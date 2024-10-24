@@ -1,8 +1,11 @@
 <?php
-    include_once 'links.php'; 
-    include_once 'secondheader.php'; 
+    include_once './links.php'; 
+    include_once './secondheader.php'; 
 ?>
 <style>
+    .whole {
+        height: 100vh;
+    }
     input {
         display: block;
         width: 100%;
@@ -13,22 +16,21 @@
 </style>
 <section class="whole">
     <div class="leftside">
-        <img src="assets/images/logo.png" alt="">
+        <img src="./assets/images/logo.png" alt="">
         <p>A streamlined ordering platform connecting customers to various food stalls.</p>
     </div>
     <form action="#" class="form">
         <h4>Sign In</h4>
-        <span>Don't have an account? <a href="signup.php">Sign Up</a></span>
-
+        
         <div class="input-group">
             <label for="email">Email</label>
-            <input type="text" name="email" id="email" placeholder="Enter your email"/>
+            <input type="text" name="email" id="email" placeholder="Enter your email" required/>
         </div>
         <div class="input-group">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" placeholder="Enter your password"/>
+            <input type="password" name="password" id="password" placeholder="Enter your password" required/>
         </div>
-        <div class="btns-group">
+        <div class="btns-group d-block text-center">
             <input type="submit" value="Sign In" class="button">
         </div>
 
@@ -36,9 +38,10 @@
         <span class="d-block text-center" style="font-size: 15px;">
             <a href="">Forgot Password?</a>
         </span>
+        <span class="d-block text-center">Don't have an account? <a href="signup.php">Sign Up</a></span>
     </form>
 </section>
-<script src="assets/js/script.js"></script>
+<script src="./assets/js/script.js"></script>
 <?php
-    include_once 'footer.php'; 
+    include_once './footer.php'; 
 ?>
