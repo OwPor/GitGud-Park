@@ -5,10 +5,10 @@ class Customer {
     public $id = '';
     public $first_name = '';
     public $last_name = '';
-    public $middle_name = '';
-    public $birth_date = '';
-    public $email = '';
     public $phone = '';
+    public $email = '';
+    public $birth_date = '';
+    public $sex = '';
     public $password = '';
 
     protected $db;
@@ -37,54 +37,37 @@ class Customer {
         if ($this->checkPhone($this->phone))
             return false;
 
-        $sql = "INSERT INTO customers (first_name, last_name, middle_name, birth_date, email, phone, password) VALUES (:first_name, :last_name, :middle_name, :birth_date, :email, :phone, :password);";
-        $query = $this->db->connect()->prepare($sql);
-        
-        if ($this->middle_name !== '') {
-            $query->execute(array(
-                ':first_name' => $this->first_name,
-                ':last_name' => $this->last_name,
-                ':middle_name' => $this->middle_name,
-                ':birth_date' => $this->birth_date,
-                ':email' => $this->email,
-                ':phone' => $this->phone,
-                ':password' => $this->password
-            ));
-        } else {
-            $query->execute(array(
-                ':first_name' => $this->first_name,
-                ':last_name' => $this->last_name,
-                ':birth_date' => $this->birth_date,
-                ':email' => $this->email,
-                ':phone' => $this->phone,
-                ':password' => $this->password
-            ));
-        }
-        
-        if($query)
-            return true;
-        else
+        if (!($this->sex == "male" || $this->sex == "female"))
             return false;
-    }
 
-    function editCustomer($customerID){
-        $sql = "UPDATE customers SET first_name = :first_name, last_name = :last_name, middle_name = :middle_name, birth_date = :birth_date, email = :email, phone = :phone, password = :password WHERE id = :id;";
+        $sql = "INSERT INTO customers (first_name, last_name, birth_date, email, sex, phone, password) VALUES (:first_name, :last_name, :birth_date, :email, :sex, :phone, :password);";
         $query = $this->db->connect()->prepare($sql);
-        $query->execute(array(
-            ':id' => $customerID,
+        
+        return $query->execute(array(
             ':first_name' => $this->first_name,
             ':last_name' => $this->last_name,
-            ':middle_name' => $this->middle_name,
             ':birth_date' => $this->birth_date,
             ':email' => $this->email,
+            ':sex' => $this->sex,
             ':phone' => $this->phone,
             ':password' => $this->password
         ));
-        
-        if($query)
-            return true;
-        else
-            return false;
+    }
+
+    function editCustomer($customerID){
+        $sql = "UPDATE customers SET first_name = :first_name, last_name = :last_name, birth_date = :birth_date, email = :email, sex = :sex, phone = :phone, password = :password WHERE id = :id;";
+        $query = $this->db->connect()->prepare($sql);
+
+        return $query->execute(array(
+            ':id' => $customerID,
+            ':first_name' => $this->first_name,
+            ':last_name' => $this->last_name,
+            ':birth_date' => $this->birth_date,
+            ':email' => $this->email,
+            ':sex' => $this->sex,
+            ':phone' => $this->phone,
+            ':password' => $this->password
+        ));
     }
 
     function deleteCustomer($customerID){
@@ -110,8 +93,7 @@ class Customer {
         return $query->fetch();
     }
 
-    public function checkCustomer()
-    {
+    public function checkCustomer() {
         $this->validateEmail($this->email);
         
         $sql = "SELECT * FROM customers WHERE email = :email LIMIT 1";
