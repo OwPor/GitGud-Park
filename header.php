@@ -2,47 +2,7 @@
     session_start();
     include_once 'links.php'; 
 ?>
-<style>
-    .name {
-        margin-right: 1rem;
-    }
-    
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
 
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content a {
-        color: white;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-
-    .dropdown-content a:hover {
-        background-color: #f1f1f1;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .profileIMG {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    }
-    
-</style>
 <nav>
     <div class="top">
         <?php
@@ -53,18 +13,16 @@
                     <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Cart</a></li>
                     <li><a href="notification.php"><i class="fa-solid fa-bell"></i>Notifications</a></li>
                     <li>
-                        <span class="name">
-                            <?php echo $_SESSION['customer']['first_name']; ?> <?php echo $_SESSION['customer']['last_name']; ?>
-                        </span>
                         <div class="dropdown">
-                            <a onclick="toggleDropdown()">
-                                <img class="profileIMG" src="assets/images/user.jpg" alt="Profile Image">
+                            <a href="javascript:void(0)" onclick="toggleDropdown()">
+                                <img src="assets/images/user.jpg" alt="Profile Image"> 
+                                <span><?php echo $_SESSION['customer']['first_name']; ?> <?php echo $_SESSION['customer']['last_name']; ?></span>
                             </a>
                             <div class="dropdown-content" id="dropdownMenu">
-                                <a href="account.php"><i class="fa-regular fa-user"></i> <span> Account </span></a>
-                                <a href="purchase.php"><i class="fa-regular fa-credit-card"></i> <span> Purchase </span></a>
-                                <a href="favorites.php"><i class="fa-regular fa-heart"></i> <span> Favorites </span></a>
-                                <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span> Logout </span></a>
+                                <a href="account.php"><i class="fa-regular fa-user"></i> Account</a>
+                                <a href="purchase.php"><i class="fa-regular fa-credit-card"></i> Purchase</a>
+                                <a href="favorites.php"><i class="fa-regular fa-heart"></i> Favorites</a>
+                                <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
                             </div>
                         </div>
                     </li>

@@ -4,13 +4,11 @@ function toggleDropdown() {
 }
 
 window.onclick = function(event) {
-    if (!event.target.matches('.dropdown a') && !event.target.matches('.dropdown img')) {
+    if (!event.target.matches('.dropdown-content') && !event.target.closest('a')) {
         const dropdowns = document.getElementsByClassName("dropdown-content");
         for (let i = 0; i < dropdowns.length; i++) {
             const openDropdown = dropdowns[i];
-            if (openDropdown.style.display === "block") {
-                openDropdown.style.display = "none";
-            }
+            openDropdown.style.display === "block" ? "none" : "block";
         }
     }
 }
