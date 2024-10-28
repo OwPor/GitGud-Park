@@ -2,15 +2,6 @@
     include_once 'links.php'; 
     include_once 'secondheader.php'; 
 ?>
-<style>
-    input {
-        display: block;
-        width: 100%;
-        padding: 0.5rem 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 0.25rem;
-    }
-</style>
 <section class="whole">
     <div class="leftside">
         <img src="assets/images/logo.png" alt="">
@@ -38,7 +29,6 @@
         </span>
     </form>
 </section>
-<script src="assets/js/script.js"></script>
 <?php
     include_once 'footer.php'; 
 ?>

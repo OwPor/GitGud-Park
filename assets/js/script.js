@@ -1,3 +1,6 @@
+
+/* PROGRESS WITH STEPS */
+
 const prevBtns = document.querySelectorAll(".btn-prev");
 const nextBtns = document.querySelectorAll(".btn-next");
 const progress = document.getElementById("progress");
@@ -46,12 +49,14 @@ function updateProgressbar() {
     ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
 }
 
+
+/* PROFILE DROPDOWN */
+
 function toggleDropdown() {
   var dropdown = document.getElementById("dropdownMenu");
   dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
 
-// Optional: Close the dropdown if clicked outside
 window.onclick = function(event) {
   if (!event.target.matches('.dropdown a img') && !event.target.matches('.dropdown a')) {
       var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -61,5 +66,17 @@ window.onclick = function(event) {
               openDropdown.style.display = "none";
           }
       }
+  }
+}
+
+/* DISPAY UPLOADED IMAGE */
+
+function handleFileUpload(elementId) {
+  let input = document.getElementById('fplogo'); 
+  let file = input.files[0];
+  
+  if (file) {
+      document.getElementById(elementId).style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+      document.getElementById(elementId).innerText = ''; 
   }
 }

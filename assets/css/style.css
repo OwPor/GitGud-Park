@@ -285,9 +285,21 @@ nav ul li a{text-decoration: none;}
 .leftside img{width: 100%;}
 
 :root {--primary-color: #CD5C08;}
-label {
+.input-group label{
   display: block;
   margin-bottom: 0.5rem;
+}
+.input-group input{
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+.och select{
+  padding: 8px 4px;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
 .width-50 {width: 50%;}
 .ml-auto {margin-left: auto;}
@@ -307,7 +319,7 @@ label {
   height: 4px;
   width: 100%;
   background-color: #dcdcdc;
-  z-index: -1;
+  z-index: 0;
 }
 .progress {
   background-color: var(--primary-color);
@@ -322,6 +334,7 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 .progress-step::before {
   counter-increment: step;
@@ -343,6 +356,7 @@ label {
   border: 1px solid #ccc;
   border-radius: 0.35rem;
   padding: 1.5rem;
+  background-color: white;
 }
 .form-step {
   display: none;
@@ -352,7 +366,7 @@ label {
 .form-step-active {
   display: block;
 }
-.input-group {
+.input-group, .input-grp {
   margin: 2rem 0;
 }
 @keyframes animate {
@@ -372,6 +386,7 @@ label {
 }
 
 .button {
+  width: 100%;
   padding: 0.4rem;
   display: block;
   text-decoration: none;
@@ -383,3 +398,124 @@ label {
   transition: 0.3s;
 }
 .button:hover {box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--primary-color);}
+
+/* FOOD PARK REGISTRATION */
+
+.day-checkboxes label {margin-right: 15px;}
+.add-hours-btn {
+  background-color: #CD5C08;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: small;
+}
+.add-hours-btn:hover {
+  
+}
+.oh, .och{
+  display: flex;
+  gap: 20px;
+}
+.och{gap: 10px;}
+.och label{margin: auto 0;}
+h6{margin:0;}
+.schedule-list, .add-schedule{
+  padding: 15px;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+.schedule-list p {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: #ccc 1px solid;
+  margin: 0;
+}
+.delete-btn {
+  font-size: large;
+  border: none;
+  background-color: white;
+  color: #CD5C08;
+}
+.delete-btn:hover {
+  
+}
+.logocon{
+  height: 200px;
+  width: 200px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.logocon:hover{
+  
+}
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+  outline: none;
+  box-shadow: none; 
+  border-color: gray;
+}
+.box{
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.box div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.box div a{
+  color: #CD5C08;
+  text-decoration: none;
+}
+.par, .logocon span{
+  font-size: small;
+  color: gray;
+  line-height: 1.3;
+}
+
+.c{cursor: not-allowed;}
+.form-floating .fa-circle-question {
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #CD5C08;
+}
+.form-floating select.form-select option:disabled {
+  color: #D3D3D3;
+}
+.form-check-input:checked{
+  background-color: #CD5C08;
+  border: none;
+}
+.fs{
+  font-size: 14px;
+}
+
+.uploaded-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+  border-radius: 4px;
+}
+.file-name {
+  flex: 1;
+  margin-left: 10px;
+}
+.icon-btn {
+  cursor: pointer;
+  margin: 0 5px;
+}
+.button[type="submit"]{
+  border: none;
+}
+.last{
+  font-size: 14px;
+  line-height: 1.5;
+}

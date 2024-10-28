@@ -3,7 +3,7 @@
 ?>
 <style>
     .bottom{
-        padding: 20px 120px;
+        padding: 10px 120px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
     a{
