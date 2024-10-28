@@ -9,19 +9,46 @@ const progressSteps = document.querySelectorAll(".progress-step");
 
 let formStepsNum = 0;
 
+function areFieldsFilled() {
+  const currentStep = formSteps[formStepsNum];
+  const inputs = currentStep.querySelectorAll("input[required], textarea[required], select[required]");
+  return Array.from(inputs).every(input => input.value.trim() !== "");
+}
+
+function updateFormSteps() {
+  formSteps.forEach((formStep, index) => {
+    formStep.classList.toggle("form-step-active", index === formStepsNum);
+  });
+}
+
+function updateProgressbar() {
+  progressSteps.forEach((progressStep, idx) => {
+    progressStep.classList.toggle("progress-step-active", idx < formStepsNum + 1);
+  });
+
+  const progressActive = document.querySelectorAll(".progress-step-active");
+  progress.style.width = ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
+}
+
 nextBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
-    formStepsNum++;
-    updateFormSteps();
-    updateProgressbar();
+    if (areFieldsFilled()) {
+      formStepsNum++;
+      updateFormSteps();
+      updateProgressbar();
+    } else {
+      alert("Please fill in all required fields before proceeding.");
+    }
   });
 });
 
 prevBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
-    formStepsNum--;
-    updateFormSteps();
-    updateProgressbar();
+    if (formStepsNum > 0) {
+      formStepsNum--;
+      updateFormSteps();
+      updateProgressbar();
+    }
   });
 });
 
@@ -49,34 +76,19 @@ function updateProgressbar() {
     ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
 }
 
-
-/* PROFILE DROPDOWN */
-
 function toggleDropdown() {
-  var dropdown = document.getElementById("dropdownMenu");
+  const dropdown = document.getElementById("dropdownMenu");
   dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
 
 window.onclick = function(event) {
   if (!event.target.matches('.dropdown a img') && !event.target.matches('.dropdown a')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      for (var i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.style.display === "block") {
-              openDropdown.style.display = "none";
-          }
+    const dropdowns = document.getElementsByClassName("dropdown-content");
+    for (let i = 0; i < dropdowns.length; i++) {
+      const openDropdown = dropdowns[i];
+      if (openDropdown.style.display === "block") {
+        openDropdown.style.display = "none";
       }
-  }
-}
-
-/* DISPAY UPLOADED IMAGE */
-
-function handleFileUpload(elementId) {
-  let input = document.getElementById('fplogo'); 
-  let file = input.files[0];
-  
-  if (file) {
-      document.getElementById(elementId).style.backgroundImage = `url(${URL.createObjectURL(file)})`;
-      document.getElementById(elementId).innerText = ''; 
+    }
   }
 }

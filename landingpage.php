@@ -38,7 +38,7 @@
     
     <div class="row row-cols-1 row-cols-md-4 g-3">
         <div class="col">
-            <a href="homepage.php" class="card-link text-decoration-none">
+            <a href="index.php" class="card-link text-decoration-none">
                 <div class="card" style="position: relative;">
                     <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
                     <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
@@ -51,7 +51,7 @@
             </a>
         </div>
         <div class="col">
-            <a href="homepage.php" class="card-link text-decoration-none">
+            <a href="index.php" class="card-link text-decoration-none">
                 <div class="card" style="position: relative;">
                     <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
                     <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
@@ -64,7 +64,7 @@
             </a>
         </div>
         <div class="col">
-            <a href="homepage.php" class="card-link text-decoration-none">
+            <a href="index.php" class="card-link text-decoration-none">
                 <div class="card" style="position: relative;">
                     <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
                     <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
@@ -77,7 +77,7 @@
             </a>
         </div>
         <div class="col">
-            <a href="homepage.php" class="card-link text-decoration-none">
+            <a href="index.php" class="card-link text-decoration-none">
                 <div class="card" style="position: relative;">
                     <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
                     <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
