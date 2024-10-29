@@ -403,16 +403,16 @@ nav ul li a{text-decoration: none;}
 
 .day-checkboxes label {margin-right: 15px;}
 .add-hours-btn {
-  background-color: #CD5C08;
+  background-color: #6A9C89;
   color: white;
-  padding: 5px 10px;
+  padding: 3px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: small;
+  
 }
 .add-hours-btn:hover {
-  
 }
 .oh, .och{
   display: flex;
@@ -442,7 +442,7 @@ h6{margin:0;}
   color: #CD5C08;
 }
 .delete-btn:hover {
-  
+  transform: scale(1.2);
 }
 .logocon{
   height: 200px;
@@ -451,7 +451,8 @@ h6{margin:0;}
   border-radius: 5px;
 }
 .logocon:hover{
-  
+  background-color: #F8F8F8;
+  transform: scale(1.02);
 }
 .form-control:focus, .form-select:focus, .form-check-input:focus {
   outline: none;
@@ -491,10 +492,6 @@ h6{margin:0;}
   background-color: #CD5C08;
   border: none;
 }
-.fs{
-  font-size: 14px;
-}
-
 .uploaded-file {
   display: flex;
   align-items: center;
