@@ -4,8 +4,14 @@
 
     $isLoggedIn = false;
     $userInfo = '';
-    if (isset($_SESSION['customer'])) {
-        $isLoggedIn = true;
+    
+    if (isset($_SESSION['user'])) {
+        if ($_SESSION['user']['isVerified'] == 1) {
+            $isLoggedIn = true;
+        } else {
+            header('Location: email/verify_email.php');
+            exit();
+        }
     }
 ?>
 <title>GitGud PMS</title>

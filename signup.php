@@ -1,7 +1,22 @@
 <?php
+    session_start();
+
+    if (isset($_SESSION['user'])) {
+        if ($_SESSION['user']['isVerified'] == 1) {
+            header('Location: index.php');
+            exit();
+        } else {
+            header('Location: email/verify_email.php');
+            exit();
+        }
+    }
+
     include_once 'links.php'; 
     include_once 'secondheader.php';
     require_once './classes/db.class.php';
+    require_once './email/verification_token.class.php';
+    $userObj = new User();
+    $verificationObj = new Verification();
 
     $first_name = $last_name = $phone = $email = $dob = $sex = $password = $confirm_password = '';
     $first_name_err = $last_name_err = $phone_err = $email_err = $dob_err = $sex_err = $password_err = $confirm_password_err = '';
@@ -30,21 +45,38 @@
                     $password_err = 'Passwords do not match';
                 } else if ($password < 8) {
                     $password_err = 'Password must be at least 8 characters';
+                } else if ($first_name_err != '' || $last_name_err != '' || $phone_err != '' || $email_err != '' || $dob_err != '' || $sex_err != '') {
+                    echo '<script>alert("Invalid input")</script>';
                 } else {
-                    $customer = new Customer();
-                    $customer->first_name = $first_name;
-                    $customer->last_name = $last_name;
-                    $customer->phone = $phone;
-                    $customer->email = $email;
-                    $customer->birth_date = $dob;
-                    $customer->sex = $sex;
-                    $customer->password = $password;
+                    $user = new User();
+                    $user->first_name = $first_name;
+                    $user->last_name = $last_name;
+                    $user->phone = $phone;
+                    $user->email = $email;
+                    $user->birth_date = $dob;
+                    $user->sex = $sex;
+                    $user->password = $password;
 
-                    if ($customer->addCustomer()) {
-                        header('Location: signin.php');
-                        exit();
+                    if ($user->addUser()) {
+                        $userObj->email = $email;
+                        $userObj->password = $password;
+                        
+                        $user = $userObj->checkUser();
+                        if ($user) {
+                            $_SESSION['user'] = $user;
+                            $_SESSION['user']['isVerified'] = $userObj->isVerified($user['id']);
+                            $verification = $verificationObj->sendVerificationEmail($_SESSION['email'], $_SESSION['user']['id'], $_SESSION['user']['first_name']);
+                            if ($verification) {
+                                header('Location: ./email/verify_email.php');
+                                exit();
+                            } else {
+                                echo '<script>alert("Failed to send verification email")</script>';
+                            }
+                        } else {
+                            echo '<script>alert("Failed to sign up1")</script>';
+                        }
                     } else {
-                        echo '<script>alert("Failed to sign up")</script>';
+                        echo '<script>alert("Failed to sign up555")</script>';
                     }
                 }
             } else {

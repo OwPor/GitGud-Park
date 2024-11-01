@@ -6,7 +6,7 @@
 <nav>
     <div class="top">
         <?php
-            if (isset($_SESSION['customer'])) {
+            if (isset($_SESSION['user'])) {
                 // LOGGED IN
                 ?>
                 <ul>
@@ -16,7 +16,7 @@
                         <div class="dropdown">
                             <a href="javascript:void(0)" onclick="toggleDropdown()">
                                 <img src="assets/images/user.jpg" alt="Profile Image"> 
-                                <span><?php echo $_SESSION['customer']['first_name']; ?> <?php echo $_SESSION['customer']['last_name']; ?></span>
+                                <span><?php echo $_SESSION['user']['first_name']; ?> <?php echo $_SESSION['user']['last_name']; ?></span>
                             </a>
                             <div class="dropdown-content" id="dropdownMenu">
                                 <a href="account.php"><i class="fa-regular fa-user"></i> Account</a>

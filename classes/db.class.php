@@ -1,7 +1,7 @@
 <?php
 require_once 'db.php';
 
-class Customer {
+class User {
     public $id = '';
     public $first_name = '';
     public $last_name = '';
@@ -17,7 +17,7 @@ class Customer {
         $this->db = new Database();
     }
 
-    function addCustomer(){
+    function addUser(){
         $age = $this->calculateAge($this->birth_date);
         if ($age < 18)
             return false;
@@ -40,7 +40,7 @@ class Customer {
         if (!($this->sex == "male" || $this->sex == "female"))
             return false;
 
-        $sql = "INSERT INTO customers (first_name, last_name, birth_date, email, sex, phone, password) VALUES (:first_name, :last_name, :birth_date, :email, :sex, :phone, :password);";
+        $sql = "INSERT INTO users (first_name, last_name, birth_date, email, sex, phone, password) VALUES (:first_name, :last_name, :birth_date, :email, :sex, :phone, :password);";
         $query = $this->db->connect()->prepare($sql);
         
         return $query->execute(array(
@@ -54,12 +54,12 @@ class Customer {
         ));
     }
 
-    function editCustomer($customerID){
-        $sql = "UPDATE customers SET first_name = :first_name, last_name = :last_name, birth_date = :birth_date, email = :email, sex = :sex, phone = :phone, password = :password WHERE id = :id;";
+    function editUser($user_id){
+        $sql = "UPDATE users SET first_name = :first_name, last_name = :last_name, birth_date = :birth_date, email = :email, sex = :sex, phone = :phone, password = :password WHERE id = :id;";
         $query = $this->db->connect()->prepare($sql);
 
         return $query->execute(array(
-            ':id' => $customerID,
+            ':id' => $user_id,
             ':first_name' => $this->first_name,
             ':last_name' => $this->last_name,
             ':birth_date' => $this->birth_date,
@@ -70,44 +70,53 @@ class Customer {
         ));
     }
 
-    function deleteCustomer($customerID){
-        $sql = "DELETE FROM customers WHERE id = :id;";
+    function deleteUser($user_id){
+        $sql = "DELETE FROM users WHERE id = :id;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(
-            ':id' => $customerID
+            ':id' => $user_id
         ));
         
-        if($query)
-            return true;
-        else
-            return false;
+        return $query;
     }
 
-    function getCustomer($customerID){
-        $sql = "SELECT * FROM customers WHERE id = :id;";
+    function getUser($user_id){
+        $sql = "SELECT * FROM users WHERE id = :id;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(
-            ':id' => $customerID
+            ':id' => $user_id
         ));
         
         return $query->fetch();
     }
 
-    public function checkCustomer() {
+    public function checkUser() {
         $this->validateEmail($this->email);
         
-        $sql = "SELECT * FROM customers WHERE email = :email LIMIT 1";
+        $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
         $query = $this->db->connect()->prepare($sql);
         $query->execute([':email' => $this->email]);
         
-        $customer = $query->fetch();
+        $user = $query->fetch();
         
-        if (!$customer) {
+        if (!$user) {
             return false; 
         }
         
-        if (password_verify($this->password, isset($customer['password_hashed']) ? $customer['password_hashed'] : $customer['password'])) {
-            return $customer;
+        if (password_verify($this->password, $user['password'])) {
+
+            $info = [
+                'id' => $user['id'],
+                'email' => $user['email'],
+                'role' => $user['role'],
+                'first_name' => $user['first_name'],
+                'last_name' => $user['last_name'],
+                'phone' => $user['phone'],
+                'birth_date' => $user['birth_date'],
+                'sex' => $user['sex']
+            ];
+
+            return $info;
         }
         
         return false;
@@ -128,7 +137,7 @@ class Customer {
     }
 
     private function checkEmail($email){
-        $sql = "SELECT * FROM customers WHERE email = :email;";
+        $sql = "SELECT * FROM users WHERE email = :email;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(
             ':email' => $email
@@ -150,12 +159,26 @@ class Customer {
     }
 
     private function checkPhone($phone){
-        $sql = "SELECT * FROM customers WHERE phone = :phone;";
+        $sql = "SELECT * FROM users WHERE phone = :phone;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(
             ':phone' => $phone
         ));
         
         return $query->fetch();
+    }
+
+    function isVerified($user_id) {
+        $sql = "SELECT is_verified FROM verification WHERE user_id = :user_id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':user_id' => $user_id));
+        
+        $result = $query->fetch();
+        
+        if ($result === false) {
+            return false;
+        }
+
+        return $result['is_verified'];
     }
 }

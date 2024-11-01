@@ -5,17 +5,25 @@ CREATE DATABASE gitgud;
 
 USE gitgud;
 
-CREATE TABLE customers (
+CREATE TABLE users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(100) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
     sex VARCHAR(10) NOT NULL,
     phone VARCHAR(20) UNIQUE NOT NULL,
     password CHAR(255) NOT NULL,
     birth_date DATE NOT NULL,
+    role ENUM('Customer', 'Park Owner', 'Stall Owner', 'Admin') NOT NULL DEFAULT 'Customer',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE verification (
+    user_id INT UNSIGNED PRIMARY KEY NOT NULL,
+    verification_token VARCHAR(255) NOT NULL,
+    token_expiration DATETIME NOT NULL,
+    is_verified TINYINT DEFAULT 0
 );
 
 CREATE TABLE stalls (
@@ -49,12 +57,12 @@ CREATE TABLE menu_items (
 
 CREATE TABLE orders (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL,
     status ENUM('Pending', 'Preparing', 'Ready', 'Completed', 'Cancelled') NOT NULL DEFAULT 'Pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE order_items (
@@ -70,11 +78,11 @@ CREATE TABLE order_items (
 
 CREATE TABLE reviews (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
     stall_id INT UNSIGNED NOT NULL,
     rating TINYINT UNSIGNED NOT NULL CHECK (rating BETWEEN 1 AND 5),
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (stall_id) REFERENCES stalls(id) ON DELETE CASCADE
 );

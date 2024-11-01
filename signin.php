@@ -3,13 +3,18 @@
     include_once './links.php'; 
     include_once './secondheader.php'; 
     require_once './classes/db.class.php';
-    $customerObj = new Customer();
+    $userObj = new User();
     $email = $password = '';
     $err = $email_err = $password_err = '';
 
-    if (isset($_SESSION['customer'])) {
-        header('Location: index.php');
-        exit();
+    if (isset($_SESSION['user'])) {
+        if ($_SESSION['user']['isVerified'] == 1) {
+            header('Location: index.php');
+            exit();
+        } else {
+            header('Location: email/verify_email.php');
+            exit();
+        }
     }
 
     switch ($_SERVER['REQUEST_METHOD']) {
@@ -21,14 +26,21 @@
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $email_err = 'Invalid email format';
                 } else {
-                    $customerObj->email = $email;
-                    $customerObj->password = $password;
+                    $userObj->email = $email;
+                    $userObj->password = $password;
                     
-                    $customer = $customerObj->checkCustomer();
-                    if ($customer) {
-                        $_SESSION['customer'] = $customer;
-                        header('Location: index.php');
-                        exit();
+                    $user = $userObj->checkUser();
+                    if ($user) {
+                        $_SESSION['user'] = $user;
+
+                        $_SESSION['user']['isVerified'] = $userObj->isVerified($user['id']);
+                        if ($_SESSION['user']['isVerified'] == 1) {
+                            header('Location: index.php');
+                            exit();
+                        } else {
+                            header('Location: email/verify_email.php');
+                            exit();
+                        }
                     } else {
                         $err = 'Invalid email or password';
                     }
