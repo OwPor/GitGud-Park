@@ -48,48 +48,46 @@
             break;
     }
 ?>
+
+<title>Sign In</title>
 <style>
-    .whole {
-        height: 100vh;
-    }
-    input {
-        display: block;
-        width: 100%;
-        padding: 0.5rem 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 0.25rem;
+    main {
+        background-image: url('assets/images/customer.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 </style>
-<title>Sign In</title>
-<section class="whole">
+<main class="whole">
     <div class="leftside">
         <img src="./assets/images/logo.png" alt="">
         <p>A streamlined ordering platform connecting customers to various food stalls.</p>
     </div>
     <form action="" class="form" method="POST">
-        <h4>Sign In</h4>
+        <h4 class="fw-bold">Sign In</h4>
         <span class="text-danger"><?php echo $err; ?></span>
         <div class="input-group">
             <label for="email">Email</label>
             <input type="text" name="email" id="email" placeholder="Enter your email" required/>
             <span class="text-danger"><?php echo $email_err; ?></span>
         </div>
-        <div class="input-group">
+        <div class="input-group mb-2">
             <label for="password">Password</label>
             <input type="password" name="password" id="password" placeholder="Enter your password" required/>
             <span class="text-danger"><?php echo $password_err; ?></span>
         </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="remember_me" id="rememberMeCheckbox">
+                <label class="form-check-label" for="rememberMeCheckbox">Remember Me</label>
+            </div>
+            <a href="#">Forgot Password?</a>
+        </div><br>
         <div class="btns-group d-block text-center">
             <input type="submit" value="Sign In" class="button">
-        </div>
-
-        <br>
-        <span class="d-block text-center" style="font-size: 15px;">
-            <a href="">Forgot Password?</a>
-        </span>
+        </div><br>
         <span class="d-block text-center">Don't have an account? <a href="./signup.php">Sign Up</a></span>
     </form>
-</section>
+</main>
 <script src="./assets/js/script.js"></script>
 <?php
     include_once './footer.php'; 

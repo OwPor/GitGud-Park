@@ -105,34 +105,19 @@
 ?>
 <title>Sign Up</title>
 <style>
-    .form-group {
-        margin-bottom: 0.5rem;
-    }
-    .input-group {
-        margin-top: 0;
-    }
-    .input-group-text {
-        height: 100%;
-    }
-    .whole {
-        height: 100vh;
-    }
-    input {
-        display: block;
-        width: 100%;
-        padding: 0.5rem 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 0.25rem;
+    main {
+        background-image: url('assets/images/customer.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 </style>
-<section class="whole">
+<main class="whole">
     <div class="leftside">
         <img src="./assets/images/logo.png" alt="">
         <p>A streamlined ordering platform connecting customers to various food stalls.</p>
     </div>
     <form action="#" class="form" method="POST">
-        <h4>Sign Up</h4>
-        <span>Already have an account? <a href="./signin.php">Sign In</a></span>
+        <h4 class="fw-bold">Sign Up</h4>
 
         <div class="progressbar">
             <div class="progress" id="progress"></div>
@@ -160,12 +145,10 @@
 
         <div class="form-step">
             <div class="form-group">
-                <label for="phone" class="mb-1">Phone Number</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">+63</span>
-                    </div>
-                    <input type="tel" name="phone" id="phone" class="form-control phone-input" value="<?= $phone ?>" maxlength="10" min="10" max="10" required>
+                <label for="phone" class="mb-2">Phone Number</label>
+                <div class="input-group mt-0">
+                    <span class="input-group-text">+63</span>
+                    <input type="tel" name="phone" id="phone" class="form-control phone-input" value="<?= $phone ?>" maxlength="10" min="10" max="10" placeholder="Enter your phone number" required>
                     <span class="text-danger"><?= $phone_err ?></span>
                 </div>
             </div>
@@ -187,7 +170,7 @@
             </div>
             <div class="input-group">
                 <label for="sex">Sex</label>
-                <select name="sex" id="sex" value="<?= $sex ?>" required>
+                <select name="sex" id="sex" value="<?= $sex ?>" required style="padding: 12px 0.75rem">
                     <option value="" disabled <?php echo empty($sex) ? "selected" : ""; ?>>Select your sex</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -213,15 +196,15 @@
             </div>
             <div class="btns-group">
                 <a href="#" class="button btn-prev">Previous</a>
-                <input type="submit" value="Sign Up" class="button" />
+                <input type="submit" value="Sign Up" class="button"/>
             </div>
         </div>
         <br>
-        <span class="d-block text-center" style="font-size: 15px;">
-            By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.
-        </span>
+        <span class="d-block text-center small text-muted">By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</span><br>
+        <span class="d-block text-center">Already have an account? <a href="./signin.php">Sign In</a></span>
     </form>
-</section>
+    
+</main>
 <script src="./assets/js/script.js"></script>
 <?php
     include_once './footer.php'; 

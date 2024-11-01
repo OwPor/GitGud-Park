@@ -12,7 +12,9 @@ Color Palette:
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
 }
-
+main{
+  background-color: #f4f4f4;
+}
 /* HEADER */
 nav ul{
     list-style: none;
@@ -261,11 +263,11 @@ nav ul li a{text-decoration: none;}
 
 /* SIGN UP AND SIGN IN */
 .whole{
-    padding: 50px 0;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 100px;
+    height: calc(100% - 65.61px);
 }
 .leftside{
     width: 35%;
@@ -276,11 +278,11 @@ nav ul li a{text-decoration: none;}
     text-decoration: none;
 }
 .whole .leftside p{
-    font-size: 32px;
-    line-height: 1.2;
+    font-size: 40px;
+    line-height: 1.3;
     margin-top: 50px;
     font-weight: bold;
-    color: gray;
+    color: white;
 }
 .leftside img{width: 100%;}
 
@@ -289,7 +291,7 @@ nav ul li a{text-decoration: none;}
   display: block;
   margin-bottom: 0.5rem;
 }
-.input-group input{
+.input-group input, .input-group select{
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
@@ -309,7 +311,8 @@ nav ul li a{text-decoration: none;}
   display: flex;
   justify-content: space-between;
   counter-reset: step;
-  margin: 2rem 0 4rem;
+  margin: 2rem auto 4rem;
+  max-width: 80%;
 }
 .progressbar::before, .progress {
   content: "";
@@ -351,13 +354,14 @@ nav ul li a{text-decoration: none;}
   background-color: var(--primary-color);
   color: #f3f3f3;
 }
-.form {
-  width: clamp(320px, 30%, 430px);
+.form, .verify{
+  width: 30%;
   border: 1px solid #ccc;
-  border-radius: 0.35rem;
-  padding: 1.5rem;
+  border-radius: 12px;
+  padding: 40px 1.5rem;
   background-color: white;
 }
+
 .form-step {
   display: none;
   transform-origin: top;
@@ -396,6 +400,7 @@ nav ul li a{text-decoration: none;}
   border-radius: 0.25rem;
   cursor: pointer;
   transition: 0.3s;
+  border: none;
 }
 .button:hover {box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--primary-color);}
 
@@ -515,4 +520,38 @@ h6{margin:0;}
 .last{
   font-size: 14px;
   line-height: 1.5;
+}
+.verify{
+  text-align: center;
+  width: 32%;
+  padding: 70px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1)
+}
+.verify h1{
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.verify img{
+  width: 360px;
+  height: 300px;
+  margin: 20px 0;
+}
+.verify p{
+  font-size: 20px;
+  line-height: 1.5;
+  margin: 0;
+}
+.verify p a:hover{
+  text-decoration: underline;
+}
+.btn-primary{
+  background-color: #CD5C08;
+  border: none;
+}
+.btn-primary:hover{
+  background-color: #B54F07;
+}
+.fa-envelope{
+  font-size: 90px;
+  color: #CD5C08;
 }

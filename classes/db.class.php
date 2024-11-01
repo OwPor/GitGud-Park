@@ -30,7 +30,7 @@ class Customer {
 
         if ($this->validatePassword($this->password))
             return false;
-        $this->password = password_hash($this->password, algo: PASSWORD_BCRYPT);
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
 
         if ($this->validatePhone($this->phone))
             return false;
