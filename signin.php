@@ -7,40 +7,45 @@
     $email = $password = '';
     $err = $email_err = $password_err = '';
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST['email']) && isset($_POST['password'])) {
-            $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-            $password = trim($_POST['password']);
-
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $email_err = 'Invalid email format';
-            } else {
-                $customerObj->email = $email;
-                $customerObj->password = $password;
-                
-                $_SESSION['customer'] = $customerObj->checkCustomer();
-                if ($_SESSION['customer']) {
-                    header('Location: index.php');
-                    exit();
-                } else {
-                    $err = 'Invalid email or password';
-                }
-            }
-        } else {
-            if (empty($_POST['email'])) {
-                $email_err = 'Email is required';
-            }
-            if (empty($_POST['password'])) {
-                $password_err = 'Password is required';
-            }
-        }
-    } else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        if (isset($_GET['email']))
-            $email = filter_var(trim($_GET['email']), FILTER_SANITIZE_EMAIL);
-        
-    } else if (isset($_SESSION['customer'])) {
+    if (isset($_SESSION['customer'])) {
         header('Location: index.php');
         exit();
+    }
+
+    switch ($_SERVER['REQUEST_METHOD']) {
+        case 'POST':
+            if (isset($_POST['email']) && isset($_POST['password'])) {
+                $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+                $password = trim($_POST['password']);
+
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $email_err = 'Invalid email format';
+                } else {
+                    $customerObj->email = $email;
+                    $customerObj->password = $password;
+                    
+                    $customer = $customerObj->checkCustomer();
+                    if ($customer) {
+                        $_SESSION['customer'] = $customer;
+                        header('Location: index.php');
+                        exit();
+                    } else {
+                        $err = 'Invalid email or password';
+                    }
+                }
+            } else {
+                if (empty($_POST['email'])) {
+                    $email_err = 'Email is required';
+                }
+                if (empty($_POST['password'])) {
+                    $password_err = 'Password is required';
+                }
+            }
+            break;
+        case 'GET':
+            if (isset($_GET['email']))
+                $email = filter_var(trim($_GET['email']), FILTER_SANITIZE_EMAIL);
+            break;
     }
 ?>
 <style>

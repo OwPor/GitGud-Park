@@ -6,90 +6,101 @@
     $first_name = $last_name = $phone = $email = $dob = $sex = $password = $confirm_password = '';
     $first_name_err = $last_name_err = $phone_err = $email_err = $dob_err = $sex_err = $password_err = $confirm_password_err = '';
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['phone']) && isset($_POST['email']) && isset($_POST['dob']) && isset($_POST['sex']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
-            $first_name = htmlspecialchars(trim($_POST['firstname']));
-            $last_name = htmlspecialchars(trim($_POST['lastname']));
-            $phone = htmlspecialchars(trim($_POST['phone']));
-            $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-            $dob = htmlspecialchars(trim($_POST['dob']));
-            $sex = htmlspecialchars(trim($_POST['sex']));
-            $password = trim($_POST['password']);
-            $confirm_password = trim($_POST['confirm_password']);
-        
-            if ($password !== $confirm_password) {
-                $password_err = 'Passwords do not match';
-            } else if ($password < 8) {
-                $password_err = 'Password must be at least 8 characters';
-            } else {
-                $customer = new Customer();
-                $customer->first_name = $first_name;
-                $customer->last_name = $last_name;
-                $customer->phone = $phone;
-                $customer->email = $email;
-                $customer->birth_date = $dob;
-                $customer->sex = $sex;
-                $customer->password = $password;
+    switch ($_SERVER['REQUEST_METHOD']) {
+        case 'POST':
+            if (isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['phone']) && isset($_POST['email']) && isset($_POST['dob']) && isset($_POST['sex']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
+                $first_name = htmlspecialchars(trim($_POST['firstname']));
+                $last_name = htmlspecialchars(trim($_POST['lastname']));
+                $phone = htmlspecialchars(trim($_POST['phone']));
+                $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+                $dob = htmlspecialchars(trim($_POST['dob']));
+                $sex = htmlspecialchars(trim($_POST['sex']));
+                $password = trim($_POST['password']);
+                $confirm_password = trim($_POST['confirm_password']);
+                
+                if (!preg_match("/^[a-zA-Z-' ]*$/",$first_name)) {
+                    $first_name_err = "Only letters and white space allowed";
+                }
 
-                if ($customer->addCustomer()) {
-                    header('Location: signin.php');
-                    exit();
+                if (!preg_match("/^[a-zA-Z-' ]*$/",$last_name)) {
+                    $last_name_err = "Only letters and white space allowed";
+                }
+
+                if ($password !== $confirm_password) {
+                    $password_err = 'Passwords do not match';
+                } else if ($password < 8) {
+                    $password_err = 'Password must be at least 8 characters';
                 } else {
-                    echo '<script>alert("Failed to sign up")</script>';
+                    $customer = new Customer();
+                    $customer->first_name = $first_name;
+                    $customer->last_name = $last_name;
+                    $customer->phone = $phone;
+                    $customer->email = $email;
+                    $customer->birth_date = $dob;
+                    $customer->sex = $sex;
+                    $customer->password = $password;
+
+                    if ($customer->addCustomer()) {
+                        header('Location: signin.php');
+                        exit();
+                    } else {
+                        echo '<script>alert("Failed to sign up")</script>';
+                    }
+                }
+            } else {
+                if (empty($_POST['firstname'])) {
+                    $first_name_err = 'First name is required';
+                }
+                if (empty($_POST['lastname'])) {
+                    $last_name_err = 'Last name is required';
+                }
+                if (empty($_POST['phone'])) {
+                    $phone_err = 'Phone is required';
+                }
+                if (empty($_POST['email'])) {
+                    $email_err = 'Email is required';
+                } else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                    $email_err = 'Invalid email format';
+                }
+                if (empty($_POST['dob'])) {
+                    $dob_err = 'Date of birth is required';
+                }
+                if (empty($_POST['sex'])) {
+                    $sex_err = "Sex is required";
+                }
+                if (empty($_POST['password'])) {
+                    $password_err = 'Password is required';
+                }
+                if (empty($_POST['confirm_password'])) {
+                    $confirm_password_err = 'Confirm password is required';
                 }
             }
-        } else {
-            if (empty($_POST['firstname'])) {
-                $first_name_err = 'First name is required';
-            }
-            if (empty($_POST['lastname'])) {
-                $last_name_err = 'Last name is required';
-            }
-            if (empty($_POST['phone'])) {
-                $phone_err = 'Phone is required';
-            }
-            if (empty($_POST['email'])) {
-                $email_err = 'Email is required';
-            } else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                $email_err = 'Invalid email format';
-            }
-            if (empty($_POST['dob'])) {
-                $dob_err = 'Date of birth is required';
-            }
-            if (empty($_POST['sex'])) {
-                $sex_err = "Sex is required";
-            }
-            if (empty($_POST['password'])) {
-                $password_err = 'Password is required';
-            }
-            if (empty($_POST['confirm_password'])) {
-                $confirm_password_err = 'Confirm password is required';
-            }
-        }
-    } else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        if (isset($_GET['firstname']))
-            $first_name = $_GET['firstname'];
+            break;
+        case 'GET':
+            if (isset($_GET['firstname']))
+                $first_name = $_GET['firstname'];
 
-        if (isset($_GET['lastname']))
-            $last_name = $_GET['lastname'];
+            if (isset($_GET['lastname']))
+                $last_name = $_GET['lastname'];
 
-        if (isset($_GET['phone']))
-            $phone = $_GET['phone'];
+            if (isset($_GET['phone']))
+                $phone = $_GET['phone'];
 
-        if (isset($_GET['email']))
-            $email = $_GET['email'];
+            if (isset($_GET['email']))
+                $email = $_GET['email'];
 
-        if (isset($_GET['dob']))
-            $dob = $_GET['dob'];
+            if (isset($_GET['dob']))
+                $dob = $_GET['dob'];
 
-        if (isset($_GET['sex'])) 
-            $sex = $_GET['sex'];
+            if (isset($_GET['sex'])) 
+                $sex = $_GET['sex'];
 
-        if (isset($_GET['password']))
-            $password = $_GET['password'];
+            if (isset($_GET['password']))
+                $password = $_GET['password'];
 
-        if (isset($_GET['confirm_password']))
-            $confirm_password = $_GET['confirm_password'];
+            if (isset($_GET['confirm_password']))
+                $confirm_password = $_GET['confirm_password'];
+            break;
     }
 ?>
 <title>Sign Up</title>

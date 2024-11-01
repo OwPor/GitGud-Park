@@ -22,7 +22,7 @@
                                 <a href="account.php"><i class="fa-regular fa-user"></i> Account</a>
                                 <a href="purchase.php"><i class="fa-regular fa-credit-card"></i> Purchase</a>
                                 <a href="favorites.php"><i class="fa-regular fa-heart"></i> Favorites</a>
-                                <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                                <a href="./logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
                             </div>
                         </div>
                     </li>
