@@ -415,7 +415,6 @@ nav ul li a{text-decoration: none;}
   border-radius: 5px;
   cursor: pointer;
   font-size: small;
-  
 }
 .add-hours-btn:hover {
 }
@@ -465,6 +464,9 @@ h6{margin:0;}
   box-shadow: none; 
   border-color: gray;
   background-color: white;
+}
+.form-check-input{
+  border-color: gray;
 }
 .box{
   border-top: 1px solid #ccc;

@@ -46,7 +46,7 @@
     position: relative;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #EFEFEF;
+    background-color: white;
     border: 1px solid #f1f1f1;
     border-radius: 4px;
     cursor: default;

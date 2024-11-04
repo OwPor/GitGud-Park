@@ -4,75 +4,84 @@
     include_once 'secondheader.php'; 
 ?>
 <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
-
 <style>
-    .form-floating input{
-        border-color: ;
-    }
-    .logo{
+    .logo {
         height: 240px;
         width: 240px;
         cursor: pointer;
         border-radius: 50%;
         background-color: white;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        transition: 0.1s;
     }
     .logo i{
-        background-color: #D9D9D9;
+        background-color: white;
         border-radius: 50%;
     }
     .logo:hover{
-        
+        border: 1px solid gray !important;
+        transform: scale(1.05);
     }
     .logorem{
         line-height: 1.2;
         font-size: 12px;
     }
-    /*main {
-        background-image: url('assets/images/stall.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        height: calc(100vh - 65.61px); 
-    }*/
+    main {
+        background-color: #D3D3D3;
+        padding: 20px 300px;
+    }
     .srform{
         border: 1px #ccc solid;
         padding: 30px 40px;
         background-color: white;
-        margin: 0 200px;
         border-radius: 20px;
     }
-    .form-floating input, .form-floating textarea, .form-floating label::after, .logo{
+    .form-floating input, .form-floating textarea, .form-floating label::after, .logo, .add-schedule, .schedule-list{
         background-color: #F8F8F8 !important;
+    }
+    .createpage{
+        border-top: 1px #ccc solid;
+    }
+    .pagehead{
+        border-bottom: 1px #ccc solid;
     }
 </style>
 <main>
     <form action="" class="srform">
-        <h4 class="fw-bold">Confirm business owner details</h4>
-        <p class="par mb-4">
-            The account you registered is linked to the business owner's details including name, email, and contact number. 
-            By proceeding, you will be associating this food park with your account. 
-            If this is correct, continue with your registration below. 
-            If you need to register with different owner details, please create a new account.
-        </p>
-        <div class="d-flex gap-4 align-items-center">
-            <div class="logo px-4 py-5 text-center border flex-shrink-0">
+        <div class="pagehead mb-4">
+            <div class="d-flex gap-3 align-items-center">
+                <h4 class="fw-bold m-0">Create a business page</h4>
+                <i class="fa-regular fa-circle-question" data-bs-toggle="tooltip" data-bs-placement="right" title="Your food stall will be registered under the food park that sent you this invitation link. Ensure that the invitation is from the correct food park, as this will determine where your stall is listed and managed." style="color: #CD5C08;"></i>
+                <script>
+                    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+                    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                </script>
+            </div>
+            <p class="par mt-2">
+                Your page is where people go to learn more about your business. Make sure yours has all the information they may need.
+            </p>
+        </div>
+        <div class="d-flex gap-3 align-items-center">
+            <div class="logo px-4 py-5 text-center border flex-shrink-0" id="logoContainer" onclick="document.getElementById('stalllogo').click();">
                 <i class="fa-solid fa-arrow-up-from-bracket fs-3 p-2 mb-1"></i><br>
                 <label for="stalllogo" class="fw-bold m-0 fs-6">Add Business Logo</label><br>
-                <input type="file" id="stalllogo" accept="image/jpeg, image/png, image/jpg" style="display:none;">
-                <p class="small">or drag and drop</p>
+                <input type="file" id="stalllogo" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayImage(event)">
+                <p class="small mb-2">or drag and drop</p>
                 <span class="text-muted logorem">Image size must be less than 5MB. Only JPG, JPEG, and PNG formats are allowed.</span>
             </div>
+            <script src="assets/js/displayimage.js"></script>
             
             <div class="flex-grow-1 ms-4">
-                
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" style="color: black;" id="businessname" name="businessname" placeholder="Business Name">
                     <label for="businessname">Business Name <span style="color: #CD5C08;">*</span></label>
                 </div>
 
                 <div class="form-group m-0 select2Part select2multiple w-100 floating-group">
-                    <label class="floating-label">Business Category <span style="color: #CD5C08;">*</span></label>
-                    <select name="" id="" class="form-control customSelectMultiple floating-control" multiple>
+                    <label class="floating-label">Categories <span style="color: #CD5C08;">*</span></label>
+                    <select name="categories" id="categories" class="form-control customSelectMultiple floating-control" multiple>
                         <option value="Category">Category</option>
                         <option value="Category">Category</option>
                         <option value="Category">Category</option>
@@ -90,7 +99,7 @@
             </div>
         </div>
 
-        <div class="contact">
+        <div class="contact mt-4">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email">
                 <label for="businessemail">Business Email <span style="color: #CD5C08;">*</span></label>
@@ -104,9 +113,10 @@
             </div>
             <div class="form-floating mb-4">
                 <input type="text" class="form-control" id="website" name="website" placeholder="Website">
-                <label for="website">Website <span style="color: #CD5C08;">*</span></label>
+                <label for="website">Website</label>
             </div>
         </div>
+
         <div class="operatinghours">
             <div class="add-schedule mb-4">
                 <label class="mb-3">What is your business operating hours? <span style="color: #CD5C08;">*</span></label>
@@ -185,19 +195,32 @@
             </div>
             <script src="assets/js/display.js"></script>
         </div>
-        <div class="paymentmethod">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="Cash" id="flexCheckCash">
-                <label class="form-check-label" for="flexCheckCash">Cash</label>
+        
+        <div class="paymentmethod mt-4">
+            <div class="add-schedule">
+                <label for="" class="mb-3">What payment methods does your business accept? <span style="color: #CD5C08;">*</span></label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Cash" id="flexCheckCash">
+                    <label class="form-check-label" for="flexCheckCash">Cash</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="G-Cash" id="flexCheckGcash">
+                    <label class="form-check-label" for="flexCheckGcash">G-Cash</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="PayMaya" id="flexCheckPaymaya">
+                    <label class="form-check-label" for="flexCheckPaymaya">PayMaya</label>
+                </div>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="G-Cash" id="flexCheckGcash">
-                <label class="form-check-label" for="flexCheckGcash">G-Cash</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="PayMaya" id="flexCheckPaymaya">
-                <label class="form-check-label" for="flexCheckPaymaya">PayMaya</label>
-            </div>
+        </div>
+        <div class="form-check mt-4 text-center">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                By clicking this box, I confirm that I am authorised by the Vendor to accept this Registration Form and the following <a href="">Terms and Conditions.</a>
+            </label>
+        </div>
+        <div class="text-center pt-4 mt-4 createpage">
+            <button type="submit" class="btn btn-primary send px-5">CREATE PAGE</button>
         </div>
     </form>
 </main>
