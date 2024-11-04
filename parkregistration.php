@@ -11,6 +11,7 @@ main {
   display: flex;
   height: calc(100vh - 65.61px); 
   overflow: hidden;
+  background-color: white;
 }
 
 .fixed-image {
@@ -31,6 +32,8 @@ main {
     padding: 30px 0;
     background-color: white;
     border-top: 3px solid #ccc;
+    border-radius: 0;
+    z-index: 100;
 }
 .mb{
     margin-bottom: 50%;
@@ -184,7 +187,7 @@ main {
                 </script>
 
 
-                <div class="add-schedule mb-4">
+                <div class="add-schedule mb-4 small">
                     <label class="mb-3">What is your business operating hours? <span style="color: #CD5C08;">*</span></label>
                     <div id="timeForm">
                         <div class="oh">
@@ -255,7 +258,7 @@ main {
                     </div>
                 </div>
                 
-                <div class="schedule-list">
+                <div class="schedule-list small">
                     <h6>Operating Hours</h6>
                     <div id="scheduleContainer"></div>
                 </div>
@@ -312,8 +315,8 @@ main {
                 <script src="assets/js/uploadedfiles.js"></script>
             </div>
             <div class="btns-group">
-                <a href="#" class="button btn-prev">Previous</a>
-                <a href="#" class="button btn-next">Next</a>
+                <a href="" class="button btn-prev">Previous</a>
+                <a href="" class="button btn-next">Next</a>
             </div>
         </div>
         <div class="form-step">

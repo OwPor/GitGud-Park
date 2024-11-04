@@ -358,7 +358,7 @@ nav ul li a{text-decoration: none;}
   width: 30%;
   border: 1px solid #ccc;
   border-radius: 12px;
-  padding: 40px 1.5rem;
+  padding: 1.5rem;
   background-color: white;
 }
 
@@ -459,10 +459,12 @@ h6{margin:0;}
   background-color: #F8F8F8;
   transform: scale(1.02);
 }
-.form-control:focus, .form-select:focus, .form-check-input:focus {
+.form-control:focus, .form-select:focus, .form-check-input:focus,
+.accordion-button:focus, .accordion-button:active, .accordion-button:not(:disabled):not(.collapsed){
   outline: none;
   box-shadow: none; 
   border-color: gray;
+  background-color: white;
 }
 .box{
   border-top: 1px solid #ccc;
@@ -537,8 +539,6 @@ h6{margin:0;}
   margin: 20px 0;
 }
 .verify p{
-  font-size: 20px;
-  line-height: 1.5;
   margin: 0;
 }
 .verify p a:hover{
@@ -555,3 +555,82 @@ h6{margin:0;}
   font-size: 90px;
   color: #CD5C08;
 }
+.stats{
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.rentstatus{
+  top: 10px;
+  left: 10px;
+  border-radius: 7px;
+  padding: 2px 6px;
+  font-size: small;
+  color: white;
+}
+.overdue{background-color: red;}
+.pending{background-color: orange;}
+.paid{background-color: green;}
+/*
+Color Palette:
+#CD5C08
+#FFF5E4
+#C1D8C3
+#6A9C89
+*/
+.owner{
+  border: 1px solid #ccc;
+  padding: 15px 10px;
+  border-radius: 20px;
+}
+
+.owner div img, .more{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+.smopen, .smclose{
+  color: #6A9C89;
+  padding: 3px 6px;
+  font-size: small;
+  border-radius: 2px;
+  font-weight: 600;
+  border: 2px solid #6A9C89;
+  border-radius: 5px;
+}
+.smclose{
+  color: gray;
+  border: 2px solid gray;
+}
+.smaction{
+  bottom: 10px;
+  right: 10px;
+}
+.smaction i{
+  padding: 6px;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+.dot {
+  display: inline-block;
+  width: 2px;         
+  height: 2px;        
+  background-color: currentColor; 
+  border-radius: 50%;   
+}
+.send{
+  border-radius: 20px;
+  font-size: 14px;
+  padding: 10px 20px
+}
+.invite{
+  background-color: #6A9C89;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #6A9C89;
+}
+

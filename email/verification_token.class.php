@@ -37,7 +37,7 @@
                 ));
 
                 $token = urlencode($token);
-                $verificationLink = "http://localhost/GitGudPark/email/verify.php?token={$token}";
+                $verificationLink = "http://localhost/GitGudPark/email/verify.php?token={$token}&id={$user_id}";
 
                 $mail = new PHPMailer(true);
                 try {
@@ -105,28 +105,38 @@
             }
         }
 
-        function verifyEmail($token) {
-            $sql = "SELECT * FROM verification WHERE verification_token = :token";
+        function verifyEmail($token, $user_id) {
+            $sql = "SELECT * FROM verification WHERE user_id = :user_id";
             $query = $this->db->connect()->prepare($sql);
             $query->execute(array(
-                ':token' => $token
+                ':user_id' => $user_id
             ));
             $verification = $query->fetch();
+            if ($verification['is_verified'] == 0) {
+                $sql = "SELECT * FROM verification WHERE verification_token = :token";
+                $query = $this->db->connect()->prepare($sql);
+                $query->execute(array(
+                    ':token' => $token
+                ));
+                $verification = $query->fetch();
 
-            if ($verification) {
-                if (strtotime($verification['token_expiration']) > time()) {
-                    $sql = "UPDATE verification SET is_verified = 1 WHERE user_id = :user_id";
-                    $query = $this->db->connect()->prepare($sql);
-                    $query->execute(array(
-                        ':user_id' => $verification['user_id']
-                    ));
+                if ($verification) {
+                    if (strtotime($verification['token_expiration']) > time()) {
+                        $sql = "UPDATE verification SET is_verified = 1 WHERE user_id = :user_id";
+                        $query = $this->db->connect()->prepare($sql);
+                        $query->execute(array(
+                            ':user_id' => $verification['user_id']
+                        ));
 
-                    return true;
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
             } else {
-                return false;
+                return 'verified';
             }
         }
     }
