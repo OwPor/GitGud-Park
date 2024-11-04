@@ -68,7 +68,7 @@
                     </div>
                     <script src="assets/js/sendemail.js"></script>
 
-                    <h6 class=" mb-3 mt-1">People in your food park</h6>
+                    <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
                     <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-3 align-items-center">
                             <img src="assets/images/user.jpg" alt="">

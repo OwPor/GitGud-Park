@@ -3,6 +3,8 @@
     include_once 'bootstrap.php'; 
     include_once 'secondheader.php'; 
 ?>
+<link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
+
 <style>
     .form-floating input{
         border-color: ;
