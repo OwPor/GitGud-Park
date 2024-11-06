@@ -48,24 +48,25 @@
                 } else if ($first_name_err != '' || $last_name_err != '' || $phone_err != '' || $email_err != '' || $dob_err != '' || $sex_err != '') {
                     echo '<script>alert("Invalid input")</script>';
                 } else {
-                    $user = new User();
-                    $user->first_name = $first_name;
-                    $user->last_name = $last_name;
-                    $user->phone = $phone;
-                    $user->email = $email;
-                    $user->birth_date = $dob;
-                    $user->sex = $sex;
-                    $user->password = $password;
+                    $userObj->first_name = $first_name;
+                    $userObj->last_name = $last_name;
+                    $userObj->phone = $phone;
+                    $userObj->email = $email;
+                    $userObj->birth_date = $dob;
+                    $userObj->sex = $sex;
+                    $userObj->password = $password;
 
-                    if ($user->addUser()) {
+                    $add = $userObj->addUser();
+                    if ($add == 'success') {
                         $userObj->email = $email;
                         $userObj->password = $password;
                         
                         $user = $userObj->checkUser();
-                        if ($user) {
-                            $_SESSION['user'] = $user;
+                        if ($user == true) {
+                            $_SESSION['user'] = [];
+                            $_SESSION['user']['id'] = $user['id'];
                             $_SESSION['user']['isVerified'] = $userObj->isVerified($user['id']);
-                            $verification = $verificationObj->sendVerificationEmail($_SESSION['email'], $_SESSION['user']['id'], $_SESSION['user']['first_name']);
+                            $verification = $verificationObj->sendVerificationEmail($user['id'], $user['email'], $user['first_name']);
                             if ($verification) {
                                 header('Location: ./email/verify_email.php');
                                 exit();
@@ -73,10 +74,12 @@
                                 echo '<script>alert("Failed to send verification email")</script>';
                             }
                         } else {
-                            echo '<script>alert("Failed to sign up1")</script>';
+                            echo '<script>alert("Failed to sign up")</script>';
                         }
-                    } else {
-                        echo '<script>alert("Failed to sign up555")</script>';
+                    } else if ($add == 'email') {
+                        echo '<script>alert("Email is already taken")</script>';
+                    } else if ($add == 'phone') {
+                        echo '<script>alert("Phone number is already taken")</script>';
                     }
                 }
             } else {

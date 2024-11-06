@@ -21,6 +21,10 @@
         } else {
             echo "Verification link has expired or is invalid.";
         }
-    } else {
+    } else if ($_SESSION['user']['isVerified'] == 1) {
+        header('Location: ../index.php');
+        exit();
+    } 
+    else {
         echo "No token provided.";
     }

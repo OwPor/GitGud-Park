@@ -23,7 +23,8 @@ CREATE TABLE verification (
     user_id INT UNSIGNED PRIMARY KEY NOT NULL,
     verification_token VARCHAR(255) NOT NULL,
     token_expiration DATETIME NOT NULL,
-    is_verified TINYINT DEFAULT 0
+    is_verified TINYINT DEFAULT 0,
+    last_sent VARCHAR(255) NULL
 );
 
 CREATE TABLE stalls (

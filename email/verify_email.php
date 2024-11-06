@@ -2,20 +2,13 @@
     session_start();
     include_once '../links.php'; 
     include_once '../secondheader.php';
-
+    require_once __DIR__ . '/../classes/db.class.php';
+    require_once 'verification_token.class.php';
+    $verificationObj = new Verification();
+    $userObj = new User();
     $email = '';
 
-    if (isset($_SESSION['user'])) {
-        if ($_SESSION['user']['isVerified'] == 1) {
-            header('Location: ../index.php');
-            exit();
-        }
-        $email = $_SESSION['user']['email'];
-    } else {
-        header('Location: ../signin.php');
-        exit();
-    }
-
+    require_once 'resend_token.php';
 ?>
 <style>
     main{
@@ -46,10 +39,12 @@
                     <i class="fa-regular fa-envelope mb-3"></i>
                     <p>The email address we have for you is <span class="fw-bold" id="email"><?= $email ?></span>. If you haven't received our message, please click the button below.</p>
                 </div>
-                <input type="hidden" id="user_id" value="<?= $_SESSION['user']['id'] ?>">
-                <input type="hidden" id="first_name" value="<?= $_SESSION['user']['first_name'] ?>">
-                <input type="hidden" id="email" value="<?= $_SESSION['user']['email'] ?>">
-                <button type="button" class="btn btn-primary" id="resendButton">Resend</button> 
+                <form method="POST">
+                    <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id'] ?>" />
+                    <input type="hidden" name="first_name" value="<?= $user['first_name'] ?>" />
+                    <input type="hidden" name="email" value="<?= $email ?>" />
+                    <input type="submit" class="btn btn-primary" value="Resend" /> 
+                </form>
             </div>
         </div>
     </div>

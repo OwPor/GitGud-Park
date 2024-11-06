@@ -26,7 +26,7 @@ class User {
             return false;
         
         if ($this->checkEmail($this->email))
-            return false;
+            return 'email';
 
         if ($this->validatePassword($this->password))
             return false;
@@ -35,7 +35,7 @@ class User {
         if ($this->validatePhone($this->phone))
             return false;
         if ($this->checkPhone($this->phone))
-            return false;
+            return 'phone';
 
         if (!($this->sex == "male" || $this->sex == "female"))
             return false;
@@ -86,8 +86,21 @@ class User {
         $query->execute(array(
             ':id' => $user_id
         ));
+
+        $user = $query->fetch();
         
-        return $query->fetch();
+        $info = [
+            'id' => $user['id'],
+            'email' => $user['email'],
+            'role' => $user['role'],
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name'],
+            'phone' => $user['phone'],
+            'birth_date' => $user['birth_date'],
+            'sex' => $user['sex']
+        ];
+
+        return $info;
     }
 
     public function checkUser() {

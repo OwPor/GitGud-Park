@@ -13,5 +13,5 @@
 </style>
 <div class="bottom d-flex justify-content-between align-items-center">
     <img src="assets/images/logo.png" alt="">
-    <a href="javascript:void(0);" onclick="history.back();">Go Back</a>
+    <a href="../logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
 </div> 

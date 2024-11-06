@@ -1,6 +1,8 @@
 <?php 
     session_start();
     include_once 'links.php'; 
+    require_once __DIR__ . '/classes/db.class.php';
+    $userObj = new User();
 ?>
 
 <nav>
@@ -8,6 +10,13 @@
         <?php
             if (isset($_SESSION['user'])) {
                 // LOGGED IN
+                if ($_SESSION['user']['isVerified'] == 0) {
+                    header('Location: ./email/verify_email.php');
+                    exit();
+                }
+                
+                $user = $userObj->getUser($_SESSION['user']['id']);
+
                 ?>
                 <ul>
                     <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i>Cart</a></li>
@@ -16,7 +25,7 @@
                         <div class="dropdown">
                             <a href="javascript:void(0)" onclick="toggleDropdown()">
                                 <img src="assets/images/user.jpg" alt="Profile Image"> 
-                                <span><?php echo $_SESSION['user']['first_name']; ?> <?php echo $_SESSION['user']['last_name']; ?></span>
+                                <span><?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?></span>
                             </a>
                             <div class="dropdown-content" id="dropdownMenu">
                                 <a href="account.php"><i class="fa-regular fa-user"></i> Account</a>
