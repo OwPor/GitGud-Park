@@ -1,8 +1,8 @@
 <?php
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'POST':
-            if (isset($_SESSION['user'])) {
-                if ($_SESSION['user']['isVerified'] == 1) {
+            if (isset($_SESSION['user']['id'])) {
+                if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
                     header('Location: ../index.php');
                     exit();
                 }
@@ -35,8 +35,8 @@
             break;
     
         case 'GET':
-            if (isset($_SESSION['user'])) {
-                if ($_SESSION['user']['isVerified'] == 1) {
+            if (isset($_SESSION['user']['id'])) {
+                if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
                     header('Location: ../index.php');
                     exit();
                 }

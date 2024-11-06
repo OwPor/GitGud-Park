@@ -12,7 +12,6 @@
         $isVerified = $verificationObj->verifyEmail($token, $user_id);
 
         if ($isVerified === true) {
-            $_SESSION['user']['isVerified'] = true;
             echo "Email verified successfully!";
             header('Location: ../index.php');
             exit();
@@ -21,7 +20,7 @@
         } else {
             echo "Verification link has expired or is invalid.";
         }
-    } else if ($_SESSION['user']['isVerified'] == 1) {
+    } else if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
         header('Location: ../index.php');
         exit();
     } 

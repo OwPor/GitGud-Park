@@ -1,8 +1,10 @@
 <?php
     session_start();
+    require_once __DIR__ . '/classes/db.class.php';
+    $userObj = new User();
 
-    if (isset($_SESSION['user'])) {
-        if ($_SESSION['user']['isVerified'] == 1) {
+    if (isset($_SESSION['user']['id'])) {
+        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
             header('Location: index.php');
             exit();
         } else {
@@ -65,7 +67,6 @@
                         if ($user == true) {
                             $_SESSION['user'] = [];
                             $_SESSION['user']['id'] = $user['id'];
-                            $_SESSION['user']['isVerified'] = $userObj->isVerified($user['id']);
                             $verification = $verificationObj->sendVerificationEmail($user['id'], $user['email'], $user['first_name']);
                             if ($verification) {
                                 header('Location: ./email/verify_email.php');

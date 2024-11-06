@@ -10,7 +10,7 @@
         <?php
             if (isset($_SESSION['user'])) {
                 // LOGGED IN
-                if ($_SESSION['user']['isVerified'] == 0) {
+                if ($userObj->isVerified($_SESSION['user']['id']) == 0) {
                     header('Location: ./email/verify_email.php');
                     exit();
                 }

@@ -8,7 +8,7 @@
     $err = $email_err = $password_err = '';
 
     if (isset($_SESSION['user'])) {
-        if ($_SESSION['user']['isVerified'] == 1) {
+        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
             header('Location: index.php');
             exit();
         } else {
@@ -31,10 +31,10 @@
                     
                     $user = $userObj->checkUser();
                     if ($user) {
-                        $_SESSION['user'] = $user;
+                        $_SESSION['user'] = [];
+                        $_SESSION['user']['id'] = $user['id'];
 
-                        $_SESSION['user']['isVerified'] = $userObj->isVerified($user['id']);
-                        if ($_SESSION['user']['isVerified'] == 1) {
+                        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
                             header('Location: index.php');
                             exit();
                         } else {

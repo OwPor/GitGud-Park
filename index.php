@@ -1,12 +1,13 @@
 <?php 
     include_once 'links.php'; 
     include_once 'header.php';
-
+    require_once __DIR__ . '/classes/db.class.php';
+    $userObj = new User();
     $isLoggedIn = false;
     $userInfo = '';
     
-    if (isset($_SESSION['user'])) {
-        if ($_SESSION['user']['isVerified'] == 1) {
+    if (isset($_SESSION['user']['id'])) {
+        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
             $isLoggedIn = true;
         } else {
             header('Location: email/verify_email.php');
