@@ -16,3 +16,4 @@ function displayImage(event) {
         alert('File is too large or not supported. Please select a JPG, JPEG, or PNG image under 5MB.');
     }
 }
+

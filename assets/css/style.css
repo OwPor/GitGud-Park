@@ -291,12 +291,11 @@ nav ul li a{text-decoration: none;}
   display: block;
   margin-bottom: 0.5rem;
 }
-.input-group input, .input-group select{
+.input-group input, .input-group select, .input-group textarea, .variation-container, .variation-row input, .search-input{
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
-  border-radius: 0.25rem;
 }
 .och select{
   padding: 8px 4px;
@@ -636,3 +635,95 @@ Color Palette:
   box-shadow: 0 0 0 2px #fff, 0 0 0 3px #6A9C89;
 }
 
+.proinf img{
+  width: 210px;
+  height: 200px;
+  display: block;
+  border: 1px solid #ddd;
+}
+.inventory {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 20px;
+}
+.productdet{
+  background-color: white;
+  border: 1px solid #ddd;
+}
+.proprice{
+  color: #CD5C08;
+  font-weight: bold;
+}
+.prolikes{
+  color: #6A9C89;
+}
+.moreinfo, .conopepay{
+  all: unset;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.moreinfo i, .conopepay i{
+  margin-right: 5px;
+}
+.moreinfo:hover, .conopepay:hover{
+  background-color: #e5e5e5;
+  border-radius: 50px;
+}
+.propl{
+  margin: 15px 0 10px 0;
+}
+.proaction i{
+  padding: 6px;
+  background-color: #e5e5e5;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  height: fit-content;
+}
+.proaction{
+  margin-right: 15px;
+}
+.proaction i:hover{
+  background-color: #dcdcdc;
+  transform: scale(1.02);
+}
+.addpro, .pagelike{
+  background-color: #CD5C08;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+}
+.pagelike{
+  background-color: #6A9C89;
+  padding: 8px 40px;
+}
+.pagelike:hover{
+  transform: scale(1.02);
+  background-color: #82B19E;
+}
+.addpro:hover{
+  transform: scale(1.02);
+  background-color: #E06D1A;
+}
+.prostockstat {
+  position: absolute;
+  bottom: 0; 
+  background-color: #ff9800; 
+  color: white;
+  padding: 3px;
+  width: 100%;
+  text-align: center;
+}
+
+.prodis {
+  position: absolute;
+  top: 8px; 
+  left: 8px;
+  color: #cd5c08;
+  background-color: #FFF5E4;
+  border: #cd5c08 1px solid;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 5px;
+}
