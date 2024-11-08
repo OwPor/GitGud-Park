@@ -17,7 +17,6 @@
     include_once 'secondheader.php';
     require_once './classes/db.class.php';
     require_once './email/verification_token.class.php';
-    $userObj = new User();
     $verificationObj = new Verification();
 
     $first_name = $last_name = $phone = $email = $dob = $sex = $password = $confirm_password = '';

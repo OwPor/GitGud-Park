@@ -13,5 +13,8 @@
 </style>
 <div class="bottom d-flex justify-content-between align-items-center">
     <img src="assets/images/logo.png" alt="">
-    <a href="../logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+    <?php 
+        if (isset($SESSION['user']['id']))
+            echo '<a href="../logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>';
+    ?>
 </div> 

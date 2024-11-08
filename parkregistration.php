@@ -1,11 +1,35 @@
 <?php
+    session_start();
+
     include_once 'links.php'; 
     include_once 'secondheader.php';
+    require_once './classes/db.class.php';
+    $userObj = new User();
 
     $first_name = $last_name = $email = $phone = $business_name = $business_type = $branches = $business_email = $business_phone = $region_province_city = $barangay = $street_building_house = $business_permit = '';
     $err = $first_name_err = $last_name_err = $email_err = $phone_err = $business_name_err = $business_type_err = $branches_err = $business_email_err = $business_phone_err = $region_province_city_err = $barangay_err = $street_building_house_err = $business_permit_err = '';
 
+    if (isset($_SESSION['user']['id'])) {
+        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
+            $user = $userObj->getUser($_SESSION['user']['id']);
+            if ($user) {
+                $first_name = $user['first_name'];
+                $last_name = $user['last_name'];
+                $email = $user['email'];
+                $phone = $user['phone'];
+            } else {
+                header('Location: email/verify_email.php');
+                exit();
+            }
+        } else {
+            header('Location: email/verify_email.php');
+            exit();
+        }
+    }
 
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Validate and sanitize inputs
+    }
 ?>
 <style>
 .progressbar{
@@ -51,7 +75,7 @@ main {
 
     <img src="assets/images/background.jpg" class="fixed-image">
     
-    <form action="#" class="form">
+    <form action="#" class="form" method="POST">
         <div class="progressbar">
             <div class="progress" id="progress"></div>
             <div class="progress-step progress-step-active" data-title="Owner"></div>
@@ -70,21 +94,21 @@ main {
                     If you need to register with different owner details, please create a new account.
                 </p>
                 <div class="form-floating mb-4">
-                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name" value="<?= $first_name ?>" required>
+                    <input type="text" class="form-control c" id="firstname" name="firstname" placeholder="First Name" value="<?= $first_name ?>" required readonly>
                     <label for="firstname">First Name <span style="color: #CD5C08;">*</span></label>
                 </div>
                 <div class="form-floating mb-4">
-                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" value="<?= $last_name ?>" required>
+                    <input type="text" class="form-control c" id="lastname" name="lastname" placeholder="Last Name" value="<?= $last_name ?>" required readonly>
                     <label for="lastname">Last Name <span style="color: #CD5C08;">*</span></label>
                 </div>
                 <div class="form-floating mb-4">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?= $email ?>" required>
+                    <input type="email" class="form-control c" id="email" name="email" placeholder="Email" value="<?= $email ?>" required readonly>
                     <label for="email">Email <span style="color: #CD5C08;">*</span></label>
                 </div>
                 <div class="input-group mb-3 mt-0">
                     <span class="input-group-text c">+63</span>
                     <div class="form-floating flex-grow-1">
-                        <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="<?= $phone ?>" maxlength="10" min="10" max="10" required>
+                        <input type="text" class="form-control c" id="phonenumber" name=" " placeholder="Phone Number" value="<?= $phone ?>" maxlength="10" min="10" max="10" required readonly> 
                         <label for="phonenumber">Phone Number <span style="color: #CD5C08;">*</span></label>
                     </div>
                 </div>
@@ -126,7 +150,7 @@ main {
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control c" id="email" name="email" placeholder="Email" value="example@gmail.com" readonly>
+                    <input type="text" class="form-control c" id="email" name="email" placeholder="Email" value="<?= $email ?>" readonly>
                     <label for="email">Email <span style="color: #CD5C08;">*</span></label>
                 </div>
 
@@ -143,7 +167,7 @@ main {
                 <div class="input-group mb-3 mt-0">
                     <span class="input-group-text c">+63</span>
                     <div class="form-floating flex-grow-1">
-                        <input type="text" class="form-control c" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="9123456789" readonly>
+                        <input type="text" class="form-control c" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="<?= $phone ?>" readonly>
                         <label for="phonenumber">Phone Number <span style="color: #CD5C08;">*</span></label>
                     </div>
                 </div>
