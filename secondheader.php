@@ -17,4 +17,8 @@
         if (isset($SESSION['user']['id']))
             echo '<a href="../logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>';
     ?>
+
+    <?php 
+        echo '<a href="index.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Back</a>';
+    ?>
 </div> 
