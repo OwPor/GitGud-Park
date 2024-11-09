@@ -1023,3 +1023,117 @@ section{
   text-decoration: line-through;
   color: gray;
 }
+
+
+
+
+.variation span, .addon span{
+  padding: 3px 8px;
+  border-radius: 40px;
+  color: white;
+  background-color: #CD5C08;
+  font-size: 11px;
+}
+.addon span{
+  background-color: gray;
+}
+.variation, .addon {
+  padding: 7px;
+}
+.variationitem, .addonitem {
+  padding: 7px;
+  cursor: pointer;
+}
+.variationitem span, .addonitem span{
+  font-size: 13px;
+}
+.variationitem:hover {
+  background-color: #FFD9D2;
+  border-radius: 5px;
+}
+.addonitem:hover{
+  background-color: #e5e5e5;
+  border-radius: 5px;
+}
+
+.variationitem:hover .form-check-input {
+  border-width: 2px;
+  border-color: #CD5C08;
+}
+.addonitem:hover .form-check-input {
+  border-width: 2px;
+  border-color: gray;
+}
+.vrtn, .addons{
+  background-color: #FFF5E4;
+  border: 1px #ccc solid;
+  border-radius: 5px;
+  padding: 12px 7px;
+}
+.addons{
+  background-color: #f4f4f4;
+}
+#menumodal .modal-dialog {
+  max-width: 40%; 
+}
+#menumodal .modal-content {
+  height: 600px; 
+  border-radius: 10px; 
+  overflow: hidden;
+}
+#menumodal .modal-body {
+  overflow-y: auto;
+}
+.ordquantity {
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  padding: 15px 20px;
+  z-index: 10;
+  border-top: 1px solid #ccc;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.btn-close{
+  background-color: white;
+  opacity: 1;
+  border-radius: 50%;
+  padding: 10px;
+  border: 1px #ccc solid;
+}
+.btn-close:focus {
+  outline: none;
+  box-shadow: none; 
+}
+.btn-close:hover {
+  background-color: #e5e5e5;
+  opacity: 1;
+}
+.custom-img {
+  height: 300px; /* Adjust the height as needed */
+  object-fit: cover; /* Ensures the image fills the container without distortion */
+}
+.addonitem .form-check-input[type="checkbox"]:checked{
+  background-color: gray;
+}
+.speins span{
+  font-size: 13px;
+  color: gray;
+}
+.ordquantity i{
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px #ccc solid;
+}
+.ordquantity i:hover{
+  background-color: #e5e5e5;
+}
+.ordquanum{
+  width: 30px;
+  text-align: center;
+}

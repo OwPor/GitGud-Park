@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
 <style>
     .btn{
         width: 150px;
@@ -6,9 +5,6 @@
     .ip{
         color: #CD5C08;
         font-weight: bold;
-    }
-    .invvar{
-        
     }
 </style>
 <!-- Menu Modal -->
