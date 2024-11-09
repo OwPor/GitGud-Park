@@ -287,7 +287,7 @@ nav ul li a{text-decoration: none;}
 .leftside img{width: 100%;}
 
 :root {--primary-color: #CD5C08;}
-.input-group label{
+.input-group label, .input-grp label{
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -653,6 +653,7 @@ Color Palette:
 .proprice{
   color: #CD5C08;
   font-weight: bold;
+  font-size: 20px;
 }
 .prolikes{
   color: #6A9C89;
@@ -726,4 +727,187 @@ Color Palette:
   font-size: 12px;
   font-weight: bold;
   padding: 0 5px;
+}
+
+.productimage{
+  width: 210px;
+  height: 210px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  background-color: #e8e8e8;
+}
+.productimage i{
+  background-color: #bbbbbb;
+  border-radius: 50%;
+  padding: 10px 12px;
+  color: white;
+}
+.productimage:hover {
+  border: 1px solid #cd5c08;
+}
+.productimage:hover i {
+  background-color: #cd5c08;
+}
+.productimage:hover p {
+  color: #cbcbc9;
+}
+.pirem{
+  font-size: small;
+  width: 210px;
+}
+.productcon{
+  display: flex;
+  gap: 80px;
+}
+
+/* variation */
+
+.variation-container {
+  background-color: white;
+  padding: 12px 0.75rem;
+}
+.variation-header, .variation-row{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.variation-form {
+  padding-left: 7px;
+  padding-bottom: 20px;
+}
+.variation-btn {all: unset;}
+.variation-btn.rename:hover, .variation-btn.delete:hover, .variation-btn.addrem:hover,
+.remove-btn:hover, .edit-btn:hover{
+  background-color: #e5e5e5;
+  border-radius: 50px;
+}
+.variation-btn.addvar:hover{
+    text-decoration: underline;
+}
+.variation-btn.addvar{
+  color: #CD5C08;
+}
+.variation-btn-group{
+  display: flex;
+  gap: 5px;
+  font-size: 14px;
+  margin-top: 15px;
+}
+.variation-btn.addrem{
+  border-radius: 50px;
+  padding: 6px 12px;
+  background-color: #f2f2f2;
+}
+.variation-btn.delete{
+  font-size: large;
+  padding: 5px 7px;
+  color: gray;
+}
+.variation-btn.rename {
+  font-size: small;
+  padding: 8px;
+  color: gray;
+}
+
+/* Add On */
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  display: none;
+}
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0.75rem;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.product-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+.addon-list {
+  margin-top: 10px;
+}
+.rempro{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.addon-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid #ccc;
+  background-color: white;
+}
+.addon-item input {
+  width: 80px;
+  padding: 5px;
+  border: none;
+  background-color: white;
+}
+.edit-btn, .remove-btn{all: unset;}
+.remove-btn{
+  padding: 5px 7px;
+  font-size: large;
+}
+.edit-btn {
+  font-size: small;
+  padding: 8px;
+  color: gray;
+}
+
+.prohelp{
+  border-bottom: 1px #ddd solid;
+  padding: 20px 0;
+  font-size: 17.5px;
+  background-color: #f4f4f4;
+}
+.helpspn{
+  padding: 5px 10px;
+  border-radius: 50px;
+  color: white;
+  background-color: #CD5C08;
+  font-size: 13px;
+  font-weight: bold;
+}
+.prohelp a{
+  color: gray;
+  text-decoration: none;
+  padding-top: 4px;
+}
+.prohelp p{
+  padding-top: 4px;
 }

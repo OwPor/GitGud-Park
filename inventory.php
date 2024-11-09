@@ -1,15 +1,16 @@
 <?php
     include_once 'links.php'; 
-    include_once 'secondheader.php'; 
+    include_once 'header.php'; 
 ?>
 <style>
     main{
         padding: 20px 120px;
     }
 </style>
+
 <main>
     <div class="d-flex justify-content-end">
-        <button class="addpro mb-3">+ Add Product</button>
+        <button class="addpro mb-3" onclick="window.location.href='addproduct.php';">+ Add Product</button>
     </div>
     <div class="inventory">
         <div class="d-flex justify-content-between productdet">

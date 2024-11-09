@@ -17,3 +17,21 @@ function displayImage(event) {
     }
 }
 
+function displayProductImage(event) {
+    const file = event.target.files[0];
+    if (file && file.size <= 5 * 1024 * 1024) { // Check if file size is less than 5MB
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const productImageContainer = document.getElementById('productimageContainer');
+            productImageContainer.style.backgroundImage = `url(${e.target.result})`;
+            productImageContainer.style.backgroundSize = 'cover';
+            productImageContainer.style.backgroundPosition = 'center';
+            productImageContainer.innerHTML = `
+                <input type="file" id="productimage" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayProductImage(event)">
+            `;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        alert('File is too large or not supported. Please select a JPG, JPEG, or PNG image under 5MB.');
+    }
+}
