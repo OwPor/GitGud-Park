@@ -2,6 +2,7 @@
     include_once 'links.php'; 
     include_once 'header.php'; 
     include_once 'bootstrap.php'; 
+    include_once 'modals.php'; 
 ?>
 <style>
     main{
@@ -50,7 +51,10 @@
     }
 </style>
 <main>
-    <button data-bs-toggle="modal" data-bs-target="#invitestall" class="invite"><i class="fa-solid fa-user-plus"></i> Invite</button>
+    <div class="d-flex justify-content-end gap-2 align-items-center my-3">
+        <button class="addpro" onclick="window.location.href='#';">+ Add Stall</button>
+        <button data-bs-toggle="modal" data-bs-target="#invitestall" class="invite"><i class="fa-solid fa-user-plus"></i> Invite</button>
+    </div>
 
     <!-- Invite Stall Modal -->
     <div class="modal fade" id="invitestall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -121,7 +125,7 @@
                     <div class="position-absolute d-flex gap-2 smaction">
                         <i class="fa-solid fa-sack-dollar"></i>
                         <i class="fa-solid fa-pen-to-square"></i>
-                        <i class="fa-solid fa-trash-can"></i>
+                        <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                     </div>
                 </div>
                 <div class="card-body px-4">
@@ -243,7 +247,7 @@
                     <div class="position-absolute d-flex gap-2 smaction">
                         <i class="fa-solid fa-sack-dollar"></i>
                         <i class="fa-solid fa-pen-to-square"></i>
-                        <i class="fa-solid fa-trash-can"></i>
+                        <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                     </div>
                 </div>
                 <div class="card-body px-4">
@@ -293,12 +297,12 @@
                         </div>
                     </div>
 
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion accordion-flush" id="accordionFlushExample1">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">Contact information</button>
                             </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample1">
                                 <div class="accordion-body p-0 mb-3 small">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span>Business Email</span>
@@ -315,7 +319,7 @@
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">Opening Hours</button>
                             </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample1">
                                 <div class="accordion-body p-0 mb-3 small">
                                     <div class="mb-2">
                                         <p class="mb-1">Monday, Tuesday, Thursday</p>
@@ -332,7 +336,7 @@
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">Payment Method</button>
                             </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample1">
                                 <div class="accordion-body p-0 mb-3 small">
                                     <ul>
                                         <li class="mb-2">Cash</li>
@@ -365,7 +369,7 @@
                     <div class="position-absolute d-flex gap-2 smaction">
                         <i class="fa-solid fa-sack-dollar"></i>
                         <i class="fa-solid fa-pen-to-square"></i>
-                        <i class="fa-solid fa-trash-can"></i>
+                        <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                     </div>
                 </div>
                 <div class="card-body px-4">
@@ -415,20 +419,24 @@
                         </div>
                     </div>
 
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion accordion-flush" id="accordionFlushExample2">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">Contact information</button>
                             </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample2">
                                 <div class="accordion-body p-0 mb-3 small">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span>Business Email</span>
                                         <span>example@gmail.com</span>
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span>Business Phone Number</span>
                                         <span class="text-muted">+639123456789</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Website</span>
+                                        <span class="text-muted">asdfghjkl.com</span>
                                     </div>
                                 </div>
                             </div>
@@ -437,7 +445,7 @@
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">Opening Hours</button>
                             </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample2">
                                 <div class="accordion-body p-0 mb-3 small">
                                     <div class="mb-2">
                                         <p class="mb-1">Monday, Tuesday, Thursday</p>
@@ -454,7 +462,7 @@
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">Payment Method</button>
                             </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample2">
                                 <div class="accordion-body p-0 mb-3 small">
                                     <ul>
                                         <li class="mb-2">Cash</li>

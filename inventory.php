@@ -1,6 +1,7 @@
 <?php
     include_once 'links.php'; 
     include_once 'header.php'; 
+    include_once 'modals.php'; 
 ?>
 <style>
     main{
@@ -36,9 +37,9 @@
                 </div>
             </div>
             <div class="proaction d-flex gap-2 mt-3">
-                <i class="fa-solid fa-box"></i>
-                <i class="fa-solid fa-pen-to-square"></i>
-                <i class="fa-solid fa-trash"></i>
+                <i class="fa-solid fa-box" onclick="window.location.href='stocks.php';"></i>
+                <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editproduct.php';"></i>
+                <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deleteproduct"></i>
             </div>
         </div>
         <div class="d-flex justify-content-between productdet">
@@ -56,7 +57,7 @@
                         <span class="proprice">P129</span>
                         <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
                     </div>
-                    <button class="moreinfo"><i class="fa-solid fa-circle-info"></i> More info</button>
+                    <button class="moreinfo" data-bs-toggle="modal" data-bs-target="#moreinfoproduct"><i class="fa-solid fa-circle-info"></i> More info</button>
                 </div>
             </div>
             <div class="proaction d-flex gap-2 mt-3">

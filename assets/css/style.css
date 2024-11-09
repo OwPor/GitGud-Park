@@ -613,6 +613,11 @@ Color Palette:
   border-radius: 5px;
   cursor: pointer;
   border: 1px solid #ccc;
+  transition: 0.3s;
+}
+.smaction i:hover{
+  background-color: #e5e5e5;
+  transform: scale(1.2);
 }
 .dot {
   display: inline-block;
@@ -625,14 +630,6 @@ Color Palette:
   border-radius: 20px;
   font-size: 14px;
   padding: 10px 20px
-}
-.invite{
-  background-color: #6A9C89;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 10px;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #6A9C89;
 }
 
 .proinf img{
@@ -673,27 +670,36 @@ Color Palette:
 .propl{
   margin: 15px 0 10px 0;
 }
-.proaction i{
+.proaction i, .stoaction i{
   padding: 6px;
   background-color: #e5e5e5;
   border-radius: 5px;
   cursor: pointer;
   border: 1px solid #ccc;
   height: fit-content;
+  transition: 0.3s;
+
 }
 .proaction{
   margin-right: 15px;
 }
-.proaction i:hover{
+.proaction i:hover, .stoaction i:hover{
   background-color: #dcdcdc;
-  transform: scale(1.02);
+  transform: scale(1.2);
 }
-.addpro, .pagelike{
+.addpro, .pagelike, .invite{
   background-color: #CD5C08;
   color: white;
   padding: 8px 20px;
   border: none;
   border-radius: 20px;
+}
+.invite{
+  background-color: #6A9C89;
+}
+.invite:hover{
+  transform: scale(1.02);
+  background-color: #85B19E;
 }
 .pagelike{
   background-color: #6A9C89;

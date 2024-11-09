@@ -29,8 +29,9 @@
         font-size: 12px;
     }
     main {
-        background-color: #D3D3D3;
-        padding: 20px 300px;
+        background-image: url('assets/images/stall.jpg');
+        background-size: cover;
+        padding: 50px 300px;
     }
     .srform{
         border: 1px #ccc solid;
