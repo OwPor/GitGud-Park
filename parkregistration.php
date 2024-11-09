@@ -437,7 +437,6 @@ main {
                 <input type="submit" value="Submit" class="button" />
             </div>
         </div>  
-        
     </form>
     <script src="assets/js/script.js"></script>
 </main>

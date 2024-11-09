@@ -31,6 +31,13 @@
                                 <a href="account.php"><i class="fa-regular fa-user"></i> Account</a>
                                 <a href="purchase.php"><i class="fa-regular fa-credit-card"></i> Purchase</a>
                                 <a href="favorites.php"><i class="fa-regular fa-heart"></i> Favorites</a>
+                                <a href="orders.php"><i class="fa-regular fa-rectangle-list"></i> Orders</a>
+                                <a href="inventory.php"><i class="fa-regular fa-window-restore"></i> Inventory</a>
+                                <a href="sales.php"><i class="fa-solid fa-chart-column"></i> Sales</a>
+                                <a href="stallpage.php"><i class="fa-regular fa-address-card"></i> Stall Page</a>
+                                <a href="managestall.php"><i class="fa-regular fa-building"></i> Manage Stall</a>
+                                <a href="dashboard.php"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
+                                <a href="centralized.php"><i class="fa-regular fa-money-bill-1"></i> Centralized</a>
                                 <a href="./logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
                             </div>
                         </div>
