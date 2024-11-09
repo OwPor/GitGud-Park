@@ -88,10 +88,10 @@
             <span class="text-danger"><?php echo $password_err; ?></span>
         </div>
         <div class="d-flex justify-content-between align-items-center">
-            <div class="form-check">
+            <!-- <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="remember_me" id="rememberMeCheckbox">
                 <label class="form-check-label" for="rememberMeCheckbox">Remember Me</label>
-            </div>
+            </div> -->
             <a href="#">Forgot Password?</a>
         </div><br>
         <div class="btns-group d-block text-center">
