@@ -31,8 +31,8 @@
                 $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
                 $dob = htmlspecialchars(trim($_POST['dob']));
                 $sex = htmlspecialchars(trim($_POST['sex']));
-                $password = trim($_POST['password']);
-                $confirm_password = trim($_POST['confirm_password']);
+                $password = htmlspecialchars(trim($_POST['password']));
+                $confirm_password = htmlspecialchars(trim($_POST['confirm_password']));
                 
                 if (!preg_match("/^[a-zA-Z-' ]*$/",$first_name)) {
                     $first_name_err = "Only letters and white space allowed";
@@ -44,7 +44,7 @@
 
                 if ($password !== $confirm_password) {
                     $password_err = 'Passwords do not match';
-                } else if ($password < 8) {
+                } else if (strlen($password) < 8) {
                     $password_err = 'Password must be at least 8 characters';
                 } else if ($first_name_err != '' || $last_name_err != '' || $phone_err != '' || $email_err != '' || $dob_err != '' || $sex_err != '') {
                     echo '<script>alert("Invalid input")</script>';

@@ -40,7 +40,11 @@
                 We'll list your stalls' menus online and simplify the ordering process, helping you reach hungry customers quickly. From street food to local favorites, we'll boost your park's visibility.<br><br>
                 Ready to grow your audience? Let's partner today!
             </p>
-            <button onclick="window.location.href='parkregistration.php'">Get Started</button>
+            <?php if ($isLoggedIn) { ?>
+                <button onclick="window.location.href='parkregistration.php'">Get Started</button>
+            <?php } else { ?>
+                <button onclick="window.location.href='signup.php'">Get Started</button>
+            <?php } ?>
         </div>
     </div>
 </section>
