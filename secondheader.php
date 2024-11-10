@@ -16,6 +16,6 @@
     <?php 
         if (isset($SESSION['user']['id']))
             echo '<a href="../logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>';
-        echo '<a href="/GitGud-Park/index.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Back</a>';
+        echo '<a href="/GitGudPark/index.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Back</a>';
     ?>
 </div> 
