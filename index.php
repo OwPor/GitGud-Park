@@ -2,9 +2,10 @@
     include_once 'links.php'; 
     include_once 'header.php';
     require_once __DIR__ . '/classes/db.class.php';
+    require_once __DIR__ . '/classes/park.class.php';
     $userObj = new User();
+    $parkObj = new Park();
     $isLoggedIn = false;
-    $userInfo = '';
     
     if (isset($_SESSION['user']['id'])) {
         if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
@@ -54,7 +55,7 @@
     <h2>All Food Parks in Zamboanga City</h2><br>
     
     <div class="row row-cols-1 row-cols-md-4 g-3">
-        <div class="col">
+        <!-- <div class="col">
             <a href="./homepage.php" class="card-link text-decoration-none">
                 <div class="card" style="position: relative;">
                     <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
@@ -66,46 +67,30 @@
                     </div>
                 </div>
             </a>
-        </div>
-        <div class="col">
-            <a href="./homepage.php" class="card-link text-decoration-none">
-                <div class="card" style="position: relative;">
-                    <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
-                    <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
-                    <div class="card-body">
-                        <h5 class="card-title">Food Park Name</h5>
-                        <p class="card-text text-muted "><i class="fa-solid fa-location-dot"></i> Street Name, Barangay, Zamboanga City</p>
-                        <span class="opennow">Open Now</span>
+        </div> -->
+        <?php
+            $parks = $parkObj->getParks();
+            foreach ($parks as $park) { 
+                if ($park['status'] != 'Maintenance' && $park['status'] != 'Pending Approval') {
+                    $uniqueLink = "./park.php?id=" . $park['url'];
+                    ?>
+                    <div class="col">
+                        <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none">
+                            <div class="card" style="position: relative;">
+                                <img src="<?= $park['image'] ?>" class="card-img-top" alt="...">
+                                <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= $park['name'] ?></h5>
+                                    <p class="card-text text-muted"><i class="fa-solid fa-location-dot"></i><?= $park['location'] ?></p>
+                                    <span class="opennow">Open Now</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="./homepage.php" class="card-link text-decoration-none">
-                <div class="card" style="position: relative;">
-                    <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
-                    <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
-                    <div class="card-body">
-                        <h5 class="card-title">Food Park Name</h5>
-                        <p class="card-text text-muted "><i class="fa-solid fa-location-dot"></i> Street Name, Barangay, Zamboanga City</p>
-                        <span class="opennow">Open Now</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="./homepage.php" class="card-link text-decoration-none">
-                <div class="card" style="position: relative;">
-                    <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
-                    <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
-                    <div class="card-body">
-                        <h5 class="card-title">Food Park Name</h5>
-                        <p class="card-text text-muted "><i class="fa-solid fa-location-dot"></i> Street Name, Barangay, Zamboanga City</p>
-                        <span class="opennow">Open Now</span>
-                    </div>
-                </div>
-            </a>
-        </div>
+            <?php 
+                }
+            }
+            ?>
     </div>
     <br><br><br>
 </section>

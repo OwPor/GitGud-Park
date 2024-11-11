@@ -27,6 +27,56 @@ CREATE TABLE verification (
     last_sent VARCHAR(255) NULL
 );
 
+CREATE TABLE parks (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    location VARCHAR(50),
+    image VARCHAR(255),
+    owner_name VARCHAR(100),
+    contact_number VARCHAR(20),
+    email VARCHAR(100),
+    opening_time TIME,
+    closing_time TIME,
+    price_range DECIMAL(10, 2) NOT NULL,
+    status ENUM('Open', 'Closed', 'Maintenance', 'Pending Approval') NOT NULL DEFAULT 'Pending Approval',
+    url VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO parks (name, description, location, image, owner_name, contact_number, email, opening_time, closing_time, price_range, status)
+VALUES ('Amethyst Food Park', 'A food park located in the heart of the city.', 'Johnston St., Zamboanga City', 'assets/images/foodpark.jpg', 'John Doe', '123-456-7890', '222@gmail.com', '08:00:00', '22:00:00', 100.00, 'Open');
+
+CREATE TABLE stalls (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    location VARCHAR(50),
+    img VARCHAR(255),
+    owner_name VARCHAR(100),
+    contact_number VARCHAR(20),
+    email VARCHAR(100),
+    opening_time TIME,
+    closing_time TIME,
+    price_range DECIMAL(10, 2) NOT NULL,
+    status ENUM('Open', 'Closed', 'Maintenance', 'Pending Approval') NOT NULL DEFAULT 'Pending Approval',
+    park_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (park_id) REFERENCES parks(id) ON DELETE CASCADE
+);
+
+INSERT INTO stalls (name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status, park_id)
+VALUES ('YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', 'assets/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'aaa@gmail.com', '08:00:00', '22:00:00', 100.00, 'Open', 1);
+
+INSERT INTO stalls (name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status, park_id)
+VALUES ('Ihhh', 'AHHHHH.', 'Amethyst Food Park', 'assets/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'aaa@gmail.com', '08:00:00', '22:00:00', 100.00, 'Closed', 1);
+
+
+
+
+
 CREATE TABLE stalls (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
