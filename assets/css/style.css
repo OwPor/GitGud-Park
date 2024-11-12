@@ -735,7 +735,7 @@ Color Palette:
   padding: 0 5px;
 }
 
-.productimage{
+.productimage, .variationimage{
   width: 210px;
   height: 210px;
   background-repeat: no-repeat;
@@ -744,19 +744,36 @@ Color Palette:
   cursor: pointer;
   background-color: #e8e8e8;
 }
-.productimage i{
+.variationimage{
+  width: 65px;
+  height: 65px;
+  flex-shrink: 0;
+}
+.productimage i, .variationimage i{
   background-color: #bbbbbb;
   border-radius: 50%;
   padding: 10px 12px;
   color: white;
 }
+.variationimage i{
+  padding: 3px 5px;
+  font-size: 9px;
+}
+.variationimage label{
+  font-size: 12px;
+  line-height: 1.2;
+  cursor: pointer;
+}
 .productimage:hover {
   border: 1px solid #cd5c08;
 }
-.productimage:hover i {
+.variationimage:hover{
+  border: 0.5px solid #cd5c08;
+}
+.productimage:hover i, .variationimage:hover i{
   background-color: #cd5c08;
 }
-.productimage:hover p {
+.productimage:hover p, .variationimage:hover label {
   color: #cbcbc9;
 }
 .pirem{
@@ -774,15 +791,20 @@ Color Palette:
   background-color: white;
   padding: 12px 0.75rem;
 }
-.variation-header, .variation-row{
+.variation-row, .variation-header{
   display: flex;
-  gap: 10px;
+  gap: 15px;
   align-items: center;
-  margin-bottom: 10px;
+}
+.variation-row:first-child {
+  border-top: 0.5px #ddd solid;
+}
+.variation-row{
+  border-bottom: 0.5px #ddd solid;
+  padding: 10px 0;
 }
 .variation-form {
-  padding-left: 7px;
-  padding-bottom: 20px;
+  padding: 0 10px 30px 10px;
 }
 .variation-btn {all: unset;}
 .variation-btn.rename:hover, .variation-btn.delete:hover, .variation-btn.addrem:hover,
@@ -791,7 +813,7 @@ Color Palette:
   border-radius: 50px;
 }
 .variation-btn.addvar:hover{
-    text-decoration: underline;
+  color: black;
 }
 .variation-btn.addvar{
   color: #CD5C08;
@@ -799,8 +821,6 @@ Color Palette:
 .variation-btn-group{
   display: flex;
   gap: 5px;
-  font-size: 14px;
-  margin-top: 15px;
 }
 .variation-btn.addrem{
   border-radius: 50px;
@@ -818,82 +838,7 @@ Color Palette:
   color: gray;
 }
 
-/* Add On */
-.search-bar {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
 
-.dropdown-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  border: 1px solid #ccc;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 10;
-  display: none;
-}
-.dropdown-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0.75rem;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-}
-.dropdown-item:last-child {
-  border-bottom: none;
-}
-.dropdown-item:hover {
-  background-color: #f0f0f0;
-}
-.product-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.product-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 3px;
-  object-fit: cover;
-}
-.addon-list {
-  margin-top: 10px;
-}
-.rempro{
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-.addon-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  border-bottom: 1px solid #ccc;
-  background-color: white;
-}
-.addon-item input {
-  width: 80px;
-  padding: 5px;
-  border: none;
-  background-color: white;
-}
-.edit-btn, .remove-btn{all: unset;}
-.remove-btn{
-  padding: 5px 7px;
-  font-size: large;
-}
-.edit-btn {
-  font-size: small;
-  padding: 8px;
-  color: gray;
-}
 
 .prohelp{
   border-bottom: 1px #ddd solid;
@@ -1136,4 +1081,58 @@ section{
 .ordquanum{
   width: 30px;
   text-align: center;
+}
+
+
+.containerrach {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 15px;
+}
+.containerrach .radio-group, .hech .checkbox-group {
+  display: flex;
+  align-items: center;
+}
+.containerrach .radio-group label, .hech .checkbox-group label {
+  margin-left: 10px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+.containerrach input[type="radio"], .hech input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+
+input[type="number"] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  display: inline;
+  -webkit-appearance: auto;
+  margin-left: 10px;
+}
+
+.addpeso, .minuspeso {
+  position: relative;
+  flex-shrink: 0.5;
+}
+
+.addpeso::before, .minuspeso::before {
+  content: "(+) ₱";
+  position: absolute;
+  left: 10px; 
+  color: #000; 
+}
+.minuspeso::before{
+  content: "(-) ₱";
+}
+.addpeso input, .minuspeso input {
+  text-align: right; 
 }

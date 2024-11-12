@@ -71,18 +71,6 @@
     .stockright{
     padding: 20px;
     }
-    .stockaction input[type="number"] {
-        -webkit-appearance: none;
-        -moz-appearance: textfield;
-        appearance: textfield;
-    }
-
-    .stockaction input[type="number"]::-webkit-inner-spin-button,
-    .stockaction input[type="number"]::-webkit-outer-spin-button {
-        opacity: 1;
-        display: inline;
-        -webkit-appearance: auto;
-    }
     .prev{
         background-color: gray;
     }

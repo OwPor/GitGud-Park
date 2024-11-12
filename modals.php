@@ -168,13 +168,32 @@
 <div class="modal-dialog">
     <div class="modal-content h-75 overflow-auto">
       <div class="modal-body">
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold m-0">Product Name</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="p-3 rounded-2 border invvar mb-3">
             <div class="mb-1">
                 <h5 class="fw-bold mb-1">Variation 1</h5>
-                <span class="small text-muted">Customer is required to choose on this variation</span>
+                <span class="small text-muted">Customer is required to choose one in this variation</span>
+            </div>
+            <div class="d-flex justify-content-between py-3 border-bottom">
+                <span >Variation Name</span>
+                <span class="ip">₱12</span>
+            </div>
+            <div class="d-flex justify-content-between py-3 border-bottom">
+                <span>Variation Name</span>
+                <span class="ip">₱12</span>
+            </div>
+            <div class="d-flex justify-content-between py-3 border-bottom">
+                <span>Variation Name</span>
+                <span class="ip">₱12</span>
+            </div>
+        </div>
+        <div class="p-3 rounded-2 border invvar mb-3">
+            <div class="mb-1">
+                <h5 class="fw-bold mb-1">Variation 2</h5>
+                <span class="small text-muted">Customer is required to choose one in this variation</span>
             </div>
             <div class="d-flex justify-content-between py-3 border-bottom">
                 <span >Variation Name</span>
@@ -190,20 +209,29 @@
             </div>
         </div>
         <div class="p-3 rounded-2 border invvar">
-            <div class="mb-1">
-                <h5 class="fw-bold mb-1">Variation 1</h5>
-                <span class="small text-muted">Customer is required to choose on this variation</span>
+            <div class="mb-2">
+                <h5 class="fw-bold mb-1">Add Ons</h5>
+                <span class="small text-muted">Customer can optionally select from this add-ons</span>
             </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span >Variation Name</span>
+            <div class="d-flex justify-content-between py-2 border-bottom align-items-center">
+                <div class="d-flex gap-2 align-items-center">
+                    <img src="assets/images/example.jpg" alt="" width="45px" height="45px" class="rounded-2 border">
+                    <span >Product Name</span>
+                </div>
                 <span class="ip">₱12</span>
             </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span>Variation Name</span>
+            <div class="d-flex justify-content-between py-2 border-bottom align-items-center">
+                <div class="d-flex gap-2 align-items-center">
+                    <img src="assets/images/example.jpg" alt="" width="45px" height="45px" class="rounded-2 border">
+                    <span >Product Name</span>
+                </div>
                 <span class="ip">₱12</span>
             </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span>Variation Name</span>
+            <div class="d-flex justify-content-between py-2 border-bottom align-items-center">
+                <div class="d-flex gap-2 align-items-center">
+                    <img src="assets/images/example.jpg" alt="" width="45px" height="45px" class="rounded-2 border">
+                    <span >Product Name</span>
+                </div>
                 <span class="ip">₱12</span>
             </div>
         </div>
