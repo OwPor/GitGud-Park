@@ -34,12 +34,33 @@
                         $_SESSION['user'] = [];
                         $_SESSION['user']['id'] = $user['id'];
 
-                        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
-                            header('Location: index.php');
-                            exit();
+                        $remember = $_POST['remember_me'] ?? false;
+
+                        if ($remember) {
+                            $safeEmail = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+                            echo "<script>
+                                localStorage.setItem('email', '$safeEmail');
+                                localStorage.setItem('password', '" . htmlspecialchars($password, ENT_QUOTES, 'UTF-8') . "');
+                            </script>";
                         } else {
-                            header('Location: email/verify_email.php');
-                            exit();
+                            echo "<script>
+                                    localStorage.removeItem('email');
+                                    localStorage.removeItem('password');
+                            </script>";
+                        }
+
+                        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
+                            // header('Location: index.php');
+                            // exit();
+                            echo "<script>
+                                window.location.href = 'index.php';
+                            </script>";
+                        } else {
+                            // header('Location: email/verify_email.php');
+                            // exit();
+                            echo "<script>
+                                window.location.href = 'email/verify_email.php';
+                            </script>";
                         }
                     } else {
                         $err = 'Invalid email or password';
@@ -88,10 +109,10 @@
             <span class="text-danger"><?php echo $password_err; ?></span>
         </div>
         <div class="d-flex justify-content-between align-items-center">
-            <!-- <div class="form-check">
+            <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="remember_me" id="rememberMeCheckbox">
                 <label class="form-check-label" for="rememberMeCheckbox">Remember Me</label>
-            </div> -->
+            </div>
             <a href="#">Forgot Password?</a>
         </div><br>
         <div class="btns-group d-block text-center">
@@ -100,7 +121,7 @@
         <span class="d-block text-center">Don't have an account? <a href="./signup.php">Sign Up</a></span>
     </form>
 </main>
-<script src="./assets/js/script.js"></script>
+<script src="./assets/js/rememberme.js"></script>
 <?php
     include_once './footer.php'; 
 ?>
