@@ -1,148 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagination Example</title>
-    <style>
-        /* Basic styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        /* Pagination styling */
-        .pagination {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-            justify-content: center;
-        }
-        .pagination li {
-            margin: 0 5px;
-            cursor: pointer;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            color: #333;
-        }
-        .pagination li.active {
-            background-color: #00e676;
-            color: white;
-            font-weight: bold;
-            border: none;
-        }
-        .pagination li:hover {
-            background-color: #ddd;
-        }
-    </style>
-</head>
-<body>
-    <table id="dataTable">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Reason</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+<script>
+    let variationFormCount = 0;
 
-    <ul class="pagination" id="pagination"></ul>
+function addVariationForm() {
+    variationFormCount++;
 
-    <script>
-        const rowsPerPage = 5;
-        const data = Array.from({ length: 50 }, (_, i) => ({
-            date: `07/29/2024 22:${String(i).padStart(2, '0')}`,
-            reason: i % 2 === 0 ? "Restock" : "Inventory Adjustment"
-        }));
+    const variationForm = document.createElement("div");
+    variationForm.className = "variation-form";
+    variationForm.id = `variation-form-${variationFormCount}`;
 
-        let currentPage = 1;
-        let maxVisiblePages = 10;
+    variationForm.innerHTML = `
+        <div class="variation-header">
+            <span id="variation-title-${variationFormCount}" class="fw-bold fs-5">Variation ${variationFormCount}</span>
+            <button type="button" class="variation-btn rename" onclick="renameVariation(${variationFormCount})">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+        </div>
+        <div class="containerrach mt-1 mb-3 text-muted">
+            <span class="label">How do you want this variation to be selected by customers?</span>
+            <div class="radio-group">
+                <input type="radio" id="single_selection" name="selection_type_${variationFormCount}" value="single">
+                <label for="single_selection">Single Selection</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="multiple_selection" name="selection_type_${variationFormCount}" value="multiple">
+                <label for="multiple_selection">Multiple Selection</label>
+            </div>
+        </div>
 
-        function displayTableData(page) {
-            const start = (page - 1) * rowsPerPage;
-            const end = start + rowsPerPage;
-            const rows = data.slice(start, end);
+        <div class="variation-rows-container" id="variation-rows-container-${variationFormCount}">
+            ${createVariationRow(variationFormCount, 1)}
+            ${createVariationRow(variationFormCount, 2)}
+            ${createVariationRow(variationFormCount, 3)}
+        </div>
+        <div class="d-flex justify-content-between align-items-center hech mt-3">
+            <div class="checkbox-group">
+                <input type="checkbox" id="is_required_${variationFormCount}" name="is_required_${variationFormCount}">
+                <label for="is_required_${variationFormCount}">Customer is required to select</label>
+            </div>
+            <div class="variation-btn-group">
+                <button type="button" class="variation-btn addrem" onclick="addVariationRow(${variationFormCount})">Add New Row</button>
+                <button type="button" class="variation-btn addrem" onclick="removeVariationForm(${variationFormCount})">Remove Variation</button>
+            </div>
+        </div>
+    `;
 
-            const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-            tableBody.innerHTML = '';
-            rows.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${row.date}</td><td>${row.reason}</td>`;
-                tableBody.appendChild(tr);
-            });
-        }
+    document.getElementById("variation-forms-list").appendChild(variationForm);
+}
 
-        function displayPagination(totalPages) {
-            const paginationElement = document.getElementById('pagination');
-            paginationElement.innerHTML = '';
+function createVariationRow(variationFormId, rowId = Date.now()) {
+    return `
+        <div class="variation-row" id="variation-row-${variationFormId}-${rowId}">
+            <div class="variationimage text-center py-2" id="variationimageContainer-${variationFormId}-${rowId}">
+                <i class="fa-solid fa-arrow-up-long mb-1"></i>
+                <label for="variationimage-${variationFormId}-${rowId}">Variation Image</label>
+                <input type="file" id="variationimage-${variationFormId}-${rowId}" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displaySelectedImage(${variationFormId}, ${rowId})">
+            </div>
 
-            const createPageItem = (page, isActive = false) => {
-                const li = document.createElement('li');
-                li.textContent = page;
-                if (isActive) li.classList.add('active');
-                li.addEventListener('click', () => {
-                    currentPage = page;
-                    updatePagination();
-                    displayTableData(currentPage);
-                });
-                return li;
-            };
+            <input type="text" name="variation_name_${variationFormId}[]" placeholder="Variation Name">
 
-            const createArrow = (direction) => {
-                const li = document.createElement('li');
-                li.textContent = direction === 'left' ? '◀' : '▶';
-                li.addEventListener('click', () => {
-                    if (direction === 'left' && currentPage > 1) {
-                        currentPage--;
-                    } else if (direction === 'right' && currentPage < totalPages) {
-                        currentPage++;
-                    }
-                    updatePagination();
-                    displayTableData(currentPage);
-                });
-                return li;
-            };
+            <div class="d-flex align-items-center addpeso" data-bs-toggle="tooltip" data-bs-placement="top" title="This will be added to the selling price">
+                <input type="number" name="variation_additional_price_${variationFormId}[]" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div class="d-flex align-items-center minuspeso" data-bs-toggle="tooltip" data-bs-placement="top" title="This will be minus to the selling price">
+                <input type="number" name="variation_subtract_price_${variationFormId}[]" placeholder="0.00" min="0" step="0.01">
+            </div>
 
-            // Add left arrow if current page is beyond the first visible set
-            if (currentPage > maxVisiblePages) {
-                paginationElement.appendChild(createArrow('left'));
-            }
+            <button type="button" class="variation-btn delete" onclick="removeVariationRow(this)">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    `;
+}
 
-            // Calculate which pages to show
-            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+function displaySelectedImage(variationFormId, rowId) {
+    const inputFile = document.getElementById(`variationimage-${variationFormId}-${rowId}`);
+    const imageContainer = document.getElementById(`variationimageContainer-${variationFormId}-${rowId}`);
 
-            if (endPage - startPage < maxVisiblePages - 1) {
-                startPage = Math.max(1, endPage - maxVisiblePages + 1);
-            }
+    if (inputFile.files && inputFile.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imageContainer.style.backgroundImage = `url(${e.target.result})`;
+            imageContainer.style.backgroundSize = 'cover';
+            imageContainer.style.backgroundPosition = 'center';
+        };
+        reader.readAsDataURL(inputFile.files[0]);
+    }
+}
 
-            for (let i = startPage; i <= endPage; i++) {
-                paginationElement.appendChild(createPageItem(i, i === currentPage));
-            }
+function addVariationRow(variationFormId) {
+    const rowId = Date.now();
+    const variationRowsContainer = document.getElementById(`variation-rows-container-${variationFormId}`);
+    variationRowsContainer.insertAdjacentHTML("beforeend", createVariationRow(variationFormId, rowId));
+}
 
-            // Add right arrow if there are more pages left to show
-            if (endPage < totalPages) {
-                paginationElement.appendChild(createArrow('right'));
-            }
-        }
+function removeVariationRow(button) {
+    const variationRow = button.parentNode;
+    variationRow.remove();
+}
 
-        function updatePagination() {
-            const totalPages = Math.ceil(data.length / rowsPerPage);
-            displayPagination(totalPages);
-        }
+function removeVariationForm(variationFormId) {
+    const variationForm = document.getElementById(`variation-form-${variationFormId}`);
+    variationForm.remove();
+}
 
-        displayTableData(currentPage);
-        updatePagination();
-    </script>
-</body>
-</html>
+function renameVariation(variationFormId) {
+    const newTitle = prompt("Enter a new name for this variation:");
+    if (newTitle && newTitle.trim()) {
+        document.getElementById(`variation-title-${variationFormId}`).textContent = newTitle.trim();
+    }
+}
+
+</script>
