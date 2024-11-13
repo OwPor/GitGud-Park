@@ -748,6 +748,7 @@ Color Palette:
   width: 65px;
   height: 65px;
   flex-shrink: 0;
+  position: relative;
 }
 .productimage i, .variationimage i{
   background-color: #bbbbbb;
@@ -759,7 +760,7 @@ Color Palette:
   padding: 3px 5px;
   font-size: 9px;
 }
-.variationimage label{
+.variationimage span{
   font-size: 12px;
   line-height: 1.2;
   cursor: pointer;
@@ -807,7 +808,7 @@ Color Palette:
   padding: 0 10px 30px 10px;
 }
 .variation-btn {all: unset;}
-.variation-btn.rename:hover, .variation-btn.delete:hover, .variation-btn.addrem:hover,
+.rename:hover, .variation-btn.delete:hover, .variation-btn.addrem:hover,
 .remove-btn:hover, .edit-btn:hover{
   background-color: #e5e5e5;
   border-radius: 50px;
@@ -832,7 +833,7 @@ Color Palette:
   padding: 5px 7px;
   color: gray;
 }
-.variation-btn.rename {
+.rename {
   font-size: small;
   padding: 8px;
   color: gray;
@@ -1135,4 +1136,47 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .addpeso input, .minuspeso input {
   text-align: right; 
+}
+
+.choice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.ac, .uc{
+  font-size: 14px;
+  margin-right: 5px;
+}
+.ac{color: green;}
+.uc{color: red;}
+
+.choice-header {
+  background-color: #f9f9f9;
+  border-bottom: 2px solid #007bff;
+  font-size: 15px;
+}
+.choice-header th, .choice-row td {
+  padding: 10px 30px;
+  text-align: left;
+  font-weight: normal;
+}
+
+.choice-row td {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 30px;
+}
+.cg {
+  color: #888;
+  font-size: small;
+}
+.choice-row .left{
+  padding-right: 5px;
+  color: gray;
+}
+
+.variationimage .overlay {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
