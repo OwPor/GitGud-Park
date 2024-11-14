@@ -451,21 +451,19 @@
                     $uniqueLink = "./stallpage.php?id=" . $stall['id'];
                     ?>
                     <div class="col closed-stall" hidden>
-                        <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none">
-                            <div class="card" style="position: relative;">
-                                <img src="<?= $stall['img'] ?>" class="card-img-top" alt="...">
-                                <button class="add"><i class="fa-regular fa-heart"></i></button>
-                                <div class="card-body">
-                                    <h5 class="card-title my-2"><?= $stall['name'] ?></h5>
-                                    <div class="d-flex justify-content-between">
-                                        <p class="card-text text-muted m-0"><?= $stall['description'] ?></p>
-                                    </div>
-                                    <div class="mt-2">
-                                        <span class="opennow">Closed</span>
-                                    </div>
+                        <div class="card card-link text-decoration-none" style="position: relative;">
+                            <img src="<?= $stall['img'] ?>" class="card-img-top" alt="...">
+                            <button class="add"><i class="fa-regular fa-heart"></i></button>
+                            <div class="card-body">
+                                <h5 class="card-title my-2"><?= $stall['name'] ?></h5>
+                                <div class="d-flex justify-content-between">
+                                    <p class="card-text text-muted m-0"><?= $stall['description'] ?></p>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="opennow">Closed</span>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 <?php
                 }

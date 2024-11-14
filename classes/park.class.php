@@ -35,21 +35,20 @@ class Park {
         return $query->fetchAll();
     }
 
-    function addPark($name, $description, $location, $image, $ownerName, $contactNumber, $email, $openingTime, $closingTime, $priceRange, $status) {
-        $binaryUuid = random_bytes(16);
-        $uniqueUrl = bin2hex($binaryUuid);
+    function addPark() {
+        $uniqueUrl = uniqid();
 
-        // $name = 'Amethyst Food Park';
-        // $description = 'A food park located in the heart of the city.';
-        // $location = 'Johnston St., Zamboanga City';
-        // $image = 'assets/images/foodpark.jpg';
-        // $ownerName = 'John Doe';
-        // $contactNumber = '123-456-7890';
-        // $email = '222@gmail.com';
-        // $openingTime = '08:00:00';
-        // $closingTime = '22:00:00';
-        // $priceRange = 100.00;
-        // $status = 'Open';
+        $name = 'Amethyst Food Park';
+        $description = 'A food park located in the heart of the city.';
+        $location = 'Johnston St., Zamboanga City';
+        $image = 'assets/images/foodpark.jpg';
+        $ownerName = 'John Doe';
+        $contactNumber = '123-456-7890';
+        $email = '222@gmail.com';
+        $openingTime = '08:00:00';
+        $closingTime = '22:00:00';
+        $priceRange = 100.00;
+        $status = 'Open';
 
         $sql = "INSERT INTO parks (name, description, location, image, owner_name, contact_number, email, opening_time, closing_time, price_range, status, url)
                 VALUES (:name, :description, :location, :image, :owner_name, :contact_number, :email, :opening_time, :closing_time, :price_range, :status, :url)";
@@ -71,21 +70,21 @@ class Park {
 
         $stmt->execute();
 
-        echo "Park inserted successfully with unique URL: " . $uniqueUrl;
+        // echo "Park inserted successfully with unique URL: " . $uniqueUrl;
     }
 
-    function addStall($parkId, $name, $description, $image, $ownerName, $contactNumber, $email, $openingTime, $closingTime, $priceRange, $status) {
-        // $parkId = 1;
-        // $name = 'YumYim Stall';
-        // $description = 'A stall located in the heart of the city.';
-        // $image = 'assets/images/stall.jpg';
-        // $ownerName = 'Jane Doe';
-        // $contactNumber = '098-765-4321';
-        // $email = 'aaa@gmail.com';
-        // $openingTime = '08:00:00';
-        // $closingTime = '22:00:00';
-        // $priceRange = 100.00;
-        // $status = 'Closed';
+    function addStall() {
+        $parkId = 1;
+        $name = 'YumYim Stall';
+        $description = 'A stall located in the heart of the city.';
+        $image = 'assets/images/stall.jpg';
+        $ownerName = 'Jane Doe';
+        $contactNumber = '098-765-4321';
+        $email = 'aaa@gmail.com';
+        $openingTime = '08:00:00';
+        $closingTime = '22:00:00';
+        $priceRange = 100.00;
+        $status = 'Closed';
 
         $sql = "INSERT INTO stalls (park_id, name, description, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status)
                 VALUES (:park_id, :name, :description, :img, :owner_name, :contact_number, :email, :opening_time, :closing_time, :price_range, :status)";
@@ -106,6 +105,9 @@ class Park {
 
         $stmt->execute();
 
-        echo "Stall inserted successfully";
+        // echo "Stall inserted successfully";
     }
 }
+
+// $parkObj = new Park();
+// $parkObj->addStall();

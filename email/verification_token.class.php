@@ -89,7 +89,7 @@ class Verification {
         $sql = "SELECT * FROM verification WHERE user_id = :user_id";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':user_id' => $user_id));
-        $token = bin2hex(random_bytes(16));
+        $token = uniqid();
         $verification = $query->fetch();
 
         if ($verification) {
@@ -100,9 +100,7 @@ class Verification {
 
             if ($difference < $cd) {
                 return ['cd' => $cd - $difference, 'message' => 'cooldown'];
-            } else
-            
-            if ($verification['is_verified'] == 0) {
+            } else if ($verification['is_verified'] == 0) {
                 $expiration = date('Y-m-d H:i:s', strtotime('+24 hours'));
 
                 $sql = "INSERT INTO verification (user_id, verification_token, token_expiration, last_sent) 
