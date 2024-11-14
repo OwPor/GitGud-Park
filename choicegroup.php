@@ -5,14 +5,30 @@
     include_once 'modals.php'; 
 ?>
 <style>
+    /*
+Color Palette:
+#CD5C08
+#FFF5E4
+#C1D8C3
+#6A9C89
+*/
     main{
         padding: 20px 120px;
     }
-
+    .invite{
+        background-color: #6A9C89;
+        color: white;
+        border: none;
+        padding: 7px 12px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
 </style>
 
 <main>
-    <button class="addpro mb-3">Created Choice Group</button>
+    <div class="d-flex justify-content-end">
+        <button class="invite mb-3" onclick="window.location.href='createchoicegroup.php';">Create Choice Group</button>
+    </div>
 
     <table class="choice-table border rounded-2 bg-white">
         

@@ -58,7 +58,7 @@ let variationFormCount = 0;
 
     function triggerFileInput(variationFormId, rowId) {
         const inputFile = document.getElementById(`variationimage-${variationFormId}-${rowId}`);
-        inputFile.value = ''; // Reset input to allow re-upload
+        inputFile.value = ''; 
         inputFile.click();
     }
 

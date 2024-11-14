@@ -291,12 +291,17 @@ nav ul li a{text-decoration: none;}
   display: block;
   margin-bottom: 0.5rem;
 }
-.input-group input, .input-group select, .input-group textarea, .variation-container, .variation-row input, .search-input{
+.input-group input, .input-group select, .input-group textarea, .variation-container, .variation-row input, .search-input,
+.choice-group-container, .choice-group-row input, .availability-dropdown{
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
 }
+.availability-dropdown{
+  padding: 10.5px 0.75rem;
+}
+
 .och select{
   padding: 8px 4px;
   border: 1px solid #ccc;
@@ -735,7 +740,7 @@ Color Palette:
   padding: 0 5px;
 }
 
-.productimage, .variationimage{
+.productimage, .variationimage, .choice-group-image{
   width: 210px;
   height: 210px;
   background-repeat: no-repeat;
@@ -744,23 +749,30 @@ Color Palette:
   cursor: pointer;
   background-color: #e8e8e8;
 }
-.variationimage{
+.variationimage, .choice-group-image{
   width: 65px;
   height: 65px;
   flex-shrink: 0;
   position: relative;
 }
-.productimage i, .variationimage i{
+.variationimage .overlay, .choice-group-image .overlay{
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.productimage i, .variationimage i, .choice-group-image i{
   background-color: #bbbbbb;
   border-radius: 50%;
   padding: 10px 12px;
   color: white;
 }
-.variationimage i{
+.variationimage i, .choice-group-image i{
   padding: 3px 5px;
   font-size: 9px;
 }
-.variationimage span{
+.variationimage span, .choice-group-image span{
   font-size: 12px;
   line-height: 1.2;
   cursor: pointer;
@@ -768,13 +780,13 @@ Color Palette:
 .productimage:hover {
   border: 1px solid #cd5c08;
 }
-.variationimage:hover{
+.variationimage:hover, .choice-group-image:hover{
   border: 0.5px solid #cd5c08;
 }
-.productimage:hover i, .variationimage:hover i{
+.productimage:hover i, .variationimage:hover i, .choice-group-image:hover i{
   background-color: #cd5c08;
 }
-.productimage:hover p, .variationimage:hover label {
+.productimage:hover p, .variationimage:hover span, .choice-group-image:hover span {
   color: #cbcbc9;
 }
 .pirem{
@@ -788,47 +800,47 @@ Color Palette:
 
 /* variation */
 
-.variation-container {
+.variation-container, .choice-group-container  {
   background-color: white;
   padding: 12px 0.75rem;
 }
-.variation-row, .variation-header{
+.variation-row, .variation-header, .choice-group-row, .choice-group-header{
   display: flex;
   gap: 15px;
   align-items: center;
 }
-.variation-row:first-child {
+.variation-row:first-child,.choice-group-row:first-child  {
   border-top: 0.5px #ddd solid;
 }
-.variation-row{
+.variation-row, .choice-group-row {
   border-bottom: 0.5px #ddd solid;
   padding: 10px 0;
 }
-.variation-form {
+.variation-form, .choice-group-form {
   padding: 0 10px 30px 10px;
 }
-.variation-btn {all: unset;}
+.variation-btn, .choice-group-btn  {all: unset;}
 .rename:hover, .variation-btn.delete:hover, .variation-btn.addrem:hover,
-.remove-btn:hover, .edit-btn:hover{
+.remove-btn:hover, .edit-btn:hover, .choice-group-btn.delete:hover, .choice-group-btn.addrem:hover{
   background-color: #e5e5e5;
   border-radius: 50px;
 }
-.variation-btn.addvar:hover{
+.variation-btn.addvar:hover, .choice-group-btn.addgroup:hover{
   color: black;
 }
-.variation-btn.addvar{
+.variation-btn.addvar, .choice-group-btn.addgroup {
   color: #CD5C08;
 }
-.variation-btn-group{
+.variation-btn-group, .choice-group-btn-group{
   display: flex;
   gap: 5px;
 }
-.variation-btn.addrem{
+.variation-btn.addrem, .choice-group-btn.addrem {
   border-radius: 50px;
   padding: 6px 12px;
   background-color: #f2f2f2;
 }
-.variation-btn.delete{
+.variation-btn.delete, .choice-group-btn.delete{
   font-size: large;
   padding: 5px 7px;
   color: gray;
@@ -1084,7 +1096,6 @@ section{
   text-align: center;
 }
 
-
 .containerrach {
   display: flex;
   align-items: center;
@@ -1173,10 +1184,3 @@ input[type="number"]::-webkit-outer-spin-button {
   color: gray;
 }
 
-.variationimage .overlay {
-    position: absolute;
-    top: 8px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}

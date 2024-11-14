@@ -6,7 +6,23 @@
     main{
         padding: 40px 200px
     }
-  
+    .getcg td{
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+        line-height: 1.5;
+    }
+    .getcg .st{
+        vertical-align: top;
+    }
+    .addchogro{
+        text-decoration: none;
+        color: #CD5C08;
+        margin-top: 10px;
+    }
+    .addchogro:hover{
+        color: black;
+    }
+    
 </style>
 <div class="prohelp d-flex align-items-center gap-4 justify-content-center">
     <span class="helpspn">HELP</span>
@@ -72,6 +88,32 @@
                 </div>
             </div>
             <script src="./assets/js/variation.js?v=<?php echo time(); ?>"></script>
+
+            <!-- Choice Group -->
+            <div class="input-group m-0 mb-5">
+                <label for="choicegroup">Choice Groups (Optional)</label>
+                <table class="border bg-white w-100 getcg">
+                    <tr>
+                        <td class="pe-0"><input type="checkbox"></td>
+                        <td class="st text-nowrap">
+                            <p class="mb-1">Choice of First Pizza</p>
+                            <span class="cg">Required (Single), 6 Choices</span>
+                        </td>
+                        <td class="st ">Pepperoni, Margarita, Hawaiian, Vegetarian Special, Meat Special, Tomatoes</td>
+                        <td><i class="fa-solid fa-pen rename"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="pe-0"><input type="checkbox"></td>
+                        <td class="st text-nowrap">
+                            <p class="mb-1">Choice of Drink</p>
+                            <span class="cg">Optional (Multiple), 3 Choices</span>
+                        </td>
+                        <td class="st ">Coca Cola, Bottled Water, Green Tee</td>
+                        <td><i class="fa-solid fa-pen rename"></i></td>
+                    </tr>
+                </table>
+                <a href="createchoicegroup.php" class="addchogro">+ Add Choice Group</a>
+            </div>
 
             <div class="d-flex gap-3">
                 <div class="input-group w-50 m-0 mb-4">

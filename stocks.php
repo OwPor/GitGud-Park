@@ -81,7 +81,7 @@
 
 <main>
     <div class="d-flex justify-content-end">
-        <button class="addpro mb-3 prev" onclick="window.location.href='inventory.php';"><i class="fa-solid fa-chevron-left me-2"></i> Previous</button>
+        <button class="addpro mb-3 prev" onclick="window.location.href='managemenu.php';"><i class="fa-solid fa-chevron-left me-2"></i> Previous</button>
     </div>
     <div class="d-flex justify-content-between productdet">
         <div class="d-flex gap-4 align-items-center proinf">
