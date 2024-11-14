@@ -30,6 +30,9 @@
         if (!$stalls) {
             echo 'No stalls found.';
         }
+    } else {
+        header('Location: index.php');
+        exit();
     }
 
 ?>
@@ -148,7 +151,7 @@
 
 </section>
 
-<section class="third">
+<!-- <section class="third">
     <br><br>
     <h3>With Promo</h3>
     <div class="row row-cols-1 row-cols-md-4 g-3 slide">
@@ -258,9 +261,9 @@
             </a>
         </div>
     </div>
-</section>
+</section> -->
 
-<section class="third">
+<!-- <section class="third">
     <br><br>
     <h3>New Comers</h3>
     <div class="row row-cols-1 row-cols-md-4 g-3 slide">
@@ -370,7 +373,7 @@
             </a>
         </div>
     </div>
-</section>
+</section> -->
 
 <section class="third">
     <br><br>

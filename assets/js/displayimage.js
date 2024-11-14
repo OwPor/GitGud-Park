@@ -26,9 +26,9 @@ function displayProductImage(event) {
             productImageContainer.style.backgroundImage = `url(${e.target.result})`;
             productImageContainer.style.backgroundSize = 'cover';
             productImageContainer.style.backgroundPosition = 'center';
-            productImageContainer.innerHTML = `
-                <input type="file" id="productimage" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayProductImage(event)">
-            `;
+            // delete div "id = product_image_div"
+            var element = document.getElementById("product_image_div");
+            element.parentNode.removeChild(element);
         };
         reader.readAsDataURL(file);
     } else {

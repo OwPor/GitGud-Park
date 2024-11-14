@@ -103,7 +103,7 @@
             <script src="./assets/js/editvariation.js?v=<?php echo time(); ?>"></script>
 
             <!-- Choice Group -->
-            <div class="input-group m-0 mb-5">
+            <!-- <div class="input-group m-0 mb-5">
                 <label for="choicegroup">Choice Groups (Optional)</label>
                 <table class="border bg-white w-100 getcg">
                     <tr>
@@ -126,7 +126,7 @@
                     </tr>
                 </table>
                 <a href="createchoicegroup.php" class="addchogro">+ Add Choice Group</a>
-            </div>
+            </div> -->
 
             <div class="d-flex gap-3">
                 <div class="input-group w-50 m-0 mb-4">

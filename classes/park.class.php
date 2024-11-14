@@ -110,4 +110,5 @@ class Park {
 }
 
 // $parkObj = new Park();
+// $parkObj->addPark();
 // $parkObj->addStall();

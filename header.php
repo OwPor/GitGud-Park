@@ -76,7 +76,7 @@
 
     </div>
     <div class="bottom">
-        <a href="landingpage.php">
+        <a href="index.php">
             <img src="assets/images/logo.png" alt="">
         </a>
         <div>
@@ -85,7 +85,7 @@
                 <button type="submit"><i class="fas fa-search fa-lg"></i></button>
             </form>
             <ul>
-                <li><a href="home.php">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="popular.php">Popular</a></li>
                 <li><a href="categories.php">Categories</a></li>
                 <li><a href="new.php">New</a></li>
