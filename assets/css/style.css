@@ -1031,15 +1031,15 @@ section{
 .addons{
   background-color: #f4f4f4;
 }
-#menumodal .modal-dialog {
+#menumodal .modal-dialog, #moreinfoproduct .modal-dialog{
   max-width: 40%; 
 }
-#menumodal .modal-content {
+#menumodal .modal-content, #moreinfoproduct .modal-dialog {
   height: 600px; 
   border-radius: 10px; 
   overflow: hidden;
 }
-#menumodal .modal-body {
+#menumodal .modal-body, #moreinfoproduct .modal-body {
   overflow-y: auto;
 }
 .ordquantity {

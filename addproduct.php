@@ -72,8 +72,9 @@
                     <input type="number" name="sellingPrice" id="sellingPrice" placeholder="Enter selling price" step="0.01"/>
                 </div>
                 <div class="input-group m-0 mb-4">
-                    <label for="costPrice">Cost Price</label>
+                    <label for="costPrice">Cost Price (Optional)</label>
                     <input type="number" name="costPrice" id="costPrice" placeholder="Enter cost price" step="0.01"/>
+
                 </div>
             </div>
 
@@ -100,7 +101,7 @@
                             <span class="cg">Required (Single), 6 Choices</span>
                         </td>
                         <td class="st ">Pepperoni, Margarita, Hawaiian, Vegetarian Special, Meat Special, Tomatoes</td>
-                        <td><i class="fa-solid fa-pen rename"></i></td>
+                        <td><i class="fa-solid fa-pen rename" onclick="window.location.href='editchoicegroup.php';"></i></td>
                     </tr>
                     <tr>
                         <td class="pe-0"><input type="checkbox"></td>
@@ -109,7 +110,7 @@
                             <span class="cg">Optional (Multiple), 3 Choices</span>
                         </td>
                         <td class="st ">Coca Cola, Bottled Water, Green Tee</td>
-                        <td><i class="fa-solid fa-pen rename"></i></td>
+                        <td><i class="fa-solid fa-pen rename" onclick="window.location.href='editchoicegroup.php';"></i></td>
                     </tr>
                 </table>
                 <a href="createchoicegroup.php" class="addchogro">+ Add Choice Group</a>

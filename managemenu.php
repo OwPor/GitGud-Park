@@ -38,7 +38,7 @@ Color Palette:
         <button class="addpro mb-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+ Add New</button>
         <ul class="dropdown-menu dropdown-menu-end p-0">
             <li><a class="dropdown-item" href="addproduct.php"><i class="fa-solid fa-burger me-2"></i> Item</a></li>
-            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-list me-2"></i> Category</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addcategory"><i class="fa-solid fa-list me-2"></i> Category</a></li>
         </ul>
     </div>
     
@@ -47,7 +47,7 @@ Color Palette:
             <h2 class="accordion-header">
                 <button class="accordion-button d-flex align-items-center gap-2 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#categoryitem1" aria-expanded="true" aria-controls="categoryitem1">
                     <span class="fs-5 fw-bold">Category 1</span>
-                    <i class="fa-solid fa-pen rename"></i>  
+                    <i class="fa-solid fa-pen rename" data-bs-toggle="modal" data-bs-target="#editcategory"></i>  
                 </button>
             </h2>
             <div id="categoryitem1" class="accordion-collapse collapse show">
@@ -91,7 +91,7 @@ Color Palette:
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed d-flex align-items-center gap-2 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#categoryitem2" aria-expanded="false" aria-controls="categoryitem2">
                     <span class="fs-5 fw-bold">Category 2</span>
-                    <i class="fa-solid fa-pen rename"></i>  
+                    <i class="fa-solid fa-pen rename" data-bs-toggle="modal" data-bs-target="#editcategory"></i>  
                 </button>
             </h2>
             <div id="categoryitem2" class="accordion-collapse">
@@ -135,7 +135,7 @@ Color Palette:
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed d-flex align-items-center gap-2 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#categoryitem3" aria-expanded="false" aria-controls="categoryitem3">
                     <span class="fs-5 fw-bold">Category 3</span>
-                    <i class="fa-solid fa-pen rename"></i>  
+                    <i class="fa-solid fa-pen rename" data-bs-toggle="modal" data-bs-target="#editcategory"></i>  
                 </button>
             </h2>
             <div id="categoryitem3" class="accordion-collapse">

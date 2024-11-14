@@ -32,6 +32,7 @@
                         <span class="newopen">New</span>
                     </div>
                     <hr>
+                    <!-- If required, can be variation or choice group -->
                     <div class="vrtn mt-3">
                         <div class="d-flex align-items-center justify-content-between variation mb-2">
                             <h5 class="mb-0">Choose your Drink</h5>
@@ -163,62 +164,74 @@
   </div>
 </div>
 
+<!-- Add Category -->
+<div class="modal fade" id="addcategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="text-center">
+            <h4 class="fw-bold mb-4">Add Category</h4>
+            <div class="form-floating m-0">
+                <input type="text" class="form-control" id="category" placeholder="Category">
+                <label for="category">Category</label>
+            </div>
+            <div class="mt-5 mb-3">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Category -->
+<div class="modal fade" id="editcategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="text-center">
+            <h4 class="fw-bold mb-4">Edit Category</h4>
+            <div class="form-floating m-0">
+                <input type="text" class="form-control" id="category" placeholder="Category" value="Category 1">
+                <label for="category">Category</label>
+            </div>
+            <div class="mt-5 mb-3">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Product Info -->
 <div class="modal fade" id="moreinfoproduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
+<div class="modal-dialog modal-dialog-centered">
     <div class="modal-content h-75 overflow-auto">
       <div class="modal-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="fw-bold m-0">Product Name</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="p-3 rounded-2 border invvar mb-3">
-            <div class="mb-1">
-                <h5 class="fw-bold mb-1">Variation 1</h5>
-                <span class="small text-muted">Customer is required to choose one in this variation</span>
-            </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span >Variation Name</span>
-                <span class="ip">₱12</span>
-            </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span>Variation Name</span>
-                <span class="ip">₱12</span>
-            </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span>Variation Name</span>
-                <span class="ip">₱12</span>
-            </div>
-        </div>
-        <div class="p-3 rounded-2 border invvar mb-3">
-            <div class="mb-1">
-                <h5 class="fw-bold mb-1">Variation 2</h5>
-                <span class="small text-muted">Customer is required to choose one in this variation</span>
-            </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span >Variation Name</span>
-                <span class="ip">₱12</span>
-            </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span>Variation Name</span>
-                <span class="ip">₱12</span>
-            </div>
-            <div class="d-flex justify-content-between py-3 border-bottom">
-                <span>Variation Name</span>
-                <span class="ip">₱12</span>
-            </div>
-        </div>
         <div class="p-3 rounded-2 border invvar">
             <div class="mb-2">
-                <h5 class="fw-bold mb-1">Add Ons</h5>
-                <span class="small text-muted">Customer can optionally select from this add-ons</span>
+                <h5 class="fw-bold mb-1">Choose your Drink</h5>
+                <span class="small text-muted">Customer is required to select one option</span>
             </div>
             <div class="d-flex justify-content-between py-2 border-bottom align-items-center">
                 <div class="d-flex gap-2 align-items-center">
                     <img src="assets/images/example.jpg" alt="" width="45px" height="45px" class="rounded-2 border">
-                    <span >Product Name</span>
+                    <span>Coke Regular</span>
                 </div>
-                <span class="ip">₱12</span>
+                <span class="ip">Free</span>
             </div>
             <div class="d-flex justify-content-between py-2 border-bottom align-items-center">
                 <div class="d-flex gap-2 align-items-center">
