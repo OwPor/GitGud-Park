@@ -13,7 +13,7 @@ Color Palette:
 */
     main{
         background-color: white;
-        padding: 0 120px;
+        padding: 20px 120px;
     }
     .fsname:hover{
         text-decoration: underline;
@@ -31,13 +31,17 @@ Color Palette:
         left: 5px;
     }
     .dispro{
-        background-color: #FFF5E4;
-        padding: 10px;
+        background-color: #C1D8C3;
+        padding: 30px;
     }
 </style>
 <main>
-    <div class="dispro border">
-        <h3 class="m-0">Top Rated</h3>
+    <div class="dispro border rounded-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <img src="assets/images/bg.png" width="200px" height="100px">
+            <h1 class="m-0 fs-1 text-white fw-bold">Don't Miss Out Limited Time Discount</h1>
+            <img src="assets/images/bg.png" width="200px" height="100px">
+        </div>
         <div class="tpdiv position-relative">
             <i class="fa-solid fa-arrow-left scroll-arrow left-arrow" style="display: none;"></i>
             <div class="d-flex rightfilter gap-3">
