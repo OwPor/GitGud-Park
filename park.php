@@ -67,7 +67,7 @@
     </div>
 </section>
 
-<section class="third">
+<!-- <section class="third">
     <br><br>
     <h3>Top Rated</h3>
     <div class="d-flex slide">
@@ -89,12 +89,12 @@
             </div>
             
         </div>
-        <!--<a href="stallpage.php" class="card-link text-decoration-none">
-        </a>-->
+        <a href="stallpage.php" class="card-link text-decoration-none">
+        </a>
         <i class="fa-solid fa-arrow-right scroll-arrow right-arrow"></i>
     </div>
 
-</section>
+</section> -->
 
 <!-- <section class="third">
     <br><br>
