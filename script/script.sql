@@ -50,6 +50,8 @@ VALUES ('Amethyst Food Park', 'A food park located in the heart of the city.', '
 
 CREATE TABLE stalls (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    park_id INT UNSIGNED NOT NULL,
     name VARCHAR(100) NOT NULL,
     description TEXT,
     location VARCHAR(50),
@@ -61,7 +63,6 @@ CREATE TABLE stalls (
     closing_time TIME,
     price_range DECIMAL(10, 2) NOT NULL,
     status ENUM('Open', 'Closed', 'Maintenance', 'Pending Approval') NOT NULL DEFAULT 'Pending Approval',
-    park_id INT UNSIGNED NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (park_id) REFERENCES parks(id) ON DELETE CASCADE
@@ -72,6 +73,34 @@ VALUES ('YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', '
 
 INSERT INTO stalls (name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status, park_id)
 VALUES ('Ihhh', 'AHHHHH.', 'Amethyst Food Park', 'assets/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'aaa@gmail.com', '08:00:00', '22:00:00', 100.00, 'Closed', 1);
+
+CREATE TABLE categories (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO categories (name, description)
+VALUES ('Main Course', 'Main dishes that are served in a meal.');
+
+CREATE TABLE products (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    category_id INT UNSIGNED NOT NULL,
+    stall_id INT UNSIGNED NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
+    FOREIGN KEY (stall_id) REFERENCES stalls(id) ON DELETE CASCADE
+);
+
+INSERT INTO products (name, code, description, price, category_id, stall_id) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1);
 
 
 
