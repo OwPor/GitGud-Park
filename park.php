@@ -68,7 +68,7 @@
     </div>
 </section>
 
-<section>
+<!-- <section class="third">
     <br><br>
     <h3 class="mb-3">Categories</h3>
     <div class="tpdiv position-relative">
@@ -123,9 +123,12 @@
                 <span class="text-dark d-block mt-1">Chicken</span>
             </a>
         </div>
+        <a href="stallpage.php" class="card-link text-decoration-none">
+        </a>
         <i class="fa-solid fa-arrow-right scroll-arrow right-arrow"></i>
     </div>
-</section>
+
+</section> -->
 
 <section>
     <br><br>
