@@ -33,6 +33,12 @@
     }
 
 ?>
+<style>
+    .trimage{
+        width: 150px;
+        height: max-content;
+    }
+</style>
 <section class="third">
     <br>
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -58,92 +64,31 @@
     </div>
 </section>
 
-
 <section class="third">
     <br><br>
     <h3>Top Rated</h3>
-    <div class="row row-cols-1 row-cols-md-2 g-3 slide">
-        <div class="col">
-            <a href="stallpage.php" class="card-link text-decoration-none">
-                <div class="card" style="position: relative;">
-                    <div class="row g-0">
-                        <button class="add"><i class="fa-regular fa-heart"></i></button>
-                        <div class="col-md-3">
-                            <img src="assets/images/foodpark.jpg" class="img-fluid rounded-start h-100" alt="...">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body d-flex flex-column">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <h5 class="card-title my-2">Food Stall Name</h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text text-muted m-0">Description</p>
-                                    <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="opennow">Open Now</span>
-                                    <span class="discount">20% off</span>
-                                    <span class="newopen">New Open</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="d-flex slide">
+        <i class="fa-solid fa-arrow-left scroll-arrow left-arrow" style="display: none;"></i>
+        <div class="d-flex align-items-center border rounded-2">
+            <img src="assets/images/foodpark.jpg" class="trimage">
+            <div class="p-5" style="width:500px;">
+                <p class="card-text text-muted m-0">Category</p>
+                <h5 class="card-title my-2">Food Stall Name Food Stall Name</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="card-text text-muted m-0">Description</p>
+                    <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
                 </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="stallpage.php" class="card-link text-decoration-none">
-                <div class="card" style="position: relative;">
-                    <div class="row g-0">
-                        <button class="add"><i class="fa-regular fa-heart"></i></button>
-                        <div class="col-md-3">
-                            <img src="assets/images/foodpark.jpg" class="img-fluid rounded-start h-100" alt="...">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body d-flex flex-column">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <h5 class="card-title my-2">Food Stall Name</h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text text-muted m-0">Description</p>
-                                    <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="opennow">Open Now</span>
-                                    <span class="discount">20% off</span>
-                                    <span class="newopen">New Open</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mt-2">
+                    <span class="opennow">Open Now</span>
+                    <span class="discount">20% off</span>
+                    <span class="newopen">New Open</span>
                 </div>
-            </a>
+            </div>
+            
         </div>
-        <div class="col">
-            <a href="stallpage.php" class="card-link text-decoration-none">
-                <div class="card" style="position: relative;">
-                    <div class="row g-0">
-                        <button class="add"><i class="fa-regular fa-heart"></i></button>
-                        <div class="col-md-3">
-                            <img src="assets/images/foodpark.jpg" class="img-fluid rounded-start h-100" alt="...">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="card-body d-flex flex-column">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <h5 class="card-title my-2">Food Stall Name</h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text text-muted m-0">Description</p>
-                                    <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="opennow">Open Now</span>
-                                    <span class="discount">20% off</span>
-                                    <span class="newopen">New Open</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+        <!--<a href="stallpage.php" class="card-link text-decoration-none">
+        </a>-->
+        <i class="fa-solid fa-arrow-right scroll-arrow right-arrow"></i>
     </div>
 
 </section>
@@ -473,6 +418,7 @@
     <br><br>
 </section>
 <script src="assets/js/filterstalls.js"></script>
+<script src="./assets/js/navigation.js?v=<?php echo time(); ?>"></script>
 <?php
     include_once 'footer.php'; 
 ?>

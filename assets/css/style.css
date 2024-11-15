@@ -239,7 +239,7 @@ nav ul li a{text-decoration: none;}
 
 .slide {
     overflow-x: auto;
-    flex-wrap: nowrap; 
+    scrollbar-width: none;
 }
 .third h3{margin-bottom: 15px;}
 .oc{
