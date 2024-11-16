@@ -2,6 +2,32 @@
     include_once 'links.php'; 
     include_once 'header.php'; 
     include_once 'modals.php'; 
+    require_once __DIR__ . '/classes/park.class.php';
+    require_once __DIR__ . '/classes/stall.class.php';
+
+    $parkObj = new Park();
+    $stallObj = new Stall();
+
+    if (isset($_GET['pid']) && isset($_GET['sid'])) {
+        $park_link = filter_var($_GET['pid'] , FILTER_SANITIZE_STRING);
+        $park = $parkObj->getPark($park_link);
+
+        $stall_id = filter_var($_GET['sid'] , FILTER_SANITIZE_STRING);
+
+        if (!$park) {
+            header('Location: index.php');
+            exit();
+        }
+
+        $stall = $stallObj->getStall($stall_id);
+
+        if (!$stall) {
+            echo 'No stall found.';
+        }
+    } else {
+        header('Location: index.php');
+        exit();
+    }
 ?>
 <main>
     <div class="pageinfo pb-4">
@@ -16,8 +42,8 @@
                         <span class="dot text-muted"></span>
                         <span class="text-muted m-0">Category</span>
                     </div>
-                    <h5 class="my-2 fw-bold fs-2">Food Stall Name</h5>
-                    <p class="text-muted m-0">Description</p>
+                    <h5 class="my-2 fw-bold fs-2"><?= $stall['name'] ?></h5>
+                    <p class="text-muted m-0"><?= $stall['description'] ?></p>
 
                     <div class="d-flex gap-2 align-items-center my-2">
                         <span class="pageon">Open now</span>

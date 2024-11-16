@@ -1,7 +1,7 @@
 <?php 
     include_once 'links.php'; 
     include_once 'header.php';
-    /*require_once __DIR__ . '/classes/db.class.php';
+    require_once __DIR__ . '/classes/db.class.php';
     require_once __DIR__ . '/classes/park.class.php';
     $userObj = new User();
     $parkObj = new Park();
@@ -33,7 +33,7 @@
     } else {
         header('Location: index.php');
         exit();
-    }*/
+    }
 
 ?>
 
@@ -373,7 +373,7 @@
         <?php
             foreach ($stalls as $stall) {
                 if ($stall['status'] == 'Open') {
-                    $uniqueLink = "./stallpage.php?id=" . $stall['id'];
+                    $uniqueLink = "./stallpage.php?pid=" . $_GET['id'] . '&' . 'sid=' . $stall['id'];
                     ?>
                     <div class="col open-stall">
                         <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none bg-white">
@@ -394,7 +394,6 @@
                     </div>
             <?php
                 } else if ($stall['status'] == 'Closed') {
-                    $uniqueLink = "./stallpage.php?id=" . $stall['id'];
                     ?>
                     <div class="col closed-stall" hidden>
                         <div class="card card-link text-decoration-none bg-white" style="position: relative;">
