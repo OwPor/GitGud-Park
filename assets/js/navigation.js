@@ -49,3 +49,40 @@ document.addEventListener('DOMContentLoaded', function () {
     updateArrows();
     rightFilter.addEventListener('scroll', updateArrows);
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll(".nav-link");
+    const sections = document.querySelectorAll(".section-content");
+
+    function activateSection(hash) {
+        links.forEach((link) => link.classList.remove("active"));
+        sections.forEach((section) => section.classList.remove("active", "d-none"));
+
+        const targetLink = document.querySelector(`.nav-link[href="${hash}"]`);
+        const targetSection = document.querySelector(hash);
+
+        if (targetLink && targetSection) {
+            targetLink.classList.add("active");
+            targetSection.classList.add("active");
+        }
+    }
+
+    const currentHash = window.location.hash || "#all"; 
+    activateSection(currentHash);
+
+    links.forEach((link) => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default anchor behavior (scrolling to the section)
+            const target = this.getAttribute("href");
+
+            history.pushState(null, null, target); // Update the URL without scrolling
+            activateSection(target);
+        });
+    });
+
+    window.addEventListener("hashchange", function () {
+        const currentHash = window.location.hash || "#all";
+        activateSection(currentHash);
+    });
+});
