@@ -16,7 +16,7 @@
             exit();
         }
     } else {
-        header('Location: login.php');
+        header('Location: signin.php');
         exit();
     }
 
@@ -94,23 +94,23 @@
                 $type = $_POST["variation-title-$variantIndex"];
                 $additionalPrice = $_POST['variation_additional_price_' . $variantIndex][$index] ?? 0;
                 $subtractPrice = $_POST['variation_subtract_price_' . $variantIndex][$index] ?? 0;
-                $variantImage = $_FILES['variationimage-' . $variantIndex . '-' . $index]    ?? '';
-                $variantImageTemp = $_FILES['variationimage-' . $variantIndex . '-' . $index]['tmp_name'] ?? '';
+                $variantImage = $_FILES['variationimage-' . $variantIndex . '-' . $index + 1] ?? '';
+                $variantImageTemp = $_FILES['variationimage-' . $variantIndex . '-' . $index + 1]['tmp_name'] ?? '';
 
                 $variantImagePath = null;
-                if (!empty($variantImage)) {
-                    $variantImageFileType = strtolower(pathinfo($variantImage, PATHINFO_EXTENSION));
-                    if (in_array($variantImageFileType, $allowedTypes) && $_FILES['variationimage-' . $variantIndex . '-' . $index]['size'] <= 5000000) {
+                if (!empty($variantImage['name'])) {
+                    $variantImageFileType = strtolower(pathinfo($variantImage['name'], PATHINFO_EXTENSION));
+                    if (in_array($variantImageFileType, $allowedTypes) && $variantImage['size'] <= 5000000) {
                         $variantImagePath = $uploadDir . uniqid() . '.' . $variantImageFileType;
                         if (!move_uploaded_file($variantImageTemp, $variantImagePath)) {
                             $errors['variantImageErr'] = 'Failed to upload variant image.';
-                            error_log('Failed to move uploaded file for variant image: ' . $variantImage);
+                            error_log('Failed to move uploaded file for variant image: ' . $variantImage['name']);
                         } else {
                             error_log('Successfully uploaded variant image to: ' . $variantImagePath);
                         }
                     } else {
                         $errors['variantImageErr'] = 'Variant image must be jpg, jpeg, or png and under 5MB.';
-                        error_log('Invalid file type or size for variant image: ' . $variantImage);
+                        error_log('Invalid file type or size for variant image: ' . $variantImage['name']);
                     }
                 } else {
                     error_log('No variant image provided for index: ' . $index);

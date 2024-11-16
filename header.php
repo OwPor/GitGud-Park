@@ -1,8 +1,8 @@
 <?php 
-    //session_start();
+    session_start();
     include_once 'links.php'; 
-    //require_once __DIR__ . '/classes/db.class.php';
-    //$userObj = new User();
+    require_once __DIR__ . '/classes/db.class.php';
+    $userObj = new User();
 ?>
 <style>
     .headnav a.active,
@@ -15,10 +15,10 @@
         <?php
             if (isset($_SESSION['user'])) {
                 // LOGGED IN
-                // if ($userObj->isVerified($_SESSION['user']['id']) == 0) {
-                //     header('Location: ./email/verify_email.php');
-                //     exit();
-                // }
+                if ($userObj->isVerified($_SESSION['user']['id']) == 0) {
+                    header('Location: ./email/verify_email.php');
+                    exit();
+                }
                 
                 $user = $userObj->getUser($_SESSION['user']['id']);
 
