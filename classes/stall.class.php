@@ -19,4 +19,16 @@ class Stall {
         }
         return $result['id'];
     }
+
+    function getStall($stallId){
+        $sql = "SELECT * FROM stalls WHERE id = :id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':id' => $stallId));
+        $result = $query->fetch();
+
+        if ($result === false) {
+            return false;
+        }
+        return $result;
+    }
 }
