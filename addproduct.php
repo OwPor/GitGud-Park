@@ -94,7 +94,7 @@
                 $type = $_POST["variation-title-$variantIndex"];
                 $additionalPrice = $_POST['variation_additional_price_' . $variantIndex][$index] ?? 0;
                 $subtractPrice = $_POST['variation_subtract_price_' . $variantIndex][$index] ?? 0;
-                $variantImage = $_FILES['variationimage-' . $variantIndex . '-' . $index]['name'] ?? '';
+                $variantImage = $_FILES['variationimage-' . $variantIndex . '-' . $index]    ?? '';
                 $variantImageTemp = $_FILES['variationimage-' . $variantIndex . '-' . $index]['tmp_name'] ?? '';
 
                 $variantImagePath = null;
