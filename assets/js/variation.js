@@ -1,100 +1,117 @@
 let variationFormCount = 0;
 
-    function addVariationForm() {
-        variationFormCount++;
+function addVariationForm() {
+    variationFormCount++;
 
-        const variationForm = document.createElement("div");
-        variationForm.className = "variation-form";
-        variationForm.id = `variation-form-${variationFormCount}`;
+    const variationForm = document.createElement("div");
+    variationForm.className = "variation-form";
+    variationForm.id = `variation-form-${variationFormCount}`;
 
-        variationForm.innerHTML = `
-            <div class="variation-header">
-                <input type="text" placeholder="Variation Title" name="variation-title-${variationFormCount}" id="variation-title-${variationFormCount}" class="fw-bold fs-5">Variation ${variationFormCount}</input>
-                <button type="button" class="variation-btn rename" onclick="renameVariation(${variationFormCount})">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-            </div>
+    variationForm.innerHTML = `
+        <div class="variation-header">
+            <input type="text" placeholder="Variation Title" name="variation-title-${variationFormCount}" id="variation-title-${variationFormCount}" class="fw-bold fs-5">Variation ${variationFormCount}</input>
+            <button type="button" class="variation-btn rename" onclick="renameVariation(${variationFormCount})">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+        </div>
 
-            <div class="variation-rows-container my-2" id="variation-rows-container-${variationFormCount}">
-                ${createVariationRow(variationFormCount, 1)}
-                ${createVariationRow(variationFormCount, 2)}
-                ${createVariationRow(variationFormCount, 3)}
-            </div>
-            <div class="variation-btn-group">
-                <button type="button" class="variation-btn addrem" onclick="addVariationRow(${variationFormCount})">Add New Row</button>
-                <button type="button" class="variation-btn addrem" onclick="removeVariationForm(${variationFormCount})">Remove Variation</button>
-            </div>
-        `;
+        <div class="variation-rows-container my-2" id="variation-rows-container-${variationFormCount}">
+            ${createVariationRow(variationFormCount, 1)}
+            ${createVariationRow(variationFormCount, 2)}
+            ${createVariationRow(variationFormCount, 3)}
+        </div>
+        <div class="variation-btn-group">
+            <button type="button" class="variation-btn addrem" onclick="addVariationRow(${variationFormCount})">Add New Row</button>
+            <button type="button" class="variation-btn addrem" onclick="removeVariationForm(${variationFormCount})">Remove Variation</button>
+        </div>
+    `;
 
-        document.getElementById("variation-forms-list").appendChild(variationForm);
-    }
+    document.getElementById("variation-forms-list").appendChild(variationForm);
+}
 
-    function createVariationRow(variationFormId, rowId = Date.now()) {
-        return `
-            <div class="variation-row" id="variation-row-${variationFormId}-${rowId}">
-                <div class="variationimage text-center" id="variationimageContainer-${variationFormId}-${rowId}" onclick="triggerFileInput(${variationFormId}, ${rowId})">
-                    <div class="overlay">
-                        <i class="fa-solid fa-arrow-up-long mb-1"></i>
-                        <span>Variation Image</span>
-                    </div>
-                    <input type="file" name="variationimage-${variationFormId}-${rowId}" id="variationimage-${variationFormId}-${rowId}" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displaySelectedImage(${variationFormId}, ${rowId})">
+function createVariationRow(variationFormId, rowId) {
+    return `
+        <div class="variation-row" id="variation-row-${variationFormId}-${rowId}">
+            <div class="variationimage text-center" id="variationimageContainer-${variationFormId}-${rowId}" onclick="triggerFileInput(${variationFormId}, ${rowId})">
+                <div class="overlay">
+                    <i class="fa-solid fa-arrow-up-long mb-1"></i>
+                    <span>Variation Image</span>
                 </div>
-
-                <input type="text" name="variation_name_${variationFormId}[]" placeholder="Variation Name">
-                
-                <div class="d-flex align-items-center addpeso">
-                    <input type="number" name="variation_additional_price_${variationFormId}[]" placeholder="0.00" min="0" step="0.01">
-                </div>
-                <div class="d-flex align-items-center minuspeso">
-                    <input type="number" name="variation_subtract_price_${variationFormId}[]" placeholder="0.00" min="0" step="0.01">
-                </div>
-
-                <button type="button" class="variation-btn delete" onclick="removeVariationRow(this)">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+                <input type="file" name="variationimage-${variationFormId}-${rowId}" id="variationimage-${variationFormId}-${rowId}" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displaySelectedImage(${variationFormId}, ${rowId})">
             </div>
-        `;
-    }
 
-    function triggerFileInput(variationFormId, rowId) {
-        const inputFile = document.getElementById(`variationimage-${variationFormId}-${rowId}`);
-        inputFile.value = ''; 
-        inputFile.click();
-    }
+            <input type="text" name="variation_name_${variationFormId}[]" placeholder="Variation Name">
+            
+            <div class="d-flex align-items-center addpeso">
+                <input type="number" name="variation_additional_price_${variationFormId}[]" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div class="d-flex align-items-center minuspeso">
+                <input type="number" name="variation_subtract_price_${variationFormId}[]" placeholder="0.00" min="0" step="0.01">
+            </div>
 
-    function displaySelectedImage(variationFormId, rowId) {
-        const inputFile = document.getElementById(`variationimage-${variationFormId}-${rowId}`);
-        const imageContainer = document.getElementById(`variationimageContainer-${variationFormId}-${rowId}`);
+            <button type="button" class="variation-btn delete" onclick="removeVariationRow(this, ${variationFormId})">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    `;
+}
 
-        if (inputFile.files && inputFile.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imageContainer.style.backgroundImage = `url(${e.target.result})`;
-                imageContainer.querySelector('.overlay').style.display = 'none'; // Hide overlay
-            };
-            reader.readAsDataURL(inputFile.files[0]);
-        }
-    }
+function triggerFileInput(variationFormId, rowId) {
+    const inputFile = document.getElementById(`variationimage-${variationFormId}-${rowId}`);
+    inputFile.value = ''; 
+    inputFile.click();
+}
 
-    function addVariationRow(variationFormId) {
-        const rowId = Date.now();
-        const variationRowsContainer = document.getElementById(`variation-rows-container-${variationFormId}`);
-        variationRowsContainer.insertAdjacentHTML("beforeend", createVariationRow(variationFormId, rowId));
-    }
+function displaySelectedImage(variationFormId, rowId) {
+    const inputFile = document.getElementById(`variationimage-${variationFormId}-${rowId}`);
+    const imageContainer = document.getElementById(`variationimageContainer-${variationFormId}-${rowId}`);
 
-    function removeVariationRow(button) {
-        const variationRow = button.parentNode;
-        variationRow.remove();
+    if (inputFile.files && inputFile.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imageContainer.style.backgroundImage = `url(${e.target.result})`;
+            imageContainer.querySelector('.overlay').style.display = 'none'; // Hide overlay
+        };
+        reader.readAsDataURL(inputFile.files[0]);
     }
+}
 
-    function removeVariationForm(variationFormId) {
-        const variationForm = document.getElementById(`variation-form-${variationFormId}`);
-        variationForm.remove();
-    }
+function addVariationRow(variationFormId) {
+    const variationRowsContainer = document.getElementById(`variation-rows-container-${variationFormId}`);
+    const newRowId = variationRowsContainer.children.length + 1;
+    variationRowsContainer.insertAdjacentHTML("beforeend", createVariationRow(variationFormId, newRowId));
+}
 
-    function renameVariation(variationFormId) {
-        const newTitle = prompt("Enter a new name for this variation:");
-        if (newTitle && newTitle.trim()) {
-            document.getElementById(`variation-title-${variationFormId}`).textContent = newTitle.trim();
-        }
+function removeVariationRow(button, variationFormId) {
+    const variationRow = button.parentNode;
+    variationRow.remove();
+    reindexRows(variationFormId);
+}
+
+function reindexRows(variationFormId) {
+    const variationRowsContainer = document.getElementById(`variation-rows-container-${variationFormId}`);
+    const rows = variationRowsContainer.children;
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const newRowId = i + 1;
+        row.id = `variation-row-${variationFormId}-${newRowId}`;
+        row.querySelector('.variationimage').id = `variationimageContainer-${variationFormId}-${newRowId}`;
+        const inputFile = row.querySelector('input[type="file"]');
+        inputFile.name = `variationimage-${variationFormId}-${newRowId}`;
+        inputFile.id = `variationimage-${variationFormId}-${newRowId}`;
+        inputFile.setAttribute('onchange', `displaySelectedImage(${variationFormId}, ${newRowId})`);
+        row.querySelector('.variation-btn.delete').setAttribute('onclick', `removeVariationRow(this, ${variationFormId})`);
     }
+}
+
+function removeVariationForm(variationFormId) {
+    const variationForm = document.getElementById(`variation-form-${variationFormId}`);
+    variationForm.remove();
+}
+
+// function renameVariation(variationFormId) {
+//     const newTitle = prompt("Enter a new name for this variation:");
+//     if (newTitle && newTitle.trim()) {
+//         document.getElementById(`variation-title-${variationFormId}`).textContent = newTitle.trim();
+//     }
+// }
