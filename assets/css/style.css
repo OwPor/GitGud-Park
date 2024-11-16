@@ -714,7 +714,7 @@ Color Palette:
   transform: scale(1.02);
   background-color: #82B19E;
 }
-.addpro:hover{
+.addpro:hover, .cancelorder:hover{
   transform: scale(1.02);
   background-color: #E06D1A;
 }
@@ -1230,4 +1230,68 @@ left: -25px;
 }
 .dispro h1{
   color: #CD5C08;
+}
+.reminder{
+  background-color: #FFF5E4;
+  border: 1px #CD5C08 solid;
+  color: #CD5C08;
+}
+.newban{
+  background-color: #FFF5E4;
+  padding: 0 120px;
+}
+.newban h1{
+  color: #CD5C08;
+  font-weight: bold;
+  font-size: 45px;
+}
+.newban p{
+  font-size: 18px;
+}
+.nav-container .nav-link {
+  text-decoration: none;
+  color: #333;
+  padding: 8px 16px;
+  border: 1px solid #eee;
+  border-radius: 50px;
+  background-color: #fff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-container .nav-link.active, .nav-container .nav-link.active:hover{
+  background-color: #CD5C08;
+  color: #fff;
+}
+
+.nav-container .nav-link:hover {
+  background-color: #e5e5e5;
+  color: #333;
+}
+
+.section-content {
+  display: none;
+  margin-top: 20px;
+}
+
+.section-content.active {
+  display: block;
+}
+
+.cancelorder, .preparing, .likeorder{
+  background-color: #CD5C08;
+  color: white;
+  border: none;
+  font-size: 13px;
+  height: fit-content;
+  padding: 5px 15px;
+}
+.preparing{
+  background-color: gray;
+  cursor: auto !important;
+}
+.likeorder:hover{
+  background-color: #85B19E;
+}
+.likeorder{
+  background-color: #6A9C89;
 }

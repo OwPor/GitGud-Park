@@ -15,21 +15,6 @@ Color Palette:
         background-color: white;
         padding: 0 120px;
     }
-    .fsname:hover{
-        text-decoration: underline;
-    }
-    .newban{
-        background-color: #FFF5E4;
-        padding: 0 120px;
-    }
-    .newban h1{
-        color: #CD5C08;
-        font-weight: bold;
-        font-size: 45px;
-    }
-    .newban p{
-        font-size: 18px;
-    }
 </style>
 <div class="d-flex newban justify-content-between align-items-center">
     <div>

@@ -1,8 +1,8 @@
 <?php 
-    session_start();
+    //session_start();
     include_once 'links.php'; 
-    require_once __DIR__ . '/classes/db.class.php';
-    $userObj = new User();
+    //require_once __DIR__ . '/classes/db.class.php';
+    //$userObj = new User();
 ?>
 <style>
     .headnav a.active,
