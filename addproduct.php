@@ -20,81 +20,124 @@
         exit();
     }
 
-
-
     require_once __DIR__ . '/classes/product.class.php';
     $productObj = new Product();
 
     $selectCategories = $productObj->getCategories();
     
     $uploadDir = 'uploads/images/';
-    $allowedType = ['jpg', 'jpeg', 'png'];
+    $allowedTypes = ['jpg', 'jpeg', 'png'];
+
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $errors = [];
+
+        $name = filter_var($_POST['productname'], FILTER_SANITIZE_STRING);
+        $code = filter_var($_POST['productcode'], FILTER_SANITIZE_STRING);
+        $category = filter_var($_POST['category'], FILTER_SANITIZE_STRING);
+        $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
+        $price = filter_var($_POST['sellingPrice'], FILTER_SANITIZE_STRING);
+
+        if (empty($name)) {
+            $errors['nameErr'] = 'Product name is required.';
+        } elseif (!preg_match("/^[a-zA-Z0-9 ]*$/", $name)) {
+            $errors['nameErr'] = 'Only letters, numbers, and white spaces are allowed.';
+        }
+
+        if (empty($code)) {
+            $errors['codeErr'] = 'Product code is required.';
+        } elseif (!preg_match("/^[a-zA-Z0-9 ]*$/", $code)) {
+            $errors['codeErr'] = 'Only letters, numbers, and white spaces are allowed.';
+        }
+
+        if (empty($category)) {
+            $errors['categoryErr'] = 'Category is required.';
+        }
+
+        if (empty($price)) {
+            $errors['priceErr'] = 'Selling price is required.';
+        } elseif (!is_numeric($price)) {
+            $errors['priceErr'] = 'Only numbers are allowed.';
+        } elseif ($price <= 0) {
+            $errors['priceErr'] = 'Price must be greater than 0.';
+        }
+
         if (isset($_FILES['product_image'])) {
-            $name = filter_var($_POST['productname'], FILTER_SANITIZE_STRING);
-            $code = filter_var($_POST['productcode'], FILTER_SANITIZE_STRING);
-            $category = filter_var($_POST['category'], FILTER_SANITIZE_STRING);
-            $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
-            $price = filter_var($_POST['sellingPrice'], FILTER_SANITIZE_STRING);
             $image = $_FILES['product_image']['name'] ?? '';
             $imageTemp = $_FILES['product_image']['tmp_name'] ?? '';
-
-
-            // $discount = filter_var($_POST['discount'], FILTER_SANITIZE_STRING);
-            // $startDate = filter_var($_POST['startDate'], FILTER_SANITIZE_STRING);
-            // $endDate = filter_var($_POST['endDate'], FILTER_SANITIZE_STRING);
-
-            if (empty($name)) {
-                $nameErr = 'Product name is required.';
-            } else if (!preg_match("/^[a-zA-Z0-9 ]*$/", $name)) {
-                $nameErr = 'Only letters, numbers, and white spaces are allowed.';
-            }
-
-            if (empty($code)) {
-                $codeErr = 'Product code is required.';
-            } else if (!preg_match("/^[a-zA-Z0-9 ]*$/", $code)) {
-                $codeErr = 'Only letters, numbers, and white spaces are allowed.';
-            }
-
-            if (empty($category)) {
-                $categoryErr = 'Category is required.';
-            }
-
-            if (empty($price)) {
-                $priceErr = 'Selling price is required.';
-            } else if (!is_numeric($price)) {
-                $priceErr = 'Only numbers are allowed.';
-            } else if ($price <= 0) {
-                $priceErr = 'Price must be greater than 0.';
-            }
-
             $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+
             if (empty($image)) {
-                $imageErr = 'Product image is required.';
-            } else if (!in_array($imageFileType, $allowedType)) {
-                $imageErr = 'Accepted files are jpg, jpeg, and png only.';
-            } else if ($_FILES['product_image']['size'] > 5000000) {
-                $imageErr = "Only files under 5MB are allowed.";
+                $errors['imageErr'] = 'Product image is required.';
+            } elseif (!in_array($imageFileType, $allowedTypes)) {
+                $errors['imageErr'] = 'Accepted files are jpg, jpeg, and png only.';
+            } elseif ($_FILES['product_image']['size'] > 5000000) {
+                $errors['imageErr'] = "Only files under 5MB are allowed.";
+            } else {
+                $targetImage = $uploadDir . uniqid() . '.' . $imageFileType;
+                if (!move_uploaded_file($imageTemp, $targetImage)) {
+                    $errors['imageErr'] = 'Failed to upload image.';
+                }
             }
         } else {
-            $imageErr = 'Product image is required.';
+            $errors['imageErr'] = 'Product image is required.';
         }
 
-        if (!empty($imageErr)) {
-            echo json_encode([
-                'imageErr' => $imageErr
-            ]);
-            exit;
+        $variants = [];
+        $variantIndex = 1;
+
+        while (isset($_POST['variation_name_' . $variantIndex])) {
+            foreach ($_POST['variation_name_' . $variantIndex] as $index => $variantName) {
+                $type = $_POST["variation-title-$variantIndex"];
+                $additionalPrice = $_POST['variation_additional_price_' . $variantIndex][$index] ?? 0;
+                $subtractPrice = $_POST['variation_subtract_price_' . $variantIndex][$index] ?? 0;
+                $variantImage = $_FILES['variationimage-' . $variantIndex . '-' . $index]['name'] ?? '';
+                $variantImageTemp = $_FILES['variationimage-' . $variantIndex . '-' . $index]['tmp_name'] ?? '';
+
+                $variantImagePath = null;
+                if (!empty($variantImage)) {
+                    $variantImageFileType = strtolower(pathinfo($variantImage, PATHINFO_EXTENSION));
+                    if (in_array($variantImageFileType, $allowedTypes) && $_FILES['variationimage-' . $variantIndex . '-' . $index]['size'] <= 5000000) {
+                        $variantImagePath = $uploadDir . uniqid() . '.' . $variantImageFileType;
+                        if (!move_uploaded_file($variantImageTemp, $variantImagePath)) {
+                            $errors['variantImageErr'] = 'Failed to upload variant image.';
+                            error_log('Failed to move uploaded file for variant image: ' . $variantImage);
+                        } else {
+                            error_log('Successfully uploaded variant image to: ' . $variantImagePath);
+                        }
+                    } else {
+                        $errors['variantImageErr'] = 'Variant image must be jpg, jpeg, or png and under 5MB.';
+                        error_log('Invalid file type or size for variant image: ' . $variantImage);
+                    }
+                } else {
+                    error_log('No variant image provided for index: ' . $index);
+                }
+                
+                $variants[] = [
+                    'type' => filter_var($type, FILTER_SANITIZE_STRING),
+                    'name' => filter_var($variantName, FILTER_SANITIZE_STRING),
+                    'additional_price' => filter_var($additionalPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
+                    'subtract_price' => filter_var($subtractPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
+                    'image_path' => $variantImagePath
+                ];
+            }
+            $variantIndex++;
         }
 
-        if(empty($codeErr) && empty($nameErr) && empty($categoryErr) && empty($priceErr) && empty($imageErr) && empty($stall_idErr) ) {
-            $targetImage = $uploadDir . uniqid() . basename($image);
-            if($productObj->addProduct($name, $code, $description, $price, $category, $stall_id, $targetImage)){
-                move_uploaded_file($imageTemp, $targetImage);
+        if (empty($errors)) {
+            if ($productObj->addProduct($name, $code, $description, $price, $category, $stall_id, $targetImage, $variants)) {
                 header('Location: index.php');
                 exit();
+            } else {
+                $errors['generalErr'] = 'Failed to add product. Please try again.';
             }
+        }
+        
+        if (!empty($errors)) {
+            echo json_encode($errors);
             exit;
         }
     }
