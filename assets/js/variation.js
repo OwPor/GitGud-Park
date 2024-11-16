@@ -9,7 +9,7 @@ let variationFormCount = 0;
 
         variationForm.innerHTML = `
             <div class="variation-header">
-                <span id="variation-title-${variationFormCount}" class="fw-bold fs-5">Variation ${variationFormCount}</span>
+                <input type="text" placeholder="Variation Title" name="variation-title-${variationFormCount}" id="variation-title-${variationFormCount}" class="fw-bold fs-5">Variation ${variationFormCount}</input>
                 <button type="button" class="variation-btn rename" onclick="renameVariation(${variationFormCount})">
                     <i class="fa-solid fa-pen"></i>
                 </button>
@@ -37,7 +37,7 @@ let variationFormCount = 0;
                         <i class="fa-solid fa-arrow-up-long mb-1"></i>
                         <span>Variation Image</span>
                     </div>
-                    <input type="file" id="variationimage-${variationFormId}-${rowId}" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displaySelectedImage(${variationFormId}, ${rowId})">
+                    <input type="file" name="variationimage-${variationFormId}-${rowId}" id="variationimage-${variationFormId}-${rowId}" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displaySelectedImage(${variationFormId}, ${rowId})">
                 </div>
 
                 <input type="text" name="variation_name_${variationFormId}[]" placeholder="Variation Name">

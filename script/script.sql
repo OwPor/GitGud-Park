@@ -100,6 +100,20 @@ CREATE TABLE products (
     FOREIGN KEY (stall_id) REFERENCES stalls(id) ON DELETE CASCADE
 );
 
+CREATE TABLE product_variants (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT UNSIGNED NOT NULL,
+    variation_type VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    additional_price DECIMAL(10, 2) DEFAULT 0.00,
+    subtract_price DECIMAL(10, 2) DEFAULT 0.00,
+    image_path VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+
 INSERT INTO products (name, code, description, price, category_id, stall_id) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1);
 
 
