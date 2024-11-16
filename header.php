@@ -4,7 +4,12 @@
     require_once __DIR__ . '/classes/db.class.php';
     $userObj = new User();
 ?>
-
+<style>
+    .headnav a.active,
+    .headnav a.hover {
+    border-bottom: 2px solid #CD5C08;
+    }
+</style>
 <nav>
     <div class="top">
         <?php
@@ -84,16 +89,30 @@
                 <input type="text" name="search" placeholder="Search">
                 <button type="submit"><i class="fas fa-search fa-lg"></i></button>
             </form>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="popular.php">Popular</a></li>
-                <li><a href="categories.php">Categories</a></li>
-                <li><a href="new.php">New</a></li>
-                <li><a href="promotion.php">Promotion</a></li>
+            <ul class="headnav">
+                <li><a href="index.php" class="nav-link">Home</a></li>
+                <li><a href="popular.php" class="nav-link">Popular</a></li>
+                <li><a href="categories.php" class="nav-link">Categories</a></li>
+                <li><a href="new.php" class="nav-link">New</a></li>
+                <li><a href="promotion.php" class="nav-link">Promotion</a></li>
             </ul>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const links = document.querySelectorAll(".nav-link");
+                    const currentURL = window.location.pathname;
+
+                    links.forEach(link => {
+                        if (link.getAttribute("href") === currentURL.split('/').pop()) {
+                            link.classList.add("active");
+                        }
+                    });
+                });
+
+            </script>
         </div>
     </div> 
 </nav>
+<script src="assets/js/navigation.js"></script>
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/dropdown.js"></script>
