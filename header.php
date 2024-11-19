@@ -46,9 +46,8 @@
                                             echo '<a href="favorites.php"><i class="fa-regular fa-heart"></i> Favorites</a>';
                                             echo '<a href="orders.php"><i class="fa-regular fa-rectangle-list"></i> Orders</a>';
                                             echo '<a href="menagemenu.php"><i class="fa-regular fa-window-restore"></i> Manage Menu</a>';
-                                            echo '<a href="choicegroup.php"><i class="fa-solid fa-layer-group"></i> Choice Group</a>';
                                             echo '<a href="sales.php"><i class="fa-solid fa-chart-column"></i> Sales</a>';
-                                            echo '<a href="stallpage.php"><i class="fa-regular fa-address-card"></i> Stall Page</a>';
+                                            echo '<a href="stallpage(user).php"><i class="fa-regular fa-address-card"></i> Stall Page</a>';
                                             break;
                                         case 'Park Owner':
                                             echo '<a href="account.php"><i class="fa-regular fa-user"></i> Account</a>';

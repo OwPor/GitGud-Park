@@ -1,107 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order UI</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet">
-  <style>
-    .btn-toggle {
-      background-color: #f8f9fa;
-      border: 1px solid #ced4da;
-      border-radius: 5px;
-    }
-    .btn-toggle.active {
-      background-color: #cd5c08;
-      color: white;
-    }
-    .btn-orange {
-      background-color: #cd5c08;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 5px;
-    }
-    .btn-orange:hover {
-      background-color: #b25007;
-    }
-  </style>
-</head>
-<body>
-<div class="container mt-5">
-  <div class="card p-4">
-    <h4 class="text-end">Total: <span class="text-danger">P1,072</span></h4>
-
-    <!-- Order Type -->
-    <div class="mb-3">
-      <label class="form-label">Order Type</label>
-      <div class="btn-group d-flex" role="group">
-        <button type="button" class="btn btn-toggle active" id="dineIn">Dine In</button>
-        <button type="button" class="btn btn-toggle" id="takeOut">Take Out</button>
-      </div>
+<div class="bg-white border rounded-2 p-4 w-75">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 class="m-0 fw-bold">Sales Today</h5>
+        <span class="small py-1 px-2 rounded-5 salesdr" style="color: #CD5C08;">Download Report<i class="fa-regular fa-circle-down ms-2"></i></span>
     </div>
-
-    <!-- Payment Method -->
-    <div class="mb-3">
-      <label class="form-label">Payment Method</label>
-      <select class="form-select" id="paymentMethod">
-        <option value="cash">Cash</option>
-        <option value="gcash">GCash</option>
-        <option value="paymaya">PayMaya</option>
-      </select>
-    </div>
-
-    <!-- Order Time -->
-    <div>
-      <label class="form-label">Order</label>
-      <div class="d-flex align-items-center mb-3">
-        <input class="form-check-input me-2" type="radio" name="orderTime" id="immediately" checked>
-        <label for="immediately" class="me-4">Immediately</label>
-
-        <input class="form-check-input me-2" type="radio" name="orderTime" id="scheduleLater">
-        <label for="scheduleLater">Schedule for later</label>
-      </div>
-
-      <div class="row g-3">
-        <div class="col-md-4">
-          <input type="date" class="form-control" id="scheduleDate" disabled>
+    <div class="w-100 d-flex my-4">
+        <div class="cartot btn-group w-50" role="group">
+            <button type="button" class="btn-toggle active rounded" id="outletView">Outlet View</button>
+            <button type="button" class="btn-toggle rounded" id="chartView">Chart View</button>
         </div>
-        <div class="col-md-4">
-          <input type="time" class="form-control" id="scheduleTime" disabled>
+        <div class="w-25 text-end">
+            <h4 class="m-0 fw-bold">53</h4>
+            <span class="small">Total Orders</span>
         </div>
-      </div>
+        <div class="w-25 text-end">
+            <h4 class="m-0 fw-bold">₱433</h4>
+            <span class="small">Total Sales</span>
+        </div>
     </div>
 
-    <!-- Place Order -->
-    <div class="mt-4">
-      <button class="btn btn-orange w-100">Place Order</button>
+    <!-- Outlet View (Table) -->
+    <table class="salestable w-100" id="outletViewTable">
+        <tr>
+            <th class="w-50">Product Name</th>
+            <th class="text-end w-25">Order Count</th>
+            <th class="text-end w-25">Sales</th>
+        </tr>
+    </table>
+    <div class="d-flex gap-3 saletabpag align-items-center justify-content-center mt-3" id="pagination">
+        <!-- Pagination will be dynamically generated -->
     </div>
-  </div>
+
+    <!-- Chart View (Graph) -->
+    <div id="chartContainer" class="d-none">
+        <canvas id="salesChart" width="400" height="200"></canvas>
+    </div>
 </div>
 
-<script>
-  // Toggle Order Type buttons
-  document.querySelectorAll('.btn-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  // Enable/Disable Date and Time fields
-  const scheduleDate = document.getElementById('scheduleDate');
-  const scheduleTime = document.getElementById('scheduleTime');
-  document.getElementById('immediately').addEventListener('click', () => {
-    scheduleDate.disabled = true;
-    scheduleTime.disabled = true;
-  });
-  document.getElementById('scheduleLater').addEventListener('click', () => {
-    scheduleDate.disabled = false;
-    scheduleTime.disabled = false;
-  });
+<script>
+    // Data for products
+    const products = [
+        { name: "Product 1", count: 10, sales: 100 },
+        { name: "Product 2", count: 20, sales: 200 },
+        { name: "Product 3", count: 30, sales: 300 },
+        { name: "Product 4", count: 25, sales: 250 },
+        { name: "Product 5", count: 15, sales: 150 },
+        { name: "Product 6", count: 18, sales: 180 },
+        { name: "Product 7", count: 22, sales: 220 },
+        { name: "Product 8", count: 16, sales: 160 },
+        { name: "Product 9", count: 12, sales: 120 },
+        { name: "Product 10", count: 28, sales: 280 },
+    ];
+
+    // Pagination variables
+    const rowsPerPage = 5;
+    let currentPage = 1;
+
+    // Elements
+    const outletViewTable = document.getElementById("outletViewTable");
+    const paginationContainer = document.getElementById("pagination");
+    const outletViewButton = document.getElementById("outletView");
+    const chartViewButton = document.getElementById("chartView");
+    const chartContainer = document.getElementById("chartContainer");
+
+    // Render table with pagination
+    function renderTable() {
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const paginatedProducts = products.slice(startIndex, endIndex);
+
+        // Clear existing rows
+        outletViewTable.innerHTML = `
+            <tr>
+                <th class="w-50">Product Name</th>
+                <th class="text-end w-25">Order Count</th>
+                <th class="text-end w-25">Sales</th>
+            </tr>
+        `;
+
+        // Add rows for paginated products
+        paginatedProducts.forEach(product => {
+            const row = `
+                <tr>
+                    <td>${product.name}</td>
+                    <td class="text-end">${product.count}</td>
+                    <td class="text-end">₱${product.sales}</td>
+                </tr>
+            `;
+            outletViewTable.innerHTML += row;
+        });
+
+        renderPagination();
+    }
+
+    // Render pagination buttons
+    function renderPagination() {
+        const totalPages = Math.ceil(products.length / rowsPerPage);
+        paginationContainer.innerHTML = "";
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement("span");
+            pageButton.textContent = i;
+            pageButton.classList.add(i === currentPage ? "active" : "");
+            pageButton.addEventListener("click", () => {
+                currentPage = i;
+                renderTable();
+            });
+            paginationContainer.appendChild(pageButton);
+        }
+    }
+
+    // Toggle views
+    outletViewButton.addEventListener("click", () => {
+        outletViewTable.classList.remove("d-none");
+        chartContainer.classList.add("d-none");
+        paginationContainer.classList.remove("d-none");
+        outletViewButton.classList.add("active");
+        chartViewButton.classList.remove("active");
+    });
+
+    chartViewButton.addEventListener("click", () => {
+        outletViewTable.classList.add("d-none");
+        chartContainer.classList.remove("d-none");
+        paginationContainer.classList.add("d-none");
+        outletViewButton.classList.remove("active");
+        chartViewButton.classList.add("active");
+        loadChart(); // Generate the chart
+    });
+
+    // Generate the Chart.js line graph
+    function loadChart() {
+        const ctx = document.getElementById("salesChart").getContext("2d");
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: products.map(product => product.name),
+                datasets: [
+                    {
+                        label: "Order Count",
+                        data: products.map(product => product.count),
+                        borderColor: "#CD5C08",
+                        backgroundColor: "rgba(205, 92, 8, 0.1)",
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                    },
+                    {
+                        label: "Sales (₱)",
+                        data: products.map(product => product.sales),
+                        borderColor: "#1e90ff",
+                        backgroundColor: "rgba(30, 144, 255, 0.1)",
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top",
+                    },
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Products",
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Values",
+                        },
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+    }
+
+    // Initial render
+    renderTable();
 </script>
-</body>
-</html>
+
+
+=
