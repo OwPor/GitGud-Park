@@ -123,7 +123,7 @@
                 <span class="text-dark d-block mt-1">Chicken</span>
             </a>
         </div>
-        <a href="stallpage.php" class="card-link text-decoration-none">
+        <a href="stall.php" class="card-link text-decoration-none">
         </a>
         <i class="fa-solid fa-arrow-right scroll-arrow right-arrow"></i>
     </div>
@@ -136,7 +136,7 @@
     <div class="tpdiv position-relative">
         <i class="fa-solid fa-arrow-left scroll-arrow left-arrow" style="display: none;"></i>
         <div class="d-flex rightfilter gap-3">
-            <a href="stallpage.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
+            <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
@@ -157,7 +157,7 @@
                     </div>
                 </div>
             </a>
-            <a href="stallpage.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
+            <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
@@ -189,7 +189,7 @@
     <div class="tpdiv position-relative">
         <i class="fa-solid fa-arrow-left scroll-arrow left-arrow" style="display: none;"></i>
         <div class="d-flex rightfilter gap-3">
-            <a href="stallpage.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
+            <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
@@ -210,7 +210,7 @@
                     </div>
                 </div>
             </a>
-            <a href="stallpage.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
+            <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
@@ -242,7 +242,7 @@
     <div class="tpdiv position-relative">
         <i class="fa-solid fa-arrow-left scroll-arrow left-arrow" style="display: none;"></i>
         <div class="d-flex rightfilter gap-3">
-            <a href="stallpage.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
+            <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
@@ -263,7 +263,7 @@
                     </div>
                 </div>
             </a>
-            <a href="stallpage.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
+            <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
@@ -284,7 +284,7 @@
                     </div>
                 </div>
             </a>
-            <a href="stallpage.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
+            <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
@@ -320,7 +320,7 @@
 
     <div class="row row-cols-1 row-cols-md-4 g-3">
         <div class="col">
-            <a href="stallpage.php" class="card-link text-decoration-none bg-white">
+            <a href="stall.php" class="card-link text-decoration-none bg-white">
                 <div class="card" style="position: relative;">
                     <img src="assets/images/user.jpg" class="card-img-top" alt="...">
                     <div class="closed">Closed until Wed 10:00 AM</div>
@@ -345,7 +345,7 @@
             </a>
         </div>
         <!-- <div class="col">
-            <a href="stallpage.php" class="card-link text-decoration-none bg-white">
+            <a href="stall.php" class="card-link text-decoration-none bg-white">
                 <div class="card" style="position: relative;">
                     <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
                     <button class="add"><i class="fa-regular fa-heart"></i></button>
@@ -373,7 +373,7 @@
         <?php
             foreach ($stalls as $stall) {
                 if ($stall['status'] == 'Open') {
-                    $uniqueLink = "./stallpage.php?pid=" . $_GET['id'] . '&' . 'sid=' . $stall['id'];
+                    $uniqueLink = "./stall.php?pid=" . $_GET['id'] . '&' . 'sid=' . $stall['id'];
                     ?>
                     <div class="col open-stall">
                         <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none bg-white">

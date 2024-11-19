@@ -54,7 +54,7 @@
                 echo '<a href="orders.php" class="<?= $current_page == "orders.php" ? "active" : "" ?>ORDERS</a>';
                 echo '<a href="managemenu.php" class="<?= $current_page == "managemenu.php" ? "active" : "" ?>MANAGE MENU</a>';
                 echo '<a href="choicegroup.php" class="<?= $current_page == "choicegroup.php" ? "active" : "" ?>CHOICE GROUP</a>';
-                echo '<a href="stallpage.php" class="<?= $current_page == "stallpage.php" ? "active" : "" ?>STALL PAGE</a>';
+                echo '<a href="stall.php" class="<?= $current_page == "stall.php" ? "active" : "" ?>STALL PAGE</a>';
                 echo '<a href="sales.php" class="<?= $current_page == "sales.php" ? "active" : "" ?>SALES</a>';
                 break;
             case 'Park Owner':

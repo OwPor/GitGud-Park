@@ -42,7 +42,7 @@ Color Palette:
                 <h5 class="ranknumber">1</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -64,7 +64,7 @@ Color Palette:
                 <h5 class="ranknumber">2</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -86,7 +86,7 @@ Color Palette:
                 <h5 class="ranknumber">3</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -108,7 +108,7 @@ Color Palette:
                 <h5 class="ranknumber">4</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -136,7 +136,7 @@ Color Palette:
                 <h5 class="ranknumber">1</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -158,7 +158,7 @@ Color Palette:
                 <h5 class="ranknumber">2</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -180,7 +180,7 @@ Color Palette:
                 <h5 class="ranknumber">3</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -202,7 +202,7 @@ Color Palette:
                 <h5 class="ranknumber">4</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -230,7 +230,7 @@ Color Palette:
                 <h5 class="ranknumber">1</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -252,7 +252,7 @@ Color Palette:
                 <h5 class="ranknumber">2</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -274,7 +274,7 @@ Color Palette:
                 <h5 class="ranknumber">3</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
@@ -296,7 +296,7 @@ Color Palette:
                 <h5 class="ranknumber">4</h5>
                 <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
-                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                    <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
                     <div class="d-flex align-items-center justify-content-between">
                         <div>

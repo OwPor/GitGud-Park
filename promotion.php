@@ -39,7 +39,7 @@ Color Palette:
                         <span class="newopen">New</span>
                     </div>
                     <div class="card-body">
-                        <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                        <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                         <h5 class="card-title mt-2 mb-4">Beef And Mushroom Pizza</h5>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -63,7 +63,7 @@ Color Palette:
                         <span class="newopen">New</span>
                     </div>
                     <div class="card-body">
-                        <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                        <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                         <h5 class="card-title mt-2 mb-4">Beef And Mushroom Pizza</h5>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -87,7 +87,7 @@ Color Palette:
                         <span class="newopen">New</span>
                     </div>
                     <div class="card-body">
-                        <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                        <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                         <h5 class="card-title mt-2 mb-4">Beef And Mushroom Pizza</h5>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -111,7 +111,7 @@ Color Palette:
                         <span class="newopen">New</span>
                     </div>
                     <div class="card-body">
-                        <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                        <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                         <h5 class="card-title mt-2 mb-4">Beef And Mushroom Pizza</h5>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -148,7 +148,7 @@ Color Palette:
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
-                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
                             <p class="card-text text-muted m-0">Until March 20, 2024</p>
                             <div class="d-flex align-items-center justify-content-between my-3">
@@ -186,7 +186,7 @@ Color Palette:
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
-                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
                             <p class="card-text text-muted m-0">Until March 20, 2024</p>
                             <div class="d-flex align-items-center justify-content-between my-3">
@@ -224,7 +224,7 @@ Color Palette:
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
-                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
                             <p class="card-text text-muted m-0">Until March 20, 2024</p>
                             <div class="d-flex align-items-center justify-content-between my-3">
@@ -262,7 +262,7 @@ Color Palette:
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                         <div class="card-body">
-                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stallpage.php';">Food Stall Name</p>
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
                             <p class="card-text text-muted m-0">Until March 20, 2024</p>
                             <div class="d-flex align-items-center justify-content-between my-3">
