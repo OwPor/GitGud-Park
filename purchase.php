@@ -32,7 +32,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-2 align-items-center">
                         <span class="fw-bold">Food Stall Name</span>
-                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stallpage.php';">View Stall</button>
+                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php';">View Stall</button>
                     </div>
                 </div>
                 <div class="d-flex gap-3 align-items-center">
@@ -93,7 +93,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-2 align-items-center">
                         <span class="fw-bold">Food Stall Name</span>
-                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stallpage.php';">View Stall</button>
+                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php';">View Stall</button>
                     </div>
                 </div>
                 <div class="d-flex gap-3 align-items-center">
@@ -154,7 +154,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-2 align-items-center">
                         <span class="fw-bold">Food Stall Name</span>
-                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stallpage.php';">View Stall</button>
+                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php';">View Stall</button>
                     </div>
                 </div>
                 <div class="d-flex gap-3 align-items-center">
@@ -215,7 +215,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-2 align-items-center">
                         <span class="fw-bold">Food Stall Name</span>
-                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stallpage.php';">View Stall</button>
+                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php';">View Stall</button>
                     </div>
                 </div>
                 <div class="d-flex gap-3 align-items-center">
@@ -279,7 +279,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-2 align-items-center">
                         <span class="fw-bold">Food Stall Name</span>
-                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stallpage.php';">View Stall</button>
+                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php';">View Stall</button>
                     </div>
                 </div>
                 <div class="d-flex gap-3 align-items-center">
@@ -343,7 +343,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-2 align-items-center">
                         <span class="fw-bold">Food Stall Name</span>
-                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stallpage.php';">View Stall</button>
+                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php';">View Stall</button>
                     </div>
                 </div>
                 <div class="d-flex gap-3 align-items-center">
