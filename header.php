@@ -11,7 +11,7 @@
     }
 </style>
 <nav>
-    <div class="top">
+    <div class="top position-relative">
         <?php
             if (isset($_SESSION['user'])) {
                 // LOGGED IN
@@ -45,7 +45,7 @@
                                             echo '<a href="purchase.php"><i class="fa-regular fa-credit-card"></i> Purchase</a>';
                                             echo '<a href="favorites.php"><i class="fa-regular fa-heart"></i> Favorites</a>';
                                             echo '<a href="orders.php"><i class="fa-regular fa-rectangle-list"></i> Orders</a>';
-                                            echo '<a href="managemenu.php"><i class="fa-regular fa-window-restore"></i> Manage Menu</a>';
+                                            echo '<a href="menagemenu.php"><i class="fa-regular fa-window-restore"></i> Manage Menu</a>';
                                             echo '<a href="choicegroup.php"><i class="fa-solid fa-layer-group"></i> Choice Group</a>';
                                             echo '<a href="sales.php"><i class="fa-solid fa-chart-column"></i> Sales</a>';
                                             echo '<a href="stallpage.php"><i class="fa-regular fa-address-card"></i> Stall Page</a>';
@@ -70,6 +70,7 @@
                 // NOT LOGGED IN
                 ?>
                 <ul>
+                    
                     <li><a href="signin.php">Sign In</a></li>
                     <span style="color:white;">|</span>
                     <li><a href="signup.php">Sign Up</a></li>
@@ -77,8 +78,7 @@
                 <?php
             }
         ?>
-        
-
+        <span class="insidefp text-white"><i class="fa-solid fa-location-crosshairs me-2"></i> Food Park Name</span> 
     </div>
     <div class="bottom">
         <a href="index.php">
@@ -110,7 +110,7 @@
 
             </script>
         </div>
-    </div> 
+    </div>
 </nav>
 <script src="assets/js/navigation.js"></script>
 

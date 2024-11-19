@@ -1295,3 +1295,41 @@ left: -25px;
 .likeorder{
   background-color: #6A9C89;
 }
+
+.carttop button{
+  all: unset;
+  padding: 3px 8px;
+  border-radius: 50px;
+  border: none;
+  color: #CD5C08;
+  font-size: 14px;
+  cursor: pointer;
+}
+.carttop button:hover{
+  background-color: #FFF5E4;
+}
+.btn-toggle{
+  width: 100%;
+  border: none;
+  background-color: #f4f4f4;
+  padding: 5px 0;
+}
+.btn-toggle.active {
+  background-color: white;
+  border: 1px solid #ddd;
+}
+.cartot.btn-group{
+  background-color: #f4f4f4; 
+  padding: 3px;
+}
+.cartdis input:disabled {
+  background-color: #fff;
+  color:  #a0a0a0;
+  opacity: 0.7;
+}
+.insidefp {
+  position: absolute;
+  top: 50%;
+  left: 120px; 
+  transform: translateY(-50%); 
+}

@@ -4,32 +4,8 @@
     include_once 'modals.php';
 ?>
 <style>
-        /*
-Color Palette:
-#CD5C08
-#FFF5E4
-#C1D8C3
-#6A9C89
-*/
     main{
         padding: 20px 120px;
-    }
-    .carttop button{
-        all: unset;
-        padding: 3px 8px;
-        border-radius: 50px;
-        border: none;
-        color: #CD5C08;
-        font-size: 14px;
-        cursor: pointer;
-    }
-    .carttop button:hover{
-        background-color: #FFF5E4;
-    }
-    .cartdel{
-        font-size: large;
-        padding: 5px 7px;
-        color: gray;
     }
 </style>
 <main>
@@ -39,7 +15,6 @@ Color Palette:
             <input class="form-check-input m-0" type="checkbox" value="" id="selectAll" onclick="toggleSelectAll(this)">
             <label class="form-check-label" for="selectAll">Select All</label>
             <button>Delete</button>
-            <button>Remove inactive items</button>
             <button>Like</button>
         </div>
     </div>
@@ -51,40 +26,53 @@ Color Palette:
                 <input class="form-check-input m-0 stall-checkbox" type="checkbox" onclick="toggleStallItems(this, 'stall-1')">
                 <span class="fw-bold">Stall 1 Name</span>
             </div>
+            <span class="text-danger" style="font-size: 13px;"><i class="fa-solid fa-circle-exclamation me-2"></i>This stall does not offer Cash payment</span>
         </div>
         <!-- Item 1 -->
-        <div class="d-flex justify-content-between border-bottom py-2 stall-1">
-            <div class="d-flex gap-3 align-items-center">
+        <div class="d-flex border-bottom py-2 stall-1">
+            <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="85px" height="85px" class="border rounded-2">
-                <div class="d-flex justify-content-between align-items-center w-100">
-                    <div>
-                        <span class="fs-5">Kimchi Noodle Soup</span><br>
-                        <span class="small text-muted">Variation: Chocolate, Medium</span>
-                    </div>
-                    <div class="d-flex gap-5 align-items-center">
-                        <i class="fa-solid fa-xmark cartdel"></i>
-                        <div class="d-flex align-items-center hlq">
-                            <i class="fa-solid fa-minus" onclick="updateQuantity(this, -1)"></i>
-                            <span class="ordquanum">1</span>
-                            <i class="fa-solid fa-plus" onclick="updateQuantity(this, 1)"></i>
-                        </div>
-                    </div>
-                    <div class="fw-bold">₱103</div>
+                <img src="assets/images/foodpark.jpg" width="80px" height="80px" class="border rounded-2">
+                <div>
+                    <span class="fs-5">Kimchi Noodle Soup</span><br>
+                    <span class="small text-muted">Variation: Chocolate, Medium</span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between" style="width: 35%">
+                <div class="d-flex align-items-center hlq">
+                    <i class="fa-solid fa-minus" onclick="updateQuantity(this, -1)"></i>
+                    <span class="ordquanum">1</span>
+                    <i class="fa-solid fa-plus" onclick="updateQuantity(this, 1)"></i>
+                </div>
+                <div class="fw-bold fs-5">₱103</div>
+                <div class="carttop d-flex gap-3">
+                    <button>Delete</button>
+                    <button>Like</button>
                 </div>
             </div>
         </div>
         <!-- Item 2 -->
-        <div class="d-flex justify-content-between border-bottom py-2 stall-1">
-            <div class="d-flex gap-3 align-items-center">
+        <div class="d-flex border-bottom py-2 stall-1">
+            <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="85px" height="85px" class="border rounded-2">
+                <img src="assets/images/foodpark.jpg" width="80px" height="80px" class="border rounded-2">
                 <div>
-                    <span class="fs-5">Spicy Ramen</span><br>
-                    <span class="small text-muted">Burger Queen</span>
+                    <span class="fs-5">Kimchi Noodle Soup</span><br>
+                    <span class="small text-muted">Variation: Chocolate, Medium</span>
                 </div>
             </div>
-            <div class="fw-bold">₱120</div>
+            <div class="d-flex align-items-center justify-content-between" style="width: 35%">
+                <div class="d-flex align-items-center hlq">
+                    <i class="fa-solid fa-minus" onclick="updateQuantity(this, -1)"></i>
+                    <span class="ordquanum">1</span>
+                    <i class="fa-solid fa-plus" onclick="updateQuantity(this, 1)"></i>
+                </div>
+                <div class="fw-bold fs-5">₱103</div>
+                <div class="carttop d-flex gap-3">
+                    <button>Delete</button>
+                    <button>Like</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -97,95 +85,100 @@ Color Palette:
             </div>
         </div>
         <!-- Item 1 -->
-        <div class="d-flex justify-content-between border-bottom py-2 stall-2">
-            <div class="d-flex gap-3 align-items-center">
+        <div class="d-flex border-bottom py-2 stall-2">
+            <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="85px" height="85px" class="border rounded-2">
+                <img src="assets/images/foodpark.jpg" width="80px" height="80px" class="border rounded-2">
                 <div>
-                    <span class="fs-5">Grilled Cheese</span><br>
-                    <span class="small text-muted">Cheesy Bites</span>
+                    <span class="fs-5">Kimchi Noodle Soup</span><br>
+                    <span class="small text-muted">Variation: Chocolate, Medium</span>
                 </div>
             </div>
-            <div class="fw-bold">₱95</div>
+            <div class="d-flex align-items-center justify-content-between" style="width: 35%">
+                <div class="d-flex align-items-center hlq">
+                    <i class="fa-solid fa-minus" onclick="updateQuantity(this, -1)"></i>
+                    <span class="ordquanum">1</span>
+                    <i class="fa-solid fa-plus" onclick="updateQuantity(this, 1)"></i>
+                </div>
+                <div class="fw-bold fs-5">₱103</div>
+                <div class="carttop d-flex gap-3">
+                    <button>Delete</button>
+                    <button>Like</button>
+                </div>
+            </div>
         </div>
         <!-- Item 2 -->
-        <div class="d-flex justify-content-between border-bottom py-2 stall-2">
-            <div class="d-flex gap-3 align-items-center">
+        <div class="d-flex border-bottom py-2 stall-2">
+            <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="85px" height="85px" class="border rounded-2">
+                <img src="assets/images/foodpark.jpg" width="80px" height="80px" class="border rounded-2">
                 <div>
-                    <span class="fs-5">Mac and Cheese</span><br>
-                    <span class="small text-muted">Cheesy Bites</span>
+                    <span class="fs-5">Kimchi Noodle Soup</span><br>
+                    <span class="small text-muted">Variation: Chocolate, Medium</span>
                 </div>
             </div>
-            <div class="fw-bold">₱110</div>
+            <div class="d-flex align-items-center justify-content-between" style="width: 35%">
+                <div class="d-flex align-items-center hlq">
+                    <i class="fa-solid fa-minus" onclick="updateQuantity(this, -1)"></i>
+                    <span class="ordquanum">1</span>
+                    <i class="fa-solid fa-plus" onclick="updateQuantity(this, 1)"></i>
+                </div>
+                <div class="fw-bold fs-5">₱103</div>
+                <div class="carttop d-flex gap-3">
+                    <button>Delete</button>
+                    <button>Like</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Stall 3 -->
-    <div class="border py-3 px-4 rounded-2 bg-white mb-3">
-        <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
-            <div class="d-flex gap-2 align-items-center">
-                <input class="form-check-input m-0 stall-checkbox" type="checkbox" onclick="toggleStallItems(this, 'stall-3')">
-                <span class="fw-bold">Stall 3 Name</span>
-            </div>
-        </div>
-        <!-- Item 1 -->
-        <div class="d-flex justify-content-between border-bottom py-2 stall-3">
-            <div class="d-flex gap-3 align-items-center">
-                <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="85px" height="85px" class="border rounded-2">
-                <div>
-                    <span class="fs-5">Chicken Burger</span><br>
-                    <span class="small text-muted">Grill Masters</span>
+    <div class="d-flex justify-content-between align-items-start border py-3 px-4 rounded-2 bg-white">
+        <div style="width: 70%">
+            <div class="d-flex align-items-center mb-4">
+                <label class="form-label w-25 mb-0 fw-bold">Order Type</label>
+                <div class="cartot btn-group w-75" role="group">
+                    <button type="button" class="btn-toggle active rounded" id="dineIn">Dine In</button>
+                    <button type="button" class="btn-toggle rounded" id="takeOut">Take Out</button>
                 </div>
             </div>
-            <div class="fw-bold">₱150</div>
-        </div>
-        <!-- Item 2 -->
-        <div class="d-flex justify-content-between border-bottom py-2 stall-3">
-            <div class="d-flex gap-3 align-items-center">
-                <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="85px" height="85px" class="border rounded-2">
-                <div>
-                    <span class="fs-5">BBQ Ribs</span><br>
-                    <span class="small text-muted">Grill Masters</span>
+            <div class="d-flex align-items-center mb-4">
+                <label class="form-label w-25 mb-0 fw-bold">Payment Method</label>
+                <select class="form-select w-75" id="paymentMethod">
+                    <option value="cash">Cash</option>
+                    <option value="gcash">GCash</option>
+                    <option value="paymaya">PayMaya</option>
+                </select>
+            </div>
+            <div class="d-flex mb-4">
+                <label class="form-label w-25 mb-0 fw-bold">Order</label>
+                <div class="w-75">
+                    <div class="d-flex align-items-center mb-2">
+                        <input class="form-check-input me-3 m-0" type="radio" name="orderTime" id="immediately" checked>
+                        <label for="immediately" class="me-5">Immediately</label>
+
+                        <input class="form-check-input me-3 m-0" type="radio" name="orderTime" id="scheduleLater">
+                        <label for="scheduleLater">Schedule for later</label>
+                    </div>
+                    <div class="d-flex gap-3 cartdis">
+                        <input type="date" class="form-control" id="scheduleDate" disabled>
+                        <input type="time" class="form-control" id="scheduleTime" disabled>
+                    </div>
                 </div>
             </div>
-            <div class="fw-bold">₱200</div>
+            <div class="d-flex">
+                <div class="w-25"></div>
+                <div class="w-75">
+                    <button type="button" class="btn btn-primary rounded-5" style="width: 250px;">Place Order</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-4">
+            <p class="fw-bold fs-5 m-0">Total:</p>
+            <h2 class="fw-bold m-0" style="color: #CD5C08">₱1,072</h2>
         </div>
     </div>
-
-    <!--<div class="border py-3 px-4 rounded-2 bg-white mb-3">
-        <div>
-            <label for="ordertype">Order Type</label>
-            <input type="">
-        </div>
-    </div>-->
-    <script>
-
-        // Select All checkbox
-        function toggleSelectAll(selectAllCheckbox) {
-            const checkboxes = document.querySelectorAll('.item-checkbox, .stall-checkbox');
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = selectAllCheckbox.checked;
-            });
-        }
-
-        // Stall-specific checkbox
-        function toggleStallItems(stallCheckbox, stallClass) {
-            const items = document.querySelectorAll(`.${stallClass} .item-checkbox`);
-            items.forEach(item => {
-                item.checked = stallCheckbox.checked;
-            });
-        }
-        function updateQuantity(button, change) {
-            const quantitySpan = button.parentElement.querySelector('.ordquanum');
-            let quantity = parseInt(quantitySpan.innerText);
-            quantity = Math.max(1, quantity + change);
-            quantitySpan.innerText = quantity;
-        }
-    </script>
+    <script src="./assets/js/cart.js?v=<?php echo time(); ?>"></script>
 </main>
 <?php 
     include_once 'footer.php'; 
