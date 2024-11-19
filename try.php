@@ -1,113 +1,107 @@
-<style>
-/* Dropdown Container */
-.custom-dropdown {
-  position: relative;
-  display: inline-block;
-  font-family: Arial, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order UI</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+  <style>
+    .btn-toggle {
+      background-color: #f8f9fa;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+    }
+    .btn-toggle.active {
+      background-color: #cd5c08;
+      color: white;
+    }
+    .btn-orange {
+      background-color: #cd5c08;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    .btn-orange:hover {
+      background-color: #b25007;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <div class="card p-4">
+    <h4 class="text-end">Total: <span class="text-danger">P1,072</span></h4>
 
-/* Dropdown Button */
-.dropdown-toggle {
-  background-color: #fff; /* White background */
-  color: #000; /* Black text */
-  border: 1px solid #ddd; /* Light gray border */
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-  width: 200px;
-  text-align: left;
-}
+    <!-- Order Type -->
+    <div class="mb-3">
+      <label class="form-label">Order Type</label>
+      <div class="btn-group d-flex" role="group">
+        <button type="button" class="btn btn-toggle active" id="dineIn">Dine In</button>
+        <button type="button" class="btn btn-toggle" id="takeOut">Take Out</button>
+      </div>
+    </div>
 
-.dropdown-toggle:hover {
-  background-color: #f5f5f5; /* Slightly lighter background */
-}
+    <!-- Payment Method -->
+    <div class="mb-3">
+      <label class="form-label">Payment Method</label>
+      <select class="form-select" id="paymentMethod">
+        <option value="cash">Cash</option>
+        <option value="gcash">GCash</option>
+        <option value="paymaya">PayMaya</option>
+      </select>
+    </div>
 
-/* Dropdown Menu */
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff; /* White background */
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  border-radius: 4px;
-  width: 200px;
-  z-index: 10;
-  border: 1px solid #ddd; /* Border matching the button */
-}
+    <!-- Order Time -->
+    <div>
+      <label class="form-label">Order</label>
+      <div class="d-flex align-items-center mb-3">
+        <input class="form-check-input me-2" type="radio" name="orderTime" id="immediately" checked>
+        <label for="immediately" class="me-4">Immediately</label>
 
-.custom-dropdown:hover .dropdown-menu {
-  display: block; /* Show menu on hover */
-}
+        <input class="form-check-input me-2" type="radio" name="orderTime" id="scheduleLater">
+        <label for="scheduleLater">Schedule for later</label>
+      </div>
 
-/* Dropdown Items */
-.dropdown-item {
-  padding: 10px 15px;
-  color: #000; /* Black text */
-  cursor: pointer;
-  font-size: 14px;
-  border-bottom: 1px solid #f0f0f0; /* Separator */
-  position: relative;
-}
+      <div class="row g-3">
+        <div class="col-md-4">
+          <input type="date" class="form-control" id="scheduleDate" disabled>
+        </div>
+        <div class="col-md-4">
+          <input type="time" class="form-control" id="scheduleTime" disabled>
+        </div>
+      </div>
+    </div>
 
-.dropdown-item:last-child {
-  border-bottom: none; /* Remove border for the last item */
-}
-
-.dropdown-item:hover {
-  background-color: #f5f5f5; /* Lighter background */
-}
-
-/* Selected Item Checkmark */
-.dropdown-item.selected::after {
-  content: '✔';
-  font-size: 14px;
-  position: absolute;
-  right: 10px;
-  color: #000; /* Checkmark color */
-}
-
-
-
-</style>
-
-
-<div class="custom-dropdown">
-  <button class="dropdown-toggle" id="dropdownButton">by Popularity</button>
-  <div class="dropdown-menu" id="dropdownMenu">
-    <div class="dropdown-item" data-value="by Popularity">by Popularity</div>
-    <div class="dropdown-item" data-value="by Likes">by Likes</div>
-    <div class="dropdown-item" data-value="by Date">by Date</div>
+    <!-- Place Order -->
+    <div class="mt-4">
+      <button class="btn btn-orange w-100">Place Order</button>
+    </div>
   </div>
 </div>
 
-
 <script>
-    // Get elements
-const dropdownMenu = document.getElementById("dropdownMenu");
-const dropdownButton = document.getElementById("dropdownButton");
-const dropdownItems = document.querySelectorAll(".dropdown-item");
-
-// Default selection (by Popularity)
-dropdownItems.forEach(item => {
-  if (item.getAttribute("data-value") === "by Popularity") {
-    item.classList.add("selected");
-  }
-});
-
-// Add event listeners to items
-dropdownItems.forEach(item => {
-  item.addEventListener("click", function () {
-    // Update button text
-    dropdownButton.textContent = this.getAttribute("data-value");
-
-    // Remove 'selected' class from all items
-    dropdownItems.forEach(i => i.classList.remove("selected"));
-
-    // Add 'selected' class to clicked item
-    this.classList.add("selected");
+  // Toggle Order Type buttons
+  document.querySelectorAll('.btn-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
   });
-});
 
+  // Enable/Disable Date and Time fields
+  const scheduleDate = document.getElementById('scheduleDate');
+  const scheduleTime = document.getElementById('scheduleTime');
+  document.getElementById('immediately').addEventListener('click', () => {
+    scheduleDate.disabled = true;
+    scheduleTime.disabled = true;
+  });
+  document.getElementById('scheduleLater').addEventListener('click', () => {
+    scheduleDate.disabled = false;
+    scheduleTime.disabled = false;
+  });
 </script>
+</body>
+</html>
