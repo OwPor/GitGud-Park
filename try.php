@@ -1,69 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Upload</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 50px;
-        }
-
-        #profileImage {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ddd;
-            background-color: #f5f5f5;
-        }
-
-        #uploadButton {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #uploadButton:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <h2>Upload Profile Image</h2>
-    <img id="profileImage" src="assets/images/profile.jpg" alt="Profile Image">
-    <input type="file" id="fileInput" style="display: none;" accept="image/*">
-    <button id="uploadButton">Upload Image</button>
-
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const profileImage = document.getElementById('profileImage');
-        const uploadButton = document.getElementById('uploadButton');
-
-        uploadButton.addEventListener('click', () => {
-            fileInput.click(); // Trigger the file input when button is clicked
-        });
-
-        fileInput.addEventListener('change', (event) => {
-            const file = event.target.files[0]; // Get the selected file
-            if (file) {
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                    profileImage.src = e.target.result; // Update the image source
-                };
-
-                reader.readAsDataURL(file); // Read the file as a data URL
-            }
-        });
-    </script>
-</body>
-</html>
+    .logo {
+        height: 240px;
+        width: 240px;
+        cursor: pointer;
+        border-radius: 50%;
+        background-color: white;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        transition: 0.1s;
+    }
+    .logo i{
+        background-color: white;
+        border-radius: 50%;
+    }
+    .logo:hover{
+        border: 1px solid gray !important;
+        transform: scale(1.05);
+    }
+    .logorem{
+        line-height: 1.2;
+        font-size: 12px;
+    }
+    main {
+        background-image: url('assets/images/stall.jpg');
+        background-size: cover;
+        padding: 50px 300px;
+    }
+    .srform{
+        border: 1px #ccc solid;
+        padding: 30px 40px;
+        background-color: white;
+        border-radius: 20px;
+    }
+    .form-floating input, .form-floating textarea, .form-floating label::after, .logo, .add-schedule, .schedule-list{
+        background-color: #F8F8F8 !important;
+    }
+    .createpage{
+        border-top: 1px #ccc solid;
+    }
+    .pagehead{
+        border-bottom: 1px #ccc solid;
+    }

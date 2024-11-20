@@ -17,6 +17,7 @@ function displayImage(event) {
     }
 }
 
+
 function displayProductImage(event) {
     const file = event.target.files[0];
     if (file && file.size <= 5 * 1024 * 1024) { // Check if file size is less than 5MB

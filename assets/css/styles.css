@@ -1,4 +1,7 @@
-.form-group{position: relative;}
+.form-group {
+    position: relative;
+}
+
 .floating-label {
     font-size: 16px;
     font-weight: 400;
@@ -7,10 +10,11 @@
     left: 12px;
     pointer-events: none;
     position: absolute;
-    transition: 0ms;
+    transition: all 0.2s ease-in-out;
     margin-bottom: 0;
     z-index: 1;
 }
+
 .form-group.focused .floating-label {
     opacity: 1;
     color: #7b7f82;

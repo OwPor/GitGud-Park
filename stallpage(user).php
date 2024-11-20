@@ -1,7 +1,7 @@
 <?php
     include_once 'links.php'; 
-    /*include_once 'header.php'; 
-    include_once 'nav.php'; */
+    include_once 'header.php'; 
+    include_once 'nav.php'; 
     include_once 'modals.php'; 
 ?>
 <main>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <button class="pagelike">Edit Page</button>
+            <button class="pagelike" onclick="window.location.href='editpage.php';">Edit Page</button>
         </div>
     </div>
 
@@ -74,10 +74,10 @@
         <h5 class="mb-3 fw-bold">POPULAR</h5>
         <div class="row row-cols-1 row-cols-md-4 g-3">
             <div class="col">
-                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                <a href="editproduct.php" class="card-link text-decoration-none">
                     <div class="card position-relative">
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
-                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center"><i class="fa-solid fa-pen" style="font-size: 18px;"></i></button>
                         <div class="card-body">
                             <p class="card-text text-muted m-0">Category</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
@@ -105,10 +105,10 @@
         <h5 class="mb-3 fw-bold">NEW</h5>
         <div class="row row-cols-1 row-cols-md-4 g-3">
             <div class="col">
-                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                <a href="editproduct.php" class="card-link text-decoration-none">
                     <div class="card position-relative">
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
-                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center"><i class="fa-solid fa-pen" style="font-size: 18px;"></i></button>
                         <div class="card-body">
                             <p class="card-text text-muted m-0">Category</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
@@ -136,10 +136,10 @@
         <h5 class="mb-3 fw-bold">PROMO</h5>
         <div class="row row-cols-1 row-cols-md-4 g-3">
             <div class="col">
-                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                <a href="editproduct.php" class="card-link text-decoration-none">
                     <div class="card position-relative">
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
-                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center"><i class="fa-solid fa-pen" style="font-size: 18px;"></i></button>
                         <div class="card-body">
                             <p class="card-text text-muted m-0">Category</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
@@ -164,13 +164,16 @@
     </section>
 
     <section id="category1" class="pt-3 mt-3">
-        <h5>Category 1</h5>
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <h5 class="fw-bold m-0">Category 1</h5>
+            <i class="fa-solid fa-pen rename" data-bs-toggle="modal" data-bs-target="#editcategory"></i>  
+        </div>
         <div class="row row-cols-1 row-cols-md-4 g-3">
             <div class="col">
-                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                <a href="editproduct.php" class="card-link text-decoration-none">
                     <div class="card position-relative">
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
-                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center"><i class="fa-solid fa-pen" style="font-size: 18px;"></i></button>
                         <div class="card-body">
                             <p class="card-text text-muted m-0">Category</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
@@ -195,13 +198,16 @@
     </section>
 
     <section id="category2" class="pt-3 mt-3">
-        <h5>Category 2</h5>
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <h5 class="fw-bold m-0">Category 2</h5>
+            <i class="fa-solid fa-pen rename" data-bs-toggle="modal" data-bs-target="#editcategory"></i>  
+        </div>
         <div class="row row-cols-1 row-cols-md-4 g-3">
             <div class="col">
-                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                <a href="editproduct.php" class="card-link text-decoration-none">
                     <div class="card position-relative">
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
-                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center"><i class="fa-solid fa-pen" style="font-size: 18px;"></i></button>
                         <div class="card-body">
                             <p class="card-text text-muted m-0">Category</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
@@ -226,13 +232,16 @@
     </section>
     
     <section id="category3" class="pt-3 mt-3">
-        <h5>Category 3</h5>
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <h5 class="fw-bold m-0">Category 3</h5>
+            <i class="fa-solid fa-pen rename" data-bs-toggle="modal" data-bs-target="#editcategory"></i>  
+        </div>
         <div class="row row-cols-1 row-cols-md-4 g-3">
             <div class="col">
-                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                <a href="editproduct.php" class="card-link text-decoration-none">
                     <div class="card position-relative">
                         <img src="assets/images/example.jpg" class="card-img-top" alt="...">
-                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center"><i class="fa-solid fa-pen" style="font-size: 18px;"></i></button>
                         <div class="card-body">
                             <p class="card-text text-muted m-0">Category</p>
                             <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>

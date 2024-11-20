@@ -38,8 +38,7 @@
         </ul>
     </div>
 
-    <!-- IF DONE ACTIVATING 
-
+<!-- IF ACTIVATED
     <button class="addpro " onclick="window.location.href='centralizedcash.php';"><i class="fa-regular fa-hand-pointer me-2"></i>Centralized Cash Payment</button>
     <div class="mt-5">
         <span class="fw-bold">What is Centralized Cash Payment?</span>
