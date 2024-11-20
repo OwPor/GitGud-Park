@@ -8,41 +8,6 @@
     main{
         padding: 20px 120px;
     }
-    .salestable{
-        border-collapse: collapse;
-    }
-    .salestable th{
-        color: gray;
-        font-size: small;
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 8px;
-    }
-    .salestable td{
-        border-bottom: 1px solid #ccc;
-        padding: 11px 0;
-        font-weight: bold;
-    }
-    .saletabpag span{
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 25px;
-        width: 25px;
-        cursor: pointer;
-    }
-    .saletabpag .active{
-        background-color: #CD5C08;
-        color: white;
-        cursor: pointer;
-    }
-    .salesdr:hover{
-        background-color: #FFF5E4;
-    }
-    .salesdr{
-        cursor: pointer;
-    }
-
 </style>
 
 <main>

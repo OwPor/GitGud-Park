@@ -31,3 +31,60 @@ document.addEventListener('DOMContentLoaded', () => {
     productImageContainer.innerHTML = 
         `<input type="file" id="productimage" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayProductImage(event)">`;
 });
+
+
+function displayProfilePic(event) { 
+    const file = event.target.files[0];
+    const profilePicContainer = document.getElementById('profilepicContainer');
+
+    if (file && file.size <= 500 * 1024) { // Check if file size is less than 500KB
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Set the new background image
+            profilePicContainer.style.backgroundImage = `url(${e.target.result})`;
+            profilePicContainer.style.backgroundSize = 'cover';
+            profilePicContainer.style.backgroundPosition = 'center';
+            
+            // Remove the inner HTML to hide the icon and text
+            profilePicContainer.innerHTML = 
+                `<input type="file" id="profilepic" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayProfilePic(event)">`;
+        };
+        reader.readAsDataURL(file);
+    } else if (file) {
+        alert('File is too large or not supported. Please select a JPG, JPEG, or PNG image under 500KB.');
+    }
+}
+
+// Set initial image when the page loads (for editing mode)
+document.addEventListener('DOMContentLoaded', () => {
+    const profilePicContainer = document.getElementById('profilepicContainer');
+    profilePicContainer.style.backgroundImage = "url('assets/images/defaultprofile.jpg')";
+    profilePicContainer.style.backgroundSize = 'cover';
+    profilePicContainer.style.backgroundPosition = 'center';
+
+    // Clear inner HTML initially to hide icon and text when the default image is displayed
+    profilePicContainer.innerHTML = 
+        `<input type="file" id="profilepic" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayProfilePic(event)">`;
+});
+
+
+const fileInput = document.getElementById('fileInput');
+const profileImage = document.getElementById('profileImage');
+const uploadButton = document.getElementById('uploadButton');
+
+uploadButton.addEventListener('click', () => {
+    fileInput.click(); // Trigger the file input when button is clicked
+});
+
+fileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0]; // Get the selected file
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            profileImage.src = e.target.result; // Update the image source
+        };
+
+        reader.readAsDataURL(file); // Read the file as a data URL
+    }
+});

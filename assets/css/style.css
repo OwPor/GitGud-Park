@@ -714,7 +714,7 @@ Color Palette:
   transform: scale(1.02);
   background-color: #82B19E;
 }
-.addpro:hover, .cancelorder:hover{
+.addpro:hover, .cancelorder:hover, .disatc:hover{
   transform: scale(1.02);
   background-color: #E06D1A;
 }
@@ -1332,4 +1332,110 @@ left: -25px;
   top: 50%;
   left: 120px; 
   transform: translateY(-50%); 
+}
+
+.salestable{
+  border-collapse: collapse;
+}
+.salestable th{
+  color: gray;
+  font-size: small;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 8px;
+}
+.salestable td{
+  border-bottom: 1px solid #ccc;
+  padding: 11px 0;
+  font-weight: bold;
+}
+.saletabpag span{
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+.saletabpag .active{
+  background-color: #CD5C08;
+  color: white;
+  cursor: pointer;
+}
+.salesdr:hover{
+  background-color: #FFF5E4;
+}
+.salesdr{
+  cursor: pointer;
+}
+.stostatus{
+  padding: 20px 0;
+}
+.stostatus h1{
+  font-weight: bold;
+  margin: 15px 0 0 0;
+}
+.stostatus span{
+  color: #CD5C08;
+}
+.stostatus i{
+  margin-right: 5px;
+}
+.stostatus div{
+  text-align: center;
+}
+.stockaction input, .stockaction select{
+  padding: 5px 10px;
+  outline: none;
+  border-radius: 0;
+  border: 1px #ccc solid;
+}
+.stockin input[type="number"]{
+  width: 150px;
+}
+.stockaction select{
+  width: 100%;
+}
+.stockin input[type="submit"]{
+  background-color: ;
+}
+.stockaction table th{
+  padding: 10px 0;
+  border: 2px solid white;
+}
+.stockaction table td{
+  border-bottom: 1px #ccc solid;
+  padding: 10px 0;
+}
+.stockaction table th{
+  background-color: #C1D8C3;
+  color: #6A9C89;
+}
+.stockaction table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse !important;
+}
+.stoaction i{
+  padding: 4px;
+  font-size: 15px;
+}
+.stoaction{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.stockleft{
+padding: 20px;
+border-right: 1px #ccc solid;
+}
+.stockright{
+padding: 20px;
+}
+.prev{
+  background-color: gray;
+}
+.prev:hover{
+  background-color: #8F8F8F;
 }
