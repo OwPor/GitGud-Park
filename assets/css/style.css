@@ -573,16 +573,10 @@ h6{margin:0;}
   font-size: small;
   color: white;
 }
-.overdue{background-color: red;}
-.pending{background-color: orange;}
-.paid{background-color: green;}
-/*
-Color Palette:
-#CD5C08
-#FFF5E4
-#C1D8C3
-#6A9C89
-*/
+.overdue{background-color: #dc3545;}
+.pending{background-color: #ffc107;}
+.paid{background-color: #28a745;}
+
 .owner{
   border: 1px solid #ccc;
   padding: 15px 10px;
@@ -721,13 +715,26 @@ Color Palette:
 .prostockstat {
   position: absolute;
   bottom: 0; 
-  background-color: #ff9800; 
   color: white;
   padding: 3px;
   width: 100%;
   text-align: center;
 }
+.editcategory{
+  color: #CD5C08;
+  font-size: 12px;
+}
+.editcategory:hover{
+  text-decoration: underline;
+}
+.dropdown-menu .dropdown-item {
+  padding: 10px 20px;
+}
 
+.dropdown-menu .dropdown-item:hover {
+  background-color: #f1f1f1;
+  color: black;
+}
 .prodis {
   position: absolute;
   top: 8px; 
