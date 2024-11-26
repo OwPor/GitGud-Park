@@ -557,7 +557,7 @@ h6{margin:0;}
 .btn-primary:hover{
   background-color: #B54F07;
 }
-.fa-envelope{
+.fa-envelope.env{
   font-size: 90px;
   color: #CD5C08;
 }

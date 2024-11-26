@@ -36,7 +36,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-0 my-4 text-center">
-                    <i class="fa-regular fa-envelope mb-3"></i>
+                    <i class="fa-regular fa-envelope env mb-3"></i>
                     <p>The email address we have for you is <span class="fw-bold" id="email"><?= $email ?></span>. If you haven't received our message, please click the button below.</p>
                 </div>
                 <form method="POST">
@@ -58,7 +58,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-0 my-4 text-center">
-                    <i class="fa-regular fa-envelope mb-3"></i>
+                    <i class="fa-regular fa-envelope env mb-3"></i>
                     <p>The email address we have for you is <span class="fw-bold">email</span>. If you want to change it, please provide us with your new email and we'll send a new verification link.</p>
                     <div class="input-group m-0">
                         <input type="email" name="email" id="new_email" placeholder="Type your new email address here" value="" required/>

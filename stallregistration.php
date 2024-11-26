@@ -159,7 +159,7 @@
                 <h6>Operating Hours</h6>
                 <div id="scheduleContainer"></div>
             </div>
-            <script src="assets/js/display.js"></script>
+            <script src="assets/js/display.js?v=<?php echo time(); ?>"></script>
         </div>
         
         <div class="paymentmethod mt-4">

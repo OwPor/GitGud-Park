@@ -1,79 +1,97 @@
-const ctx = document.getElementById('stallPerformanceChart').getContext('2d');
-const stallPerformanceChart = new Chart(ctx, {
-  type: 'bar',
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const salesData = [12000, 15000, 18000, 20000, 22000, 25000, 27000, 29000, 30000, 32000, 35000, 37000];
+const visitsData = [200, 300, 250, 400, 500, 450, 600, 550, 650, 700, 750, 800];
+const ordersData = [80, 120, 100, 150, 200, 180, 220, 210, 240, 270, 300, 320];
+
+// Colors
+const mainColor = '#CD5C08';
+
+// Line Graph for Sales
+new Chart(document.getElementById('salesChart').getContext('2d'), {
+  type: 'line',
   data: {
-    labels: ['Stall 1', 'Stall 2', 'Stall 3', 'Stall 4', 'Stall 5', 'Stall 6', 'Stall 7', 'Stall 8', 'Stall 9', 'Stall 10'],
+    labels: labels,
     datasets: [{
-      label: 'Performance (%)',
-      data: [85, 70, 90, 60, 75, 95, 80, 50, 65, 88], // Example percentages
-      backgroundColor: '#CD5C08',
-      borderWidth: 1
+      label: 'Sales per Month (₱)',
+      data: salesData,
+      borderColor: mainColor,
+      backgroundColor: 'rgba(205, 92, 8, 0.2)',
+      fill: true,
+      tension: 0.4
     }]
   },
   options: {
     responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 100,
-        title: {
-          display: true,
-          text: 'Performance (%)'
-        }
-      },
-      x: {
-        title: {
-          display: true,
-          text: 'Stalls'
-        }
-      }
-    },
     plugins: {
       legend: {
         display: true,
-        position: 'top'
+        position: 'top',
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true
       }
     }
   }
 });
 
-const ctxctx = document.getElementById('salesChart').getContext('2d');
-new Chart(ctxctx, {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], // Months or dates
-        datasets: [{
-            label: 'Sales ($)',
-            data: [1200, 1500, 1100, 1800, 2000, 1700], // Sales data
-            borderColor: '#CD5C08',
-            backgroundColor: 'rgba(205, 92, 8, 0.2)',
-            fill: true,
-            tension: 0.4
-        }]
+// Bar Graph for Visits
+new Chart(document.getElementById('visitsChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: 'Food Park Visits per Month',
+      data: visitsData,
+      backgroundColor: mainColor,
+      borderColor: mainColor,
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      }
     },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Sales ($)'
-                }
-            },
-            x: {
-                title: {
-                    display: true,
-                    text: 'Months'
-                }
-            }
-        },
-        plugins: {
-            legend: {
-                display: true,
-                position: 'top'
-            }
-        }
+    scales: {
+      y: {
+        beginAtZero: true
+      }
     }
+  }
+});
+
+// Area Graph for Orders
+new Chart(document.getElementById('ordersChart').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: 'Total Orders per Month',
+      data: ordersData,
+      borderColor: mainColor,
+      backgroundColor: 'rgba(205, 92, 8, 0.2)',
+      fill: true,
+      tension: 0.4
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
 });
