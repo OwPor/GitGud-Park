@@ -320,7 +320,7 @@
 
     <div class="row row-cols-1 row-cols-md-4 g-3">
         <div class="col">
-            <a href="stall.php" class="card-link text-decoration-none bg-white">
+            <!-- <a href="stall.php" class="card-link text-decoration-none bg-white"> -->
                 <div class="card" style="position: relative;">
                     <img src="assets/images/user.jpg" class="card-img-top" alt="...">
                     <div class="closed">Closed until Wed 10:00 AM</div>

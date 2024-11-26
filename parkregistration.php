@@ -438,6 +438,6 @@ main {
             </div>
         </div>  
     </form>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/parkForm.js"></script>
 </main>
 
