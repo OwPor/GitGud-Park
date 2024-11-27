@@ -194,4 +194,26 @@ class User {
 
         return $result['is_verified'];
     }
+
+    function registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit) {
+        $sql = "INSERT INTO businesses (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit);";
+        $query = $this->db->connect()->prepare($sql);
+        # $user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit
+        if ($query->execute(array(
+            ':user_id' => $user_id,
+            ':business_name' => $business_name,
+            ':business_type' => $business_type,
+            ':region_province_city' => $region_province_city,
+            ':barangay' => $barangay,
+            ':street_building_house' => $street_building_house,
+            ':business_phone' => $business_phone,
+            ':business_email' => $business_email,
+            ':business_permit' => $business_permit
+        ))) {
+            $sql = "UPDATE users SET role = 'park' WHERE id = :user_id;";
+            $query = $this->db->connect()->prepare($sql);
+            
+            return $query->execute(array(':user_id' => $user_id));;
+        }
+    }
 }

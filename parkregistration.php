@@ -29,6 +29,76 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Validate and sanitize inputs
+        $first_name = filter_var(trim($_POST['firstname']), FILTER_SANITIZE_STRING);
+        $last_name = filter_var(trim($_POST['lastname']), FILTER_SANITIZE_STRING);
+        $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+        $phone = filter_var(trim($_POST['phonenumber']), FILTER_SANITIZE_STRING);
+        $business_name = filter_var(trim($_POST['businessname']), FILTER_SANITIZE_STRING);
+        $business_type = filter_var(trim($_POST['businesstype']), FILTER_SANITIZE_STRING);
+        $branches = filter_var(trim($_POST['branches']), FILTER_SANITIZE_STRING);
+        $business_email = filter_var(trim($_POST['businessemail']), FILTER_SANITIZE_EMAIL);
+        $business_phone = filter_var(trim($_POST['businessphonenumber']), FILTER_SANITIZE_STRING);
+        $region_province_city = filter_var(trim($_POST['rpc']), FILTER_SANITIZE_STRING);
+        $barangay = filter_var(trim($_POST['barangay']), FILTER_SANITIZE_STRING);
+        $street_building_house = filter_var(trim($_POST['sbh']), FILTER_SANITIZE_STRING);
+        $business_permit = filter_var(trim($_POST['businesspermit']), FILTER_SANITIZE_STRING);
+
+        if (empty($first_name)) {
+            $first_name_err = 'Please enter your first name.';
+        }
+
+        if (empty($last_name)) {
+            $last_name_err = 'Please enter your last name.';
+        }
+
+        if (empty($email)) {
+            $email_err = 'Please enter your email.';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $email_err = 'Please enter a valid email.';
+        }
+
+        if (empty($phone)) {
+            $phone_err = 'Please enter your phone number.';
+        } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
+            $phone_err = 'Please enter a valid phone number.';
+        }
+
+        if (empty($business_name)) {
+            $business_name_err = 'Please enter your business name.';
+        }
+
+        if (empty($business_type)) {
+            $business_type_err = 'Please select your business type.';
+        }
+
+        if (empty($branches)) {
+            $branches_err = 'Please enter the number of branches.';
+        }
+
+        if (empty($region_province_city)) {
+            $region_province_city_err = 'Please enter your region, province, and city.';
+        }
+
+        if (empty($barangay)) {
+            $barangay_err = 'Please enter your barangay.';
+        }
+
+        if (empty($street_building_house)) {
+            $street_building_house_err = 'Please enter your street, building, and house number.';
+        }
+
+        if (empty($business_permit)) {
+            $business_permit_err = 'Please upload your business permit.';
+        }
+
+        if (empty($first_name_err) && empty($last_name_err) && empty($email_err) && empty($phone_err) && empty($business_name_err) && empty($business_type_err) && empty($branches_err) && empty($region_province_city_err) && empty($barangay_err) && empty($street_building_house_err) && empty($business_permit_err)) {
+            $user_id = $_SESSION['user']['id'];
+            $business_id = $userObj->registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit);
+            if ($business_id) {
+                header('Location: parkregistration.php');
+                exit();
+            }
+        }
     }
 ?>
 <style>
