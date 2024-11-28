@@ -56,7 +56,7 @@
         <button class="addpro mb-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+ Add Stall</button>
         <ul class="dropdown-menu dropdown-menu-end p-0">
             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#invitestall"><i class="fa-solid fa-user-plus me-2"></i>Invite</a></li>
-            <li><a class="dropdown-item" href="addstall.php"><i class="fa-solid fa-plus me-2"></i>Manual</a></li>
+            <li><a class="dropdown-item" href="stallregistration.php"><i class="fa-solid fa-plus me-2"></i>Manual</a></li>
         </ul>
     </div>
 
@@ -127,8 +127,8 @@
                     <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute rentstatus paid"><i class="fa-solid fa-circle-check"></i> Paid: Rent for this period has been fully settled</div>
                     <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar"></i>
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
+                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
                         <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                     </div>
                 </div>
@@ -249,8 +249,8 @@
                     <img src="assets/images/stall2.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute rentstatus pending"><i class="fa-solid fa-hourglass-half"></i> Pending: Rent payment is due in 3 days</div>
                     <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar"></i>
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
+                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
                         <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                     </div>
                 </div>
@@ -371,8 +371,8 @@
                     <img src="assets/images/stall3.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute rentstatus overdue"><i class="fa-solid fa-circle-exclamation"></i> Overdue: Rent payment is overdue by 4 days</div>
                     <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar"></i>
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
+                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
                         <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                     </div>
                 </div>
@@ -497,8 +497,8 @@
                     <img src="assets/images/stall4.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute rentstatus overdue"><i class="fa-solid fa-circle-exclamation"></i> Overdue: Rent payment is overdue by 4 days</div>
                     <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar"></i>
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
+                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
                         <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                     </div>
                 </div>
@@ -623,8 +623,8 @@
                     <img src="assets/images/stall5.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute rentstatus overdue"><i class="fa-solid fa-circle-exclamation"></i> Overdue: Rent payment is overdue by 4 days</div>
                     <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar"></i>
-                        <i class="fa-solid fa-pen-to-square"></i>
+                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
+                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
                         <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                     </div>
                 </div>

@@ -13,53 +13,15 @@
     main{
         padding: 10px 120px;
     }
-    .custom-progress-container {
-        display: flex;
-        align-items: center;
-        gap: 10px; 
-    }
-
-    .custom-progress {
-        width: 100%;
-        height: 15px;
-        background-color: #f3f3f3;
-        border-radius: 7.5px;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .custom-progress-bar {
-        height: 100%;
-        background-color:  #CD5C08; 
-        transition: width 0.3s ease-in-out;
-    }
-
-    .custom-progress-label {
-        font-size: 14px;
-        color: #333; 
-    }
-
-    .line-dot .line{
-        height: 5px;
-        background-color: #C1D8C3;
-    }
-    .line-dot .dot{
-        background-color: #6A9C89;
-        height: 5px;
-        width: 5px;
-        border-radius: 50%;
-    }
-
 </style>
 <main>
     <div class="d-flex gap-3">
         <div class="card h-100" style="width: 33%;">
             <div class="position-relative">
-                <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
-                <div class="position-absolute rentstatus paid"><i class="fa-solid fa-circle-check"></i> Paid: Rent for this period has been fully settled</div>
+                <img src="assets/images/stall2.jpg" class="card-img-top" alt="...">
+                <div class="position-absolute rentstatus pending"><i class="fa-solid fa-hourglass-half"></i> Pending: Rent payment is due in 3 days</div>
                 <div class="position-absolute d-flex gap-2 smaction">
-                    <i class="fa-solid fa-sack-dollar"></i>
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
                     <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
                 </div>
             </div>
@@ -74,9 +36,9 @@
                         <h5 class="card-title my-2 fw-bold">Food Stall Name</h5>
                         <p class="card-text text-muted m-0">Description</p>
                     </div>
-                    <div class="smopen">
-                        <i class="fa-solid fa-clock"></i>
-                        <span>OPEN</span>
+                    <div class="smclose">
+                        <i class="fa-solid fa-door-closed"></i>
+                        <span>CLOSE</span>
                     </div>
                 </div>
                 <div class="stats py-2 mt-3 mb-2 d-flex justify-content-between align-items-center">
@@ -110,12 +72,12 @@
                     </div>
                 </div>
 
-                <div class="accordion accordion-flush" id="accCol1">
+                <div class="accordion accordion-flush" id="accCol2">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu1" aria-expanded="false" aria-controls="col1flu1">Contact information</button>
+                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col2flu1" aria-expanded="false" aria-controls="col2flu1">Contact information</button>
                         </h2>
-                        <div id="col1flu1" class="accordion-collapse collapse" data-bs-parent="#accCol1">
+                        <div id="col2flu1" class="accordion-collapse collapse" data-bs-parent="#accCol2">
                             <div class="accordion-body p-0 mb-3 small">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span>Business Email</span>
@@ -130,15 +92,15 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu2" aria-expanded="false" aria-controls="col1flu2">Opening Hours</button>
+                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col2flu2" aria-expanded="false" aria-controls="col2flu2">Opening Hours</button>
                         </h2>
-                        <div id="col1flu2" class="accordion-collapse collapse" data-bs-parent="#accCol1">
+                        <div id="col2flu2" class="accordion-collapse collapse" data-bs-parent="#accCol2">
                             <div class="accordion-body p-0 mb-3 small">
                                 <div class="mb-2">
                                     <p class="mb-1">Monday, Tuesday, Thursday</p>
                                     <span>7AM - 7PM</span>
                                 </div>
-                                <div>
+                                <div class="">
                                     <p class="mb-1">Wednesday, Friday, Saturday</p>
                                     <span>8AM - 9PM</span>
                                 </div>
@@ -147,9 +109,9 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu3" aria-expanded="false" aria-controls="col1flu3">Payment Method</button>
+                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col2flu3" aria-expanded="false" aria-controls="col2flu3">Payment Method</button>
                         </h2>
-                        <div id="col1flu3" class="accordion-collapse collapse" data-bs-parent="#accCol1">
+                        <div id="col2flu3" class="accordion-collapse collapse" data-bs-parent="#accCol2">
                             <div class="accordion-body p-0 mb-3 small">
                                 <ul>
                                     <li class="mb-2">Cash</li>
@@ -179,7 +141,7 @@
                     <h5 class="m-0 fw-bold">Rent Information</h5>
                     <span class="small text-muted">(Nov 19, 2024)</span>
                 </div>
-                <span class="small py-1 px-2 rounded-5 salesdr" style="color: #CD5C08;">+ Add New Payment</span>
+                <span class="small py-1 px-2 rounded-5 salesdr" style="color: #CD5C08;" data-bs-toggle="modal" data-bs-target="#addpayment">+ Add New Payment</span>
             </div>
             <div class="d-flex gap-3">
                 <div class="w-50 border p-3 rounded-2">
@@ -258,28 +220,36 @@
                         <td class="fw-normal py-3">₱100</td>
                         <td class="fw-normal py-3">30 Days</td>
                         <td class="fw-normal py-3">Cash</td>
-                        <td class="fw-normal py-3"><i class="fa-solid fa-ellipsis"></i></td>
+                        <td class="fw-normal py-3 tabact">
+                            <i class="fa-solid fa-pen-to-square me-2 p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#editpayment"></i>
+                            <i class="fa-solid fa-trash p-1 small rounded-1" onclick="if (confirm('Are you sure you want to delete this payment?')) deletePayment();"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td class="fw-normal py-3">07/29/2024 22:59</td>
                         <td class="fw-normal py-3">₱100</td>
                         <td class="fw-normal py-3">30 Days</td>
                         <td class="fw-normal py-3">Cash</td>
-                        <td class="fw-normal py-3"><i class="fa-solid fa-ellipsis"></i></td>
+                        <td class="fw-normal py-3 tabact">
+                            <i class="fa-solid fa-pen-to-square me-2 p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#editpayment"></i>
+                            <i class="fa-solid fa-trash p-1 small rounded-1" onclick="if (confirm('Are you sure you want to delete this payment?')) deletePayment();"></i>
+                        </td>
                     </tr>
                     <tr>
                         <td class="fw-normal py-3">07/29/2024 22:59</td>
                         <td class="fw-normal py-3">₱100</td>
                         <td class="fw-normal py-3">30 Days</td>
                         <td class="fw-normal py-3">Cash</td>
-                        <td class="fw-normal py-3"><i class="fa-solid fa-ellipsis"></i></td>
+                        <td class="fw-normal py-3 tabact">
+                            <i class="fa-solid fa-pen-to-square me-2 p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#editpayment"></i>
+                            <i class="fa-solid fa-trash p-1 small rounded-1" onclick="if (confirm('Are you sure you want to delete this payment?')) deletePayment();"></i>
+                        </td>
                     </tr>
                     
                 </table>
             </div>
         </div>
     </div>
-
     <br><br><br><br><br>
 </main>
 

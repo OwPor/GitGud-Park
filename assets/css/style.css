@@ -682,7 +682,7 @@ h6{margin:0;}
 .proaction{
   margin-right: 15px;
 }
-.proaction i:hover, .stoaction i:hover{
+.proaction i:hover, .stoaction i:hover, .tabact i:hover{
   background-color: #dcdcdc;
   transform: scale(1.2);
 }
@@ -1481,4 +1481,45 @@ padding: 20px;
   padding: 30px 40px;
   background-color: white;
   border-radius: 20px;
+}
+
+.custom-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+.custom-progress {
+  width: 100%;
+  height: 15px;
+  background-color: #f3f3f3;
+  border-radius: 7.5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-progress-bar {
+  height: 100%;
+  background-color:  #CD5C08; 
+  transition: width 0.3s ease-in-out;
+}
+
+.custom-progress-label {
+  font-size: 14px;
+  color: #333; 
+}
+
+.line-dot .line{
+  height: 5px;
+  background-color: #C1D8C3;
+}
+.line-dot .dot{
+  background-color: #6A9C89;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+}
+.tabact i{
+  background-color: #e5e5e5;
+  cursor: pointer;
 }

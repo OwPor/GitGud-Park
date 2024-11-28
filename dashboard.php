@@ -570,7 +570,10 @@
                     <td class="fw-normal py-3">₱100</td>
                     <td class="fw-normal py-3">30 Days</td>
                     <td class="fw-normal py-3">Cash</td>
-                    <td class="fw-normal py-3"><i class="fa-solid fa-ellipsis"></i></td>
+                    <td class="fw-normal py-3 tabact">
+                        <i class="fa-solid fa-pen-to-square me-2 p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#editpayment"></i>
+                        <i class="fa-solid fa-trash p-1 small rounded-1" onclick="if (confirm('Are you sure you want to delete this payment?')) deletePayment();"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td class="fw-normal py-3">Food Stall Name</td>
@@ -578,7 +581,10 @@
                     <td class="fw-normal py-3">₱100</td>
                     <td class="fw-normal py-3">30 Days</td>
                     <td class="fw-normal py-3">Cash</td>
-                    <td class="fw-normal py-3"><i class="fa-solid fa-ellipsis"></i></td>
+                    <td class="fw-normal py-3 tabact">
+                        <i class="fa-solid fa-pen-to-square me-2 p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#editpayment"></i>
+                        <i class="fa-solid fa-trash p-1 small rounded-1" onclick="if (confirm('Are you sure you want to delete this payment?')) deletePayment();"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td class="fw-normal py-3">Food Stall Name</td>
@@ -586,7 +592,10 @@
                     <td class="fw-normal py-3">₱100</td>
                     <td class="fw-normal py-3">30 Days</td>
                     <td class="fw-normal py-3">Cash</td>
-                    <td class="fw-normal py-3"><i class="fa-solid fa-ellipsis"></i></td>
+                    <td class="fw-normal py-3 tabact">
+                        <i class="fa-solid fa-pen-to-square me-2 p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#editpayment"></i>
+                        <i class="fa-solid fa-trash p-1 small rounded-1" onclick="if (confirm('Are you sure you want to delete this payment?')) deletePayment();"></i>
+                    </td>
                 </tr>
                 
             </table>

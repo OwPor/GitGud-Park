@@ -238,14 +238,14 @@
                     <img src="assets/images/example.jpg" alt="" width="45px" height="45px" class="rounded-2 border">
                     <span >Product Name</span>
                 </div>
-                <span class="ip">₱12</span>
+                <span class="ip">+ ₱12</span>
             </div>
             <div class="d-flex justify-content-between py-2 border-bottom align-items-center">
                 <div class="d-flex gap-2 align-items-center">
                     <img src="assets/images/example.jpg" alt="" width="45px" height="45px" class="rounded-2 border">
                     <span >Product Name</span>
                 </div>
-                <span class="ip">₱12</span>
+                <span class="ip">- ₱12</span>
             </div>
         </div>
       </div>
@@ -377,4 +377,92 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Add Rent Payment -->
+<div class="modal fade" id="addpayment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4">Add Payment</h4>
+                    <div class="input-group m-0 mb-3">
+                        <label for="amountpaid">Amount Paid</label>
+                        <input type="number" name="amountpaid" id="amountpaid" placeholder="Enter amount paid"/>            
+                    </div>
+                    <div class="input-group m-0 mb-3">
+                        <label for="datepaid">Date Paid</label>
+                        <input type="date" name="datepaid" id="datepaid" placeholder="Enter date paid"/>            
+                    </div>
+                    <div class="d-flex gap-2">
+                        <div class="input-group m-0 mb-3">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" name="startDate" id="startDate"/>
+                        </div>
+                        <div class="input-group m-0 mb-3">
+                            <label for="endDate">End Date</label>
+                            <input type="date" name="endDate" id="endDate"/>
+                        </div>
+                    </div>
+                    <div class="input-group m-0 mb-4">
+                        <label for="paymentmethod">Payment Method</label>
+                        <select name="paymentmethod" id="paymentmethod" style="padding: 10.5px 0.75rem">
+                            <option value="" disabled selected>Select</option>
+                            <option value="cash">Cash</option>
+                            <option value="gcash">GCash</option>
+                            <option value="paymaya">PayMaya</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Rent Payment -->
+<div class="modal fade" id="editpayment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4">Edit Payment</h4>
+                    <div class="input-group m-0 mb-3">
+                        <label for="amountpaid">Amount Paid</label>
+                        <input type="number" name="amountpaid" id="amountpaid" value="1000" placeholder="Enter amount paid" />
+                    </div>
+                    <div class="input-group m-0 mb-3">
+                        <label for="datepaid">Date Paid</label>
+                        <input type="date" name="datepaid" id="datepaid" value="2024-11-01" placeholder="Enter date paid" />
+                    </div>
+                    <div class="d-flex gap-2">
+                        <div class="input-group m-0 mb-3">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" name="startDate" id="startDate" value="2024-10-01" />
+                        </div>
+                        <div class="input-group m-0 mb-3">
+                            <label for="endDate">End Date</label>
+                            <input type="date" name="endDate" id="endDate" value="2024-12-31" />
+                        </div>
+                    </div>
+                    <div class="input-group m-0 mb-4">
+                        <label for="paymentmethod">Payment Method</label>
+                        <select name="paymentmethod" id="paymentmethod" style="padding: 10.5px 0.75rem">
+                            <option value="" disabled>Select</option>
+                            <option value="cash" selected>Cash</option>
+                            <option value="gcash">GCash</option>
+                            <option value="paymaya">PayMaya</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
