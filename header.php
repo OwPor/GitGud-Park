@@ -77,7 +77,7 @@
                 <?php
             }
         ?>
-        <span class="insidefp text-white"><i class="fa-solid fa-location-crosshairs me-2"></i> Food Park Name</span> 
+        <!-- <span class="insidefp text-white"><i class="fa-solid fa-location-crosshairs me-2"></i> Food Park Name</span>  -->
     </div>
     <div class="bottom">
         <a href="index.php">
