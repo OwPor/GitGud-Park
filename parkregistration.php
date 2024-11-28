@@ -117,7 +117,7 @@
             $user_id = $_SESSION['user']['id'];
             $business_id = $userObj->registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit);
             if ($business_id) {
-                header('Location: parkregistration.php');
+                header('Location: index.php');
                 exit();
             } else {
                 echo 'Failed to register business';
