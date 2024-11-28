@@ -196,6 +196,22 @@ class User {
     }
 
     function registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit) {
+        $sql = "SELECT * FROM users WHERE id = :user_id AND role = 'park';";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':user_id' => $user_id));
+
+        if ($query->fetch()) {
+            return false;
+        }
+
+        $sql = "SELECT * FROM businesses WHERE business_name = :business_name;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':business_name' => $business_name));
+
+        if ($query->fetch()) {
+            return false;
+        }
+
         $sql = "INSERT INTO businesses (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit);";
         $query = $this->db->connect()->prepare($sql);
         # $user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit

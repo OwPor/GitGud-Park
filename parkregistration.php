@@ -43,6 +43,28 @@
         $street_building_house = filter_var(trim($_POST['sbh']), FILTER_SANITIZE_STRING);
         $business_permit = filter_var(trim($_POST['businesspermit']), FILTER_SANITIZE_STRING);
 
+        if (isset($_FILES['businesspermit']) && $_FILES['businesspermit']['error'] == UPLOAD_ERR_OK) {
+            $uploadDir = 'uploads/business/'; // Directory to save uploaded files
+            $uploadFile = $uploadDir . basename($_FILES['businesspermit']['name']);
+        
+            // Move the uploaded file to the target directory
+            if (move_uploaded_file($_FILES['businesspermit']['tmp_name'], $uploadFile)) {
+                $business_permit = $uploadFile; // Save the file path for later use
+            } else {
+                $business_permit_err = 'Failed to upload the business permit.';
+            }
+        } else {
+            $business_permit_err = 'Please upload your business permit.';
+        }
+
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+
+        if ($_FILES['businesspermit']['size'] > 500000) {
+            $business_permit_err = 'File size exceeds the maximum limit of 5MB.';
+        } elseif (!in_array($_FILES['businesspermit']['type'], $allowedTypes)) {
+            $business_permit_err = 'Invalid file type. Only JPG, JPEG, PNG, and PDF files are allowed.';
+        }
+
         if (empty($first_name)) {
             $first_name_err = 'Please enter your first name.';
         }
@@ -97,6 +119,8 @@
             if ($business_id) {
                 header('Location: parkregistration.php');
                 exit();
+            } else {
+                echo 'Failed to register business';
             }
         }
     }
@@ -145,7 +169,7 @@ main {
 
     <img src="assets/images/background.jpg" class="fixed-image">
     
-    <form action="#" class="form" method="POST">
+    <form action="" class="form" method="POST" enctype="multipart/form-data">
         <div class="progressbar">
             <div class="progress" id="progress"></div>
             <div class="progress-step progress-step-active" data-title="Owner"></div>
@@ -199,7 +223,7 @@ main {
                 <div class="row g-2 mb-4">
                     <div class="col-md-8">
                         <div class="form-floating">
-                            <select class="form-select" id="businesstype" aria-label="Floating label select example">
+                            <select class="form-select" id="businesstype" name="businesstype" aria-label="Floating label select example">
                                 <option value="Food Park" selected>Food Park</option>
                                 <option value="Food Stall" disabled>Food Stall</option>
                             </select>
@@ -403,7 +427,7 @@ main {
                     <div class="logocon px-3 py-4 mt-3 text-center border">
                         <img src="assets/images/upload-icon.png" class="w-50 h-50 mb-2" alt=""><br>
                         <span>Maximum of 5 files of 2GB each and can accept only JPG, JPEG, PNG or PDF format</span>
-                        <input type="file" id="fplogo" accept="image/jpeg, image/png, image/jpg, application/pdf" style="display:none;" multiple>
+                        <input name="businesspermit" type="file" id="fplogo" accept="image/jpeg, image/png, image/jpg, application/pdf" style="display:none;" multiple>
                     </div>
                     
                     <div id="uploaded-files" class="mt-4">

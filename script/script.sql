@@ -116,6 +116,22 @@ CREATE TABLE product_variants (
 
 INSERT INTO products (name, code, description, price, category_id, stall_id) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1);
 
+CREATE TABLE business (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    business_name VARCHAR(100) NOT NULL,
+    business_type VARCHAR(100) NOT NULL,
+    region_province_city VARCHAR(100) NOT NULL,
+    barangay VARCHAR(100) NOT NULL,
+    street_building_house VARCHAR(100) NOT NULL,
+    business_phone VARCHAR(20) NOT NULL,
+    business_email VARCHAR(100) NOT NULL,
+    business_permit VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 
 
 
