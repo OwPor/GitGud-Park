@@ -208,9 +208,11 @@ class User {
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':business_name' => $business_name));
 
-        
+        if ($query->fetch()) {
+            return false;
+        }
 
-        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email);";
+        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit);";
         $query = $this->db->connect()->prepare($sql);
         # $user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit
         if ($query->execute(array(
@@ -221,7 +223,8 @@ class User {
             ':barangay' => $barangay,
             ':street_building_house' => $street_building_house,
             ':business_phone' => $business_phone,
-            ':business_email' => $business_email
+            ':business_email' => $business_email,
+            ':business_permit' => $business_permit
         ))) {
             $sql = "UPDATE users SET role = 'park' WHERE id = :user_id;";
             $query = $this->db->connect()->prepare($sql);

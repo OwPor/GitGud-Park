@@ -2,6 +2,7 @@ const fileInput = document.getElementById('fplogo');
 const uploadedFilesContainer = document.getElementById('uploaded-files');
 const maxFiles = 5;
 let uploadedFileCount = 0; 
+let uploadedFiles = [];
 
 document.querySelector('.logocon').addEventListener('click', () => fileInput.click());
 
@@ -9,11 +10,12 @@ fileInput.addEventListener('change', () => {
     const newFiles = Array.from(fileInput.files);
     if (uploadedFileCount + newFiles.length > maxFiles) {
         alert(`You can upload a maximum of ${maxFiles} files.`);
-        fileInput.value = "";
         return;
     }
 
-    newFiles.forEach((file, index) => {
+    newFiles.forEach((file) => {
+        uploadedFiles.push(file);
+
         const fileEntry = document.createElement('div');
         fileEntry.classList.add('uploaded-file');
         fileEntry.style.display = 'flex';
@@ -37,6 +39,7 @@ fileInput.addEventListener('change', () => {
         deleteIcon.onclick = () => {
             fileEntry.remove();
             uploadedFileCount--; 
+            uploadedFiles = uploadedFiles.filter(f => f.name !== file.name);
         };
 
         fileEntry.appendChild(checkIcon);
@@ -46,5 +49,4 @@ fileInput.addEventListener('change', () => {
     });
 
     uploadedFileCount += newFiles.length;
-    fileInput.value = ""; 
 });

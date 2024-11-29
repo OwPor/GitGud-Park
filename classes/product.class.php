@@ -12,7 +12,6 @@ class Product {
         try {
             $db = $this->db->connect();
     
-            // Check if the stall_id exists
             $checkStallSql = "SELECT COUNT(*) FROM stalls WHERE id = :stall_id";
             $checkStallQuery = $db->prepare($checkStallSql);
             $checkStallQuery->bindParam(':stall_id', $stall_id);
@@ -24,7 +23,6 @@ class Product {
                 return false;
             }
     
-            // Check if the product code already exists
             $checkCodeSql = "SELECT COUNT(*) FROM products WHERE code = :code";
             $checkCodeQuery = $db->prepare($checkCodeSql);
             $checkCodeQuery->bindParam(':code', $code);
@@ -36,7 +34,6 @@ class Product {
                 return false;
             }
     
-            // Proceed to insert the new product
             $sql = "INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) 
                     VALUES (:name, :code, :description, :price, :category_id, :stall_id, :file_path)";
             $query = $db->prepare($sql);
@@ -51,7 +48,6 @@ class Product {
     
             $productId = $db->lastInsertId();
     
-            // Insert product variants
             $variantSql = "INSERT INTO product_variants (product_id, variation_type, name, additional_price, subtract_price, image_path) 
                            VALUES (:product_id, :type, :name, :additional_price, :subtract_price, :image_path)";
             $variantQuery = $db->prepare($variantSql);
@@ -78,5 +74,13 @@ class Product {
         $query = $this->db->connect()->prepare($sql);
         $query->execute();
         return $query->fetchAll();
+    }
+
+    function isProductCodeExists($code) {
+        $sql = "SELECT COUNT(*) FROM products WHERE code = :code;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':code' => $code));
+    
+        return $query->fetchColumn() > 0;
     }
 }

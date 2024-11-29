@@ -123,6 +123,7 @@ CREATE TABLE business (
     street_building_house VARCHAR(100) NOT NULL,
     business_phone VARCHAR(20) NOT NULL,
     business_email VARCHAR(100) NOT NULL,
+    business_permit VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
