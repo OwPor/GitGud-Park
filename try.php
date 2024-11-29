@@ -1,265 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Processing</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
-    display: flex;
-    width: 90%;
-    height: 90%;
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-/* Pending Payments Section */
-.pending-payments {
-    width: 30%;
-    background: #f9f9f9;
-    border-right: 1px solid #ddd;
-    padding: 20px;
-}
-
-h2 {
-    margin: 0 0 10px 0;
-    color: #333;
-}
-
-.search-bar input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.order-list {
-    overflow-y: auto;
-    max-height: calc(100% - 100px);
-}
-
-.order-item {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    background: white;
-}
-
-.order-item.selected {
-    border: 2px solid orange;
-}
-
-/* Payment Processing Section */
-.payment-processing {
-    width: 70%;
-    padding: 20px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.header h2 {
-    margin: 0;
-}
-
-.stall {
-    margin-bottom: 20px;
-}
-
-.stall h3 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 10px;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-.totals div {
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.totals input {
-    padding: 5px;
-    width: 120px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-button.confirm {
-    background-color: orange;
-    color: white;
-}
-
-button.cancel {
-    background-color: gray;
-    color: white;
-}
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Accounts</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- Pending Payments Section -->
-        <div class="pending-payments">
-            <h2>Pending Payment</h2>
-            <div class="search-bar">
-                <input type="text" placeholder="Search Order ID">
-            </div>
-            <div class="order-list">
-                <div class="order-item selected">
-                    <p>Order ID: <span>0001</span></p>
-                    <p>Total Price: <span>120.00</span></p>
-                    <p>Time Ordered: <span>01:00 PM</span></p>
-                </div>
-                <div class="order-item">
-                    <p>Order ID: <span>0023</span></p>
-                    <p>Total Price: <span>120.00</span></p>
-                    <p>Time Ordered: <span>01:01 PM</span></p>
-                </div>
-                <!-- Add similar items here -->
-            </div>
+  <div class="container mt-5">
+    <!-- Account Table -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Birthday</th>
+          <th>Sex</th>
+          <th>Status</th>
+          <th>Role</th>
+          <th>Date Created</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="accountTable">
+        <tr>
+          <td>Naila</td>
+          <td>Haliluddin</td>
+          <td>example@gmail.com</td>
+          <td>+639123456789</td>
+          <td>12/04/2003</td>
+          <td>Female</td>
+          <td class="status">Active</td>
+          <td>Customer</td>
+          <td>07/29/2024</td>
+          <td class="action">
+            <button class="btn btn-danger btn-sm" onclick="openDeactivateModal(this, 'Naila Haliluddin')">Deactivate</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Deactivate Modal -->
+  <div class="modal fade" id="deactivateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-4">
+          <h5 class="modal-title mb-4">Select Duration of Deactivation</h5>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="deactivationDuration" value="3 days" id="deactivate3Days">
+            <label class="form-check-label" for="deactivate3Days">3 Days</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="deactivationDuration" value="7 days" id="deactivate7Days">
+            <label class="form-check-label" for="deactivate7Days">7 Days</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="deactivationDuration" value="1 month" id="deactivate1Month">
+            <label class="form-check-label" for="deactivate1Month">1 Month</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="deactivationDuration" value="Forever" id="deactivateForever">
+            <label class="form-check-label" for="deactivateForever">Forever</label>
+          </div>
+          <div class="text-center mt-4">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="confirmDeactivate">Deactivate</button>
+          </div>
         </div>
-
-        <!-- Payment Processing Section -->
-        <div class="payment-processing">
-            <div class="header">
-                <h2>Payment Processing</h2>
-                <div class="order-id">
-                    Order ID <span>0001</span>
-                </div>
-            </div>
-
-            <!-- Stall 1 -->
-            <div class="stall">
-                <h3>Stall 1</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Sub Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Turon ni Bai</td>
-                            <td>3</td>
-                            <td>112.00</td>
-                        </tr>
-                        <tr>
-                            <td>McDonald Big Mac</td>
-                            <td>19</td>
-                            <td>555.00</td>
-                        </tr>
-                        <tr>
-                            <td>Jolly Spaghetti</td>
-                            <td>1</td>
-                            <td>66.55</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Stall 2 -->
-            <div class="stall">
-                <h3>Stall 2</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Sub Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Turon ni Bai</td>
-                            <td>3</td>
-                            <td>112.00</td>
-                        </tr>
-                        <tr>
-                            <td>McDonald Big Mac</td>
-                            <td>19</td>
-                            <td>555.00</td>
-                        </tr>
-                        <tr>
-                            <td>Jolly Spaghetti</td>
-                            <td>1</td>
-                            <td>66.55</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Totals and Actions -->
-            <div class="totals">
-                <div>
-                    Total Due: <span>766.00</span>
-                </div>
-                <div>
-                    Total Discount: <span>20.00</span>
-                </div>
-                <div>
-                    Total Products: <span>6</span>
-                </div>
-                <div>
-                    Amount Received: 
-                    <input type="number" placeholder="Enter here">
-                </div>
-                <div>
-                    Change Due: <span>0.00</span>
-                </div>
-            </div>
-            <div class="actions">
-                <button class="confirm">Confirm Payment</button>
-                <button class="cancel">Cancel Order</button>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Activate Modal -->
+  <div class="modal fade" id="activateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body p-4">
+          <h5 class="modal-title mb-4">Activate Account</h5>
+          <p>Are you sure you want to activate this account?</p>
+          <div class="text-center mt-4">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success" id="confirmActivate">Activate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript -->
+  <script>
+    let selectedRow; // Reference to the selected row
+
+    function openDeactivateModal(button, name) {
+      selectedRow = button.closest('tr');
+      const modal = new bootstrap.Modal(document.getElementById('deactivateModal'));
+      modal.show();
+    }
+
+    function openActivateModal(button, name) {
+      selectedRow = button.closest('tr');
+      const modal = new bootstrap.Modal(document.getElementById('activateModal'));
+      modal.show();
+    }
+
+    document.getElementById('confirmDeactivate').addEventListener('click', () => {
+      const duration = document.querySelector('input[name="deactivationDuration"]:checked').value;
+      const statusCell = selectedRow.querySelector('.status');
+      const actionCell = selectedRow.querySelector('.action');
+
+      // Update status and action
+      statusCell.textContent = `Deactivated for ${duration}`;
+      actionCell.innerHTML = `
+        <button class="btn btn-success btn-sm" onclick="openActivateModal(this)">Activate</button>
+      `;
+
+      const modal = bootstrap.Modal.getInstance(document.getElementById('deactivateModal'));
+      modal.hide();
+    });
+
+    document.getElementById('confirmActivate').addEventListener('click', () => {
+      const statusCell = selectedRow.querySelector('.status');
+      const actionCell = selectedRow.querySelector('.action');
+
+      // Update status and action
+      statusCell.textContent = 'Active';
+      actionCell.innerHTML = `
+        <button class="btn btn-danger btn-sm" onclick="openDeactivateModal(this)">Deactivate</button>
+      `;
+
+      const modal = bootstrap.Modal.getInstance(document.getElementById('activateModal'));
+      modal.hide();
+    });
+  </script>
 </body>
 </html>

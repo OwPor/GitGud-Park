@@ -466,3 +466,306 @@
         </div>
     </div>
 </div>
+
+<!-- Add User -->
+<div class="modal fade" id="adduser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+            <div class="modal-header p-0 border-0 m-0">
+                <h5 class="m-0">Add User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 m-0">
+                <form action="#" class="form w-100 border-0 p-0" method="POST">
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <div class="progress-step progress-step-active" data-title="Name"></div>
+                        <div class="progress-step" data-title="Contact"></div>
+                        <div class="progress-step" data-title="Other"></div>
+                        <div class="progress-step" data-title="Password"></div>
+                    </div>
+
+                    <div class="form-step form-step-active">
+                        <div class="input-group">
+                            <label for="firstname">First Name</label>
+                            <input type="text" name="firstname" id="firstname" placeholder="Enter your first name" />
+                        </div>
+                        <div class="input-group">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" name="lastname" id="lastname" placeholder="Enter your last name" />
+                        </div>
+                        <div class="btns-group d-block text-center">
+                            <input type="button" value="Next" class="button btn-next" />
+                        </div>
+                    </div>
+
+                    <div class="form-step">
+                        <div class="form-group">
+                            <label for="phone" class="mb-2">Phone Number</label>
+                            <div class="input-group mt-0">
+                                <span class="input-group-text">+63</span>
+                                <input type="tel" name="phone" id="phone" class="form-control phone-input" placeholder="Enter your phone number" />
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="Enter your email" />
+                        </div>
+                        <div class="btns-group">
+                            <a href="#" class="button btn-prev">Previous</a>
+                            <a href="#" class="button btn-next">Next</a>
+                        </div>
+                    </div>
+
+                    <div class="form-step">
+                        <div class="input-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" name="dob" id="dob" />
+                        </div>
+                        <div class="input-group">
+                            <label for="sex">Sex</label>
+                            <select name="sex" id="sex" style="padding: 12px 0.75rem">
+                                <option value="" disabled selected>Select your sex</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="btns-group">
+                            <a href="#" class="button btn-prev">Previous</a>
+                            <a href="#" class="button btn-next">Next</a>
+                        </div>
+                    </div>
+
+                    <div class="form-step">
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Enter your password" />
+                        </div>
+                        <div class="input-group">
+                            <label for="confirm_password">Confirm Password</label>
+                            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password" />
+                        </div>
+                        <div class="btns-group">
+                            <a href="#" class="button btn-prev">Previous</a>
+                            <input type="submit" value="Add User" class="button" />
+                        </div>
+                    </div>
+                </form>
+                <script src="assets/js/adduser.js?v=<?php echo time(); ?>"></script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit User -->
+<div class="modal fade" id="edituser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+            <div class="modal-header p-0 border-0 m-0">
+                <h5 class="m-0">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 m-0">
+                <form action="#" class="form w-100 border-0 p-0" method="POST">
+                    <div class="progressbar">
+                        <div class="progress" id="progress"></div>
+                        <div class="progress-step progress-step-active" data-title="Name"></div>
+                        <div class="progress-step" data-title="Contact"></div>
+                        <div class="progress-step" data-title="Other"></div>
+                        <div class="progress-step" data-title="Password"></div>
+                    </div>
+
+                    <div class="form-step form-step-active">
+                        <div class="input-group">
+                            <label for="firstname">First Name</label>
+                            <input type="text" name="firstname" id="firstname" placeholder="Enter your first name" value="Naila"/>
+                        </div>
+                        <div class="input-group">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" name="lastname" id="lastname" placeholder="Enter your last name" value="Haliluddin"/>
+                        </div>
+                        <div class="btns-group d-block text-center">
+                            <input type="button" value="Next" class="button btn-next" />
+                        </div>
+                    </div>
+
+                    <div class="form-step">
+                        <div class="form-group">
+                            <label for="phone" class="mb-2">Phone Number</label>
+                            <div class="input-group mt-0">
+                                <span class="input-group-text">+63</span>
+                                <input type="tel" name="phone" id="phone" class="form-control phone-input" placeholder="Enter your phone number" value="9123456789" />
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="Enter your email" value="example@gmail.com"/>
+                        </div>
+                        <div class="btns-group">
+                            <a href="#" class="button btn-prev">Previous</a>
+                            <a href="#" class="button btn-next">Next</a>
+                        </div>
+                    </div>
+
+                    <div class="form-step">
+                        <div class="input-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" name="dob" id="dob" value="2024-12-31"/>
+                        </div>
+                        <div class="input-group">
+                            <label for="sex">Sex</label>
+                            <select name="sex" id="sex" style="padding: 12px 0.75rem">
+                                <option value="" disabled>Select your sex</option>
+                                <option value="male" selected>Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="btns-group">
+                            <a href="#" class="button btn-prev">Previous</a>
+                            <a href="#" class="button btn-next">Next</a>
+                        </div>
+                    </div>
+
+                    <div class="form-step">
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Enter your password" value="123" />
+                        </div>
+                        <div class="input-group">
+                            <label for="confirm_password">Confirm Password</label>
+                            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password" value="123"/>
+                        </div>
+                        <div class="btns-group">
+                            <a href="#" class="button btn-prev">Previous</a>
+                            <input type="submit" value="Edit User" class="button" />
+                        </div>
+                    </div>
+                </form>
+                <script src="assets/js/edituser.js?v=<?php echo time(); ?>"></script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete User -->
+<div class="modal fade" id="deleteuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-exclamation"></i> Delete User</h4>
+                    <span>You are about to delete this user.<br>Are you sure?</span>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Suspend User -->
+<div class="modal fade" id="deactivateuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="modal-title m-0 fw-bold">Select Duration of Deactivation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="3days">
+                    <label class="form-check-label" for="3days">3 Days</label>
+                </div><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="7days">
+                    <label class="form-check-label" for="7days">7 Days</label>
+                </div><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="1month">
+                    <label class="form-check-label" for="1month">1 Month</label>
+                </div><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="forever">
+                    <label class="form-check-label" for="forever">Forever</label>
+                </div><br>
+                <div class="text-center mt-4">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+                    <button type="button" class="btn btn-primary">Deactivate</button> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Activate User -->
+<div class="modal fade" id="activateuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-check"></i> Activate User</h4>
+                    <span>You are about to activate this user.<br>Are you sure?</span>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Activate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- More Park Info -->
+<div class="modal fade" id="moreparkinfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-bold m-0">About</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <h5 class="fw-bold mb-3">Operating Hours</h5>
+                <div class="mb-4">
+                    <div class="mb-2">
+                        <p class="mb-1">Monday, Tuesday, Thursday</p>
+                        <span>7AM - 7PM</span>
+                    </div>
+                    <div class="">
+                        <p class="mb-1">Wednesday, Friday, Saturday</p>
+                        <span>8AM - 9PM</span>
+                    </div>
+                </div>
+                <h5 class="fw-bold mb-3">Business Permit</h5>
+                <div  class="mb-4">
+                    <div class="mb-2">
+                        <i class="fa-solid fa-circle-check text-success me-2"></i>
+                        <a href="#">screenshot.jpg</a>
+                    </div>
+                    <div class="">
+                        <i class="fa-solid fa-circle-check text-success me-2"></i>
+                        <a href="#">screenshot.jpg</a>
+                    </div>
+                </div>
+                <h5 class="fw-bold mb-3">Food Park Owner</h5>
+                <div class="owner py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/profile.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Park Owner</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

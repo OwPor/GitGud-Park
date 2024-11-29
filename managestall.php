@@ -56,7 +56,7 @@
         <button class="addpro mb-3 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+ Add Stall</button>
         <ul class="dropdown-menu dropdown-menu-end p-0">
             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#invitestall"><i class="fa-solid fa-user-plus me-2"></i>Invite</a></li>
-            <li><a class="dropdown-item" href="stallregistration.php"><i class="fa-solid fa-plus me-2"></i>Manual</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addowner"><i class="fa-solid fa-plus me-2"></i>Manual</a></li>
         </ul>
     </div>
 
@@ -71,10 +71,69 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <select id="emailInput" name="emails[]" class="form-control select2" multiple="multiple" aria-label="Email input with profile circle">
+                        </select>
+                    </div>
+                    <script src="assets/js/sendemail.js?v=<?php echo time(); ?>"></script>
+
+                    <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
+                    <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                        <div class="d-flex gap-3 align-items-center">
+                            <img src="assets/images/user.jpg" alt="">
+                            <div>
+                                <span class="fw-bold">Naila Haliluddin (you)</span>
+                                <p class="m-0">example@gmail.com</p>
+                            </div>
+                        </div>
+                        <i class="text-muted small mr-1">Park Owner</i>
+                    </div>
+                    <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                        <div class="d-flex gap-3 align-items-center">
+                            <img src="assets/images/profile.jpg" alt="">
+                            <div>
+                                <span class="fw-bold">Naila Haliluddin</span>
+                                <p class="m-0">example@gmail.com</p>
+                            </div>
+                        </div>
+                        <i class="text-muted small mr-1">Stall Owner</i>
+                    </div>
+                    <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                        <div class="d-flex gap-3 align-items-center">
+                            <img src="assets/images/profile.jpg" alt="">
+                            <div>
+                                <span class="fw-bold">Naila Haliluddin</span>
+                                <p class="m-0">example@gmail.com</p>
+                            </div>
+                        </div>
+                        <i class="text-muted small mr-1">Stall Owner</i>
+                    </div>
+                </div>
+                <div class="modal-footer pt-0 border-0 d-flex justify-content-between align-items-center">
+                    <i class="fa-regular fa-circle-question ml-2" data-bs-toggle="tooltip" data-bs-placement="right" title="An email will be sent to them with an invitaion link to register their stall under your food park. Once they complete the registration, their stall will be added to your food park."></i>
+                    <script>
+                        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+                        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                    </script>
+                    <button type="button" class="btn btn-primary send">SEND</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Owner Modal -->
+    <div class="modal fade" id="addowner" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header pb-0 border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Stall Owner</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select id="addemailInput" name="emails[]" class="form-control select2" multiple="multiple" aria-label="Email input with profile circle">
                             <!-- Placeholder for dynamic email entry -->
                         </select>
                     </div>
-                    <script src="assets/js/sendemail.js"></script>
+                    <script src="assets/js/addowner.js?v=<?php echo time(); ?>"></script>
 
                     <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
                     <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
