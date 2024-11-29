@@ -68,11 +68,7 @@ CREATE TABLE stalls (
     FOREIGN KEY (park_id) REFERENCES parks(id) ON DELETE CASCADE
 );
 
-INSERT INTO stalls (name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status, park_id)
-VALUES ('YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', 'assets/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'aaa@gmail.com', '08:00:00', '22:00:00', 100.00, 'Open', 1);
-
-INSERT INTO stalls (name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status, park_id)
-VALUES ('Ihhh', 'AHHHHH.', 'Amethyst Food Park', 'assets/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'aaa@gmail.com', '08:00:00', '22:00:00', 100.00, 'Closed', 1);
+INSERT INTO stalls (user_id, park_id, name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status) VALUES (2, 1, 'YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', 'uploads/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'janedoe@jane.com', '08:00:00', '22:00:00', 100.00, 'Open');
 
 CREATE TABLE categories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -113,8 +109,9 @@ CREATE TABLE product_variants (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
+-- UPDATE users SET role = 'Stall' WHERE id = 1;
 
-INSERT INTO products (name, code, description, price, category_id, stall_id) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1);
+INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1, 'uploads/images/adobo.jpg');
 
 CREATE TABLE business (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -126,11 +123,13 @@ CREATE TABLE business (
     street_building_house VARCHAR(100) NOT NULL,
     business_phone VARCHAR(20) NOT NULL,
     business_email VARCHAR(100) NOT NULL,
-    business_permit VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email) VALUES (1, "HEY PARK", "Food Park", "ZC", "S", "ST", 999, "aa@#gmailc.om");
+
 
 
 

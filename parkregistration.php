@@ -1,129 +1,164 @@
+
 <?php
-    session_start();
+session_start();
 
-    include_once 'links.php'; 
-    include_once 'secondheader.php';
-    require_once './classes/db.class.php';
-    $userObj = new User();
+include_once 'links.php'; 
+include_once 'secondheader.php';
+require_once './classes/db.class.php';
+$userObj = new User();
 
-    $first_name = $last_name = $email = $phone = $business_name = $business_type = $branches = $business_email = $business_phone = $region_province_city = $barangay = $street_building_house = $business_permit = '';
-    $err = $first_name_err = $last_name_err = $email_err = $phone_err = $business_name_err = $business_type_err = $branches_err = $business_email_err = $business_phone_err = $region_province_city_err = $barangay_err = $street_building_house_err = $business_permit_err = '';
+$first_name = $last_name = $email = $phone = $business_name = $business_type = $branches = $business_email = $business_phone = $region_province_city = $barangay = $street_building_house = $business_permit = '';
+$err = $first_name_err = $last_name_err = $email_err = $phone_err = $business_name_err = $business_type_err = $branches_err = $business_email_err = $business_phone_err = $region_province_city_err = $barangay_err = $street_building_house_err = $business_permit_err = '';
 
-    if (isset($_SESSION['user']['id'])) {
-        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
-            $user = $userObj->getUser($_SESSION['user']['id']);
-            if ($user) {
-                $first_name = $user['first_name'];
-                $last_name = $user['last_name'];
-                $email = $user['email'];
-                $phone = $user['phone'];
-            } else {
-                header('Location: email/verify_email.php');
-                exit();
-            }
+if (isset($_SESSION['user']['id'])) {
+    if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
+        $user = $userObj->getUser($_SESSION['user']['id']);
+        if ($user) {
+            $first_name = $user['first_name'];
+            $last_name = $user['last_name'];
+            $email = $user['email'];
+            $phone = $user['phone'];
         } else {
             header('Location: email/verify_email.php');
             exit();
         }
+    } else {
+        header('Location: email/verify_email.php');
+        exit();
     }
+}
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Validate and sanitize inputs
-        $first_name = filter_var(trim($_POST['firstname']), FILTER_SANITIZE_STRING);
-        $last_name = filter_var(trim($_POST['lastname']), FILTER_SANITIZE_STRING);
-        $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-        $phone = filter_var(trim($_POST['phonenumber']), FILTER_SANITIZE_STRING);
-        $business_name = filter_var(trim($_POST['businessname']), FILTER_SANITIZE_STRING);
-        $business_type = filter_var(trim($_POST['businesstype']), FILTER_SANITIZE_STRING);
-        $branches = filter_var(trim($_POST['branches']), FILTER_SANITIZE_STRING);
-        $business_email = filter_var(trim($_POST['businessemail']), FILTER_SANITIZE_EMAIL);
-        $business_phone = filter_var(trim($_POST['businessphonenumber']), FILTER_SANITIZE_STRING);
-        $region_province_city = filter_var(trim($_POST['rpc']), FILTER_SANITIZE_STRING);
-        $barangay = filter_var(trim($_POST['barangay']), FILTER_SANITIZE_STRING);
-        $street_building_house = filter_var(trim($_POST['sbh']), FILTER_SANITIZE_STRING);
-        $business_permit = filter_var(trim($_POST['businesspermit']), FILTER_SANITIZE_STRING);
-
-        if (isset($_FILES['businesspermit']) && $_FILES['businesspermit']['error'] == UPLOAD_ERR_OK) {
-            $uploadDir = 'uploads/business/'; // Directory to save uploaded files
-            $uploadFile = $uploadDir . basename($_FILES['businesspermit']['name']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Validate and sanitize inputs
+    $first_name = filter_var(trim($_POST['firstname']), FILTER_SANITIZE_STRING);
+    $last_name = filter_var(trim($_POST['lastname']), FILTER_SANITIZE_STRING);
+    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+    $phone = filter_var(trim($_POST['phonenumber']), FILTER_SANITIZE_STRING);
+    $business_name = filter_var(trim($_POST['businessname']), FILTER_SANITIZE_STRING);
+    $business_type = filter_var(trim($_POST['businesstype']), FILTER_SANITIZE_STRING);
+    $branches = filter_var(trim($_POST['branches']), FILTER_SANITIZE_STRING);
+    $business_email = filter_var(trim($_POST['businessemail']), FILTER_SANITIZE_EMAIL);
+    $business_phone = filter_var(trim($_POST['businessphonenumber']), FILTER_SANITIZE_STRING);
+    $region_province_city = filter_var(trim($_POST['rpc']), FILTER_SANITIZE_STRING);
+    $barangay = filter_var(trim($_POST['barangay']), FILTER_SANITIZE_STRING);
+    $street_building_house = filter_var(trim($_POST['sbh']), FILTER_SANITIZE_STRING);
+    $business_permit = $_FILES['businesspermit'];
         
-            // Move the uploaded file to the target directory
-            if (move_uploaded_file($_FILES['businesspermit']['tmp_name'], $uploadFile)) {
-                $business_permit = $uploadFile; // Save the file path for later use
-            } else {
-                $business_permit_err = 'Failed to upload the business permit.';
-            }
-        } else {
-            $business_permit_err = 'Please upload your business permit.';
+
+    // Handle file upload
+    if (isset($_FILES['businesspermit']) && $_FILES['businesspermit']['error'] == UPLOAD_ERR_OK) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
+        $maxFileSize = 5000000; // 5MB
+        $uploadDir = 'uploads/business/';
+
+        // Check file size
+        if ($_FILES['businesspermit']['size'] > $maxFileSize) {
+            $business_permit_err = 'File size exceeds the maximum limit of 5MB.';
         }
 
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
-
-        if ($_FILES['businesspermit']['size'] > 500000) {
-            $business_permit_err = 'File size exceeds the maximum limit of 5MB.';
-        } elseif (!in_array($_FILES['businesspermit']['type'], $allowedTypes)) {
+        // Check file type
+        $fileType = mime_content_type($_FILES['businesspermit']['tmp_name']);
+        $fileExtension = pathinfo($_FILES['businesspermit']['name'], PATHINFO_EXTENSION);
+        if (!in_array($fileType, $allowedTypes) || !in_array($fileExtension, ['jpeg', 'jpg', 'png', 'pdf'])) {
             $business_permit_err = 'Invalid file type. Only JPG, JPEG, PNG, and PDF files are allowed.';
         }
 
-        if (empty($first_name)) {
-            $first_name_err = 'Please enter your first name.';
+        // Ensure upload directory exists
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
         }
 
-        if (empty($last_name)) {
-            $last_name_err = 'Please enter your last name.';
-        }
+        // Generate unique file name
+        $uniqueFileName = $uploadDir . uniqid('permit_', true) . '.' . $fileExtension;
 
-        if (empty($email)) {
-            $email_err = 'Please enter your email.';
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $email_err = 'Please enter a valid email.';
-        }
-
-        if (empty($phone)) {
-            $phone_err = 'Please enter your phone number.';
-        } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
-            $phone_err = 'Please enter a valid phone number.';
-        }
-
-        if (empty($business_name)) {
-            $business_name_err = 'Please enter your business name.';
-        }
-
-        if (empty($business_type)) {
-            $business_type_err = 'Please select your business type.';
-        }
-
-        if (empty($branches)) {
-            $branches_err = 'Please enter the number of branches.';
-        }
-
-        if (empty($region_province_city)) {
-            $region_province_city_err = 'Please enter your region, province, and city.';
-        }
-
-        if (empty($barangay)) {
-            $barangay_err = 'Please enter your barangay.';
-        }
-
-        if (empty($street_building_house)) {
-            $street_building_house_err = 'Please enter your street, building, and house number.';
-        }
-
-        if (empty($business_permit)) {
-            $business_permit_err = 'Please upload your business permit.';
-        }
-
-        if (empty($first_name_err) && empty($last_name_err) && empty($email_err) && empty($phone_err) && empty($business_name_err) && empty($business_type_err) && empty($branches_err) && empty($region_province_city_err) && empty($barangay_err) && empty($street_building_house_err) && empty($business_permit_err)) {
-            $user_id = $_SESSION['user']['id'];
-            $business_id = $userObj->registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit);
-            if ($business_id) {
-                header('Location: index.php');
-                exit();
+        // If no errors, move the file to the upload directory
+        if (empty($business_permit_err)) {
+            if (move_uploaded_file($_FILES['businesspermit']['tmp_name'], $uniqueFileName)) {
+                $business_permit = $uniqueFileName; // Save the file path for later use
             } else {
-                echo 'Failed to register business';
+                $business_permit_err = 'Failed to upload the business permit.';
             }
         }
+    } else {
+        echo "ERRORRR";
     }
+
+    // Validate other fields
+    if (empty($first_name)) {
+        $first_name_err = 'Please enter your first name.';
+    }
+
+    if (empty($last_name)) {
+        $last_name_err = 'Please enter your last name.';
+    }
+
+    if (empty($email)) {
+        $email_err = 'Please enter your email.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $email_err = 'Please enter a valid email.';
+    }
+
+    if (empty($phone)) {
+        $phone_err = 'Please enter your phone number.';
+    } elseif (!preg_match('/^[0-9]{10}$/', $phone)) {
+        $phone_err = 'Please enter a valid phone number.';
+    }
+
+    if (empty($business_name)) {
+        $business_name_err = 'Please enter your business name.';
+    }
+
+    if (empty($business_type)) {
+        $business_type_err = 'Please select your business type.';
+    }
+
+    if (empty($branches)) {
+        $branches_err = 'Please enter the number of branches.';
+    }
+
+    if (empty($region_province_city)) {
+        $region_province_city_err = 'Please enter your region, province, and city.';
+    }
+
+    if (empty($barangay)) {
+        $barangay_err = 'Please enter your barangay.';
+    }
+
+    if (empty($street_building_house)) {
+        $street_building_house_err = 'Please enter your street, building, and house number.';
+    }
+
+    if (empty($business_permit)) {
+        $business_permit_err = 'Please upload your business permit.';
+    }
+
+    // If no errors, proceed to insert into the database
+    if (empty($first_name_err) && empty($last_name_err) && empty($email_err) && empty($phone_err) && empty($business_name_err) && empty($business_type_err) && empty($branches_err) && empty($region_province_city_err) && empty($barangay_err) && empty($street_building_house_err)) {
+        $user_id = $_SESSION['user']['id'];
+        $business_id = $userObj->registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit);
+        if ($business_id) {
+            header('Location: index.php');
+            exit();
+        } else {
+            echo 'Failed to register business';
+        }
+    } else {
+        // Display errors for debugging
+        echo '<pre>';
+        echo 'First Name Error: ' . (empty($first_name_err) ? 'Empty' : $first_name_err) . '<br>';
+        echo 'Last Name Error: ' . (empty($last_name_err) ? 'Empty' : $last_name_err) . '<br>';
+        echo 'Email Error: ' . (empty($email_err) ? 'Empty' : $email_err) . '<br>';
+        echo 'Phone Error: ' . (empty($phone_err) ? 'Empty' : $phone_err) . '<br>';
+        echo 'Business Name Error: ' . (empty($business_name_err) ? 'Empty' : $business_name_err) . '<br>';
+        echo 'Business Type Error: ' . (empty($business_type_err) ? 'Empty' : $business_type_err) . '<br>';
+        echo 'Branches Error: ' . (empty($branches_err) ? 'Empty' : $branches_err) . '<br>';
+        echo 'Region/Province/City Error: ' . (empty($region_province_city_err) ? 'Empty' : $region_province_city_err) . '<br>';
+        echo 'Barangay Error: ' . (empty($barangay_err) ? 'Empty' : $barangay_err) . '<br>';
+        echo 'Street/Building/House Error: ' . (empty($street_building_house_err) ? 'Empty' : $street_building_house_err) . '<br>';
+        echo 'Business Permit Error: ' . (empty($business_permit_err) ? 'Empty' : $business_permit_err) . '<br>';
+        echo '</pre>';
+    }
+}
 ?>
 <style>
 .progressbar{
@@ -202,7 +237,7 @@ main {
                 <div class="input-group mb-3 mt-0">
                     <span class="input-group-text c">+63</span>
                     <div class="form-floating flex-grow-1">
-                        <input type="text" class="form-control c" id="phonenumber" name=" " placeholder="Phone Number" value="<?= $phone ?>" maxlength="10" min="10" max="10" required readonly> 
+                        <input type="text" class="form-control c" id="phonenumber" name="phonenumber" placeholder="Phone Number" value="<?= $phone ?>" maxlength="10" min="10" max="10" required readonly> 
                         <label for="phonenumber">Phone Number <span style="color: #CD5C08;">*</span></label>
                     </div>
                 </div>
@@ -426,8 +461,8 @@ main {
                     <label for="fplogo">Upload FULL pages of your Business Permit <span style="color: #CD5C08;">*</span></label>
                     <div class="logocon px-3 py-4 mt-3 text-center border">
                         <img src="assets/images/upload-icon.png" class="w-50 h-50 mb-2" alt=""><br>
-                        <span>Maximum of 5 files of 2GB each and can accept only JPG, JPEG, PNG or PDF format</span>
-                        <input name="businesspermit" type="file" id="fplogo" accept="image/jpeg, image/png, image/jpg, application/pdf" style="display:none;" multiple>
+                        <span>Maximum of 5 files of 5MB each and can accept only JPG, JPEG, PNG or PDF format</span>
+                        <input type="file" id="fplogo" accept="image/jpeg, image/png, image/jpg, application/pdf" name="businesspermit" style="display:none;" />
                     </div>
                     
                     <div id="uploaded-files" class="mt-4">

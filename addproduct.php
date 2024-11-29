@@ -1,4 +1,5 @@
 <?php
+    ob_start(); 
     include_once 'links.php'; 
     include_once 'header.php';
     require_once __DIR__ . '/classes/db.class.php';
@@ -129,17 +130,18 @@
 
         if (empty($errors)) {
             if ($productObj->addProduct($name, $code, $description, $price, $category, $stall_id, $targetImage, $variants)) {
-                header('Location: index.php');
+                header('Location: managemenu.php');
                 exit();
             } else {
                 $errors['generalErr'] = 'Failed to add product. Please try again.';
             }
         }
-        
-        if (!empty($errors)) {
-            echo json_encode($errors);
-            exit;
+
+        foreach ($errors as $error) {
+            echo "<p>Error: $error</p>";
         }
+
+        ob_end_flush();
     }
 ?>
 <style>

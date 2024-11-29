@@ -11,8 +11,32 @@ class Product {
     function addProduct($name, $code, $description, $price, $category_id, $stall_id, $image, $variants) {
         try {
             $db = $this->db->connect();
-            $db->beginTransaction();
     
+            // Check if the stall_id exists
+            $checkStallSql = "SELECT COUNT(*) FROM stalls WHERE id = :stall_id";
+            $checkStallQuery = $db->prepare($checkStallSql);
+            $checkStallQuery->bindParam(':stall_id', $stall_id);
+            $checkStallQuery->execute();
+            $stallExists = $checkStallQuery->fetchColumn();
+    
+            if ($stallExists == 0) {
+                echo "Failed to add product: Stall ID does not exist.";
+                return false;
+            }
+    
+            // Check if the product code already exists
+            $checkCodeSql = "SELECT COUNT(*) FROM products WHERE code = :code";
+            $checkCodeQuery = $db->prepare($checkCodeSql);
+            $checkCodeQuery->bindParam(':code', $code);
+            $checkCodeQuery->execute();
+            $codeExists = $checkCodeQuery->fetchColumn();
+    
+            if ($codeExists > 0) {
+                echo "Failed to add product: Product code already exists.";
+                return false;
+            }
+    
+            // Proceed to insert the new product
             $sql = "INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) 
                     VALUES (:name, :code, :description, :price, :category_id, :stall_id, :file_path)";
             $query = $db->prepare($sql);
@@ -27,6 +51,7 @@ class Product {
     
             $productId = $db->lastInsertId();
     
+            // Insert product variants
             $variantSql = "INSERT INTO product_variants (product_id, variation_type, name, additional_price, subtract_price, image_path) 
                            VALUES (:product_id, :type, :name, :additional_price, :subtract_price, :image_path)";
             $variantQuery = $db->prepare($variantSql);
@@ -41,10 +66,8 @@ class Product {
                 $variantQuery->execute();
             }
     
-            $db->commit();
             return true;
         } catch (Exception $e) {
-            $db->rollBack();
             echo "Failed to add product: " . $e->getMessage();
             return false;
         }

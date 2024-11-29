@@ -196,23 +196,21 @@ class User {
     }
 
     function registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit) {
-        $sql = "SELECT * FROM users WHERE id = :user_id AND role = 'park';";
+        $sql = "SELECT * FROM users WHERE id = :user_id AND role != 'park';";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':user_id' => $user_id));
 
-        if ($query->fetch()) {
+        if (!$query->fetch()) {
             return false;
         }
 
-        $sql = "SELECT * FROM businesses WHERE business_name = :business_name;";
+        $sql = "SELECT * FROM business WHERE business_name = :business_name;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':business_name' => $business_name));
 
-        if ($query->fetch()) {
-            return false;
-        }
+        
 
-        $sql = "INSERT INTO businesses (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit);";
+        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email);";
         $query = $this->db->connect()->prepare($sql);
         # $user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit
         if ($query->execute(array(
@@ -223,8 +221,7 @@ class User {
             ':barangay' => $barangay,
             ':street_building_house' => $street_building_house,
             ':business_phone' => $business_phone,
-            ':business_email' => $business_email,
-            ':business_permit' => $business_permit
+            ':business_email' => $business_email
         ))) {
             $sql = "UPDATE users SET role = 'park' WHERE id = :user_id;";
             $query = $this->db->connect()->prepare($sql);
