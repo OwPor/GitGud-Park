@@ -14,8 +14,9 @@
 <div class="bottom d-flex justify-content-between align-items-center">
     <img src="assets/images/logo.png" alt="">
     <?php 
-        if (isset($SESSION['user']['id']))
+        if (isset($_SESSION['user']['id']))
             echo '<a href="../logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>';
-        echo '<a href="/GitGudPark/index.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Back</a>';
+        else
+            echo '<a href="/GitGudPark/index.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Back</a>';
     ?>
 </div> 
