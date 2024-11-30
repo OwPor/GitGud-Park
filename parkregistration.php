@@ -40,6 +40,9 @@ if (isset($_SESSION['user']['id'])) {
         header('Location: email/verify_email.php');
         exit();
     }
+} else {
+    header('Location: signin.php');
+    exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
