@@ -201,20 +201,26 @@ class User {
         $query->execute(array(':user_id' => $user_id));
 
         if (!$query->fetch()) {
-            return false;
+            return "Park Owner";
         }
 
         $sql = "SELECT * FROM business WHERE business_name = :business_name;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':business_name' => $business_name));
 
-        if ($query->fetch()) {
-            return false;
+        $business = $query->fetch();
+
+        if ($business['business_name'] == $business_name) {
+            return "Existing Business";
+        } else if ($business['business_email'] == $business_email) {
+            return "Existing Email";
+        } else if ($business['business_phone'] == $business_phone) {
+            return "Existing Phone";
         }
 
-        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit);";
+        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit, business_status) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit, :business_status);";
         $query = $this->db->connect()->prepare($sql);
-        # $user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit
+
         if ($query->execute(array(
             ':user_id' => $user_id,
             ':business_name' => $business_name,
@@ -224,12 +230,21 @@ class User {
             ':street_building_house' => $street_building_house,
             ':business_phone' => $business_phone,
             ':business_email' => $business_email,
-            ':business_permit' => $business_permit
+            ':business_permit' => $business_permit,
+            ':business_status' => 'Pending Approval'
         ))) {
             $sql = "UPDATE users SET role = 'Park Owner' WHERE id = :user_id;";
             $query = $this->db->connect()->prepare($sql);
             
-            return $query->execute(array(':user_id' => $user_id));;
+            return $query->execute(array(':user_id' => $user_id));
         }
+    }
+
+    function getBusinessStatus($user_id) {
+        $sql = "SELECT business_status FROM business WHERE user_id = :user_id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':user_id' => $user_id));
+
+        return $query->fetch()['business_status'];
     }
 }

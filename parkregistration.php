@@ -13,6 +13,21 @@ if (isset($_SESSION['user']['id'])) {
     if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
         $user = $userObj->getUser($_SESSION['user']['id']);
         if ($user) {
+            if ($user['role'] == 'Park Owner') {
+                $status = $userObj->getBusinessStatus($_SESSION['user']['id']);
+                if ($status == 'Pending Approval') {
+                    header('Location: pendingapproval.php');
+                    exit();
+                } else if ($status == 'Approved') {
+                    header('Location: dashboard.php');
+                    exit();
+                } else if ($status == 'Rejected') {
+                    echo 'Your business registration has been rejected.';
+                } else {
+                    echo $status;
+                }
+            }
+
             $first_name = $user['first_name'];
             $last_name = $user['last_name'];
             $email = $user['email'];
@@ -135,6 +150,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($business_id) {
             header('Location: pendingapproval.php');
             exit();
+        } else if ($business_id == "Park Owner") {
+            $status = $userObj->getBusinessStatus($user_id);
+            if ($status == 'Pending Approval') {
+                header('Location: pendingapproval.php');
+                exit();
+            } else if ($status == 'Approved') {
+                header('Location: dashboard.php');
+                exit();
+            } else if ($status == 'Rejected') {
+                echo 'Your business registration has been rejected.';
+            }
+        } else if ($business_id == "Existing Business") {
+            echo 'Business already exists';
+        } else if ($business_id == "Existing Email") {
+            echo 'Email already exists';
+        } else if ($business_id == "Existing Phone") {
+            echo 'Phone already exists';
         } else {
             echo 'Failed to register business';
         }
