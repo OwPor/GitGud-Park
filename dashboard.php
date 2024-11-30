@@ -48,8 +48,13 @@
                 <button class="variation-btn addrem m-2" data-bs-toggle="modal" data-bs-target="#editfoodpark">Edit Profile</button>
                 <button class="variation-btn addrem" onclick="window.location.href='managestall.php';">Manage Stalls</button>
             </div>
-            <h5 class="fw-bold mb-1">All Branch</h5>
-            <span class="small text-muted">Currently selected 1/2 branch</span>
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="fw-bold mb-1">All Branch</h5>
+                    <span class="small text-muted">Currently selected 1/2 branch</span>
+                </div>
+                <button class="disatc m-0 small" onclick="window.location.href='parkregistration.php';">+ New Branch</button>
+            </div>
             <div class="d-flex justify-content-between align-items-center border rounded-2 py-2 px-3 mt-2 selectbranch">
                 <div class="d-flex gap-3 align-items-center">
                     <img src="assets/images/foodpark.jpg" width="50px" height="50px" style="border-radius: 50%;">

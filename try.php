@@ -1,53 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Search and Dropdown</title>
-    <!-- Select2 CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
-    <!-- Bootstrap CSS (Optional for styling) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="form-group">
-            <select id="emailDropdown" class="form-control" style="width: 100%;"></select>
+<div id="container"  class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="col">
+            hdhdhd
         </div>
-    </div>
+        <div class="col">
+            hdhdh
+        </div>
+        <div class="col">
+            dhdhdh
+        </div>
+        <div class="col">
+          hdhdhdj
+        </div>
+        <div class="col">
+            djhdhd
+        </div>
+        
+        <div class="col">
+            hdhdhd
+        </div>
+        <div class="col">
+            hdhdh
+        </div>
+        <div class="col">
+            dhdhdh
+        </div>
+        <div class="col">
+          hdhdhdj
+        </div>
+        <div class="col">
+            djhdhd
+        </div>
+        <div class="col">
+            hdhdhd
+        </div>
+        <div class="col">
+            hdhdh
+        </div>
+        <div class="col">
+            dhdhdh
+        </div>
+        <div class="col">
+          hdhdhdj
+        </div>
+        <div class="col">
+            djhdhd
+        </div>
+        <div class="col">
+            hdhdhd
+        </div>
+        <div class="col">
+            hdhdh
+        </div>
+        <div class="col">
+            dhdhdh
+        </div>
+        <div class="col">
+          hdhdhdj
+        </div>
+        <div class="col">
+            djhdhd
+        </div>
+        <div class="col">
+            hdhdhd
+        </div>
+        <div class="col">
+            hdhdh
+        </div>
+        <div class="col">
+            dhdhdh
+        </div>
+        <div class="col">
+          hdhdhdj
+        </div>
+        <div class="col">
+            djhdhd
+        </div>
+        <div class="col">
+            hdhdhd
+        </div>
+        <div class="col">
+            hdhdh
+        </div>
+        <div class="col">
+            dhdhdh
+        </div>
+        <div class="col">
+          hdhdhdj
+        </div>
+        <div class="col">
+            djhdhd
+        </div>
+</div> 
+<div class="text-center mt-3">
+    <button id="seeMore" class="btn btn-primary">See More</button>
+</div>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Select2 JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <!-- Bootstrap Bundle JS (Optional for styling) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("container");
+    const seeMoreButton = document.getElementById("seeMore");
 
-    <script>
-        $(document).ready(function () {
-            // Initialize the dropdown with Select2
-            $('#emailDropdown').select2({
-                placeholder: "Search and select an email",
-                allowClear: true,
-                data: [
-                    { id: 'john.doe@example.com', text: 'john.doe@example.com' },
-                    { id: 'jane.doe@example.com', text: 'jane.doe@example.com' },
-                    { id: 'alice@example.com', text: 'alice@example.com' },
-                    { id: 'bob@example.com', text: 'bob@example.com' }
-                ]
-            });
+    // Initial data simulation
+    const data = Array.from({ length: 100 }, (_, i) => `Item ${i + 1}`);
+    let displayedCount = 0;
+    const itemsPerPage = 15;
 
-            // Handle selection
-            $('#emailDropdown').on('select2:select', function (e) {
-                const selectedEmail = e.params.data.text;
-                console.log("Selected email:", selectedEmail);
-            });
-
-            // Handle clearing the selection
-            $('#emailDropdown').on('select2:unselect', function () {
-                console.log("Email selection cleared.");
-            });
+    // Function to render items
+    const renderItems = () => {
+        const remainingItems = data.slice(displayedCount, displayedCount + itemsPerPage);
+        remainingItems.forEach(item => {
+            const col = document.createElement("div");
+            col.classList.add("col");
+            col.innerHTML = `<div class="p-3 border bg-light">${item}</div>`;
+            container.appendChild(col);
         });
-    </script>
-</body>
-</html>
+        displayedCount += remainingItems.length;
+
+        // Hide the button if all items are displayed
+        if (displayedCount >= data.length) {
+            seeMoreButton.style.display = "none";
+        }
+    };
+
+    // Initial render
+    renderItems();
+
+    // Event listener for "See More"
+    seeMoreButton.addEventListener("click", renderItems);
+});
+</script>

@@ -11,8 +11,24 @@
     }
 </style>
 <main>
-
-    <div class="dropdown d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex gap-3 align-items-center">
+            <select name="sortOptions" id="sortOptions" class="border-0 text-muted small py-1 px-2 bg-white">
+                <option value="all">All</option>
+            </select>
+            <select name="sortOptions" id="sortOptions" class="border-0 text-muted small py-1 px-2 bg-white">
+                <option value="all">All</option>
+            </select>
+            <i class="fa-regular fa-circle-down rename bg-white"></i>
+            <div class="d-flex gap-2 align-items-center small rename py-1 px-2 bg-white">
+                <span style="cursor: context-menu;">47s</span>
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+            </div>
+            <form action="#" method="get" class="searchmenu bg-white">
+                <button type="submit"><i class="fas fa-search fa-lg small"></i></button>
+                <input type="text" name="search" placeholder="Search">
+            </form>
+        </div>
         <button class="addpro" type="button" data-bs-toggle="modal" data-bs-target="#invitestall">+ Add Stall</button>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-3">

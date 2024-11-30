@@ -1034,61 +1034,257 @@
     </div>
 </div>
 
-<!-- Add Owner Modal
-<div class="modal fade" id="addowner" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<!-- Select Food Park -->
+ <div class="modal fade" id="selectpark" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 75%;">
         <div class="modal-content">
-            <div class="modal-header pb-0 border-0">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Stall Owner</h1>
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Select which park the stall belong</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                
-                <div class="form-group">
-                    <select id="emailDropdown" class="form-control" style="width: 100%;"></select>
-                </div>
-                <script src="assets/js/addowner.js?v=<?php echo time(); ?>"></script>
-
-                <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
-                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/user.jpg" alt="">
-                        <div>
-                            <span class="fw-bold">Naila Haliluddin (you)</span>
-                            <p class="m-0">example@gmail.com</p>
-                        </div>
+            <div class="modal-body modal-scrollable">
+                <div class="row row-cols-1 row-cols-md-3 g-3">
+                    <div class="col">
+                        <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#invitestall">
+                            <div class="card" style="position: relative;">
+                                <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
+                                <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Food Park Name</h5>
+                                    <p class="card-text text-muted "><i class="fa-solid fa-location-dot"></i> Street Name, Barangay, Zamboanga City</p>
+                                    <span class="opennow">Open Now</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <i class="text-muted small mr-1">Park Owner</i>
-                </div>
-                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/profile.jpg" alt="">
-                        <div>
-                            <span class="fw-bold">Naila Haliluddin</span>
-                            <p class="m-0">example@gmail.com</p>
-                        </div>
+                    <div class="col">
+                        <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#invitestall">
+                            <div class="card" style="position: relative;">
+                                <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
+                                <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Food Park Name</h5>
+                                    <p class="card-text text-muted "><i class="fa-solid fa-location-dot"></i> Street Name, Barangay, Zamboanga City</p>
+                                    <span class="opennow">Open Now</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <i class="text-muted small mr-1">Stall Owner</i>
-                </div>
-                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/profile.jpg" alt="">
-                        <div>
-                            <span class="fw-bold">Naila Haliluddin</span>
-                            <p class="m-0">example@gmail.com</p>
-                        </div>
+                    <div class="col">
+                        <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#invitestall">
+                            <div class="card" style="position: relative;">
+                                <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
+                                <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Food Park Name</h5>
+                                    <p class="card-text text-muted "><i class="fa-solid fa-location-dot"></i> Street Name, Barangay, Zamboanga City</p>
+                                    <span class="opennow">Open Now</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <i class="text-muted small mr-1">Stall Owner</i>
-                </div>
-            </div>
-            <div class="modal-footer pt-0 border-0 d-flex justify-content-between align-items-center">
-                <i class="fa-regular fa-circle-question ml-2" data-bs-toggle="tooltip" data-bs-placement="right" title="An email will be sent to them with an invitaion link to register their stall under your food park. Once they complete the registration, their stall will be added to your food park."></i>
-                <script>
-                    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-                    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-                </script>
-                <button type="button" class="btn btn-primary send">SEND</button>
+                    <div class="col">
+                        <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#invitestall">
+                            <div class="card" style="position: relative;">
+                                <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
+                                <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
+                                <div class="card-body">
+                                    <h5 class="card-title">Food Park Name</h5>
+                                    <p class="card-text text-muted "><i class="fa-solid fa-location-dot"></i> Street Name, Barangay, Zamboanga City</p>
+                                    <span class="opennow">Open Now</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>  
             </div>
         </div>
     </div>
-</div>  -->
+</div>
+
+<!-- Select Food Stall -->
+<div class="modal fade" id="selectstall" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 75%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Select which stall the item belong</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-scrollable">
+                <div class="row row-cols-1 row-cols-md-3 g-3">
+                    <div class="col">
+                        <a href="addproduct.php" class="card-link text-decoration-none bg-white">
+                            <div class="card" style="position: relative;">
+                                <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
+                                <button class="add"><i class="fa-regular fa-heart"></i></button>
+                                <div class="card-body">
+                                    <div class="d-flex gap-2 align-items-center">
+                                    <p class="card-text text-muted m-0">Category</p>
+                                    <span class="dot text-muted"></span>
+                                    <p class="card-text text-muted m-0">Category</p>
+                                </div>
+                                    <h5 class="card-title my-2">Food Stall Name</h5>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-text text-muted m-0">Description</p>
+                                        <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="discount">With Promo</span>
+                                        <span class="newopen">New Open</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="addproduct.php" class="card-link text-decoration-none bg-white">
+                            <div class="card" style="position: relative;">
+                                <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
+                                <button class="add"><i class="fa-regular fa-heart"></i></button>
+                                <div class="card-body">
+                                    <div class="d-flex gap-2 align-items-center">
+                                    <p class="card-text text-muted m-0">Category</p>
+                                    <span class="dot text-muted"></span>
+                                    <p class="card-text text-muted m-0">Category</p>
+                                </div>
+                                    <h5 class="card-title my-2">Food Stall Name</h5>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-text text-muted m-0">Description</p>
+                                        <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="discount">With Promo</span>
+                                        <span class="newopen">New Open</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="addproduct.php" class="card-link text-decoration-none bg-white">
+                            <div class="card" style="position: relative;">
+                                <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
+                                <button class="add"><i class="fa-regular fa-heart"></i></button>
+                                <div class="card-body">
+                                    <div class="d-flex gap-2 align-items-center">
+                                    <p class="card-text text-muted m-0">Category</p>
+                                    <span class="dot text-muted"></span>
+                                    <p class="card-text text-muted m-0">Category</p>
+                                </div>
+                                    <h5 class="card-title my-2">Food Stall Name</h5>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-text text-muted m-0">Description</p>
+                                        <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="discount">With Promo</span>
+                                        <span class="newopen">New Open</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="addproduct.php" class="card-link text-decoration-none bg-white">
+                            <div class="card" style="position: relative;">
+                                <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
+                                <button class="add"><i class="fa-regular fa-heart"></i></button>
+                                <div class="card-body">
+                                    <div class="d-flex gap-2 align-items-center">
+                                    <p class="card-text text-muted m-0">Category</p>
+                                    <span class="dot text-muted"></span>
+                                    <p class="card-text text-muted m-0">Category</p>
+                                </div>
+                                    <h5 class="card-title my-2">Food Stall Name</h5>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-text text-muted m-0">Description</p>
+                                        <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="discount">With Promo</span>
+                                        <span class="newopen">New Open</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Placed Order with Cash Paymenyt -->
+<div class="modal fade" id="ifcash" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <i class="fa-regular fa-face-smile mb-3" style="color: #CD5C08; font-size: 80px"></i><br>
+                    <span>Thank you for your order!</span>
+                    <h5 class="fw-bold mt-2 mb-4">Your Order ID is <span style="color: #CD5C08;">0000</span></h5>
+                    <p class="mb-3">Please proceed to each stall with this Order ID to complete your payment. Once payment is confirmed, your order will be in preparation queue. </p>
+                    <span>For more details about your order, go to Purchase.</span>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Purchase</button>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Placed Order with Online Paymenyt -->
+<div class="modal fade" id="ifcashless" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <i class="fa-regular fa-face-smile mb-3" style="color: #CD5C08; font-size: 80px"></i><br>
+                    <span>Thank you for your order!</span>
+                    <h5 class="fw-bold mt-2 mb-4">Your Order ID is <span style="color: #CD5C08;">0000</span></h5>
+                    <p class="mb-3"> Your order at each stall is now in preparation queue, you will be notified when your items are ready for pickup.</p>
+                    <span>For more details about your order, go to Purchase.</span>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Purchase</button>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Placed Order as scheduled with Online Paymenyt -->
+<div class="modal fade" id="ifscheduled" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <i class="fa-solid fa-clock-rotate-left mb-3" style="color: #CD5C08; font-size: 80px"></i><br>
+                    <span>Order Scheduled!</span>
+                    <h5 class="fw-bold mt-2 mb-4">Your Order ID is <span style="color: #CD5C08;">0000</span></h5>
+                    <p class="mb-3">Your order is scheduled for October 15, 2024 at 1:00 PM. You will receive a notification once your order is being prepared at that time.</p>
+                    <span>For more details about your order, go to Purchase.</span>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Purchase</button>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>

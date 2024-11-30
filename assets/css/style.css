@@ -829,7 +829,7 @@ h6{margin:0;}
 .variation-btn, .choice-group-btn  {all: unset;}
 .rename:hover, .variation-btn.delete:hover, .variation-btn.addrem:hover,
 .remove-btn:hover, .edit-btn:hover, .choice-group-btn.delete:hover, .choice-group-btn.addrem:hover{
-  background-color: #e5e5e5;
+  background-color: #e5e5e5 !important;
   border-radius: 50px;
 }
 .variation-btn.addvar:hover, .choice-group-btn.addgroup:hover{
@@ -856,6 +856,7 @@ h6{margin:0;}
   font-size: small;
   padding: 8px;
   color: gray;
+  border-radius: 50px;
 }
 
 

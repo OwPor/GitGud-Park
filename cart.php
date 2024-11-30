@@ -168,7 +168,9 @@
             <div class="d-flex">
                 <div class="w-25"></div>
                 <div class="w-75">
-                    <button type="button" class="btn btn-primary rounded-5" style="width: 250px;">Place Order</button>
+                    <button type="button" class="btn btn-primary rounded-5" style="width: 250px;" data-bs-toggle="modal" data-bs-target="#ifcash">Place Order</button>
+                    <!--<button type="button" class="btn btn-primary rounded-5" style="width: 250px;" data-bs-toggle="modal" data-bs-target="#ifcashless">Place Order</button>
+                    <button type="button" class="btn btn-primary rounded-5" style="width: 250px;" data-bs-toggle="modal" data-bs-target="#ifscheduled">Place Order</button>-->
                 </div>
             </div>
         </div>
@@ -178,6 +180,7 @@
             <h2 class="fw-bold m-0" style="color: #CD5C08">₱1,072</h2>
         </div>
     </div>
+    <br><br><br><br><br>
     <script src="./assets/js/cart.js?v=<?php echo time(); ?>"></script>
 </main>
 <?php 

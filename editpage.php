@@ -25,8 +25,8 @@
     <div class="d-flex justify-content-end">
         <button class="addpro mb-3 prev" onclick="window.location.href='stallpage(user).php';"><i class="fa-solid fa-chevron-left me-2"></i> Previous</button>
     </div>
-    <form action="" class="srform rounded-2">
-        <div class="pagehead mb-4">
+    <form action="" class="srform rounded-2 bg-white p-5">
+        <div class="pagehead mb-4 border-bottom">
             <div>
                 <h4 class="fw-bold m-0">Edit Business Page</h4>
                 <span></span>
@@ -199,5 +199,9 @@
             <button type="submit" class="btn btn-primary send px-5">SAVE EDIT</button>
         </div>
     </form>
+    <br><br><br><br>
 </main>
 
+<?php
+    include_once 'footer.php'; 
+?>
