@@ -196,7 +196,7 @@ class User {
     }
 
     function registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit) {
-        $sql = "SELECT * FROM users WHERE id = :user_id AND role != 'park';";
+        $sql = "SELECT * FROM users WHERE id = :user_id AND role != 'Park Owner';";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':user_id' => $user_id));
 
@@ -226,7 +226,7 @@ class User {
             ':business_email' => $business_email,
             ':business_permit' => $business_permit
         ))) {
-            $sql = "UPDATE users SET role = 'park' WHERE id = :user_id;";
+            $sql = "UPDATE users SET role = 'Park Owner' WHERE id = :user_id;";
             $query = $this->db->connect()->prepare($sql);
             
             return $query->execute(array(':user_id' => $user_id));;
