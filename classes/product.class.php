@@ -11,7 +11,28 @@ class Product {
     function addProduct($name, $code, $description, $price, $category_id, $stall_id, $image, $variants) {
         try {
             $db = $this->db->connect();
-            $db->beginTransaction();
+    
+            $checkStallSql = "SELECT COUNT(*) FROM stalls WHERE id = :stall_id";
+            $checkStallQuery = $db->prepare($checkStallSql);
+            $checkStallQuery->bindParam(':stall_id', $stall_id);
+            $checkStallQuery->execute();
+            $stallExists = $checkStallQuery->fetchColumn();
+    
+            if ($stallExists == 0) {
+                echo "Failed to add product: Stall ID does not exist.";
+                return false;
+            }
+    
+            $checkCodeSql = "SELECT COUNT(*) FROM products WHERE code = :code";
+            $checkCodeQuery = $db->prepare($checkCodeSql);
+            $checkCodeQuery->bindParam(':code', $code);
+            $checkCodeQuery->execute();
+            $codeExists = $checkCodeQuery->fetchColumn();
+    
+            if ($codeExists > 0) {
+                echo "Failed to add product: Product code already exists.";
+                return false;
+            }
     
             $sql = "INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) 
                     VALUES (:name, :code, :description, :price, :category_id, :stall_id, :file_path)";
@@ -41,10 +62,8 @@ class Product {
                 $variantQuery->execute();
             }
     
-            $db->commit();
             return true;
         } catch (Exception $e) {
-            $db->rollBack();
             echo "Failed to add product: " . $e->getMessage();
             return false;
         }
@@ -55,5 +74,13 @@ class Product {
         $query = $this->db->connect()->prepare($sql);
         $query->execute();
         return $query->fetchAll();
+    }
+
+    function isProductCodeExists($code) {
+        $sql = "SELECT COUNT(*) FROM products WHERE code = :code;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':code' => $code));
+    
+        return $query->fetchColumn() > 0;
     }
 }
