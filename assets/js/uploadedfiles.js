@@ -1,21 +1,21 @@
 const fileInput = document.getElementById('fplogo');
 const uploadedFilesContainer = document.getElementById('uploaded-files');
 const maxFiles = 5;
-let uploadedFileCount = 0; 
-let uploadedFiles = [];
 
 document.querySelector('.logocon').addEventListener('click', () => fileInput.click());
 
 fileInput.addEventListener('change', () => {
+    // Clear the uploaded files container to refresh the UI
+    uploadedFilesContainer.innerHTML = "";
+
     const newFiles = Array.from(fileInput.files);
-    if (uploadedFileCount + newFiles.length > maxFiles) {
+    if (newFiles.length > maxFiles) {
         alert(`You can upload a maximum of ${maxFiles} files.`);
+        fileInput.value = ""; // Reset input if too many files are selected
         return;
     }
 
     newFiles.forEach((file) => {
-        uploadedFiles.push(file);
-
         const fileEntry = document.createElement('div');
         fileEntry.classList.add('uploaded-file');
         fileEntry.style.display = 'flex';
@@ -37,9 +37,18 @@ fileInput.addEventListener('change', () => {
         deleteIcon.style.color = 'red';
         deleteIcon.style.marginLeft = '8px';
         deleteIcon.onclick = () => {
+            // Remove the file visually
             fileEntry.remove();
-            uploadedFileCount--; 
-            uploadedFiles = uploadedFiles.filter(f => f.name !== file.name);
+
+            // Update the file input (create a new DataTransfer object to hold the remaining files)
+            const dataTransfer = new DataTransfer();
+            Array.from(fileInput.files).forEach((currentFile) => {
+                if (currentFile.name !== file.name) {
+                    dataTransfer.items.add(currentFile);
+                }
+            });
+
+            fileInput.files = dataTransfer.files; // Update the file input with the new list
         };
 
         fileEntry.appendChild(checkIcon);
@@ -47,6 +56,4 @@ fileInput.addEventListener('change', () => {
         fileEntry.appendChild(deleteIcon);
         uploadedFilesContainer.appendChild(fileEntry);
     });
-
-    uploadedFileCount += newFiles.length;
 });

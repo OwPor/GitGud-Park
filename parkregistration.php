@@ -493,11 +493,10 @@ main {
                     </div>
                     
                     <div id="uploaded-files" class="mt-4">
-                        <h6 class="mb-3">Uploaded Files</h6>
                         <!-- Uploaded files list will appear here -->
                     </div>
                 </div>
-                <script src="assets/js/uploadedfiles.js"></script>
+                <script src="assets/js/uploadedfiles.js?v=<?php echo time(); ?>"></script>
             </div>
             <div class="btns-group">
                 <a href="" class="button btn-prev">Previous</a>
