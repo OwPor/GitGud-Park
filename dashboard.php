@@ -45,8 +45,8 @@
                     <span class="dot"></span>
                     <span><i class="fa-solid fa-phone small"></i> +639554638281</span>
                 </div>
-                <button class="variation-btn addrem m-2" data-bs-toggle="modal" data-bs-target="#editfoodpark">Edit Profile</button>
-                <button class="variation-btn addrem" onclick="window.location.href='managestall.php';">Manage Stalls</button>
+                <button class="variation-btn addrem m-2" data-bs-toggle="modal" data-bs-target="#editfoodpark">Edit Park</button>
+                <button class="variation-btn addrem" data-bs-toggle="modal" data-bs-target="#deletepark">Delete Park</button>
             </div>
             <div class="d-flex justify-content-between align-items-center">
                 <div>

@@ -1,21 +1,18 @@
 const fileInput = document.getElementById('fplogo');
 const uploadedFilesContainer = document.getElementById('uploaded-files');
-const maxFiles = 5;
 
+// Trigger file input on button click
 document.querySelector('.logocon').addEventListener('click', () => fileInput.click());
 
+// Handle file input change
 fileInput.addEventListener('change', () => {
-    // Clear the uploaded files container to refresh the UI
-    uploadedFilesContainer.innerHTML = "";
+    const newFile = fileInput.files[0]; // Get the selected file (single file as input is not multiple)
 
-    const newFiles = Array.from(fileInput.files);
-    if (newFiles.length > maxFiles) {
-        alert(`You can upload a maximum of ${maxFiles} files.`);
-        fileInput.value = ""; // Reset input if too many files are selected
-        return;
-    }
+    // Clear the container for a single displayed file
+    uploadedFilesContainer.innerHTML = '';
 
-    newFiles.forEach((file) => {
+    if (newFile) {
+        // Create the container for the selected file
         const fileEntry = document.createElement('div');
         fileEntry.classList.add('uploaded-file');
         fileEntry.style.display = 'flex';
@@ -28,7 +25,7 @@ fileInput.addEventListener('change', () => {
         checkIcon.style.marginRight = '8px';
 
         const fileName = document.createElement('span');
-        fileName.textContent = file.name;
+        fileName.textContent = newFile.name;
         fileName.classList.add('file-name');
         fileName.style.flexGrow = '1';
 
@@ -37,23 +34,14 @@ fileInput.addEventListener('change', () => {
         deleteIcon.style.color = 'red';
         deleteIcon.style.marginLeft = '8px';
         deleteIcon.onclick = () => {
-            // Remove the file visually
+            // Clear the displayed file on delete
+            fileInput.value = ''; // Reset the input field
             fileEntry.remove();
-
-            // Update the file input (create a new DataTransfer object to hold the remaining files)
-            const dataTransfer = new DataTransfer();
-            Array.from(fileInput.files).forEach((currentFile) => {
-                if (currentFile.name !== file.name) {
-                    dataTransfer.items.add(currentFile);
-                }
-            });
-
-            fileInput.files = dataTransfer.files; // Update the file input with the new list
         };
 
         fileEntry.appendChild(checkIcon);
         fileEntry.appendChild(fileName);
         fileEntry.appendChild(deleteIcon);
         uploadedFilesContainer.appendChild(fileEntry);
-    });
+    }
 });
