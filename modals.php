@@ -6,6 +6,47 @@
         color: #CD5C08;
         font-weight: bold;
     }
+    .select2-selection__choice__remove{
+    font-size: 20px;
+    margin-left: 10px;
+    }
+    .select2-selection {
+    padding: 10px;
+    }
+    .select2-selection__choice {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    background-color: #f8f8f8 !important; 
+    border: 1px solid #ccc; 
+    padding: 0 10px !important;
+    border-radius: 30px !important; 
+    margin: 4px !important;
+    }
+
+    .select2-selection__choice img,
+    .select2-results__option img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0;
+    border: 1px solid #ccc; 
+    margin-right: 7px;
+    }
+    .select2-selection__choice img{
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    }
+
+    .select2-results__option{
+    padding: 7px 15px;
+    background-color: white !important;
+    color: black !important;
+    }
+    .select2-results__option--highlighted{
+    background-color: #e0e0e0 !important;
+    }
 </style>
 <!-- Menu Modal -->
 <div class="modal fade" id="menumodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -769,3 +810,285 @@
         </div>
     </div>
 </div>
+
+ <!-- Edit Food Park Modal -->
+ <div class="modal fade" id="editfoodpark" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-custom-width">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <div class="d-flex gap-4 align-items-center">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Profile</h1>
+                </div>
+                <button type="submit" class="btn btn-primary send py-2">SAVE</button>
+            </div>
+            <div class="modal-body modal-scrollable">
+                <div class="text-center">
+                    <img id="profileImage" src="assets/images/stall1.jpg" width="150px" height="150px" style="border-radius:50%;">
+                    <input type="file" id="fileInput" style="display: none;" accept="image/*"><br><br>
+                    <button id="uploadButton" class="disatc m-0">Upload Image</button><br><br>
+                </div>
+                <script src="assets/js/editdisplayimage.js?v=<?php echo time(); ?>"></script>
+                <div class="border-top pt-3">
+                    <h5 class="fw-bold mb-1">Tell us about your business</h5>
+                    <p class="par mb-3">This information will be shown on the web so that customers can search and contact you in case they have any questions.</p>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="businessname" name="businessname" placeholder="Food Park Name" value="Food Park Name">
+                        <label for="businessname">Business Name <span style="color: #CD5C08;">*</span></label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email" value="example@gmail.com">
+                        <label for="businessemail">Business Email <span style="color: #CD5C08;">*</span></label>
+                    </div>
+                    <div class="input-group mb-3 mt-0">
+                        <span class="input-group-text">+63</span>
+                        <div class="form-floating flex-grow-1">
+                            <input type="text" class="form-control" id="businessphonenumber" name="businessphonenumber" placeholder="Business Phone Number" value="9123456789">
+                            <label for="businessphonenumber">Business Phone Number <span style="color: #CD5C08;">*</span></label>
+                        </div>
+                    </div>
+                    <div class="operatinghours mb-3">
+                        <div class="add-schedule mb-3" style="background-color:#F8F8F8;">
+                            <label class="mb-3">What is your business operating hours? <span style="color: #CD5C08;">*</span></label>
+                            <div id="timeForm">
+                                <div class="oh">
+                                    <div class="och mb-3">
+                                        <!-- Open Time -->
+                                        <label>Open at</label>
+                                        <div>
+                                            <select name="open_hour" id="open_hour">
+                                                <script>
+                                                    for (let i = 1; i <= 12; i++) {
+                                                        document.write(`<option value="${i}">${String(i).padStart(2, '0')}</option>`);
+                                                    }
+                                                </script>
+                                            </select>
+                                            :
+                                            <select name="open_minute" id="open_minute">
+                                                <script>
+                                                    for (let i = 0; i < 60; i++) {
+                                                        document.write(`<option value="${i}">${String(i).padStart(2, '0')}</option>`);
+                                                    }
+                                                </script>
+                                            </select>
+                                            <select name="open_ampm" id="open_ampm">
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="och mb-3">
+                                        <!-- Close Time -->
+                                        <label>Close at</label>
+                                        <div>
+                                            <select name="close_hour" id="close_hour">
+                                                <script>
+                                                    for (let i = 1; i <= 12; i++) {
+                                                        document.write(`<option value="${i}">${String(i).padStart(2, '0')}</option>`);
+                                                    }
+                                                </script>
+                                            </select>
+                                            :
+                                            <select name="close_minute" id="close_minute">
+                                                <script>
+                                                    for (let i = 0; i < 60; i++) {
+                                                        document.write(`<option value="${i}">${String(i).padStart(2, '0')}</option>`);
+                                                    }
+                                                </script>
+                                            </select>
+                                            <select name="close_ampm" id="close_ampm">
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>  
+                                <!-- Days of the Week -->
+                                <div class="day-checkboxes mb-2">
+                                    <label><input type="checkbox" name="days" value="Monday"> Monday</label>
+                                    <label><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+                                    <label><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+                                    <label><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+                                    <label><input type="checkbox" name="days" value="Friday"> Friday</label>
+                                    <label><input type="checkbox" name="days" value="Saturday"> Saturday</label>
+                                    <label><input type="checkbox" name="days" value="Sunday"> Sunday</label>
+                                </div>
+
+                                <button type="button" class="add-hours-btn mt-2" onclick="addOperatingHours()">+ Add</button>
+                            </div>
+                        </div>
+                        
+                        <div class="schedule-list" style="background-color:#F8F8F8;">
+                            <h6>Operating Hours</h6>
+                            <div id="scheduleContainer"></div>
+                        </div>
+                        <script src="assets/js/editoperatinghours.js?v=<?php echo time(); ?>"></script>
+                    </div>
+                </div>
+                
+                <div class="border-top pt-3">
+                    <h5 class="fw-bold m-0 mb-1">Where is your business located?</h5>
+                    <p class="par mb-3">Customers will use this to find your business for directions and pickup options.</p>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control c" id="rpc" name="rpc" placeholder="Region, Province, City" value="Mindanao, Zamboanga Del Sur, Zamboanga City" readonly>
+                        <label for="rpc">Region, Province, City <span style="color: #CD5C08;">*</span></label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay" value="Barangay Name">
+                        <label for="barangay">Barangay <span style="color: #CD5C08;">*</span></label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="sbh" name="sbh" placeholder="Street Name, Building, House No." value="Unit 3, Building 13, AC">
+                        <label for="sbh">Street Name, Building, House No. <span style="color: #CD5C08;">*</span></label>
+                    </div>
+                </div>
+
+                <div class="border-top pt-3">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Park -->
+<div class="modal fade" id="deletepark" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-exclamation"></i> Delete Food Park</h4>
+                    <span>You are about to delete this food park.<br>Are you sure?</span>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Invite Stall Modal -->
+<div class="modal fade" id="invitestall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header pb-0 border-0">
+                <div class="d-flex gap-3 align-items-center">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Stall Owners</h1>
+                    <i class="fa-regular fa-circle-question m-0" data-bs-toggle="tooltip" data-bs-placement="right" title="An email will be sent to them with an invitaion link to register their stall under your food park. Once they complete the registration, their stall will be added to your food park."></i>
+                    <script>
+                        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+                        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                    </script>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="emailInput" name="emails[]" class="form-control select2" multiple="multiple" aria-label="Email input with profile circle">
+                    </select>
+                </div>
+                <script src="assets/js/sendemail.js?v=<?php echo time(); ?>"></script>
+
+                <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/user.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin (you)</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Park Owner</i>
+                </div>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/profile.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Stall Owner</i>
+                </div>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/profile.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Stall Owner</i>
+                </div>
+            </div>
+            <div class="modal-footer pt-0 border-0">
+                <button type="button" class="btn btn-primary send p-2" onclick="window.location.href='stallregistration.php';">Create Stall Page</button>
+                <button type="button" class="btn btn-primary send p-2">Send Invitation Link</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Owner Modal
+<div class="modal fade" id="addowner" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header pb-0 border-0">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Stall Owner</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="form-group">
+                    <select id="emailDropdown" class="form-control" style="width: 100%;"></select>
+                </div>
+                <script src="assets/js/addowner.js?v=<?php echo time(); ?>"></script>
+
+                <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/user.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin (you)</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Park Owner</i>
+                </div>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/profile.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Stall Owner</i>
+                </div>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/profile.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Stall Owner</i>
+                </div>
+            </div>
+            <div class="modal-footer pt-0 border-0 d-flex justify-content-between align-items-center">
+                <i class="fa-regular fa-circle-question ml-2" data-bs-toggle="tooltip" data-bs-placement="right" title="An email will be sent to them with an invitaion link to register their stall under your food park. Once they complete the registration, their stall will be added to your food park."></i>
+                <script>
+                    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+                    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                </script>
+                <button type="button" class="btn btn-primary send">SEND</button>
+            </div>
+        </div>
+    </div>
+</div>  -->

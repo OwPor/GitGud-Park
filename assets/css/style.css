@@ -1449,9 +1449,6 @@ padding: 20px;
 .createpage{
   border-top: 1px #ccc solid;
 }
-.pagehead{
-  border-bottom: 1px #ccc solid;
-}
 .logo {
   height: 240px;
   width: 240px;
@@ -1474,13 +1471,6 @@ padding: 20px;
 .logorem{
   line-height: 1.2;
   font-size: 12px;
-}
-
-.srform{
-  border: 1px #ccc solid;
-  padding: 30px 40px;
-  background-color: white;
-  border-radius: 20px;
 }
 
 .custom-progress-container {

@@ -1,22 +1,33 @@
 <?php
     include_once 'links.php'; 
     include_once 'bootstrap.php'; 
-    include_once 'secondheader.php'; 
+    include_once 'secondheader.php';
 ?>
 <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
 <style>
     main {
-        background-image: url('assets/images/stall.jpg');
-        background-size: cover;
-        padding: 50px 300px;
+        display: flex;
+        height: calc(100vh - 65.61px); 
+        overflow: hidden;
+        background-color: white;
+    }
+    .fixed-image {
+        width: 35%;
+    }
+    .srform {
+        width: 65%;
+        overflow-y: auto; 
+        border: none;
+        padding: 20px 80px;
     }
     .form-floating input, .form-floating textarea, .form-floating label::after, .logo, .add-schedule, .schedule-list{
         background-color: #F8F8F8 !important;
     }
 </style>
 <main>
+    <img src="assets/images/rightbg.jpg" class="fixed-image">
     <form action="" class="srform">
-        <div class="pagehead mb-4">
+        <div class="mb-4 border-bottom">
             <div class="d-flex gap-3 align-items-center">
                 <h4 class="fw-bold m-0">Create a business page</h4>
                 <i class="fa-regular fa-circle-question" data-bs-toggle="tooltip" data-bs-placement="right" title="Your food stall will be registered under the food park that sent you this invitation link. Ensure that the invitation is from the correct food park, as this will determine where your stall is listed and managed." style="color: #CD5C08;"></i>
@@ -28,6 +39,20 @@
             <p class="par mt-2">
                 Your page is where people go to learn more about your business. Make sure yours has all the information they may need.
             </p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center border rounded-2 py-2 px-3 mb-4" style="background-color: #F8F8F8;">
+            <div class="d-flex gap-4 align-items-center">
+                <img src="assets/images/profile.jpg" width="65" height="65" style="border-radius: 50%;">
+                <div>
+                    <h4 class="fw-bold mb-1">Naila Haliluddin</h4>
+                    <div class="d-flex gap-2 text-muted align-items-center">
+                        <span><i class="fa-solid fa-envelope"></i> example@gmail.com</span>
+                        <span class="dot"></span>
+                        <span><i class="fa-solid fa-phone small"></i> +639554638281</span>
+                    </div>
+                </div>
+            </div>
+            <i class="text-muted">Stall Owner</i>
         </div>
         <div class="d-flex gap-3 align-items-center">
             <div class="logo px-4 py-5 text-center border flex-shrink-0" id="logoContainer" onclick="document.getElementById('stalllogo').click();">
@@ -68,13 +93,13 @@
         <div class="contact mt-4">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email">
-                <label for="businessemail">Business Email <span style="color: #CD5C08;">*</span></label>
+                <label for="businessemail">Business Email</label>
             </div>
             <div class="input-group mb-3 mt-0">
                 <span class="input-group-text">+63</span>
                 <div class="form-floating flex-grow-1">
                     <input type="text" class="form-control" id="businessphonenumber" name="businessphonenumber" placeholder="Business Phone Number">
-                    <label for="businessphonenumber">Business Phone Number <span style="color: #CD5C08;">*</span></label>
+                    <label for="businessphonenumber">Business Phone Number</label>
                 </div>
             </div>
             <div class="form-floating mb-4">
@@ -179,7 +204,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-check mt-4 text-center">
+        <div class="form-check mt-4">
             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
             <label class="form-check-label" for="flexCheckDefault">
                 By clicking this box, I confirm that I am authorised by the Vendor to accept this Registration Form and the following <a href="">Terms and Conditions.</a>
@@ -190,4 +215,6 @@
         </div>
     </form>
 </main>
+
+
 

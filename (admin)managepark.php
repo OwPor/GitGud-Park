@@ -28,7 +28,7 @@
                 </div>
                 <p class="text-muted m-0 mb-2" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#moreparkinfo">More about this park <span class="text-dark fw-bold">...more</span></p>
                 <button class="variation-btn addrem m-2" data-bs-toggle="modal" data-bs-target="#editfoodpark">Edit Park</button>
-                <button class="variation-btn addrem">Delete Park</button>
+                <button class="variation-btn addrem" data-bs-toggle="modal" data-bs-target="#deletepark">Delete Park</button>
             </div>
         </div>
         <div class="col">
