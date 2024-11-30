@@ -124,6 +124,7 @@ CREATE TABLE business (
     business_phone VARCHAR(20) NOT NULL,
     business_email VARCHAR(100) NOT NULL,
     business_permit VARCHAR(255) NOT NULL,
+    business_status ENUM('Approved', 'Rejected', 'Pending Approval') NOT NULL DEFAULT 'Pending Approval',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

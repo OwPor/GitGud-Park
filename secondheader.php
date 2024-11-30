@@ -12,7 +12,9 @@
     }
 </style>
 <div class="bottom d-flex justify-content-between align-items-center">
-    <img src="assets/images/logo.png" alt="">
+    <a href="/GitGudPark/index.php"><i class="fa-solid fa-arrow-left-from-bracket"></i> 
+        <img src="assets/images/logo.png" alt="GitGud">
+    </a>
     <?php 
         if (isset($_SESSION['user']['id']))
             echo '<a href="../logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>';

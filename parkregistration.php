@@ -13,6 +13,21 @@ if (isset($_SESSION['user']['id'])) {
     if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
         $user = $userObj->getUser($_SESSION['user']['id']);
         if ($user) {
+            if ($user['role'] == 'Park Owner') {
+                $status = $userObj->getBusinessStatus($_SESSION['user']['id']);
+                if ($status == 'Pending Approval') {
+                    header('Location: pendingapproval.php');
+                    exit();
+                } else if ($status == 'Approved') {
+                    header('Location: dashboard.php');
+                    exit();
+                } else if ($status == 'Rejected') {
+                    echo 'Your business registration has been rejected.';
+                } else {
+                    echo $status;
+                }
+            }
+
             $first_name = $user['first_name'];
             $last_name = $user['last_name'];
             $email = $user['email'];
@@ -133,8 +148,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user_id = $_SESSION['user']['id'];
         $business_id = $userObj->registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit);
         if ($business_id) {
-            header('Location: index.php');
+            header('Location: pendingapproval.php');
             exit();
+        } else if ($business_id == "Park Owner") {
+            $status = $userObj->getBusinessStatus($user_id);
+            if ($status == 'Pending Approval') {
+                header('Location: pendingapproval.php');
+                exit();
+            } else if ($status == 'Approved') {
+                header('Location: dashboard.php');
+                exit();
+            } else if ($status == 'Rejected') {
+                echo 'Your business registration has been rejected.';
+            }
+        } else if ($business_id == "Existing Business") {
+            echo 'Business already exists';
+        } else if ($business_id == "Existing Email") {
+            echo 'Email already exists';
+        } else if ($business_id == "Existing Phone") {
+            echo 'Phone already exists';
         } else {
             echo 'Failed to register business';
         }
@@ -456,7 +488,7 @@ main {
                     <label for="fplogo">Upload FULL pages of your Business Permit <span style="color: #CD5C08;">*</span></label>
                     <div class="logocon px-3 py-4 mt-3 text-center border">
                         <img src="assets/images/upload-icon.png" class="w-50 h-50 mb-2" alt=""><br>
-                        <span>Maximum of 5 files of 5MB each and can accept only JPG, JPEG, PNG or PDF format</span>
+                        <span>Maximum of 5MB and can accept only JPG, JPEG, PNG or PDF format</span>
                         <input type="file" id="fplogo" accept="image/jpeg, image/png, image/jpg, application/pdf" name="businesspermit" style="display:none;" />
                     </div>
                     
