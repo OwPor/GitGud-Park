@@ -47,6 +47,14 @@
     .select2-results__option--highlighted{
     background-color: #e0e0e0 !important;
     }
+    .actlog{
+        border-bottom: 1px #ddd solid;
+        padding: 10px 0;
+    }
+     .actlog:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
 </style>
 <!-- Menu Modal -->
 <div class="modal fade" id="menumodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -770,8 +778,23 @@
         <div class="modal-content">
             <div class="modal-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold m-0">About</h4>
+                    <h4 class="fw-bold m-0">More Info</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <h5 class="fw-bold mb-3">Branches</h5>
+                <div class="mb-4">
+                    <span>1/3</span>
+                </div>
+                <h5 class="fw-bold mb-3">Business Contact</h5>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Business Email</span>
+                        <span>example@gmail.com</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Business Phone Number</span>
+                        <span class="text-muted">+639123456789</span>
+                    </div>
                 </div>
                 <h5 class="fw-bold mb-3">Operating Hours</h5>
                 <div class="mb-4">
@@ -786,25 +809,8 @@
                 </div>
                 <h5 class="fw-bold mb-3">Business Permit</h5>
                 <div  class="mb-4">
-                    <div class="mb-2">
-                        <i class="fa-solid fa-circle-check text-success me-2"></i>
-                        <a href="#">screenshot.jpg</a>
-                    </div>
-                    <div class="">
-                        <i class="fa-solid fa-circle-check text-success me-2"></i>
-                        <a href="#">screenshot.jpg</a>
-                    </div>
-                </div>
-                <h5 class="fw-bold mb-3">Food Park Owner</h5>
-                <div class="owner py-1 px-2 d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/profile.jpg" alt="">
-                        <div>
-                            <span class="fw-bold">Naila Haliluddin</span>
-                            <p class="m-0">example@gmail.com</p>
-                        </div>
-                    </div>
-                    <i class="text-muted small mr-1">Park Owner</i>
+                    <i class="fa-solid fa-circle-check text-success me-2"></i>
+                    <a href="#">screenshot.jpg</a>
                 </div>
             </div>
         </div>
@@ -1297,6 +1303,97 @@
                     <button type="button" class="btn btn-primary">Purchase</button>
                 </div>
                 <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Account Activity Log -->
+<div class="modal fade" id="activitylog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-custom-width">
+        <div class="modal-content">
+            <div class="p-3 d-flex justify-content-between align-items-center">
+                <h1 class="modal-title fs-5 fw-bold" id="staticBackdropLabel">Activity Log</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-scrollable pt-0">
+                <div>
+                <div class="p-3 rounded-2 border mb-3">
+                    <h6 class="mb-2">November 30, 2024</h6>
+                    <div class="d-flex justify-content-between align-items-center actlog">
+                        <div class="d-flex gap-3">
+                            <img src="assets/images/profile.jpg" width="65" height="65" style="border-radius: 50%">
+                            <div>
+                                <p class="m-0">Naila Haliluddin searched on GitGud</p>
+                                <p class="small text-muted m-0">"cheese"</p>
+                                <p class="small text-muted m-0">7:43 PM</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-trash rename" style="cursor: pointer;"></i>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center actlog">
+                        <div class="d-flex gap-3">
+                            <img src="assets/images/profile.jpg" width="65" height="65" style="border-radius: 50%">
+                            <div>
+                                <p class="m-0">Naila Haliluddin visited on GitGud</p>
+                                <p class="small text-muted m-0">"Stall Name"</p>
+                                <p class="small text-muted m-0">7:05 PM</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-trash rename" style="cursor: pointer;"></i>
+                    </div>
+                </div>
+                <div class="p-3 rounded-2 border mb-3">
+                    <h6 class="mb-2">November 30, 2024</h6>
+                    <div class="d-flex justify-content-between align-items-center actlog">
+                        <div class="d-flex gap-3">
+                            <img src="assets/images/profile.jpg" width="65" height="65" style="border-radius: 50%">
+                            <div>
+                                <p class="m-0">Naila Haliluddin searched on GitGud</p>
+                                <p class="small text-muted m-0">"cheese"</p>
+                                <p class="small text-muted m-0">7:43 PM</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-trash rename" style="cursor: pointer;"></i>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center actlog">
+                        <div class="d-flex gap-3">
+                            <img src="assets/images/profile.jpg" width="65" height="65" style="border-radius: 50%">
+                            <div>
+                                <p class="m-0">Naila Haliluddin visited on GitGud</p>
+                                <p class="small text-muted m-0">"Stall Name"</p>
+                                <p class="small text-muted m-0">7:05 PM</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-trash rename" style="cursor: pointer;"></i>
+                    </div>
+                </div>
+                <div class="p-3 rounded-2 border mb-3">
+                    <h6 class="mb-2">November 30, 2024</h6>
+                    <div class="d-flex justify-content-between align-items-center actlog">
+                        <div class="d-flex gap-3">
+                            <img src="assets/images/profile.jpg" width="65" height="65" style="border-radius: 50%">
+                            <div>
+                                <p class="m-0">Naila Haliluddin searched on GitGud</p>
+                                <p class="small text-muted m-0">"cheese"</p>
+                                <p class="small text-muted m-0">7:43 PM</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-trash rename" style="cursor: pointer;"></i>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center actlog">
+                        <div class="d-flex gap-3">
+                            <img src="assets/images/profile.jpg" width="65" height="65" style="border-radius: 50%">
+                            <div>
+                                <p class="m-0">Naila Haliluddin visited on GitGud</p>
+                                <p class="small text-muted m-0">"Stall Name"</p>
+                                <p class="small text-muted m-0">7:05 PM</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-trash rename" style="cursor: pointer;"></i>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
     </div>
