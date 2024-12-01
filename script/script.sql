@@ -82,6 +82,12 @@ CREATE TABLE categories (
 INSERT INTO categories (name, description)
 VALUES ('Main Course', 'Main dishes that are served in a meal.');
 
+INSERT INTO categories (name, description)
+VALUES ('Dessert', 'Sweet treats that are served after a meal.');
+
+INSERT INTO categories (name, description)
+VALUES ('Drinks', 'Beverages that are served to quench thirst.');
+
 CREATE TABLE products (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,

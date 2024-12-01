@@ -76,6 +76,39 @@ class Product {
         return $query->fetchAll();
     }
 
+    function getCategory($category_id) {
+        $sql = "SELECT * FROM categories WHERE id = :id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':id' => $category_id));
+        $result = $query->fetch();
+    
+        if ($result === false) {
+            return false;
+        }
+    
+        return $result;
+    }
+    
+    function getProducts($stallId) {
+        $sql = "SELECT * FROM products WHERE stall_id = :stall_id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':stall_id' => $stallId));
+        $result = $query->fetchAll();
+        
+        if (empty($result)) {
+            return [];
+        }
+    
+        foreach ($result as $key => $product) {
+            $category = $this->getCategory($product['category_id']);
+            if ($category) {
+                $result[$key]['category'] = $category['name'];
+            }
+        }
+    
+        return $result;
+    }
+
     function isProductCodeExists($code) {
         $sql = "SELECT COUNT(*) FROM products WHERE code = :code;";
         $query = $this->db->connect()->prepare($sql);

@@ -4,9 +4,11 @@
     include_once 'modals.php'; 
     require_once __DIR__ . '/classes/park.class.php';
     require_once __DIR__ . '/classes/stall.class.php';
+    require_once __DIR__ . '/classes/product.class.php';
 
     $parkObj = new Park();
     $stallObj = new Stall();
+    $productObj = new Product();
 
     if (isset($_GET['pid']) && isset($_GET['sid'])) {
         $park_link = filter_var($_GET['pid'] , FILTER_SANITIZE_STRING);
@@ -124,6 +126,41 @@
                 </a>
             </div>
         </div>
+        <?php
+            $products = $productObj->getProducts($stall_id);
+
+            if ($products) {
+                foreach ($products as $product) {
+                    echo '<div class="row row-cols-1 row-cols-md-4 g-3">
+                        <div class="col">
+                            <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                                <div class="card position-relative">
+                                    <img src="' . htmlspecialchars($product['file_path']) . '" class="card-img-top" alt="' . htmlspecialchars($product['name']) . '">
+                                    <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                                    <div class="card-body">
+                                        <p class="card-text text-muted m-0">' . htmlspecialchars($product['category']) . '</p>
+                                        <h5 class="card-title my-2">' . htmlspecialchars($product['name']) . '</h5>
+                                        <p class="card-text text-muted m-0">' . htmlspecialchars($product['description']) . '</p>
+                                        <div class="d-flex align-items-center justify-content-between my-3">
+                                            <div>
+                                                <span class="proprice">₱' . number_format($product['price'], 2) . '</span>
+                                                <span class="pricebefore small">₱' . number_format($product['price'], 2) . '</span>
+                                            </div>
+                                            <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                                        </div>                          
+                                        <div class="m-0">
+                                            <span class="opennow">Popular</span>
+                                            <span class="discount">10% off</span>
+                                            <span class="newopen">New</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>';
+                }
+            }
+        ?>
     </section>
 
     <section id="new" class="pt-3 mt-3">
