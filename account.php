@@ -4,15 +4,16 @@
     // include_once 'nav.php';
 
     if (!isset($_SESSION['user'])) {
-        header('Location: ./login.php');
+        header('Location: ./signin.php');
         exit();
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $userObj = new User();
         $userObj->id = $_SESSION['user']['id'];
+        $user = $userObj->getUser($_SESSION['user']['id']);
 
-        if ($_POST['firstname'] == $user['first_name'] && $_POST['lastname'] == $user['last_name'] && $_POST['phone'] == $user['phone'] && $_POST['email'] == $user['email'] && $_POST['dob'] == $user['birth_date'] && $_POST['sex'] == $user['sex']) {
+        if ($_POST['firstname'] == $user['first_name'] && $_POST['lastname'] == $user['last_name'] && $_POST['phone'] == $user['phone'] && $_POST['email'] == $user['email'] && $_POST['dob'] == $user['birth_date'] && $_POST['sex'] == $user['sex'] && $_FILES['profile_img']['error'] == UPLOAD_ERR_NO_FILE) {
             echo '<script>alert("No changes were made.")</script>';
         } else {
             $userObj->first_name = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
@@ -25,6 +26,7 @@
 
             $uploadDir = 'uploads/profiles/';
             $allowedTypes = ['jpg', 'jpeg', 'png'];
+            $maxFileSize = 5 * 1024 * 1024;
 
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
@@ -32,30 +34,31 @@
 
             if (isset($_FILES['profile_img']) && $_FILES['profile_img']['error'] == UPLOAD_ERR_OK) {
                 $fileTmpPath = $_FILES['profile_img']['tmp_name'];
-                $fileName = $_FILES['profile_img']['name'];
                 $fileSize = $_FILES['profile_img']['size'];
-                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+                $fileType = strtolower(pathinfo($_FILES['profile_img']['name'], PATHINFO_EXTENSION));
         
                 if ($fileSize > $maxFileSize) {
                     echo '<script>alert("File size exceeds 5MB limit.")</script>';
-                } elseif (!in_array(strtolower($fileType), $allowedTypes)) {
+                } elseif (!in_array($fileType, $allowedTypes)) {
                     echo '<script>alert("Invalid file type. Only JPG and PNG are allowed.")</script>';
                 } else {
-                    $destPath = $uploadDir . basename($fileName);
+                    $destPath = $uploadDir . $_SESSION['user']['id'] . '.' . $fileType;
                     if (move_uploaded_file($fileTmpPath, $destPath)) {
                         $userObj->profile_img = $destPath;
+                        if ($userObj->editUser($_SESSION['user']['id'], $current_password, $user['email'], $user['phone'])) {
+                            echo '<script>alert("Account updated successfully.")</script>';
+                        } else {
+                            echo '<script>alert("Failed to update account.")</script>';
+                        }
+                        
+                        $user = $userObj->getUser($_SESSION['user']['id']);
+                    } else {
                         echo '<script>alert("Failed to move uploaded file.")</script>';
                     }
                 }
-            }
-            
-            if ($userObj->editUser($_SESSION['user']['id'], $current_password, $user['email'], $user['phone'])) {
-                echo '<script>alert("Account updated successfully.")</script>';
             } else {
-                echo '<script>alert("Failed to update account.")</script>';
+                echo '<script>alert("No file uploaded or there was an upload error.")</script>';
             }
-            
-            $user = $userObj->getUser($_SESSION['user']['id']);
         }
     }
 ?>
@@ -72,14 +75,14 @@
     }
 </style>
 <main>
-    <form class="bg-white rounded-2 p-5" method="POST">
+    <form class="bg-white rounded-2 p-5" method="POST" enctype="multipart/form-data">
         <h4 class="fw-bold text-center mb-5">Manage Account</h4>
         <div class="d-flex ">
             <div class="d-flex justify-content-center" style="width: 40%;">
                 <div class="text-center flex-grow-1">
-                    <img id="profileImage" src="<?= $user['profile_img'] ?>" alt="Profile Image">
-                    <input name="profile_img" type="file" id="fileInput" style="display: none;" accept="image/jpeg, image/png, image/jpg"><br><br>
-                    <button id="uploadButton" class="disatc m-0">Upload Image</button><br><br>
+                <img id="profileImage" src="<?= $user['profile_img'] ?>" alt="Profile Image"><br><br>
+                <input name="profile_img" id="fileInput" class="disatc m-0" type="file" accept="image/jpeg, image/png, image/jpg" onchange="replaceImage()"><br><br>
+                    
                     <span class="text-muted">File size: maximum 5 MB<br>File extension: .JPEG, .PNG</span>
                 </div>
                 <script src="assets/js/editdisplayimage.js?v=<?php echo time(); ?>"></script>

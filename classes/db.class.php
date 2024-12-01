@@ -82,7 +82,7 @@ class User {
 
         if (password_verify($current_password, $result['password'])) {
 
-            $sql = "UPDATE users SET first_name = :first_name, last_name = :last_name, birth_date = :birth_date, email = :email, sex = :sex, phone = :phone WHERE id = :id;";
+            $sql = "UPDATE users SET first_name = :first_name, last_name = :last_name, birth_date = :birth_date, email = :email, sex = :sex, phone = :phone, profile_img = :profile_img WHERE id = :id;";
             $query = $this->db->connect()->prepare($sql);
 
             return $query->execute(array(
@@ -92,7 +92,8 @@ class User {
                 ':birth_date' => $this->birth_date,
                 ':email' => $this->email,
                 ':sex' => $this->sex,
-                ':phone' => $this->phone
+                ':phone' => $this->phone,
+                ':profile_img' => $this->profile_img
             ));
         }
     }
