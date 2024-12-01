@@ -45,7 +45,7 @@
                                             echo '<a href="purchase.php"><i class="fa-regular fa-credit-card"></i> Purchase</a>';
                                             echo '<a href="favorites.php"><i class="fa-regular fa-heart"></i> Favorites</a>';
                                             echo '<a href="orders.php"><i class="fa-regular fa-rectangle-list"></i> Orders</a>';
-                                            echo '<a href="menagemenu.php"><i class="fa-regular fa-window-restore"></i> Manage Menu</a>';
+                                            echo '<a href="managemenu.php"><i class="fa-regular fa-window-restore"></i> Manage Menu</a>';
                                             echo '<a href="sales.php"><i class="fa-solid fa-chart-column"></i> Sales</a>';
                                             echo '<a href="stallpage.php"><i class="fa-regular fa-address-card"></i> Stall Page</a>';
                                             break;

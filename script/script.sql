@@ -15,6 +15,7 @@ CREATE TABLE users (
     password CHAR(255) NOT NULL,
     birth_date DATE NOT NULL,
     role ENUM('Customer', 'Park Owner', 'Stall Owner', 'Admin') NOT NULL DEFAULT 'Customer',
+    profile_img VARCHAR(255) DEFAULT 'assets/images/profile.jpg',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

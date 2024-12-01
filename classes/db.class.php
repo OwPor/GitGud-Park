@@ -10,6 +10,7 @@ class User {
     public $birth_date = '';
     public $sex = '';
     public $password = '';
+    public $profile_img = '';
 
     protected $db;
 
@@ -54,20 +55,47 @@ class User {
         ));
     }
 
-    function editUser($user_id){
-        $sql = "UPDATE users SET first_name = :first_name, last_name = :last_name, birth_date = :birth_date, email = :email, sex = :sex, phone = :phone, password = :password WHERE id = :id;";
-        $query = $this->db->connect()->prepare($sql);
+    function editUser($user_id, $current_password, $current_email, $current_phone) {
+        $age = $this->calculateAge($this->birth_date);
+        if ($age < 18)
+            return false;
+        
+        if ($this->validateEmail($this->email))
+            return false;
+        
+        if ($this->changeEmail($this->email, $this->email))
+            return 'email';
 
-        return $query->execute(array(
-            ':id' => $user_id,
-            ':first_name' => $this->first_name,
-            ':last_name' => $this->last_name,
-            ':birth_date' => $this->birth_date,
-            ':email' => $this->email,
-            ':sex' => $this->sex,
-            ':phone' => $this->phone,
-            ':password' => $this->password
-        ));
+        if ($this->validatePhone($this->phone))
+            return false;
+
+        if ($this->changePhone($this->phone, $current_phone))
+            return 'phone';
+
+        if (!($this->sex == "male" || $this->sex == "female"))
+            return false;
+
+        $sql = "SELECT password FROM users WHERE id = :id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':id' => $user_id));
+        $result = $query->fetch();
+
+        if (password_verify($current_password, $result['password'])) {
+
+            $sql = "UPDATE users SET first_name = :first_name, last_name = :last_name, birth_date = :birth_date, email = :email, sex = :sex, phone = :phone, profile_img = :profile_img WHERE id = :id;";
+            $query = $this->db->connect()->prepare($sql);
+
+            return $query->execute(array(
+                ':id' => $user_id,
+                ':first_name' => $this->first_name,
+                ':last_name' => $this->last_name,
+                ':birth_date' => $this->birth_date,
+                ':email' => $this->email,
+                ':sex' => $this->sex,
+                ':phone' => $this->phone,
+                ':profile_img' => $this->profile_img
+            ));
+        }
     }
 
     function deleteUser($user_id){
@@ -97,7 +125,8 @@ class User {
             'last_name' => $user['last_name'],
             'phone' => $user['phone'],
             'birth_date' => $user['birth_date'],
-            'sex' => $user['sex']
+            'sex' => $user['sex'],
+            'profile_img' => $user['profile_img']
         ];
 
         return $info;
@@ -159,6 +188,17 @@ class User {
         return $query->fetch();
     }
 
+    private function changeEmail($email, $currentEmail) {
+        $sql = "SELECT * FROM users WHERE email = :email AND email != :current_email;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(
+            ':email' => $email,
+            ':current_email' => $currentEmail
+        ));
+        
+        return $query->fetch();
+    }
+
     private function validateEmail($email){
         return !filter_var($email, FILTER_VALIDATE_EMAIL);
     }
@@ -180,6 +220,18 @@ class User {
         
         return $query->fetch();
     }
+
+    private function changePhone($phone, $currentPhone) {
+        $sql = "SELECT * FROM users WHERE phone = :phone AND phone != :current_phone;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(
+            ':phone' => $phone,
+            ':current_phone' => $currentPhone
+        ));
+        
+        return $query->fetch();
+    }
+
 
     function isVerified($user_id) {
         $sql = "SELECT is_verified FROM verification WHERE user_id = :user_id;";
