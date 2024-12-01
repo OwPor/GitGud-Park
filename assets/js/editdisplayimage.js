@@ -72,16 +72,13 @@ function replaceImage() {
     const fileInput = document.getElementById('fileInput');
     const profileImage = document.getElementById('profileImage');
 
-    // Check if a file was selected
     if (fileInput.files && fileInput.files[0]) {
         const reader = new FileReader();
 
-        // Set up the onload event to update the image source
         reader.onload = function(e) {
-            profileImage.src = e.target.result; // Update the image source with the selected file
+            profileImage.src = e.target.result;
         };
 
-        // Read the selected file as a data URL
         reader.readAsDataURL(fileInput.files[0]);
     }
 }
