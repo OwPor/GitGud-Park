@@ -131,7 +131,7 @@
 
             if ($products) {
                 foreach ($products as $product) {
-                    echo '<div class="row row-cols-1 row-cols-md-4 g-3">
+                    echo '
                         <div class="col">
                             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                                 <div class="card position-relative">
@@ -157,7 +157,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div>';
+                    ';
                 }
             }
         ?>
