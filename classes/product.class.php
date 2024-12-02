@@ -94,7 +94,7 @@ class Product {
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':stall_id' => $stallId));
         $result = $query->fetchAll();
-        
+
         if (empty($result)) {
             return [];
         }
@@ -115,5 +115,23 @@ class Product {
         $query->execute(array(':code' => $code));
     
         return $query->fetchColumn() > 0;
+    }
+
+    function getProductById($productId) {
+        $sql = "SELECT * FROM products WHERE id = :id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':id' => $productId));
+        $result = $query->fetch();
+    
+        if ($result === false) {
+            return false;
+        }
+    
+        $category = $this->getCategory($result['category_id']);
+        if ($category) {
+            $result['category'] = $category['name'];
+        }
+    
+        return $result;
     }
 }

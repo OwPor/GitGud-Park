@@ -165,11 +165,13 @@
                     quantitySpan.innerText = quantity;
                 }
             </script>
-            <button type="button" class="btn btn-primary w-100">Add to cart</button>
+            <button type="button" class="btn btn-primary w-100 add-to-cart-btn" 
+            data-product-id="<?php echo $product['id']; ?>">Add to cart</button>
         </div>
     </div>
   </div>
 </div>
+<script src="assets/js/addtocart.js"></script>
 
 <!-- Delete Stall -->
 <div class="modal fade" id="deletestall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
