@@ -113,7 +113,7 @@
                 <input class="form-check-input" type="checkbox" name="remember_me" id="rememberMeCheckbox">
                 <label class="form-check-label" for="rememberMeCheckbox">Remember Me</label>
             </div>
-            <a href="#">Forgot Password?</a>
+            <a href="resetpassword.php">Forgot Password?</a>
         </div><br>
         <div class="btns-group d-block text-center">
             <input type="submit" value="Sign In" class="button">
