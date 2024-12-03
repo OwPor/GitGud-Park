@@ -12,6 +12,14 @@
         grid-template-areas: 'a b c d';
         gap: 15px;
     }
+    .cencheck:hover, .fa-solid.text-success:hover{
+        transform: scale(1.2);
+    }
+    .cencheck, .fa-solid.text-success {
+        cursor: pointer;
+        transition: color 0.3s, transform 0.3s;
+    }
+        .
 /* #CD5C08
 #FFF5E4
 #C1D8C3
@@ -39,7 +47,8 @@
                     <h3 class="m-0 my-2 fw-bold">₱12,500.00</h3>
                     <span>Total Orders: 34</span>
                 </div>
-                <i class="fa-regular fa-circle-check fs-2"></i>
+                <i class="fa-regular fa-circle-check fs-2 cencheck" onclick="toggleCheck(this)"></i>
+
             </div>
         </div>
         <div class="border rounded-2 bg-white">
@@ -50,7 +59,8 @@
                     <h3 class="m-0 my-2 fw-bold">₱12,500.00</h3>
                     <span>Total Orders: 34</span>
                 </div>
-                <i class="fa-regular fa-circle-check fs-2"></i>
+                <i class="fa-regular fa-circle-check fs-2 cencheck" onclick="toggleCheck(this)"></i>
+
             </div>
         </div>
         <div class="border rounded-2 bg-white">
@@ -61,7 +71,8 @@
                     <h3 class="m-0 my-2 fw-bold">₱12,500.00</h3>
                     <span>Total Orders: 34</span>
                 </div>
-                <i class="fa-regular fa-circle-check fs-2"></i>
+                <i class="fa-regular fa-circle-check fs-2 cencheck" onclick="toggleCheck(this)"></i>
+
             </div>
         </div>
         <div class="border rounded-2 bg-white">
@@ -72,7 +83,8 @@
                     <h3 class="m-0 my-2 fw-bold">₱12,500.00</h3>
                     <span>Total Orders: 34</span>
                 </div>
-                <i class="fa-regular fa-circle-check fs-2"></i>
+                <i class="fa-regular fa-circle-check fs-2 cencheck" onclick="toggleCheck(this)"></i>
+
             </div>
         </div>
     </div>
@@ -108,24 +120,20 @@
                 <td class="fw-normal py-3">Completed</td>
                 <td class="fw-normal py-3"><i class="fa-solid fa-trash rename small"></i></td>
             </tr>
-            <tr>
-                <td class="fw-normal py-3">2024-10-06 14:30:00</td>
-                <td class="fw-normal py-3">0000</td>
-                <td class="fw-normal py-3">Stall Name 1, Stall Name 2, Stall Name 3,</td>
-                <td class="fw-normal py-3">₱120</td>
-                <td class="fw-normal py-3">Completed</td>
-                <td class="fw-normal py-3"><i class="fa-solid fa-trash rename small"></i></td>
-            </tr>
-            <tr>
-                <td class="fw-normal py-3">2024-10-06 14:30:00</td>
-                <td class="fw-normal py-3">0000</td>
-                <td class="fw-normal py-3">Stall Name 1, Stall Name 2, Stall Name 3,</td>
-                <td class="fw-normal py-3">₱120</td>
-                <td class="fw-normal py-3">Completed</td>
-                <td class="fw-normal py-3"><i class="fa-solid fa-trash rename small"></i></td>
-            </tr>
         </table>
     </div>
     <br><br><br><br>
+    <script>
+        function toggleCheck(element) {
+            if (element.classList.contains('fa-regular')) {
+                element.classList.remove('fa-regular', 'cencheck');
+                element.classList.add('fa-solid', 'text-success');
+            } else {
+                element.classList.remove('fa-solid', 'text-success');
+                element.classList.add('fa-regular', 'cencheck');
+            }
+        }
+
+    </script>
 </main>
 

@@ -7,7 +7,7 @@
 ?>
 <style>
     main{
-        padding: 10px 120px;
+        padding: 20px 120px;
     }
 </style>
 <main>

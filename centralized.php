@@ -36,7 +36,7 @@ $status = isset($_POST['status']) && $_POST['status'] === 'activated';
             <div class="bg-white rounded-2 border p-3">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="m-0 fw-bold ms-3">Cashier Management</h5>
-                    <span class="me-3 py-1 px-2 rounded-5 salesdr" style="color: #CD5C08;">
+                    <span class="me-3 py-1 px-2 rounded-5 salesdr" style="color: #CD5C08;" data-bs-toggle="modal" data-bs-target="#addcashier">
                         <i class="fa-solid fa-circle-plus me-2"></i>Add Cashier
                     </span>
                 </div>
@@ -57,7 +57,10 @@ $status = isset($_POST['status']) && $_POST['status'] === 'activated';
                         <td class="p-3">Online</td>
                         <td class="p-3">30</td>
                         <td class="p-3">₱12,500.00</td>
-                        <td class="p-3"><i class="fa-solid fa-ellipsis"></i></td>
+                        <td class="fw-normal py-3 tabact">
+                            <i class="fa-solid fa-pen-to-square me-2 p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#editcashier"></i>
+                            <i class="fa-solid fa-trash p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#deletecashier"></i>
+                        </td>   
                     </tr>
                     <tr>
                         <td class="p-3 text-start">Naila Haliluddin</td>
@@ -66,7 +69,10 @@ $status = isset($_POST['status']) && $_POST['status'] === 'activated';
                         <td class="p-3">Online</td>
                         <td class="p-3">30</td>
                         <td class="p-3">₱12,500.00</td>
-                        <td class="p-3"><i class="fa-solid fa-ellipsis"></i></td>
+                        <td class="fw-normal py-3 tabact">
+                            <i class="fa-solid fa-pen-to-square me-2 p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#editcashier"></i>
+                            <i class="fa-solid fa-trash p-1 small rounded-1" data-bs-toggle="modal" data-bs-target="#deletecashier"></i>
+                        </td>                    
                     </tr>
                 </table>
             </div>

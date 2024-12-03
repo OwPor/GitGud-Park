@@ -1,7 +1,6 @@
 <?php 
     include_once 'links.php'; 
-    /*include_once 'header.php'; 
-    include_once 'nav.php'; */
+    include_once 'header.php'; 
     include_once 'modals.php'; 
 ?>
 <style>
@@ -11,10 +10,13 @@
 #6A9C89
 */
     main{
-        padding: 10px 120px;
+        padding: 20px 120px;
     }
 </style>
 <main>
+    <div class="d-flex justify-content-end">
+        <button class="addpro mb-3 prev" onclick="window.history.back();"><i class="fa-solid fa-chevron-left me-2"></i> Previous</button>
+    </div>
     <div class="d-flex gap-3">
         <div class="card h-100" style="width: 33%;">
             <div class="position-relative">

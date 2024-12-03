@@ -1420,3 +1420,117 @@
         </div>
     </div>
 </div>
+
+<!-- Confirm Payment -->
+<div class="modal fade" id="confirmpayment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-question me-2"></i> Confirm Payment</h4>
+                    <p class="mb-2">You are about to confirm the payment for Order ID 0000.<br>Are you sure?</p>
+                    <ul class="text-muted small text-start">
+                        <li>Please ensure that the total amount of PHP 250.00 has been collected.</li>
+                        <li>The order will be in preparation queue once confirmed, please inform the customer.</li>
+                    </ul>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Confirm Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Cashier -->
+<div class="modal fade" id="addcashier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+            <div class="modal-header p-0 border-0 m-0">
+                <h5 class="m-0">Add Cashier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 m-0">
+                <form action="#" class="form w-100 border-0 p-0" method="POST">
+                    <div class="input-group">
+                        <label for="firstname">Name</label>
+                        <input type="text" name="name" id="name" placeholder="Enter name of cashier" />
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Enter password" />
+                    </div>
+                    <div class="input-group">
+                        <label for="shiftstart">Shift Start Time</label>
+                        <input type="time" name="shiftstart" id="shiftstart">
+                    </div>
+                    <div class="input-group">
+                        <label for="shiftend">Shift End Time</label>
+                        <input type="time" name="shiftend" id="shiftend">
+                    </div>
+                    <input type="submit" value="Add Cashier" class="button" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Cashier -->
+<div class="modal fade" id="editcashier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+            <div class="modal-header p-0 border-0 m-0">
+                <h5 class="m-0">Edit Cashier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0 m-0">
+                <form action="#" class="form w-100 border-0 p-0" method="POST">
+                    <!-- Assuming cashier ID is passed for identification -->
+                    <input type="hidden" name="cashier_id" id="cashier_id" value="1"> 
+                    <div class="input-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" value="John Doe" placeholder="Enter name of cashier" />
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" value="123456" placeholder="Enter password" />
+                    </div>
+                    <div class="input-group">
+                        <label for="shiftstart">Shift Start Time</label>
+                        <input type="time" name="shiftstart" id="shiftstart" value="08:00">
+                    </div>
+                    <div class="input-group">
+                        <label for="shiftend">Shift End Time</label>
+                        <input type="time" name="shiftend" id="shiftend" value="16:00">
+                    </div>
+                    <input type="submit" value="Update Cashier" class="button" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Cashier -->
+<div class="modal fade" id="deletecashier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-exclamation"></i> Delete Cashier</h4>
+                    <span>You are about to delete this Cashier.<br>Are you sure?</span>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
