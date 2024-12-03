@@ -1,7 +1,6 @@
 <?php
     include_once 'links.php'; 
     include_once 'header.php'; 
-    include_once 'modals.php'; 
     require_once __DIR__ . '/classes/park.class.php';
     require_once __DIR__ . '/classes/stall.class.php';
     require_once __DIR__ . '/classes/product.class.php';
@@ -31,11 +30,12 @@
         exit();
     }
 ?>
+<script>const userId = <?php echo json_encode($user['user_session']); ?>;</script>
 <main>
     <div class="pageinfo pb-4">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex gap-4 align-items-center pagelogo">
-                <img src="assets/images/foodpark.jpg" alt="">
+                <img src="<?= $stall['img'] ?>" alt="<?= $stall['name'] ?>">
                 <div>
                     <div class="d-flex gap-2 align-items-center">
                         <span class="text-muted m-0">Category</span>
@@ -132,7 +132,15 @@
                     foreach ($products as $product) {
                         echo '
                             <div class="col">
-                                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                                <a href="#" 
+                                class="card-link text-decoration-none" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#menumodal"
+                                data-name="' . htmlspecialchars($product['name']) . '"
+                                data-description="' . htmlspecialchars($product['description']) . '"
+                                data-price="' . number_format($product['price'], 2) . '"
+                                data-image="' . htmlspecialchars($product['file_path']) . '"
+                                data-product-id="' . htmlspecialchars($product['id']) . '">
                                     <div class="card position-relative">
                                         <img src="' . htmlspecialchars($product['file_path']) . '" class="card-img-top" alt="' . htmlspecialchars($product['name']) . '">
                                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
@@ -143,7 +151,6 @@
                                             <div class="d-flex align-items-center justify-content-between my-3">
                                                 <div>
                                                     <span class="proprice">₱' . number_format($product['price'], 2) . '</span>
-                                                    <span class="pricebefore small">₱' . number_format($product['price'], 2) . '</span>
                                                 </div>
                                                 <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
                                             </div>                          
@@ -318,9 +325,11 @@
         </div>
     </section>
     <script src="assets/js/navigation.js?v=<?php echo time(); ?>"></script>
-
+    <script src="assets/js/productmodal.js?v=<?php echo time(); ?>"></script>
     <br><br>
 </main>
 <?php
+
+    include_once 'modals.php'; 
     include_once './footer.php'; 
 ?>

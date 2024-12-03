@@ -67,7 +67,7 @@
                 <div class="card-body">
                     <p class="card-text text-muted m-0">Category</p>
                     <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
-                    <p class="card-text text-muted m-0">Beef and cheese on a thin crust Pizza</p>
+                    <p class="card-text text-muted m-0"></p>
                     <div class="d-flex align-items-center justify-content-between my-3">
                         <div>
                             <span class="proprice">₱103</span>
@@ -131,7 +131,7 @@
                             <span class="px-2">+ ₱15</span>
                         </div>
                         <div class="d-flex align-items-center justify-content-between addonitem" onclick="document.getElementById('addonname3').click()">
-                            <div class="form-check d-flex gap-2 align-items-center"">
+                            <div class="form-check d-flex gap-2 align-items-center">
                                 <input class="form-check-input" type="checkbox" name="addonname" id="addonname3">
                                 <img src="assets/images/example.jpg" alt="" width="45px" height="45px" class="rounded-2">
                                 <label class="form-check-label" for="addonname3">Add-On Name</label>
@@ -165,11 +165,13 @@
                     quantitySpan.innerText = quantity;
                 }
             </script>
-            <button type="button" class="btn btn-primary w-100">Add to cart</button>
+            <button type="button" class="btn btn-primary w-100 add-to-cart-btn" 
+            data-product-id="-1">Add to cart</button>
         </div>
     </div>
   </div>
 </div>
+<script src="assets/js/addtocart.js"></script>
 
 <!-- Delete Stall -->
 <div class="modal fade" id="deletestall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -3,7 +3,10 @@
     include_once 'header.php'; 
     include_once 'modals.php'; 
     /*include_once 'nav.php'; */
+    require_once __DIR__ . '/classes/admin.class.php';
+    $adminObj = new Admin();
 ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     main{
         padding: 20px 120px;
@@ -72,30 +75,36 @@
                 <th>Date Created</th>
                 <th>Action</th>
             </tr>
-            <tr>
-                <td class="fw-normal small py-3 px-4">Naila</td>
-                <td class="fw-normal small py-3 px-4">Haliluddin</td>
-                <td class="fw-normal small py-3 px-4">example@gmail.com</td>
-                <td class="fw-normal small py-3 px-4">+639123456789</td>
-                <td class="fw-normal small py-3 px-4">12/04/2003</td>
-                <td class="fw-normal small py-3 px-4">Female</td>
-                <td class="fw-normal small py-3 px-4">Active</td>
-                <td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-success border border-success p-1 border-2 fw-bold">Customer</span></td>
-                <td class="fw-normal small py-3 px-4">07/29/2024</td>
-                <td class="fw-normal small py-3 px-4">
-                    <div class="dropdown position-relative">
-                        <i class="fa-solid fa-ellipsis small rename py-1 px-2" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>
-                        <ul class="dropdown-menu dropdown-menu-center p-0" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edituser">Edit</a></li>
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteuser">Delete</a></li>
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deactivateuser">Deactivate</a></li>
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#activitylog">Activity</a></li>
-                            <li><a class="dropdown-item" href="parkregistration.php">Create Park</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
+            <?php
+                $users = $adminObj->getUsers();
+
+                foreach ($users as $user) {
+                    echo '<tr>';
+                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['first_name']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['last_name']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['email']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['phone']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['birth_date']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['sex']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['status']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-success border border-success p-1 border-2 fw-bold">' . htmlspecialchars($user['role']) . '</span></td>';
+                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['created_at']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4">';
+                    echo '<div class="dropdown position-relative">';
+                    echo '<i class="fa-solid fa-ellipsis small rename py-1 px-2" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>';
+                    echo '<ul class="dropdown-menu dropdown-menu-center p-0" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">';
+                    echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edituser">Edit</a></li>';
+                    echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteuser">Delete</a></li>';
+                    echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deactivateuser">Deactivate</a></li>';
+                    echo '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#activitylog">Activity</a></li>';
+                    echo '<li><a class="dropdown-item" href="parkregistration.php">Create Park</a></li>';
+                    echo '</ul>';
+                    echo '</div>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+            ?>
+            <!-- <tr>
                 <td class="fw-normal small py-3 px-4">Naila</td>
                 <td class="fw-normal small py-3 px-4">Haliluddin</td>
                 <td class="fw-normal small py-3 px-4">example@gmail.com</td>
@@ -140,7 +149,7 @@
                         </ul>
                     </div>
                 </td>
-            </tr>
+            </tr> -->
             
         </table>
         <div class="d-flex gap-3 saletabpag align-items-center justify-content-center mt-3">
@@ -180,7 +189,33 @@
                 <th style="width: 10%;">Action</th>
             </tr>
 
-            <tr>
+            <?php
+                $getBusinesses = $adminObj->getBusinesses();
+
+                foreach ($getBusinesses as $business) {
+                    $status = '';
+                    if (htmlspecialchars($business['business_status']) == 'Pending Approval') {
+                        $status = 'Pending';
+                    
+                        echo '<tr>';
+                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['business_name']) . '</td>';
+                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['business_type']) . '</td>';
+                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['region_province_city']) . htmlspecialchars($business['barangay']) . htmlspecialchars($business['street_building_house']) . '</td>';
+                        echo '<td class="fw-normal small py-3 px-4"><i class="fa-solid fa-chevron-down rename small" data-bs-toggle="modal" data-bs-target="#moreparkinfo"></i></td>';
+                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['created_at']) . '</td>';
+                        echo '<td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-warning border border-warning p-1 border-2 fw-bold">' . $status . '</span></td>';
+                        echo '<td class="fw-normal small py-3 px-4">';
+                        echo '<div class="d-flex gap-2 justify-content-center">';
+                        echo '<button class="approve-btn bg-success text-white border-0 small py-1 rounded-1" data-id="' . htmlspecialchars($business['id']) . '" style="width:60px">Approve</button>';
+                        echo '<button class="deny-btn bg-danger text-white border-0 small py-1 rounded-1" data-id="' . htmlspecialchars($business['id']) . '" style="width:60px">Deny</button>';
+                        echo '</div>';
+                        echo '</td>';
+                        echo '</tr>';
+                    }
+                }
+            ?>
+
+            <!-- <tr>
                 <td class="fw-normal small py-3 px-4">Athena Maia Casino</td>
                 <td class="fw-normal small py-3 px-4">Amethyst Food Park</td>
                 <td class="fw-normal small py-3 px-4">Unit, Building, Street, Barangay, Zamboanga</td>
@@ -193,37 +228,7 @@
                         <button class="bg-danger text-white border-0 small py-1 rounded-1" style="width:60px">Deny</button>
                     </div>
                 </td>
-            </tr>
-
-            <tr>
-                <td class="fw-normal small py-3 px-4">Athena Maia Casino</td>
-                <td class="fw-normal small py-3 px-4">Amethyst Food Park</td>
-                <td class="fw-normal small py-3 px-4">Unit, Building, Street, Barangay, Zamboanga</td>
-                <td class="fw-normal small py-3 px-4"><i class="fa-solid fa-chevron-down rename small" data-bs-toggle="modal" data-bs-target="#moreparkinfo"></i></td>
-                <td class="fw-normal small py-3 px-4">07/29/2024</td>
-                <td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-danger border border-danger p-1 border-2 fw-bold">Denied</span></td>
-                <td class="fw-normal small py-3 px-4">
-                    <div class="d-flex gap-2 justify-content-center">
-                        <button class="bg-muted text-white border-0 small py-1 rounded-1" style="width:60px">Approve</button>
-                        <button class="bg-muted text-white border-0 small py-1 rounded-1" style="width:60px">Deny</button>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="fw-normal small py-3 px-4">Athena Maia Casino</td>
-                <td class="fw-normal small py-3 px-4">Amethyst Food Park</td>
-                <td class="fw-normal small py-3 px-4">Unit, Building, Street, Barangay, Zamboanga</td>
-                <td class="fw-normal small py-3 px-4"><i class="fa-solid fa-chevron-down rename small" data-bs-toggle="modal" data-bs-target="#moreparkinfo"></i></td>
-                <td class="fw-normal small py-3 px-4">07/29/2024</td>
-                <td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-success border border-success p-1 border-2 fw-bold">Approved</span></td>
-                <td class="fw-normal small py-3 px-4">
-                    <div class="d-flex gap-2 justify-content-center">
-                        <button class="bg-muted text-white border-0 small py-1 rounded-1" style="width:60px">Approve</button>
-                        <button class="bg-muted text-white border-0 small py-1 rounded-1" style="width:60px">Deny</button>
-                    </div>
-                </td>
-            </tr>
+            </tr> -->
            
         </table>
         <div class="d-flex gap-3 saletabpag align-items-center justify-content-center mt-3">
@@ -234,6 +239,7 @@
     <script src="assets/js/navigation.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/pagination.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/activate.js?v=<?php echo time(); ?>"></script>
+    <script src="assets/js/adminresponse.js"></script>
 
     <br><br><br><br>
 </main>
