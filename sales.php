@@ -2,7 +2,7 @@
     include_once 'header.php'; 
     include_once 'links.php'; 
     include_once 'modals.php'; 
-    // include_once 'nav.php';
+    include_once 'nav.php';
 ?>
 <style>
     main{
@@ -12,14 +12,14 @@
 
 <main>
     <div class="nav-container d-flex gap-3 my-2">
-        <a href="#today" class="nav-link" data-target="today">Today</a>
+        <a href="#all" class="nav-link" data-target="all">Today</a>
         <a href="#yesterday" class="nav-link" data-target="yesterday">Yesterday</a>
         <a href="#seven" class="nav-link" data-target="seven">7 Days</a>
         <a href="#thirty" class="nav-link" data-target="thirty">30 Days</a>
         <a href="#year" class="nav-link" data-target="year">1 Year</a>
     </div>
  
-    <div id="today" class="section-content">
+    <div id="all" class="section-content">
         <div class="d-flex gap-3 mb-3">
             <div class="bg-white border rounded-2 p-4 w-75">
                 <div class="d-flex justify-content-between align-items-center">

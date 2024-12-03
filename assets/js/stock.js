@@ -36,22 +36,3 @@
         });
     });
 
-    // Add event listeners to the delete icons
-    document.querySelectorAll('.fa-trash').forEach(icon => {
-        icon.addEventListener('click', function () {
-            // Find the row associated with the clicked delete icon
-            const row = this.closest('tr');
-
-            // Display a confirmation dialog
-            const confirmDelete = confirm("Are you sure you want to delete this stock?");
-            if (confirmDelete) {
-                // Remove the row if the user confirms
-                row.remove();
-
-                // Optional: Add logic to handle server-side deletion if needed
-                console.log("Stock deleted successfully");
-            } else {
-                console.log("Deletion canceled");
-            }
-        });
-    });

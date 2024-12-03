@@ -1,7 +1,7 @@
 <?php
     include_once 'header.php'; 
     include_once 'links.php'; 
-    // include_once 'nav.php';
+    include_once 'nav.php';
 
     if (!isset($_SESSION['user'])) {
         header('Location: ./signin.php');
@@ -80,12 +80,12 @@
         <div class="d-flex ">
             <div class="d-flex justify-content-center" style="width: 40%;">
                 <div class="text-center flex-grow-1">
-                <img id="profileImage" src="<?= $user['profile_img'] ?>" alt="Profile Image"><br><br>
-                <input name="profile_img" id="fileInput" class="disatc m-0" type="file" accept="image/jpeg, image/png, image/jpg" onchange="replaceImage()"><br><br>
-                    
+                    <img id="profileImage" src="<?= $user['profile_img'] ?>" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"><br><br>
+                    <button id="selectImageBtn" type="button" class="disatc m-0">Select Image</button>
+                    <input name="profile_img" id="fileInput" class="d-none" type="file" accept="image/jpeg, image/png, image/jpg">
+                    <br><br>
                     <span class="text-muted">File size: maximum 5 MB<br>File extension: .JPEG, .PNG</span>
                 </div>
-                <script src="assets/js/editdisplayimage.js?v=<?php echo time(); ?>"></script>
             </div>
             
             <div  style="width: 60%;">
@@ -146,5 +146,28 @@
         </div>
     </form>
     <br><br><br><br>
+    <script>
+         document.getElementById("selectImageBtn").addEventListener("click", function () {
+            document.getElementById("fileInput").click();
+        });
+
+        document.getElementById("fileInput").addEventListener("change", function (event) {
+            const file = event.target.files[0]; 
+
+            if (file) {
+                if (file.type.startsWith("image/")) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        document.getElementById("profileImage").src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(file); 
+                } else {
+                    alert("Please select a valid image file (JPEG, PNG).");
+                }
+            }
+        });
+    </script>
 </main>
 <?php include_once 'footer.php'; ?>

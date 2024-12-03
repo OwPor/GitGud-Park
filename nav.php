@@ -43,27 +43,28 @@
     <?php
         switch ($user['role']) {
             case 'Customer':
-                echo '<a href="purchase.php" class="<?= $current_page == "purchase.php" ? "active" : "" ?>PURCHASE</a>';
-                echo '<a href="favorites.php" class="<?= $current_page == "favorites.php" ? "active" : "" ?>FAVORITES</a>';
-                echo '<a href="account.php" class="<?= $current_page == "account.php" ? "active" : "" ?>ACCOUNT</a>';
+                echo '<a href="purchase.php" class="' . ($current_page == "purchase.php" ? "active" : "") . '">PURCHASE</a>';
+                echo '<a href="favorites.php" class="' . ($current_page == "favorites.php" ? "active" : "") . '">FAVORITES</a>';
+                echo '<a href="account.php" class="' . ($current_page == "account.php" ? "active" : "") . '">ACCOUNT</a>';
                 break;
             case 'Stall Owner':
-                echo '<a href="purchase.php" class="<?= $current_page == "purchase.php" ? "active" : "" ?>PURCHASE</a>';
-                echo '<a href="favorites.php" class="<?= $current_page == "favorites.php" ? "active" : "" ?>FAVORITES</a>';
-                echo '<a href="account.php" class="<?= $current_page == "account.php" ? "active" : "" ?>ACCOUNT</a>';
-                echo '<a href="orders.php" class="<?= $current_page == "orders.php" ? "active" : "" ?>ORDERS</a>';
-                echo '<a href="managemenu.php" class="<?= $current_page == "managemenu.php" ? "active" : "" ?>MANAGE MENU</a>';
-                echo '<a href="stallpage.php" class="<?= $current_page == "stallpage.php" ? "active" : "" ?>STALL PAGE</a>';
-                echo '<a href="sales.php" class="<?= $current_page == "sales.php" ? "active" : "" ?>SALES</a>';
+                echo '<a href="purchase.php" class="' . ($current_page == "purchase.php" ? "active" : "") . '">PURCHASE</a>';
+                echo '<a href="favorites.php" class="' . ($current_page == "favorites.php" ? "active" : "") . '">FAVORITES</a>';
+                echo '<a href="account.php" class="' . ($current_page == "account.php" ? "active" : "") . '">ACCOUNT</a>';
+                echo '<a href="orders.php" class="' . ($current_page == "orders.php" ? "active" : "") . '">ORDERS</a>';
+                echo '<a href="managemenu.php" class="' . ($current_page == "managemenu.php" ? "active" : "") . '">MANAGE MENU</a>';
+                echo '<a href="stallpage.php" class="' . ($current_page == "stallpage.php" ? "active" : "") . '">STALL PAGE</a>';
+                echo '<a href="sales.php" class="' . ($current_page == "sales.php" ? "active" : "") . '">SALES</a>';
                 break;
             case 'Park Owner':
-                echo '<a href="purchase.php" class="<?= $current_page == "purchase.php" ? "active" : "" ?>PURCHASE</a>';
-                echo '<a href="favorites.php" class="<?= $current_page == "favorites.php" ? "active" : "" ?>FAVORITES</a>';
-                echo '<a href="account.php" class="<?= $current_page == "account.php" ? "active" : "" ?>ACCOUNT</a>';
-                echo '<a href="managestall.php" class="<?= $current_page == "managestall.php" ? "active" : "" ?>MANAGE STALL</a>';
-                echo '<a href="dashboard.php" class="<?= $current_page == "dashboard.php" ? "active" : "" ?>DASHBOARD</a>';
-                echo '<a href="centralized.php" class="<?= $current_page == "centralized.php" ? "active" : "" ?>CENTRALIZED</a>';
+                echo '<a href="purchase.php" class="' . ($current_page == "purchase.php" ? "active" : "") . '">PURCHASE</a>';
+                echo '<a href="favorites.php" class="' . ($current_page == "favorites.php" ? "active" : "") . '">FAVORITES</a>';
+                echo '<a href="account.php" class="' . ($current_page == "account.php" ? "active" : "") . '">ACCOUNT</a>';
+                echo '<a href="managestall.php" class="' . ($current_page == "managestall.php" ? "active" : "") . '">MANAGE STALL</a>';
+                echo '<a href="dashboard.php" class="' . ($current_page == "dashboard.php" ? "active" : "") . '">DASHBOARD</a>';
+                echo '<a href="centralized.php" class="' . ($current_page == "centralized.php" ? "active" : "") . '">CENTRALIZED</a>';
                 break;
         }
     ?>
 </nav>
+

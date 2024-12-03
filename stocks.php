@@ -11,7 +11,7 @@
 
 <main>
     <div class="d-flex justify-content-end">
-        <button class="addpro mb-3 prev"><i class="fa-solid fa-chevron-left me-2"></i> Previous</button>
+        <button class="addpro mb-3 prev" onclick="window.history.back();"><i class="fa-solid fa-chevron-left me-2"></i> Previous</button>
     </div>
     <div class="d-flex justify-content-between productdet rounded-2">
         <div class="d-flex gap-4 align-items-center proinf">
@@ -62,9 +62,6 @@
             <h1>LOW</h1>
         </div>
     </div>
-    <div class="bg-white rounded-2 border my-3 p-3">
-       
-    </div>
     <div class="stockaction d-flex bg-white border rounded-2 mb-5">
         <div class="flex-grow-1 stockleft">
             <span class="text-muted fw-bold">Stock In</span>
@@ -92,7 +89,7 @@
                     <td class="reason">Restock</td>
                     <td class="stoaction">
                         <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                        <i class="fa-solid fa-trash"></i>
+                        <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deletestock"></i>
                     </td>
                 </tr>
             </table>
@@ -124,12 +121,13 @@
                     <td class="reason">Theft or Loss</td>
                     <td class="stoaction">
                         <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                        <i class="fa-solid fa-trash"></i>
+                        <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deletestock"></i>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
+    <br><br> <br><br>
     <script src="assets/js/stock.js?v=<?php echo time(); ?>"></script>
 </main>
 <?php

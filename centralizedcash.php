@@ -1,18 +1,52 @@
 <?php
     include_once 'links.php'; 
     include_once 'secondheader.php'; 
+    include_once 'modals.php'; 
 ?>
 <style>
-   /* #CD5C08
+
+/* #CD5C08
 #FFF5E4
 #C1D8C3
 #6A9C89
 */
+    .penpay, .paypro{
+        height: calc(100vh - 65.61px); 
+    }
+    .centable th{
+        border: 2px white solid;
+        background-color: #C1D8C3;
+        color: #6A9C89;
+    }
+    .centable td{
+        border-bottom: 1px solid #ddd;
+    }
 </style>
 <main>
     <div class="d-flex">
-        <div class="p-4" style="background-color: #f4f4f4; width: 25%">
-            <div class="d-flex align-items-center bg-white rounded-2 border">
+        <div class="p-4 overflow-auto w-25 penpay" style="background-color: #f4f4f4;">
+            <h5 class="m-0 fw-bold my-3">Pending Payment</h5>
+            <form action="#" method="get" class="searchmenu rounded-2 mb-2 bg-white py-2">
+                <input type="text" name="search" placeholder="Search order" class="w-100">
+                <button type="submit" class="m-0 ms-2"><i class="fas fa-search fa-lg small"></i></button>
+            </form>
+            <div class="d-flex align-items-center bg-white rounded-2 border mb-2">
+                <div class="border-end p-3">
+                    <span class="small text-muted">Order ID</span>
+                    <h2 class="fw-bold m-0" style="color: #CD5C08;">0000</h2>
+                </div>
+                <div class="p-3">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="small text-muted">Total Price:</span>
+                        <h6 class="fw-bold m-0">₱103</h6>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="small text-muted">Time Ordered:</span>
+                        <h6 class="fw-bold m-0" style="color: #6A9C89;">01:00 PM</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center bg-white rounded-2 border mb-2">
                 <div class="border-end p-3">
                     <span class="small text-muted">Order ID</span>
                     <h2 class="fw-bold m-0" style="color: #CD5C08;">0000</h2>
@@ -29,52 +63,129 @@
                 </div>
             </div>
         </div>
-        <style>
-              /* #CD5C08
-                #FFF5E4
-                #C1D8C3
-                #6A9C89
-                */
-            .centable th{
-                border: 2px white solid;
-                background-color: #C1D8C3;
-                color: #6A9C89;
-            }
-            .centable td{
-                border-bottom: 1px solid #ddd;
-            }
-
-        </style>
-        <div class="w-75 bg-white p-4 mx-auto rounded">
-            <h4 class="mb-3">Stall 1</h4>
-            <table class="table table-borderless align-middle centable">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Sub Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <img src="assets/images/example.jpg" alt="Product Image" class="img-fluid rounded" style="width: 50px; height: 50px;">
-                        </td>
-                        <td>turon ni bai</td>
-                        <td>3</td>
-                        <td>₱112.00</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr class="fw-bold">
-                        <td colspan="3" class="text-end">Total</td>
-                        <td>₱66.55</td>
-                    </tr>
-                </tfoot>
-            </table>
+        <div class="w-75 bg-white px-5 py-4 overflow-auto paypro">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <h5 class="m-0 fw-bold">Payment Processing</h5>
+                <div>
+                    <span class="small text-muted">Order ID</span>
+                    <h2 class="fw-bold m-0" style="color: #CD5C08;">0000</h2>
+                </div>
+            </div>
+            <div class="border rounded-2 p-3 pb-0 mb-3">
+                <h5 class="mb-2">Stall 1</h5>
+                <table class="table table-borderless align-middle centable m-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Product</th>
+                            <th class="text-center">Variations</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Sub Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center p-3">Milk Shake</td>
+                            <td class="text-center p-3">Chocolate, Medium</td>
+                            <td class="text-center p-3">3</td>
+                            <td class="text-center p-3">₱112.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center p-3">Milk Shake</td>
+                            <td class="text-center p-3">Chocolate, Medium</td>
+                            <td class="text-center p-3">3</td>
+                            <td class="text-center p-3">₱112.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center p-3">Milk Shake</td>
+                            <td class="text-center p-3">Chocolate, Medium</td>
+                            <td class="text-center p-3">3</td>
+                            <td class="text-center p-3">₱112.00</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end p-3 pe-0 border-0">Total</td>
+                            <td class="p-3 text-center border-0 fw-bold">₱66.55</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="border rounded-2 p-3 pb-0 mb-4">
+                <h5 class="mb-2">Stall 1</h5>
+                <table class="table table-borderless align-middle centable m-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Product</th>
+                            <th class="text-center">Variations</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Sub Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center p-3">Milk Shake</td>
+                            <td class="text-center p-3">Chocolate, Medium</td>
+                            <td class="text-center p-3">3</td>
+                            <td class="text-center p-3">₱112.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center p-3">Milk Shake</td>
+                            <td class="text-center p-3">Chocolate, Medium</td>
+                            <td class="text-center p-3">3</td>
+                            <td class="text-center p-3">₱112.00</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center p-3">Milk Shake</td>
+                            <td class="text-center p-3">Chocolate, Medium</td>
+                            <td class="text-center p-3">3</td>
+                            <td class="text-center p-3">₱112.00</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end p-3 pe-0 border-0">Total</td>
+                            <td class="p-3 text-center border-0 fw-bold">₱66.55</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="d-flex justify-content-center mb-4">
+                <div class="d-flex gap-5 align-items-center">
+                    <span>Total Due</span>
+                    <span style="color: #CD5C08;" class="fw-bold fs-5">₱112.00</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mb-5">
+                <div>
+                    <div class="d-flex align-items-center mb-4" style="gap: 100px">
+                        <div class="d-flex gap-5">
+                            <span>Total Discount</span>
+                            <span>20.00</span>
+                        </div>
+                        <div class="d-flex gap-5 align-items-center">
+                            <span>Amount Received</span>
+                            <input type="text" placeholder="Enter here" class="px-2 py-1 m-0">
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center" style="gap: 100px">
+                        <div class="d-flex gap-5">
+                            <span>Total Products</span>
+                            <span>20.00</span>
+                        </div>
+                        <div class="d-flex gap-5 align-items-center">
+                            <span>Change Due</span>
+                            <span>20.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mb-5">
+                <div class="d-flex gap-3 align-items-center">
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
+                    <button class="btn btn-primary">Confirm Payment</button>
+                </div>
+            </div>
         </div>
-
     </div>
 </main>
 

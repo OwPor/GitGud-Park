@@ -1,23 +1,17 @@
 <?php
     include_once 'links.php'; 
-    include_once 'modals.php'; 
-    /*include_once 'header.php'; 
-    include_once 'nav.php'; */
+    include_once 'header.php';
 ?>
 <style>
-    /*     .variationette:
-        #CD5C08
-        #FFF5E4
-        #C1D8C3
-        #6A9C89
-        */
     main{
         padding: 20px 120px;
     }
    
 </style>
 <main>
-    <form action="#" class="" method="POST">
+
+    <form action="centralized.php"  method="POST">
+        <input type="hidden" name="status" value="activated">
         <div class="progressbar">
             <div class="progress" id="progress"></div>
             <div class="progress-step progress-step-active" data-title="Information"></div>
@@ -106,12 +100,12 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <input type="submit" value="OK" class="button rounded-5" style="width: 100px;"/>
+                <input type="submit" value="OK" class="button rounded-5" style="width: 100px;" />
             </div>
         </div>
     </form>
     <br><br><br><br>
-    <script src="./assets/js/script.js"></script>
+    <script src="assets/js/cen.js?v=<?php echo time(); ?>"></script>
 </main>
 <?php
     include_once 'footer.php'; 

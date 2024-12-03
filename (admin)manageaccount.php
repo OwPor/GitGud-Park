@@ -32,12 +32,12 @@
 
 <main>
     <div class="nav-container d-flex gap-3 my-2">
-        <a href="#accounts" class="nav-link" data-target="accounts">Accounts</a>
+        <a href="#all" class="nav-link" data-target="all">Accounts</a>
         <a href="#applications" class="nav-link" data-target="applications">Applications</a>
         <a href="#reports" class="nav-link" data-target="reports">Reports</a>
     </div>
 
-    <div id="accounts" class="w-100 border rounded-2 p-3 bg-white section-content">
+    <div id="all" class="w-100 border rounded-2 p-3 bg-white section-content">
         <div class="d-flex justify-content-between">
             <div>
                 <h5 class="fw-bold mb-2">Manage Accounts</h5>

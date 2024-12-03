@@ -19,11 +19,11 @@
 
 <main>
     <div class="nav-container d-flex gap-3 my-2">
-        <a href="#likedstalls" class="nav-link" data-target="likedstalls">My Favorite Stalls</a>
+        <a href="#all" class="nav-link" data-target="all">My Favorite Stalls</a>
         <a href="#likeditems" class="nav-link" data-target="likeditems">My Favorite Foods</a>
     </div>
 
-    <div id="likedstalls" class="section-content">
+    <div id="all" class="section-content">
         <div class="row row-cols-1 row-cols-md-4 g-3">
             <div class="col">
                 <a href="stall.php" class="card-link text-decoration-none bg-white">

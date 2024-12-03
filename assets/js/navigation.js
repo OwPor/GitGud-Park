@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
     rightFilter.addEventListener('scroll', updateArrows);
 });
 
-
 document.addEventListener("DOMContentLoaded", function () {
     const links = document.querySelectorAll(".nav-link");
     const sections = document.querySelectorAll(".section-content");
