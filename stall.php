@@ -139,7 +139,8 @@
                                 data-name="' . htmlspecialchars($product['name']) . '"
                                 data-description="' . htmlspecialchars($product['description']) . '"
                                 data-price="' . number_format($product['price'], 2) . '"
-                                data-image="' . htmlspecialchars($product['file_path']) . '">
+                                data-image="' . htmlspecialchars($product['file_path']) . '"
+                                data-product-id="' . htmlspecialchars($product['id']) . '">
                                     <div class="card position-relative">
                                         <img src="' . htmlspecialchars($product['file_path']) . '" class="card-img-top" alt="' . htmlspecialchars($product['name']) . '">
                                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
@@ -324,11 +325,11 @@
         </div>
     </section>
     <script src="assets/js/navigation.js?v=<?php echo time(); ?>"></script>
-    <script src="assets/js/productmodal.js"></script>
+    <script src="assets/js/productmodal.js?v=<?php echo time(); ?>"></script>
     <br><br>
 </main>
 <?php
 
-include_once 'modals.php'; 
+    include_once 'modals.php'; 
     include_once './footer.php'; 
 ?>

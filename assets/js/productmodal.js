@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalDescription = modal.querySelector('.card-text.text-muted.m-0'); // Product description
     const modalPrice = modal.querySelector('.proprice'); // Product price
     const modalImage = modal.querySelector('.card-img-top'); // Product image
+    const addToCart = modal.querySelector('.add-to-cart-btn'); // Add to cart button
 
     document.querySelectorAll('.card-link').forEach(card => {
         card.addEventListener('click', () => {
@@ -11,11 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const description = card.getAttribute('data-description');
             const price = card.getAttribute('data-price');
             const image = card.getAttribute('data-image');
+            const id = card.getAttribute('data-product-id');
 
             modalTitle.textContent = name;
             modalDescription.textContent = description;
             modalPrice.textContent = `₱${price}`;
             modalImage.src = image;
+            addToCart.setAttribute('data-product-id', id);
         });
     });
 });
