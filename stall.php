@@ -35,7 +35,7 @@
     <div class="pageinfo pb-4">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex gap-4 align-items-center pagelogo">
-                <img src="assets/images/foodpark.jpg" alt="">
+                <img src="<?= $stall['img'] ?>" alt="<?= $stall['name'] ?>">
                 <div>
                     <div class="d-flex gap-2 align-items-center">
                         <span class="text-muted m-0">Category</span>
@@ -126,46 +126,46 @@
                 </a>
             </div>
             <?php
-$products = $productObj->getProducts($stall_id);
+                $products = $productObj->getProducts($stall_id);
 
-if ($products) {
-    foreach ($products as $product) {
-        echo '
-            <div class="col">
-                <a href="#" 
-                   class="card-link text-decoration-none" 
-                   data-bs-toggle="modal" 
-                   data-bs-target="#menumodal"
-                   data-name="' . htmlspecialchars($product['name']) . '"
-                   data-description="' . htmlspecialchars($product['description']) . '"
-                   data-price="' . number_format($product['price'], 2) . '"
-                   data-image="' . htmlspecialchars($product['file_path']) . '">
-                    <div class="card position-relative">
-                        <img src="' . htmlspecialchars($product['file_path']) . '" class="card-img-top" alt="' . htmlspecialchars($product['name']) . '">
-                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
-                        <div class="card-body">
-                            <p class="card-text text-muted m-0">' . htmlspecialchars($product['category']) . '</p>
-                            <h5 class="card-title my-2">' . htmlspecialchars($product['name']) . '</h5>
-                            <p class="card-text text-muted m-0">' . htmlspecialchars($product['description']) . '</p>
-                            <div class="d-flex align-items-center justify-content-between my-3">
-                                <div>
-                                    <span class="proprice">₱' . number_format($product['price'], 2) . '</span>
-                                </div>
-                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
-                            </div>                          
-                            <div class="m-0">
-                                <span class="opennow">Popular</span>
-                                <span class="discount">10% off</span>
-                                <span class="newopen">New</span>
+                if ($products) {
+                    foreach ($products as $product) {
+                        echo '
+                            <div class="col">
+                                <a href="#" 
+                                class="card-link text-decoration-none" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#menumodal"
+                                data-name="' . htmlspecialchars($product['name']) . '"
+                                data-description="' . htmlspecialchars($product['description']) . '"
+                                data-price="' . number_format($product['price'], 2) . '"
+                                data-image="' . htmlspecialchars($product['file_path']) . '">
+                                    <div class="card position-relative">
+                                        <img src="' . htmlspecialchars($product['file_path']) . '" class="card-img-top" alt="' . htmlspecialchars($product['name']) . '">
+                                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                                        <div class="card-body">
+                                            <p class="card-text text-muted m-0">' . htmlspecialchars($product['category']) . '</p>
+                                            <h5 class="card-title my-2">' . htmlspecialchars($product['name']) . '</h5>
+                                            <p class="card-text text-muted m-0">' . htmlspecialchars($product['description']) . '</p>
+                                            <div class="d-flex align-items-center justify-content-between my-3">
+                                                <div>
+                                                    <span class="proprice">₱' . number_format($product['price'], 2) . '</span>
+                                                </div>
+                                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                                            </div>                          
+                                            <div class="m-0">
+                                                <span class="opennow">Popular</span>
+                                                <span class="discount">10% off</span>
+                                                <span class="newopen">New</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        ';
-    }
-}
-?>
+                        ';
+                    }
+                }
+            ?>
         </div>
     </section>
 

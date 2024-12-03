@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const quantity = parseInt(document.getElementById('quantity').innerText);
             alert('User ID: ' + userId + '\nProduct ID: ' + productId + '\nQuantity: ' + quantity);
 
-            // Send data to the backend
             fetch('./add-to-cart.php', {
                 method: 'POST',
                 headers: {
