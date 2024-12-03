@@ -6,7 +6,7 @@
     require_once __DIR__ . '/classes/cart.class.php';
     require_once __DIR__ . '/classes/product.class.php';
     $cart = new Cart();
-    $cartItems = $cart->getCart($_SESSION['user']['id']);
+    $cartItems = $cart->getCart($user['user_session']);
     $productObj = new Product();
 ?>
 <style>
@@ -14,7 +14,7 @@
         padding: 20px 120px;
     }
 </style>
-
+<script> const userId = <?php echo $user['user_session']; ?>; </script>
 <main>
     <div class="nav-container d-flex gap-3 my-2">
         <a href="#all" class="nav-link" data-target="all">All</a>
@@ -64,7 +64,7 @@
                             </div>
                             <div class="d-flex flex-column justify-content-end">
                                 <span class="fw-bold">₱' . number_format($product['price'] * $item['quantity'], 2) . '</span>
-                                <button class="cancelorder rounded-2" data-product-id="' . $item['product_id'] . '">Cancel Order</button>
+                                <button class="cancelorder rounded-2" data-user-id="' . $user['user_session'] .'" data-product-id="' . $item['product_id'] . '">Cancel Order</button>
                             </div>
                         </div>';
                     }
@@ -405,7 +405,7 @@
 
 </main>
 <script src="./assets/js/navigation.js?v=<?php echo time(); ?>"></script>
-<script src="./assets/js/cancelorder.js"></script>
+<script src="./assets/js/cancelorder.js?v=<?php echo time(); ?>"></script>
 
 <?php
     include_once './footer.php'; 

@@ -30,7 +30,7 @@
         exit();
     }
 ?>
-<script>const userId = <?php echo json_encode($_SESSION['user']['id']); ?>;</script>
+<script>const userId = <?php echo json_encode($user['user_session']); ?>;</script>
 <main>
     <div class="pageinfo pb-4">
         <div class="d-flex justify-content-between align-items-center">

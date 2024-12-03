@@ -11,7 +11,7 @@ if (!isset($data['user_id'], $data['product_id'], $data['quantity'])) {
     exit;
 }
 
-$user_id = intval($data['user_id']);
+$user_id = strval($data['user_id']);
 $product_id = intval($data['product_id']);
 $quantity = intval($data['quantity']);
 

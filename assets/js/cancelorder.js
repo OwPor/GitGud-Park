@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.cancelorder').forEach(button => {
         button.addEventListener('click', () => {
             const productId = button.getAttribute('data-product-id');
+            const userId = button.getAttribute('data-user-id');
 
             if (confirm('Are you sure you want to cancel this item?')) {
                 fetch('./cancel-cart-item.php', {
@@ -9,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ product_id: productId }),
+                    body: JSON.stringify({ user_id: userId, product_id: productId }),
                 })
                 .then(response => response.json())
                 .then(data => {

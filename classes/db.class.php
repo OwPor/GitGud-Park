@@ -18,6 +18,19 @@ class User {
         $this->db = new Database();
     }
 
+    function generateUniqueUserSession() {
+        do {
+            $user_session = bin2hex(random_bytes(86));
+    
+            $stmt = $this->db->connect()->prepare("SELECT COUNT(*) FROM users WHERE user_session = ?");
+            $stmt->execute([$user_session]);
+            $exists = $stmt->fetchColumn() > 0;
+    
+        } while ($exists);
+    
+        return $user_session;
+    }
+
     function addUser(){
         $age = $this->calculateAge($this->birth_date);
         if ($age < 18)
@@ -44,7 +57,7 @@ class User {
         $sql = "INSERT INTO users (first_name, last_name, birth_date, email, sex, phone, password) VALUES (:first_name, :last_name, :birth_date, :email, :sex, :phone, :password);";
         $query = $this->db->connect()->prepare($sql);
         
-        return $query->execute(array(
+        if ($query->execute(array(
             ':first_name' => $this->first_name,
             ':last_name' => $this->last_name,
             ':birth_date' => $this->birth_date,
@@ -52,7 +65,10 @@ class User {
             ':sex' => $this->sex,
             ':phone' => $this->phone,
             ':password' => $this->password
-        ));
+        ))) {
+            return $this->generateUniqueUserSession($this->db->connect());
+        }
+        return false;
     }
 
     function editUser($user_id, $current_password, $current_email, $current_phone) {
@@ -126,7 +142,8 @@ class User {
             'phone' => $user['phone'],
             'birth_date' => $user['birth_date'],
             'sex' => $user['sex'],
-            'profile_img' => $user['profile_img']
+            'profile_img' => $user['profile_img'],
+            'user_session' => $user['user_session']
         ];
 
         return $info;
