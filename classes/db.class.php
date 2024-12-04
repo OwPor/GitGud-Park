@@ -28,7 +28,13 @@ class User {
     
         } while ($exists);
     
-        return true;
+        $sql = "UPDATE users SET user_session = :user_session WHERE email = :email;";
+        $query = $this->db->connect()->prepare($sql);
+
+        return $query->execute(array(
+            ':user_session' => $user_session,
+            ':email' => $this->email
+        ));
     }
 
     function addUser(){
