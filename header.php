@@ -29,7 +29,7 @@
                     <li>
                         <div class="dropdown">
                             <a href="javascript:void(0)" onclick="toggleDropdown()">
-                                <img src="assets/images/user.jpg" alt="Profile Image"> 
+                                <img src="<?php echo $user['profile_img'] ?? 'assets/images/profile.jpg'; ?>" alt="Profile Image"> 
                                 <span><?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?></span>
                             </a>
                             <div class="dropdown-content" id="dropdownMenu">

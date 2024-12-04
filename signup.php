@@ -80,6 +80,8 @@
                         echo '<script>alert("Email is already taken")</script>';
                     } else if ($add == 'phone') {
                         echo '<script>alert("Phone number is already taken")</script>';
+                    } else {
+                        echo '<script>alert("Failed to sign up")</script>';
                     }
                 }
             } else {
