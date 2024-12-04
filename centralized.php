@@ -17,12 +17,14 @@ $status = isset($_POST['status']) && $_POST['status'] === 'activated';
     }
 </style>
 <main>
+    <br>
     <?php if ($status): ?>
         <!-- IF ACTIVATED -->
         <div id="activated">
             <button class="addpro" onclick="window.location.href='centralizedcash.php';">
                 <i class="fa-regular fa-hand-pointer me-2"></i>Centralized Cash Payment
             </button>
+            
             <div class="mt-5">
                 <span class="fw-bold">What is Centralized Cash Payment?</span>
                 <p class="m-0 mt-3 mb-5">Centralized cash payment allows customers to make a single cash transaction for orders from multiple stalls at the food park. Instead of visiting each stall to pay, they can settle everything at one central cashier.</p>
@@ -34,13 +36,17 @@ $status = isset($_POST['status']) && $_POST['status'] === 'activated';
                 </ul>
             </div>
             <div class="bg-white rounded-2 border p-3">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="m-0 fw-bold ms-3">Cashier Management</h5>
-                    <span class="me-3 py-1 px-2 rounded-5 salesdr" style="color: #CD5C08;" data-bs-toggle="modal" data-bs-target="#addcashier">
-                        <i class="fa-solid fa-circle-plus me-2"></i>Add Cashier
-                    </span>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-2">Manage Cashier</h5>
+                        <div class="d-flex gap-4 align-items-center border rounded-2 p-1 mt-1">
+                            <span class="small text-muted ms-2">Share link to the cashier</span>
+                            <i class="fa-regular fa-copy text-dark fs-6 me-2" style="cursor: pointer;"></i>
+                        </div>
+                    </div>
+                    <button class="disatc m-0 small" data-bs-toggle="modal" data-bs-target="#addcashier">+ Add Cashier</button>
                 </div>
-                <table class="salestable w-100 text-center">
+                <table class="salestable w-100 text-center border-top mt-3">
                     <tr>
                         <th class="pt-2 px-3 text-start">Name</th>
                         <th class="pt-2 px-3">Shift Start Time</th>

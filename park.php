@@ -68,59 +68,59 @@
     </div>
 </section>
 
-<!-- <section class="third">
+<section class="third">
     <br><br>
     <h3 class="mb-3">Categories</h3>
     <div class="tpdiv position-relative">
         <i class="fa-solid fa-arrow-left scroll-arrow left-arrow" style="display: none;"></i>
         <div class="d-flex rightfilter gap-3">
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category1.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category2.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category3.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category4.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category5.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category1.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category2.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category3.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category4.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category5.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category1.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/foodpark.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Chicken</span>
+                <img src="assets/images/category2.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Category</span>
             </a>
         </div>
         <a href="stall.php" class="card-link text-decoration-none">
@@ -128,7 +128,7 @@
         <i class="fa-solid fa-arrow-right scroll-arrow right-arrow"></i>
     </div>
 
-</section> -->
+</section>
 
 <section>
     <br><br>
@@ -138,14 +138,14 @@
         <div class="d-flex rightfilter gap-3">
             <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/stall1.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
                      <div class="d-flex gap-2 align-items-center">
                         <p class="card-text text-muted m-0">Category</p>
                         <span class="dot text-muted"></span>
                         <p class="card-text text-muted m-0">Category</p>
                     </div>
-                    <h5 class="card-title my-2" style="color: black;">Food Stall Name Food Stall Name</h5>
+                    <h5 class="card-title my-2" style="color: black;">Food Stall Name</h5>
                     <div class="d-flex justify-content-between">
                         <p class="card-text text-muted m-0">Description</p>
                         <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
@@ -159,14 +159,14 @@
             </a>
             <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/stall2.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
                      <div class="d-flex gap-2 align-items-center">
                         <p class="card-text text-muted m-0">Category</p>
                         <span class="dot text-muted"></span>
                         <p class="card-text text-muted m-0">Category</p>
                     </div>
-                    <h5 class="card-title my-2" style="color: black;">Food Stall Name Food Stall Name</h5>
+                    <h5 class="card-title my-2" style="color: black;">Food Stall Name</h5>
                     <div class="d-flex justify-content-between">
                         <p class="card-text text-muted m-0">Description</p>
                         <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
@@ -191,14 +191,14 @@
         <div class="d-flex rightfilter gap-3">
             <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/stall3.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
                      <div class="d-flex gap-2 align-items-center">
                         <p class="card-text text-muted m-0">Category</p>
                         <span class="dot text-muted"></span>
                         <p class="card-text text-muted m-0">Category</p>
                     </div>
-                    <h5 class="card-title my-2" style="color: black;">Food Stall Name Food Stall Name</h5>
+                    <h5 class="card-title my-2" style="color: black;">Food Stall Name</h5>
                     <div class="d-flex justify-content-between">
                         <p class="card-text text-muted m-0">Description</p>
                         <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
@@ -212,14 +212,14 @@
             </a>
             <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/stall4.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
                      <div class="d-flex gap-2 align-items-center">
                         <p class="card-text text-muted m-0">Category</p>
                         <span class="dot text-muted"></span>
                         <p class="card-text text-muted m-0">Category</p>
                     </div>
-                    <h5 class="card-title my-2" style="color: black;">Food Stall Name Food Stall Name</h5>
+                    <h5 class="card-title my-2" style="color: black;">Food Stall Name</h5>
                     <div class="d-flex justify-content-between">
                         <p class="card-text text-muted m-0">Description</p>
                         <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
@@ -244,14 +244,14 @@
         <div class="d-flex rightfilter gap-3">
             <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/stall5.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
                     <div class="d-flex gap-2 align-items-center">
                         <p class="card-text text-muted m-0">Category</p>
                         <span class="dot text-muted"></span>
                         <p class="card-text text-muted m-0">Category</p>
                     </div>
-                    <h5 class="card-title my-2" style="color: black;">Food Stall Name Food Stall Name</h5>
+                    <h5 class="card-title my-2" style="color: black;">Food Stall Name</h5>
                     <div class="d-flex justify-content-between">
                         <p class="card-text text-muted m-0">Description</p>
                         <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
@@ -265,35 +265,14 @@
             </a>
             <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
                 <button class="add"><i class="fa-regular fa-heart"></i></button>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/stall1.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="p-3" style="width:500px;">
                      <div class="d-flex gap-2 align-items-center">
                         <p class="card-text text-muted m-0">Category</p>
                         <span class="dot text-muted"></span>
                         <p class="card-text text-muted m-0">Category</p>
                     </div>
-                    <h5 class="card-title my-2" style="color: black;">Food Stall Name Food Stall Name</h5>
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text text-muted m-0">Description</p>
-                        <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
-                    </div>
-                    <div class="mt-2">
-                        <span class="opennow">Top Rated</span>
-                        <span class="discount">With Promo</span>
-                        <span class="newopen">New Open</span>
-                    </div>
-                </div>
-            </a>
-            <a href="stall.php" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative">
-                <button class="add"><i class="fa-regular fa-heart"></i></button>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
-                <div class="p-3" style="width:500px;">
-                     <div class="d-flex gap-2 align-items-center">
-                        <p class="card-text text-muted m-0">Category</p>
-                        <span class="dot text-muted"></span>
-                        <p class="card-text text-muted m-0">Category</p>
-                    </div>
-                    <h5 class="card-title my-2" style="color: black;">Food Stall Name Food Stall Name</h5>
+                    <h5 class="card-title my-2" style="color: black;">Food Stall Name</h5>
                     <div class="d-flex justify-content-between">
                         <p class="card-text text-muted m-0">Description</p>
                         <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>

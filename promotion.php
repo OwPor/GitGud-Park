@@ -33,7 +33,7 @@ Color Palette:
         <div class="d-flex rightfilter gap-3">
             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <div class="card position-relative" style="width: 320px;">
-                    <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute disother">
                         <span class="opennow">Popular</span>
                         <span class="newopen">New</span>
@@ -57,7 +57,7 @@ Color Palette:
             </a>
             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <div class="card position-relative" style="width: 320px;">
-                    <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/food2.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute disother">
                         <span class="opennow">Popular</span>
                         <span class="newopen">New</span>
@@ -81,7 +81,7 @@ Color Palette:
             </a>
             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <div class="card position-relative" style="width: 320px;">
-                    <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/food3.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute disother">
                         <span class="opennow">Popular</span>
                         <span class="newopen">New</span>
@@ -105,7 +105,7 @@ Color Palette:
             </a>
             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <div class="card position-relative" style="width: 320px;">
-                    <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/food4.jpg" class="card-img-top" alt="...">
                     <div class="position-absolute disother">
                         <span class="opennow">Popular</span>
                         <span class="newopen">New</span>
@@ -145,7 +145,57 @@ Color Palette:
             <div class="col">
                 <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                     <div class="card position-relative">
-                        <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
                             <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>

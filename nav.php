@@ -39,7 +39,7 @@
         border-bottom: 2px black solid;
     }
 </style>
-<nav class="indicator">
+<nav class="indicator border-bottom">
     <?php
         switch ($user['role']) {
             case 'Customer':

@@ -40,7 +40,7 @@ Color Palette:
             <a href="#" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                 <h5 class="ranknumber">1</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food1.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -62,7 +62,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">2</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food2.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -84,7 +84,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">3</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food3.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -106,7 +106,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">4</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food4.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -132,9 +132,8 @@ Color Palette:
         <div class="inventory">
             <a href="#" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
-
                 <h5 class="ranknumber">1</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food1.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -156,7 +155,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">2</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food2.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -178,7 +177,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">3</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food3.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -200,7 +199,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">4</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food4.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -226,9 +225,8 @@ Color Palette:
         <div class="inventory">
             <a href="#" class="text-decoration-none bg-white d-flex align-items-center border rounded-2 position-relative" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
-
                 <h5 class="ranknumber">1</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food1.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -250,7 +248,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">2</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food2.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -272,7 +270,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">3</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food3.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>
@@ -294,7 +292,7 @@ Color Palette:
                 <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
 
                 <h5 class="ranknumber">4</h5>
-                <img src="assets/images/foodpark.jpg" class="h-100 rounded-start-2" width="150px">
+                <img src="assets/images/food4.jpg" class="h-100 rounded-start-2" width="150px">
                 <div class="py-2 px-3 w-100">
                     <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
                     <h5 class="card-title my-2" style="color: black;">Beef And Mushroom Pizza</h5>

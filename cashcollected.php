@@ -1,6 +1,5 @@
 <?php
     include_once 'links.php'; 
-    include_once 'secondheader.php'; 
     include_once 'modals.php'; 
 ?>
 <style>
@@ -27,6 +26,10 @@
 */
    
 </style>
+<div class="bottom d-flex justify-content-between align-items-center">
+    <a href="centralized.php"><img src="assets/images/logo.png" alt="GitGud"></a>
+    <a href="centralizedcash.php" class="text-decoration-none" style="color:#CD5C08;"><i class="fa-solid fa-arrow-left-long me-2"></i> Go Back</a>
+</div> 
 <main>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="border rounded-2 p-3 w-25 bg-white">
@@ -111,6 +114,14 @@
                 <th class="pt-2">Total Paid</th>
                 <th class="pt-2">Status</th>
                 <th class="pt-2">Action</th>
+            </tr>
+            <tr>
+                <td class="fw-normal py-3">2024-10-06 14:30:00</td>
+                <td class="fw-normal py-3">0000</td>
+                <td class="fw-normal py-3">Stall Name 1, Stall Name 2, Stall Name 3,</td>
+                <td class="fw-normal py-3">₱120</td>
+                <td class="fw-normal py-3">Completed</td>
+                <td class="fw-normal py-3"><i class="fa-solid fa-trash rename small"></i></td>
             </tr>
             <tr>
                 <td class="fw-normal py-3">2024-10-06 14:30:00</td>

@@ -33,7 +33,7 @@ Color Palette:
         <div class="col">
             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <div class="card position-relative">
-                    <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/food4.jpg" class="card-img-top" alt="...">
                     <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                     <div class="card-body">
                         <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
@@ -81,7 +81,7 @@ Color Palette:
         <div class="col">
             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <div class="card position-relative">
-                    <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
                     <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                     <div class="card-body">
                         <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
@@ -105,7 +105,7 @@ Color Palette:
         <div class="col">
             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <div class="card position-relative">
-                    <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/food2.jpg" class="card-img-top" alt="...">
                     <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                     <div class="card-body">
                         <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
@@ -129,7 +129,7 @@ Color Palette:
         <div class="col">
             <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                 <div class="card position-relative">
-                    <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/food3.jpg" class="card-img-top" alt="...">
                     <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                     <div class="card-body">
                         <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>

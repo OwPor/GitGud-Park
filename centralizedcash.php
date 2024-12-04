@@ -1,6 +1,5 @@
 <?php
     include_once 'links.php'; 
-    include_once 'secondheader.php'; 
     include_once 'modals.php'; 
 ?>
 <style>
@@ -27,6 +26,10 @@
     }
 </style>
 <main>
+    <div class="bottom d-flex justify-content-between align-items-center">
+        <a href="centralized.php"><img src="assets/images/logo.png" alt="GitGud"></a>
+        <a href="cashcollected.php" class="text-decoration-none" style="color:#CD5C08;">Cash Collected <i class="fa-solid fa-arrow-right-long ms-2"></i></a>
+    </div> 
     <div class="d-flex">
         <div class="p-4 overflow-auto w-25 penpay" style="background-color: #f4f4f4;">
             <h5 class="m-0 fw-bold my-3">Pending Payment</h5>
