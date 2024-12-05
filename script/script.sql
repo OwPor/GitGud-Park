@@ -152,6 +152,12 @@ CREATE TABLE cart(
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
+
+
+
+
+
+
 CREATE TABLE orders (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(255) NOT NULL,
