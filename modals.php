@@ -66,7 +66,7 @@
                 <button type="button" class="btn-close position-absolute top-0 end-0 mt-3 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="card-body">
                     <p class="card-text text-muted m-0">Category</p>
-                    <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                    <h5 class="card-title my-2" id="stall-id" data-stall-id="-1">Beef And Mushroom Pizza</h5>
                     <p class="card-text text-muted m-0"></p>
                     <div class="d-flex align-items-center justify-content-between my-3">
                         <div>
@@ -171,7 +171,7 @@
     </div>
   </div>
 </div>
-<script src="assets/js/addtocart.js"></script>
+<script src="assets/js/addtocart.js?v=<?php echo time(); ?>"></script>
 
 <!-- Delete Stall -->
 <div class="modal fade" id="deletestall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1278,7 +1278,6 @@
     </div>
 </div>
 
-<!-- Placed Order with Cash Paymenyt -->
 <div class="modal fade" id="ifcash" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1289,13 +1288,13 @@
                 <div class="text-center">
                     <i class="fa-regular fa-face-smile mb-3" style="color: #CD5C08; font-size: 80px"></i><br>
                     <span>Thank you for your order!</span>
-                    <h5 class="fw-bold mt-2 mb-4">Your Order ID is <span style="color: #CD5C08;">0000</span></h5>
+                    <h5 class="fw-bold mt-2 mb-4">Your Order ID is <span style="color: #CD5C08;">0001</span></h5>
                     <p class="mb-3">Please proceed to each stall with this Order ID to complete your payment. Once payment is confirmed, your order will be in preparation queue. </p>
                     <span>For more details about your order, go to Purchase.</span>
                 </div>
                 <div class="text-center mt-4">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Purchase</button>
+                    <button type="button" class="btn btn-primary" id="purchaseButton">Purchase</button>
                 </div>
                 <br>
             </div>
@@ -1327,6 +1326,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    async function fetchPaymentLink() {
+        try {
+            const response = await fetch('paymongo.php');
+            const data = await response.json();
+
+            if (data.checkout_url) {
+                document.getElementById('purchaseButton').onclick = function () {
+                    window.location.href = data.checkout_url;
+                };
+            } else {
+                console.error('Error fetching payment link:', data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    window.onload = fetchPaymentLink;
+</script>
 
 <!-- Placed Order as scheduled with Online Paymenyt -->
 <div class="modal fade" id="ifscheduled" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

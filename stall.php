@@ -23,7 +23,8 @@
         $stall = $stallObj->getStall($stall_id);
 
         if (!$stall) {
-            echo 'No stall found.';
+            header('Location: index.php');
+            exit();
         }
     } else {
         header('Location: index.php');
@@ -140,7 +141,9 @@
                                 data-description="' . htmlspecialchars($product['description']) . '"
                                 data-price="' . number_format($product['price'], 2) . '"
                                 data-image="' . htmlspecialchars($product['file_path']) . '"
-                                data-product-id="' . htmlspecialchars($product['id']) . '">
+                                data-product-id="' . htmlspecialchars($product['id']) . '"
+                                data-stall-id="' . htmlspecialchars($stall_id) . '"
+                                >
                                     <div class="card position-relative">
                                         <img src="' . htmlspecialchars($product['file_path']) . '" class="card-img-top" alt="' . htmlspecialchars($product['name']) . '">
                                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>

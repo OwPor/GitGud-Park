@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($data['user_id'], $data['product_id'], $data['quantity'])) {
+if (!isset($data['user_id'], $data['product_id'], $data['quantity'], $data['stall_id'])) {
     echo json_encode(['success' => false, 'message' => 'Invalid data']);
     exit;
 }
@@ -14,11 +14,12 @@ if (!isset($data['user_id'], $data['product_id'], $data['quantity'])) {
 $user_id = strval($data['user_id']);
 $product_id = intval($data['product_id']);
 $quantity = intval($data['quantity']);
+$stall_id = intval($data['stall_id']);
 
 $cart = new Cart();
 
 try {
-    $cart->addToCart($user_id, $product_id, $quantity);
+    $cart->addToCart($user_id, $product_id, $quantity, $stall_id);
     echo json_encode(['success' => true, 'message' => 'Product added to cart']);
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Failed to add product to cart: ' . $e->getMessage()]);

@@ -16,13 +16,14 @@ class Cart {
         return $query->fetchAll();
     }
 
-    function addToCart($userId, $productId, $quantity) {
-        $sql = "INSERT INTO cart (user_id, product_id, quantity) 
-                VALUES (:user_id, :product_id, :quantity)";
+    function addToCart($userId, $productId, $quantity, $stall_id) {
+        $sql = "INSERT INTO cart (user_id, product_id, quantity, stall_id) 
+                VALUES (:user_id, :product_id, :quantity, :stall_id)";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':user_id', $userId);
         $query->bindParam(':product_id', $productId);
         $query->bindParam(':quantity', $quantity);
+        $query->bindParam(':stall_id', $stall_id);
         $query->execute();
     }
 

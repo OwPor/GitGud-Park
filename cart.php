@@ -2,6 +2,20 @@
     include_once 'links.php'; 
     include_once 'header.php';
     include_once 'modals.php';
+    require_once __DIR__ . '/classes/cart.class.php';
+    require_once __DIR__ . '/classes/product.class.php';
+    require_once __DIR__ . '/classes/stall.class.php';
+
+    if (!isset($_SESSION['user'])) {
+        header('Location: ./signin.php');
+        exit();
+    }
+
+    $cart = new Cart();
+    $cartItems = $cart->getCart($user['user_session']);
+    $productObj = new Product();
+    $stallObj = new Stall();
+    $subtotal = 0;
 ?>
 <style>
     main{
@@ -19,7 +33,7 @@
         </div>
     </div>
 
-    <!-- Stall 1 -->
+    <!-- Stall 1
     <div class="border py-3 px-4 rounded-2 bg-white mb-3">
         <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
             <div class="d-flex gap-3 align-items-center">
@@ -28,7 +42,7 @@
             </div>
             <span class="text-danger" style="font-size: 13px;"><i class="fa-solid fa-circle-exclamation me-2"></i>This stall does not offer Cash payment</span>
         </div>
-        <!-- Item 1 -->
+        Item 1
         <div class="d-flex border-bottom py-2 stall-1">
             <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
@@ -51,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <!-- Item 2 -->
+        Item 2
         <div class="d-flex border-bottom py-2 stall-1">
             <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
@@ -74,7 +88,49 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <!-- Stall -->
+    <?php foreach ($cartItems as $cartItem): 
+        $stall = $stallObj->getStall($cartItem['stall_id']);
+    ?>
+        <div class="border py-3 px-4 rounded-2 bg-white mb-3">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                <div class="d-flex gap-3 align-items-center">
+                    <input class="form-check-input m-0 stall-checkbox" type="checkbox" onclick="toggleStallItems(this, 'stall-<?= $stall['id'] ?>')">
+                    <span class="fw-bold"><?= htmlspecialchars($stall['name']) ?></span>
+                </div>
+                <!-- <span class="text-danger" style="font-size: 13px;"><i class="fa-solid fa-circle-exclamation me-2"></i>This stall does not offer Cash payment</span> -->
+            </div>
+            <?php foreach ($cartItems as $item): 
+                if ($item['stall_id'] == $stall['id']): 
+                    $product = $productObj->getProductById($item['product_id']);
+            ?>
+                <div class="d-flex border-bottom py-2 stall-<?= $stall['id'] ?>">
+                    <div class="d-flex gap-3 align-items-center" style="width: 65%">
+                        <input class="form-check-input m-0 item-checkbox" type="checkbox">
+                        <img src="<?= htmlspecialchars($product['file_path']) ?>" width="80px" height="80px" class="border rounded-2">
+                        <div>
+                            <span class="fs-5"><?= htmlspecialchars($product['name']) ?></span><br>
+                            <span class="small text-muted">Variation:</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between" style="width: 35%">
+                        <div class="d-flex align-items-center hlq">
+                            <i class="fa-solid fa-minus" onclick="updateQuantity(this, -1)"></i>
+                            <span class="ordquanum"><?= $item['quantity'] ?></span>
+                            <i class="fa-solid fa-plus" onclick="updateQuantity(this, 1)"></i>
+                        </div>
+                        <div class="fw-bold fs-5">₱<?= number_format($product['price'] * $item['quantity'], 2) ?></div>
+                        <div class="carttop d-flex gap-3">
+                            <button onclick="deleteItem(<?= $item['id'] ?>)">Delete</button>
+                            <button onclick="likeItem(<?= $item['id'] ?>)">Like</button>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; endforeach; ?>
+        </div>
+    <?php endforeach; ?>
 
     <!-- Stall 2 -->
     <div class="border py-3 px-4 rounded-2 bg-white mb-3">
@@ -83,6 +139,7 @@
                 <input class="form-check-input m-0 stall-checkbox" type="checkbox" onclick="toggleStallItems(this, 'stall-2')">
                 <span class="fw-bold">Stall 2 Name</span>
             </div>
+            <span class="text-danger" style="font-size: 13px;"><i class="fa-solid fa-circle-exclamation me-2"></i>This stall does not offer Cash payment</span>
         </div>
         <!-- Item 1 -->
         <div class="d-flex border-bottom py-2 stall-2">
@@ -179,6 +236,26 @@
     </div>
     <script src="./assets/js/cart.js"></script>
     <script>
+        function updateQuantity(element, change) {
+            const quantityContainer = element.parentElement;
+            const quantitySpan = quantityContainer.querySelector('.ordquanum');
+            const priceContainer = quantityContainer.parentElement.querySelector('.fw-bold');
+
+            let currentQuantity = parseInt(quantitySpan.textContent);
+            const pricePerItem = parseFloat(priceContainer.textContent.replace('₱', '').replace(',', '') / currentQuantity);
+
+            currentQuantity += change;
+
+            if (currentQuantity < 1) {
+                currentQuantity = 1;
+            }
+
+            quantitySpan.textContent = currentQuantity;
+
+            const newPrice = (pricePerItem * currentQuantity).toFixed(2);
+            priceContainer.textContent = `₱${newPrice}`;
+        }
+
         (function () {
             // Function to handle Place Order button click
             document.getElementById('placeOrderButton').addEventListener('click', function () {
@@ -221,4 +298,4 @@
 </main>
 <?php 
     include_once 'footer.php'; 
-?>
+?>z

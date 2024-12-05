@@ -51,7 +51,7 @@
                 $subtotal = 0;
                 if ($cartItems) {
                     foreach ($cartItems as $item) {
-                        $product = $productObj->getProductById($item['product_id']); // Fetch product details
+                        $product = $productObj->getProductById($item['product_id']); 
                         echo '
                         <div class="d-flex justify-content-between border-bottom py-2">
                             <div class="d-flex gap-3 align-items-center">

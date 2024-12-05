@@ -1,6 +1,42 @@
 <?php
     include_once 'links.php'; 
     include_once 'secondheader.php';
+    
+    if (isset($_SESSION['user']['id'])) {
+        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
+            $user = $userObj->getUser($_SESSION['user']['id']);
+            if ($user) {
+                if ($user['role'] == 'Park Owner') {
+                    $status = $userObj->getBusinessStatus($_SESSION['user']['id']);
+                    if ($status == 'Pending Approval') {
+                        header('Location: pendingapproval.php');
+                        exit();
+                    } else if ($status == 'Approved') {
+                        header('Location: dashboard.php');
+                        exit();
+                    } else if ($status == 'Rejected') {
+                        echo 'Your business registration has been rejected.';
+                    } else {
+                        echo $status;
+                    }
+                }
+    
+                $first_name = $user['first_name'];
+                $last_name = $user['last_name'];
+                $email = $user['email'];
+                $phone = $user['phone'];
+            } else {
+                header('Location: email/verify_email.php');
+                exit();
+            }
+        } else {
+            header('Location: email/verify_email.php');
+            exit();
+        }
+    } else {
+        header('Location: signin.php');
+        exit();
+    }
 ?>
 <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
 <style>
