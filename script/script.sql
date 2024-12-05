@@ -118,9 +118,7 @@ CREATE TABLE product_variants (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
--- UPDATE users SET role = 'Stall' WHERE id = 1;
-
---INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1, 'uploads/images/adobo.jpg');
+INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1, 'uploads/images/adobo.jpg');
 
 CREATE TABLE business (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -139,7 +137,6 @@ CREATE TABLE business (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
---INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email) VALUES (1, "HEY PARK", "Food Park", "ZC", "S", "ST", 999, "aa@#gmailc.om");
 
 CREATE TABLE cart(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -154,6 +151,11 @@ CREATE TABLE cart(
 
 
 
+
+
+-- UPDATE users SET role = 'Stall' WHERE id = 1;
+
+--INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email) VALUES (1, "HEY PARK", "Food Park", "ZC", "S", "ST", 999, "aa@#gmailc.om");
 
 
 
