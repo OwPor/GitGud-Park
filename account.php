@@ -2,6 +2,7 @@
     include_once 'header.php'; 
     include_once 'links.php'; 
     include_once 'nav.php';
+    include_once 'modals.php';
 
     if (!isset($_SESSION['user'])) {
         header('Location: ./signin.php');
@@ -82,7 +83,13 @@
 </style>
 <main>
     <form class="bg-white rounded-2 p-5" method="POST" enctype="multipart/form-data">
-        <h4 class="fw-bold text-center mb-5">Manage Account</h4>
+        <div class="dropdown position-relative">
+            <i class="fa-solid fa-gear rename text-dark fs-5" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;"></i>
+            <ul class="dropdown-menu dropdown-menu-center p-0" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#changepassword">Change Password</a></li>
+                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteaccount">Delete Account</a></li>
+            </ul>
+        </div>
         <div class="d-flex ">
             <div class="d-flex justify-content-center" style="width: 40%;">
                 <div class="text-center flex-grow-1">

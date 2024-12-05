@@ -1,6 +1,7 @@
 <?php 
     include_once 'links.php'; 
     include_once 'header.php';
+    include_once 'modals.php';
     require_once __DIR__ . '/classes/db.class.php';
     require_once __DIR__ . '/classes/park.class.php';
     $userObj = new User();
@@ -78,7 +79,6 @@
                         <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none">
                             <div class="card" style="position: relative;">
                                 <img src="<?= $park['image'] ?>" class="card-img-top" alt="...">
-                                <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $park['name'] ?></h5>
                                     <p class="card-text text-muted"><i class="fa-solid fa-location-dot"></i><?= $park['location'] ?></p>

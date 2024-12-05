@@ -5,13 +5,7 @@
     include_once 'nav.php'; 
 ?>
 <style>
-    /*
-.variationlette:
-#CD5C08
-#FFF5E4
-#C1D8C3
-#6A9C89
-*/
+ 
     main{
         padding: 20px 120px;
     }
@@ -28,8 +22,8 @@
             <div class="col">
                 <a href="stall.php" class="card-link text-decoration-none bg-white">
                     <div class="card" style="position: relative;">
-                        <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
-                        <button class="add"><i class="fa-regular fa-heart"></i></button>
+                        <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
+                        <button class="add"><i class="fa-solid fa-heart"></i></button>
                         <div class="card-body">
                             <div class="d-flex gap-2 align-items-center">
                             <p class="card-text text-muted m-0">Category</p>
@@ -53,8 +47,8 @@
             <div class="col">
                 <a href="stall.php" class="card-link text-decoration-none bg-white">
                     <div class="card" style="position: relative;">
-                        <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
-                        <button class="add"><i class="fa-regular fa-heart"></i></button>
+                        <img src="assets/images/stall2.jpg" class="card-img-top" alt="...">
+                        <button class="add"><i class="fa-solid fa-heart"></i></button>
                         <div class="card-body">
                             <div class="d-flex gap-2 align-items-center">
                             <p class="card-text text-muted m-0">Category</p>
@@ -78,8 +72,8 @@
             <div class="col">
                 <a href="stall.php" class="card-link text-decoration-none bg-white">
                     <div class="card" style="position: relative;">
-                        <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
-                        <button class="add"><i class="fa-regular fa-heart"></i></button>
+                        <img src="assets/images/stall3.jpg" class="card-img-top" alt="...">
+                        <button class="add"><i class="fa-solid fa-heart"></i></button>
                         <div class="card-body">
                             <div class="d-flex gap-2 align-items-center">
                             <p class="card-text text-muted m-0">Category</p>
@@ -134,7 +128,7 @@
             <div class="col">
                 <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                     <div class="card position-relative">
-                        <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
                             <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
@@ -159,7 +153,7 @@
             <div class="col">
                 <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                     <div class="card position-relative">
-                        <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/food2.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
                             <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>

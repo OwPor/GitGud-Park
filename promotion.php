@@ -20,7 +20,6 @@ Color Palette:
     <a href="#90off" class="nav-link">90% Off Deals</a>
     <a href="#50off" class="nav-link">50% Off Deals</a>
     <a href="#25off" class="nav-link">25% Off Deals</a>
-    <a href="#5off" class="nav-link">5% Off Deals</a>
 </div>
 <div class="dispro">
     <div class="d-flex align-items-center justify-content-between">
@@ -170,7 +169,7 @@ Color Palette:
             <div class="col">
                 <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                     <div class="card position-relative">
-                        <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/food2.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
                             <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
@@ -195,7 +194,32 @@ Color Palette:
             <div class="col">
                 <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                     <div class="card position-relative">
-                        <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/food3.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food5.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
                             <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
@@ -233,7 +257,82 @@ Color Palette:
             <div class="col">
                 <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                     <div class="card position-relative">
-                        <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food2.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food3.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food5.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
                             <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
@@ -271,7 +370,82 @@ Color Palette:
             <div class="col">
                 <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
                     <div class="card position-relative">
-                        <img src="assets/images/example.jpg" class="card-img-top" alt="...">
+                        <img src="assets/images/food1.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food2.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food3.jpg" class="card-img-top" alt="...">
+                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                         <div class="card-body">
+                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
+                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
+                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
+                            <div class="d-flex align-items-center justify-content-between my-3">
+                                <div>
+                                    <span class="proprice">₱103</span>
+                                    <span class="pricebefore small">₱103</span>
+                                </div>
+                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                            </div>                          
+                            <div class="m-0">
+                                <span class="opennow">Popular</span>
+                                <span class="discount">10% off</span>
+                                <span class="newopen">New</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
+                    <div class="card position-relative">
+                        <img src="assets/images/food5.jpg" class="card-img-top" alt="...">
                         <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
                          <div class="card-body">
                             <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
@@ -296,43 +470,7 @@ Color Palette:
         </div>
     </section>
     <br>
-    <section id="5off" class="p-0">
-        <div class="d-flex justify-content-between align-items-center py-3">
-            <h4 class="m-0">5% Off Deals</h4>
-            <select class="form-select m-0" aria-label="Default select example" style="width: 150px;">
-                <option selected value="popularity">by Popularity</option>
-                <option value="date">by Date</option>
-                <option value="likes">by Likes</option>
-            </select>
-        </div>
-        <div class="row row-cols-1 row-cols-md-4 g-3">
-            <div class="col">
-                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal">
-                    <div class="card position-relative">
-                        <img src="assets/images/example.jpg" class="card-img-top" alt="...">
-                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
-                        <div class="card-body">
-                            <p class="card-text text-muted m-0 fsname" onclick="window.location.href='stall.php';">Food Stall Name</p>
-                            <h5 class="card-title my-2">Beef And Mushroom Pizza</h5>
-                            <p class="card-text text-muted m-0">Until March 20, 2024</p>
-                            <div class="d-flex align-items-center justify-content-between my-3">
-                                <div>
-                                    <span class="proprice">₱103</span>
-                                    <span class="pricebefore small">₱103</span>
-                                </div>
-                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
-                            </div>                          
-                            <div class="m-0">
-                                <span class="opennow">Popular</span>
-                                <span class="discount">10% off</span>
-                                <span class="newopen">New</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
+    
     <br><br><br><br><br><br>
 </main> 
 

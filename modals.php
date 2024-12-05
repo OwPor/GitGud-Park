@@ -1534,3 +1534,109 @@
         </div>
     </div>
 </div>
+
+<!-- Change Password -->
+<div class="modal fade" id="changepassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 40%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="">
+                    <h4 class="fw-bold">Change Password</h4>
+                    <p class="small m-0 my-3">Your password must be at least 6 characters and should include a combination of numbers, letters and special characters (!$@%).</p>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="currentpassword" placeholder="Current Password (Updated 10/21/2023">
+                        <label for="currentpassword">Current password (Updated 10/21/2023)</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="newpassword" placeholder="New Password">
+                        <label for="newpassword">New password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="retypepassword" placeholder="Re-type new password">
+                        <label for="retypepassword">Re-type new password</label>
+                    </div>
+                    <a href="resetpassword.php" class="text-decoration-none" style=" color: #CD5C08;">Forgot Password?</a>
+                    <div class="form-check mt-3 mb-5">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                        <label class="form-check-label" for="flexCheckDefault">Log out of other devices. Choose this if someone else used your account.</label>
+                    </div>
+                    <input type="submit" value="Change Password" class="button" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Account -->
+<div class="modal fade" id="deleteaccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold">Delete Account</h4>
+                    <p class="m-0 my-3">Deleting your account will remove all of your information from our database. This cannot be undone.</p>
+
+                    <div class="form-floating mb-5">
+                        <input type="password" class="form-control" id="currentpassword" placeholder="Current Password (Updated 10/21/2023">
+                        <label for="currentpassword">To confirm this, type "DELETE"</label>
+                    </div>
+                    <input type="submit" value="Delete Account" class="button" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- More stall info -->
+<div class="modal fade" id="morestallinfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-bold m-0">More Info</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <h5 class="fw-bold mb-3">Business Contact</h5>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Business Email</span>
+                        <span>example@gmail.com</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Business Phone Number</span>
+                        <span class="text-muted">+639123456789</span>
+                    </div>
+                </div>
+                <h5 class="fw-bold mb-3">Operating Hours</h5>
+                <div class="mb-4">
+                    <div class="mb-2">
+                        <p class="mb-1">Monday, Tuesday, Thursday</p>
+                        <span>7AM - 7PM</span>
+                    </div>
+                    <div class="">
+                        <p class="mb-1">Wednesday, Friday, Saturday</p>
+                        <span>8AM - 9PM</span>
+                    </div>
+                </div>
+                <h5 class="fw-bold mb-3">Payment Accepted</h5>
+                <div class="mb-4">
+                    <div class="mb-2">
+                        <i class="fa-solid fa-check me-2"></i>
+                        <span>Cash</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-check me-2"></i>
+                        <span>GCash</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -32,9 +32,9 @@
         <div class="d-flex border-bottom py-2 stall-1">
             <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="80px" height="80px" class="border rounded-2">
+                <img src="assets/images/food1.jpg" width="80px" height="80px" class="border rounded-2">
                 <div>
-                    <span class="fs-5">Kimchi Noodle Soup</span><br>
+                    <span class="fs-5">Food Name</span><br>
                     <span class="small text-muted">Variation: Chocolate, Medium</span>
                 </div>
             </div>
@@ -55,9 +55,9 @@
         <div class="d-flex border-bottom py-2 stall-1">
             <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="80px" height="80px" class="border rounded-2">
+                <img src="assets/images/food2.jpg" width="80px" height="80px" class="border rounded-2">
                 <div>
-                    <span class="fs-5">Kimchi Noodle Soup</span><br>
+                    <span class="fs-5">Food Name</span><br>
                     <span class="small text-muted">Variation: Chocolate, Medium</span>
                 </div>
             </div>
@@ -88,9 +88,9 @@
         <div class="d-flex border-bottom py-2 stall-2">
             <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="80px" height="80px" class="border rounded-2">
+                <img src="assets/images/food3.jpg" width="80px" height="80px" class="border rounded-2">
                 <div>
-                    <span class="fs-5">Kimchi Noodle Soup</span><br>
+                    <span class="fs-5">Food Name</span><br>
                     <span class="small text-muted">Variation: Chocolate, Medium</span>
                 </div>
             </div>
@@ -111,9 +111,9 @@
         <div class="d-flex border-bottom py-2 stall-2">
             <div class="d-flex gap-3 align-items-center" style="width: 65%">
                 <input class="form-check-input m-0 item-checkbox" type="checkbox">
-                <img src="assets/images/foodpark.jpg" width="80px" height="80px" class="border rounded-2">
+                <img src="assets/images/food4.jpg" width="80px" height="80px" class="border rounded-2">
                 <div>
-                    <span class="fs-5">Kimchi Noodle Soup</span><br>
+                    <span class="fs-5">Food Name</span><br>
                     <span class="small text-muted">Variation: Chocolate, Medium</span>
                 </div>
             </div>

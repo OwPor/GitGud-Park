@@ -293,7 +293,7 @@
     <br><br>
     <h3 class="mb-3">All Food Stalls</h3>
     <div class="oc">
-        <button class="btn btn-outline-secondary" onclick="filterStalls('open')">Top Rated</button>
+        <button class="btn btn-outline-secondary" onclick="filterStalls('open')">Open</button>
         <button class="btn btn-outline-secondary" onclick="filterStalls('closed')">Closed</button>
     </div>
 
@@ -301,7 +301,7 @@
         <div class="col">
             <!-- <a href="stall.php" class="card-link text-decoration-none bg-white"> -->
                 <div class="card" style="position: relative;">
-                    <img src="assets/images/user.jpg" class="card-img-top" alt="...">
+                    <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
                     <div class="closed">Closed until Wed 10:00 AM</div>
                     <button class="add"><i class="fa-regular fa-heart"></i></button>
                     <div class="card-body">
@@ -396,6 +396,28 @@
     </div>
     <br><br>
 </section>
+<SCript>
+    // Select all anchor tags with the class 'add'
+    document.querySelectorAll('.add').forEach(anchor => {
+        anchor.addEventListener('click', function (event) {
+            const icon = this.querySelector('i');
+
+            // Toggle the icon's class
+            if (icon.classList.contains('fa-regular')) {
+                icon.classList.remove('fa-regular', 'fa-heart');
+                icon.classList.add('fa-solid', 'fa-heart');
+            } else {
+                icon.classList.remove('fa-solid', 'fa-heart');
+                icon.classList.add('fa-regular', 'fa-heart');
+            }
+
+            // Prevent navigation if the user clicked on the <i> element
+            if (event.target.tagName === 'I') {
+                event.preventDefault();
+            }
+        });
+    });
+</SCript>
 </main> 
 
 <script src="assets/js/filterstalls.js"></script>

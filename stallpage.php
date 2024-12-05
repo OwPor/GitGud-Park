@@ -23,7 +23,7 @@
                     <div class="d-flex gap-2 align-items-center my-2">
                         <span class="pageon">Open now</span>
                         <span class="dot text-muted"></span>
-                        <button class="conopepay"><i class="fa-solid fa-circle-info"></i> More info</button>
+                        <button class="conopepay" data-bs-toggle="modal" data-bs-target="#morestallinfo"><i class="fa-solid fa-circle-info"></i> More info</button>
                     </div>
 
                     <div class="d-flex gap-5 m-0">
