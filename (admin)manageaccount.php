@@ -1,8 +1,7 @@
 <?php
+    include_once 'landingheader.php'; 
     include_once 'links.php'; 
-    include_once 'header.php'; 
     include_once 'modals.php'; 
-    /*include_once 'nav.php'; */
     require_once __DIR__ . '/classes/admin.class.php';
     $adminObj = new Admin();
 ?>

@@ -856,7 +856,28 @@
                     <input type="file" id="fileInput" style="display: none;" accept="image/*"><br><br>
                     <button id="uploadButton" class="disatc m-0">Upload Image</button><br><br>
                 </div>
-                <script src="assets/js/editdisplayimage.js?v=<?php echo time(); ?>"></script>
+
+                <script>
+                    const fileInput = document.getElementById('fileInput');
+                    const uploadButton = document.getElementById('uploadButton');
+                    const profileImage = document.getElementById('profileImage');
+
+                    uploadButton.addEventListener('click', () => {
+                        fileInput.click();
+                    });
+
+                    fileInput.addEventListener('change', (event) => {
+                        const file = event.target.files[0]; 
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                profileImage.src = e.target.result; 
+                            };
+                            reader.readAsDataURL(file); 
+                        }
+                    });
+                </script>
+
                 <div class="border-top pt-3">
                     <h5 class="fw-bold mb-1">Tell us about your business</h5>
                     <p class="par mb-3">This information will be shown on the web so that customers can search and contact you in case they have any questions.</p>

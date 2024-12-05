@@ -1,6 +1,6 @@
-<?php 
+<?php
+    include_once 'landingheader.php'; 
     include_once 'links.php'; 
-    include_once 'header.php';
     include_once 'modals.php';
     require_once __DIR__ . '/classes/db.class.php';
     require_once __DIR__ . '/classes/park.class.php';
@@ -101,7 +101,6 @@
     </div>
     <br><br><br>
 </section>
-
 <?php
     include_once 'footer.php'; 
 ?>

@@ -18,10 +18,10 @@ if (isset($_SESSION['user']['id'])) {
                 if ($status == 'Pending Approval') {
                     header('Location: pendingapproval.php');
                     exit();
-                } else if ($status == 'Approved') {
+                } else if ($status == 'Open') {
                     header('Location: dashboard.php');
                     exit();
-                } else if ($status == 'Rejected') {
+                } else if ($status == 'Closed') {
                     echo 'Your business registration has been rejected.';
                 } else {
                     echo $status;

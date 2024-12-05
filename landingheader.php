@@ -1,0 +1,14 @@
+
+<div class="bottom d-flex justify-content-between align-items-center">
+    <a href="index.php"><img src="assets/images/logo.png" alt="GitGud"></a>
+    <div class="dropdown position-relative">
+        <a href="#" data-bs-toggle="dropdown" aria-expanded="false" class="text-decoration-none text-dark">
+            <img src="assets/images/profile.jpg" alt="Profile Image"> 
+            <span class="ms-1">Naila Haliluddin</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-center p-0 mt-2" style="box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+            <li><a class="dropdown-item" href="(admin)manageaccount.php"><i class="fa-regular fa-user me-2"></i> Manage Accounts</a></li>
+            <li><a class="dropdown-item" href="./logout.php"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Logout</a></li>
+        </ul>
+    </div>
+</div> 

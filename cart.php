@@ -168,9 +168,7 @@
             <div class="d-flex">
                 <div class="w-25"></div>
                 <div class="w-75">
-                    <button type="button" class="btn btn-primary rounded-5" style="width: 250px;" data-bs-toggle="modal" data-bs-target="#ifcash">Place Order</button>
-                    <!--<button type="button" class="btn btn-primary rounded-5" style="width: 250px;" data-bs-toggle="modal" data-bs-target="#ifcashless">Place Order</button>
-                    <button type="button" class="btn btn-primary rounded-5" style="width: 250px;" data-bs-toggle="modal" data-bs-target="#ifscheduled">Place Order</button>-->
+                    <button type="button" class="btn btn-primary rounded-5" style="width: 250px;" id="placeOrderButton">Place Order</button>
                 </div>
             </div>
         </div>
@@ -180,8 +178,47 @@
             <h2 class="fw-bold m-0" style="color: #CD5C08">₱1,072</h2>
         </div>
     </div>
+    <script src="./assets/js/cart.js"></script>
+    <script>
+        (function () {
+            // Function to handle Place Order button click
+            document.getElementById('placeOrderButton').addEventListener('click', function () {
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                const orderTime = document.querySelector('input[name="orderTime"]:checked').id;
+
+                let targetModal = '';
+
+                // Determine which modal to show
+                if (paymentMethod === 'cash' && orderTime === 'immediately') {
+                    targetModal = 'ifcash';
+                } else if (paymentMethod === 'gcash' && orderTime === 'immediately') {
+                    targetModal = 'ifcashless';
+                } else if (paymentMethod === 'cash' && orderTime === 'scheduleLater') {
+                    targetModal = 'ifscheduled';
+                }
+
+                // Show the determined modal
+                if (targetModal) {
+                    const modal = new bootstrap.Modal(document.getElementById(targetModal));
+                    modal.show();
+                }
+            });
+
+            // Enable or disable schedule inputs based on order time selection
+            const scheduleDate = document.getElementById('scheduleDate');
+            const scheduleTime = document.getElementById('scheduleTime');
+            document.getElementById('scheduleLater').addEventListener('change', () => {
+                scheduleDate.disabled = false;
+                scheduleTime.disabled = false;
+            });
+            document.getElementById('immediately').addEventListener('change', () => {
+                scheduleDate.disabled = true;
+                scheduleTime.disabled = true;
+            });
+        })();
+    </script>
+
     <br><br><br><br><br>
-    <script src="./assets/js/cart.js?v=<?php echo time(); ?>"></script>
 </main>
 <?php 
     include_once 'footer.php'; 
