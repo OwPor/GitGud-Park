@@ -1278,6 +1278,7 @@
     </div>
 </div>
 
+<!-- Placed Order with Cash Paymenyt -->
 <div class="modal fade" id="ifcash" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1294,7 +1295,7 @@
                 </div>
                 <div class="text-center mt-4">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="purchaseButton">Purchase</button>
+                    <button type="button" class="btn btn-primary">Purchase</button>
                 </div>
                 <br>
             </div>
@@ -1326,7 +1327,7 @@
         </div>
     </div>
 </div>
-
+<!--id="purchaseButton
 <script>
     async function fetchPaymentLink() {
         try {
@@ -1345,7 +1346,7 @@
         }
     }
     window.onload = fetchPaymentLink;
-</script>
+</script>"-->
 
 <!-- Placed Order as scheduled with Online Paymenyt -->
 <div class="modal fade" id="ifscheduled" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

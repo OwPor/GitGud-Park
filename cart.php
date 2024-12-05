@@ -234,68 +234,84 @@
             <h2 class="fw-bold m-0" style="color: #CD5C08">₱1,072</h2>
         </div>
     </div>
-    <script src="./assets/js/cart.js"></script>
+
     <script>
-        function updateQuantity(element, change) {
-            const quantityContainer = element.parentElement;
-            const quantitySpan = quantityContainer.querySelector('.ordquanum');
-            const priceContainer = quantityContainer.parentElement.querySelector('.fw-bold');
-
-            let currentQuantity = parseInt(quantitySpan.textContent);
-            const pricePerItem = parseFloat(priceContainer.textContent.replace('₱', '').replace(',', '') / currentQuantity);
-
-            currentQuantity += change;
-
-            if (currentQuantity < 1) {
-                currentQuantity = 1;
-            }
-
-            quantitySpan.textContent = currentQuantity;
-
-            const newPrice = (pricePerItem * currentQuantity).toFixed(2);
-            priceContainer.textContent = `₱${newPrice}`;
-        }
-
         (function () {
-            // Function to handle Place Order button click
-            document.getElementById('placeOrderButton').addEventListener('click', function () {
-                const paymentMethod = document.getElementById('paymentMethod').value;
-                const orderTime = document.querySelector('input[name="orderTime"]:checked').id;
-
-                let targetModal = '';
-
-                // Determine which modal to show
-                if (paymentMethod === 'cash' && orderTime === 'immediately') {
-                    targetModal = 'ifcash';
-                } else if (paymentMethod === 'gcash' && orderTime === 'immediately') {
-                    targetModal = 'ifcashless';
-                } else if (paymentMethod === 'cash' && orderTime === 'scheduleLater') {
-                    targetModal = 'ifscheduled';
+            document.addEventListener('DOMContentLoaded', () => {
+                // Check if a modal should be shown based on session storage
+                const modalMapping = {
+                    ifcashless: 'showCashlessModal',
+                    ifscheduled: 'showScheduledModal',
+                };
+                for (const [modalId, sessionKey] of Object.entries(modalMapping)) {
+                    if (sessionStorage.getItem(sessionKey)) {
+                        const modal = new bootstrap.Modal(document.getElementById(modalId));
+                        modal.show();
+                        sessionStorage.removeItem(sessionKey); // Clear the flag
+                    }
                 }
 
-                // Show the determined modal
-                if (targetModal) {
-                    const modal = new bootstrap.Modal(document.getElementById(targetModal));
-                    modal.show();
-                }
-            });
+                const paymentMethod = document.getElementById('paymentMethod');
+                const scheduleDate = document.getElementById('scheduleDate');
+                const scheduleTime = document.getElementById('scheduleTime');
 
-            // Enable or disable schedule inputs based on order time selection
-            const scheduleDate = document.getElementById('scheduleDate');
-            const scheduleTime = document.getElementById('scheduleTime');
-            document.getElementById('scheduleLater').addEventListener('change', () => {
-                scheduleDate.disabled = false;
-                scheduleTime.disabled = false;
-            });
-            document.getElementById('immediately').addEventListener('change', () => {
-                scheduleDate.disabled = true;
-                scheduleTime.disabled = true;
+                // Enable or disable inputs based on order time selection
+                document.getElementById('scheduleLater').addEventListener('change', () => {
+                    scheduleDate.disabled = false;
+                    scheduleTime.disabled = false;
+
+                    // Disable cash for scheduled orders
+                    paymentMethod.querySelector('option[value="cash"]').disabled = true;
+                    paymentMethod.value = 'gcash'; // Default to GCash
+                });
+
+                document.getElementById('immediately').addEventListener('change', () => {
+                    scheduleDate.disabled = true;
+                    scheduleTime.disabled = true;
+
+                    // Enable cash for immediate orders
+                    paymentMethod.querySelector('option[value="cash"]').disabled = false;
+                });
+
+                // Handle Place Order button click
+                document.getElementById('placeOrderButton').addEventListener('click', async function () {
+                    const selectedPayment = paymentMethod.value;
+                    const orderTime = document.querySelector('input[name="orderTime"]:checked').id;
+
+                    try {
+                        if (selectedPayment === 'gcash') {
+                            const response = await fetch('paymongo.php');
+                            const data = await response.json();
+
+                            if (data.checkout_url) {
+                                // Set the session flag for the appropriate modal
+                                const modalKey = orderTime === 'immediately' ? 'showCashlessModal' : 'showScheduledModal';
+                                sessionStorage.setItem(modalKey, 'true');
+                                // Redirect to the payment link
+                                window.location.href = data.checkout_url;
+                            } else {
+                                console.error('Error fetching payment link:', data.error);
+                                alert('Failed to retrieve the payment link. Please try again.');
+                            }
+                        } else if (selectedPayment === 'cash' && orderTime === 'immediately') {
+                            const cashModal = new bootstrap.Modal(document.getElementById('ifcash'));
+                            cashModal.show();
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('An error occurred while processing your request.');
+                    }
+                });
             });
         })();
     </script>
+
+
+
 
     <br><br><br><br><br>
 </main>
 <?php 
     include_once 'footer.php'; 
-?>z
+?>
+<script src="./assets/js/cart.js"></script>
