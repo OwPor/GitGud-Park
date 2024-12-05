@@ -9,6 +9,11 @@ $userObj = new User();
 $first_name = $last_name = $email = $phone = $business_name = $business_type = $branches = $business_email = $business_phone = $region_province_city = $barangay = $street_building_house = $business_permit = '';
 $err = $first_name_err = $last_name_err = $email_err = $phone_err = $business_name_err = $business_type_err = $branches_err = $business_email_err = $business_phone_err = $region_province_city_err = $barangay_err = $street_building_house_err = $business_permit_err = '';
 
+$business_email = '';
+$business_phone = '';
+$email_cb = false;
+$phone_cb = false;
+
 if (isset($_SESSION['user']['id'])) {
     if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
         $user = $userObj->getUser($_SESSION['user']['id']);
@@ -53,8 +58,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $business_name = filter_var(trim($_POST['businessname']), FILTER_SANITIZE_STRING);
     $business_type = filter_var(trim($_POST['businesstype']), FILTER_SANITIZE_STRING);
     $branches = filter_var(trim($_POST['branches']), FILTER_SANITIZE_STRING);
-    $business_email = filter_var(trim($_POST['businessemail']), FILTER_SANITIZE_EMAIL) ?? $email;
-    $business_phone = filter_var(trim($_POST['businessphonenumber']), FILTER_SANITIZE_STRING) ?? $phone;
+    
+    $email_cb = isset($_POST['flexCheckEmail']);
+    $phone_cb = isset($_POST['flexCheckPhone']);
+    
+    if ($email_cb) {
+        $business_email = $email;
+    } else {
+        $business_email = filter_var(trim($_POST['businessemail']), FILTER_SANITIZE_EMAIL);
+    }
+
+    if ($phone_cb) {
+        $business_phone = $email;
+    } else {
+        $business_phone = filter_var(trim($_POST['businessphonenumber']), FILTER_SANITIZE_STRING);
+    }
+
     $region_province_city = filter_var(trim($_POST['rpc']), FILTER_SANITIZE_STRING);
     $barangay = filter_var(trim($_POST['barangay']), FILTER_SANITIZE_STRING);
     $street_building_house = filter_var(trim($_POST['sbh']), FILTER_SANITIZE_STRING);
@@ -151,7 +170,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user_id = $_SESSION['user']['id'];
         $business_id = $userObj->registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit);
         if ($business_id) {
-            header('Location: pendingapproval.php');
+            // header('Location: pendingapproval.php');
+            var_dump($business_id);
             exit();
         } else if ($business_id == "Park Owner") {
             $status = $userObj->getBusinessStatus($user_id);
@@ -314,12 +334,12 @@ main {
                 </div>
 
                 <div class="form-floating mb-3" id="businessemailGroup" style="display: none;">
-                    <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email">
+                    <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email" value="<?= $business_email ?>">
                     <label for="businessemail">Business Email <span style="color: #CD5C08;">*</span></label>
                 </div>
 
                 <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckEmail" checked onchange="toggleBusinessEmailInput()">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckEmail" name="flexCheckEmail" checked onchange="toggleBusinessEmailInput()">
                     <label class="form-check-label" for="flexCheckEmail">My Business and Personal Emails are the same</label>
                 </div>
 
@@ -340,7 +360,7 @@ main {
                 </div>
 
                 <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked onchange="toggleBusinessPhoneNumberInput()">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  name="flexCheckPhone" checked onchange="toggleBusinessPhoneNumberInput()">
                     <label class="form-check-label" for="flexCheckChecked">My Business and Personal Phone numbers are the same</label>
                 </div>
 
