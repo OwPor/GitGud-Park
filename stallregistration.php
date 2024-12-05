@@ -198,10 +198,6 @@
                     <input class="form-check-input" type="checkbox" value="G-Cash" id="flexCheckGcash">
                     <label class="form-check-label" for="flexCheckGcash">G-Cash</label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="PayMaya" id="flexCheckPaymaya">
-                    <label class="form-check-label" for="flexCheckPaymaya">PayMaya</label>
-                </div>
             </div>
         </div>
         <div class="form-check mt-4">
@@ -211,9 +207,27 @@
             </label>
         </div>
         <div class="text-center pt-4 mt-4 createpage">
-            <button type="submit" class="btn btn-primary send px-5">CREATE PAGE</button>
+            <button type="button" class="btn btn-primary send px-5" data-bs-toggle="modal" data-bs-target="#pendingcashless">CREATE PAGE</button>
         </div>
     </form>
+    <!-- Pending Cashless Approval -->
+    <div class="modal fade" id="pendingcashless" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <br>
+                    <div class="text-center">
+                        <i class="fa-solid fa-wallet mb-4"  style="color: #CD5C08; font-size: 80px"></i>
+                        <p class="mb-4">Your selected payment method (GCash) is pending approval. Please note that the admin will review and set up the API before this payment method can be used. You will receive a notification once an action has been taken.</p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="button" class="button w-25" onclick="window.location.href='stallpage.php';">OK</button>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 

@@ -146,7 +146,6 @@
                 <select class="form-select w-75" id="paymentMethod">
                     <option value="cash">Cash</option>
                     <option value="gcash">GCash</option>
-                    <option value="paymaya">PayMaya</option>
                 </select>
             </div>
             <div class="d-flex mb-4">

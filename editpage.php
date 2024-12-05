@@ -187,11 +187,6 @@
                     <input class="form-check-input" type="checkbox" value="G-Cash" id="flexCheckGcash" <?php echo in_array('G-Cash', $selectedPaymentMethods) ? 'checked' : ''; ?>>
                     <label class="form-check-label" for="flexCheckGcash">G-Cash</label>
                 </div>
-                
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="PayMaya" id="flexCheckPaymaya" <?php echo in_array('PayMaya', $selectedPaymentMethods) ? 'checked' : ''; ?>>
-                    <label class="form-check-label" for="flexCheckPaymaya">PayMaya</label>
-                </div>
             </div>
         </div>
 

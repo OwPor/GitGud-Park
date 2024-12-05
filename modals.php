@@ -485,6 +485,7 @@
                             <option value="cash">Cash</option>
                             <option value="gcash">GCash</option>
                             <option value="paymaya">PayMaya</option>
+                            <option value="others">Others</option>
                         </select>
                     </div>
                     <button type="button" class="btn btn-primary">Add</button>
@@ -529,6 +530,7 @@
                             <option value="cash" selected>Cash</option>
                             <option value="gcash">GCash</option>
                             <option value="paymaya">PayMaya</option>
+                            <option value="others">Others</option>
                         </select>
                     </div>
                     <button type="button" class="btn btn-primary">Save</button>
