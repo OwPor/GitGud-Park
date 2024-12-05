@@ -236,6 +236,83 @@
         </div>
     </div>
 
+    <div id="reports" class="w-100 border rounded-2 p-3 bg-white section-content">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h5 class="fw-bold mb-2">Report</h5>
+                <span class="small">November 03, 2024 8:40 AM</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center text-muted small gap-4 mt-2 mb-3">
+            <form action="#" method="get" class="searchmenu rounded-2">
+                <input type="text" name="search" placeholder="Search account" style="width: 230px;">
+                <button type="submit" class="m-0 ms-2"><i class="fas fa-search fa-lg small"></i></button>
+            </form>
+            <select name="sortOptions" id="sortOptions" class="border-0 text-muted small py-1 px-2">
+                <option value="all">All</option>
+            </select>
+            <i class="fa-regular fa-circle-down rename"></i>
+            <div class="d-flex gap-2 align-items-center small rename py-1 px-2">
+                <span style="cursor: context-menu;">47s</span>
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+            </div>
+        </div>
+        <table class="salestable w-100 text-center border-top">
+            <tr>
+                <th>Reported By</th>
+                <th>Reported User</th>
+                <th>Reason</th>
+                <th>Date Reported</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            <tr>
+                <td class="fw-normal small py-3 px-4">Athena Casino</td>
+                <td class="fw-normal small py-3 px-4">Athena Casino</td>
+                <td class="fw-normal small py-3 px-4">Self Report lang</td>
+                <td class="fw-normal small py-3 px-4">07/29/2024</td>
+                <td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-warning border border-warning p-1 border-2 fw-bold">Pending</span></td>
+                <td class="fw-normal small py-3 px-4">
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button class="bg-success text-white border-0 small py-1 rounded-1" style="width:60px">Resolve</button>
+                        <button class="bg-danger text-white border-0 small py-1 rounded-1" style="width:60px">Reject</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="fw-normal small py-3 px-4">Athena Casino</td>
+                <td class="fw-normal small py-3 px-4">Athena Casino</td>
+                <td class="fw-normal small py-3 px-4">Self Report lang</td>
+                <td class="fw-normal small py-3 px-4">07/29/2024</td>
+                <td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-danger border border-danger p-1 border-2 fw-bold">Rejected</span></td>
+                <td class="fw-normal small py-3 px-4">
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button class="bg-muted text-white border-0 small py-1 rounded-1" style="width:60px">Resolve</button>
+                        <button class="bg-muted text-white border-0 small py-1 rounded-1" style="width:60px">Reject</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="fw-normal small py-3 px-4">Athena Casino</td>
+                <td class="fw-normal small py-3 px-4">Athena Casino</td>
+                <td class="fw-normal small py-3 px-4">Self Report lang</td>
+                <td class="fw-normal small py-3 px-4">07/29/2024</td>
+                <td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-success border border-success p-1 border-2 fw-bold">Resolved</span></td>
+                <td class="fw-normal small py-3 px-4">
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button class="bg-muted text-white border-0 small py-1 rounded-1" style="width:60px">Resolve</button>
+                        <button class="bg-muted text-white border-0 small py-1 rounded-1" style="width:60px">Reject</button>
+                    </div>
+                </td>
+            </tr>
+           
+        </table>
+        <div class="d-flex gap-3 saletabpag align-items-center justify-content-center mt-3">
+            <!-- Pagination will be dynamically generated -->
+        </div>
+    </div>
+
     <script src="assets/js/navigation.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/pagination.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/activate.js?v=<?php echo time(); ?>"></script>

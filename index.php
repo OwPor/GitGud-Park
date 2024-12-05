@@ -18,6 +18,12 @@
     }
 ?>
 <title>GitGud PMS</title>
+<style>
+    .lpseemore{
+        background-color: #e5e5e5;
+        cursor: pointer;
+    }
+</style>
 <section class="first">
     <div class="firstinside">
         <div>
@@ -76,16 +82,17 @@
                     $uniqueLink = "./park.php?id=" . $park['url'];
                     ?>
                     <div class="col">
-                        <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none">
-                            <div class="card" style="position: relative;">
+                        <div class="card">
+                            <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none">
                                 <img src="<?= $park['image'] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?= $park['name'] ?></h5>
-                                    <p class="card-text text-muted"><i class="fa-solid fa-location-dot"></i><?= $park['location'] ?></p>
+                                    <h5 class="card-title text-dark"><?= $park['name'] ?></h5>
+                                    <p class="card-text text-muted"><i class="fa-solid fa-location-dot me-2"></i><?= $park['location'] ?></p>
                                     <span class="opennow">Open Now</span>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                            <div class="text-center p-2 lpseemore rounded-4 mx-3 mb-3 small" data-bs-toggle="modal" data-bs-target="#seemorepark">See more...</div>
+                        </div>
                     </div>
             <?php 
                 }
