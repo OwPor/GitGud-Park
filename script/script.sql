@@ -14,7 +14,7 @@ CREATE TABLE users (
     phone VARCHAR(20) UNIQUE NOT NULL,
     password CHAR(255) NOT NULL,
     birth_date DATE NOT NULL,
-    status ENUM('Active', 'Inactive') NOT NULL DEFAULT 'Active';
+    status ENUM('Active', 'Inactive') NOT NULL DEFAULT 'Active',
     role ENUM('Customer', 'Park Owner', 'Stall Owner', 'Admin') NOT NULL DEFAULT 'Customer',
     profile_img VARCHAR(255) DEFAULT 'assets/images/profile.jpg',
     user_session VARCHAR(255) UNIQUE,
