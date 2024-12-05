@@ -13,7 +13,14 @@
 </style>
 <div class="bottom d-flex justify-content-between align-items-center">
     <a href="/GitGudPark/index.php"><i class="fa-solid fa-arrow-left-from-bracket"></i> 
-        <img src="assets/images/logo.png" alt="GitGud">
+        <?php
+            $currentDir = dirname($_SERVER['SCRIPT_NAME']);
+            if (strpos($currentDir, 'email') !== false) {
+                echo '<img src="../assets/images/logo.png" alt="GitGud">';
+            } else {
+                echo '<img src="assets/images/logo.png" alt="GitGud">';
+            }
+        ?>
     </a>
     <?php 
         if (isset($_SESSION['user']['id']))

@@ -200,7 +200,7 @@
                         echo '<tr>';
                         echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['business_name']) . '</td>';
                         echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['business_type']) . '</td>';
-                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['region_province_city']) . htmlspecialchars($business['barangay']) . htmlspecialchars($business['street_building_house']) . '</td>';
+                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['region_province_city']) . ", " . htmlspecialchars($business['barangay']) . ", " . htmlspecialchars($business['street_building_house']) . '</td>';
                         echo '<td class="fw-normal small py-3 px-4"><i class="fa-solid fa-chevron-down rename small" data-bs-toggle="modal" data-bs-target="#moreparkinfo"></i></td>';
                         echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['created_at']) . '</td>';
                         echo '<td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-warning border border-warning p-1 border-2 fw-bold">' . $status . '</span></td>';

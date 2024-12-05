@@ -284,13 +284,17 @@ class User {
         $query->execute(array(':business_name' => $business_name));
 
         $business = $query->fetch();
+        
+        
 
-        if ($business['business_name'] == $business_name) {
-            return "Existing Business";
-        } else if ($business['business_email'] == $business_email) {
-            return "Existing Email";
-        } else if ($business['business_phone'] == $business_phone) {
-            return "Existing Phone";
+        if ($business) {
+            if ($business['business_name'] == $business_name) {
+                return "Existing Business";
+            } else if ($business['business_email'] == $business_email) {
+                return "Existing Email";
+            } else if ($business['business_phone'] == $business_phone) {
+                return "Existing Phone";
+            }
         }
 
         $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit, business_status) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit, :business_status);";
