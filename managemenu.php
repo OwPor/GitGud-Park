@@ -2,7 +2,12 @@
     include_once 'header.php'; 
     include_once 'links.php'; 
     include_once 'nav.php';
-    include_once 'modals.php'; 
+    include_once 'modals.php';
+    require_once __DIR__ . '/classes/stall.class.php';
+
+    $stallObj = new Stall();
+    $stallId = $stallObj->getStallId($_SESSION['user']['id']);
+    $products = $stallObj->getProducts($stallId);
 ?>
 <style>
     main{
@@ -48,7 +53,7 @@
             <div id="collapseOne" class="accordion-collapse collapse show">
                 <div class="accordion-body pt-0 pb-4">
                     <div class="inventory">
-                        <div class="d-flex justify-content-between productdet rounded-2">
+                        <!-- <div class="d-flex justify-content-between productdet rounded-2">
                             <div class="d-flex gap-4 align-items-center proinf">
                                 <div class="position-relative">
                                     <img src="assets/images/food1.jpg" alt="">
@@ -75,7 +80,43 @@
                                 <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editproduct.php';"></i>
                                 <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deleteproduct"></i>
                             </div>
-                        </div>
+                        </div> -->
+                        <?php
+                            if ($products && count($products) > 0) {
+                                foreach ($products as $product) {
+                                    echo '<div class="d-flex justify-content-between productdet rounded-2">';
+                                    echo '    <div class="d-flex gap-4 align-items-center proinf">';
+                                    echo '        <div class="position-relative">';
+                                    echo '            <img src="' . htmlspecialchars($product['file_path']) . '" alt="">';
+                                    echo '            <div class="prostockstat" style="background-color: #ff9800;">LOW STOCK</div>'; // Example static text
+                                    echo '            <div class="prodis">-20%</div>'; // Example static text
+                                    echo '        </div>';
+                                    echo '        <div>';
+                                    echo '            <div class="d-flex gap-3 m-0 small">';
+                                    echo '                <span>' . htmlspecialchars($product['code']) . '</span>';
+                                    echo '                <span>|</span>';
+                                    echo '                <span>' . htmlspecialchars($product['category_name']) . '</span>'; // Assuming category name is included
+                                    echo '            </div>';
+                                    echo '            <h5 class="fw-bold my-2">' . htmlspecialchars($product['name']) . '</h5>';
+                                    echo '            <span class="small">' . htmlspecialchars($product['description']) . '</span>';
+                                    echo '            <div class="d-flex gap-5 align-items-center propl">';
+                                    echo '                <span class="proprice">P' . number_format($product['price'], 2) . '</span>';
+                                    echo '                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>'; // Example static text
+                                    echo '            </div>';
+                                    echo '            <button class="moreinfo" data-bs-toggle="modal" data-bs-target="#moreinfoproduct"><i class="fa-solid fa-circle-info"></i> More info</button>';
+                                    echo '        </div>';
+                                    echo '    </div>';
+                                    echo '    <div class="proaction d-flex gap-2 mt-3">';
+                                    echo '        <i class="fa-solid fa-box" onclick="window.location.href=\'stocks.php\';"></i>';
+                                    echo '        <i class="fa-solid fa-pen-to-square" onclick="window.location.href=\'editproduct.php?id=' . $product['id'] . '\';"></i>'; // Pass product ID for editing
+                                    echo '        <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deleteproduct" data-product-id="' . $product['id'] . '"></i>'; // Pass product ID for deletion
+                                    echo '    </div>';
+                                    echo '</div>';
+                                }
+                            } else {
+                                echo '<p>No products found for this stall.</p>'; // Message if no products are available
+                            }
+                            ?>
                         <div class="d-flex justify-content-between productdet rounded-2">
                             <div class="d-flex gap-4 align-items-center proinf">
                                 <div class="position-relative">

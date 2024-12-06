@@ -32,5 +32,20 @@ class Stall {
         return $result;
     }
 
+    function getProducts($stallId) {
+        $sql = "SELECT p.*, c.name AS category_name 
+                FROM products p 
+                JOIN categories c ON p.category_id = c.id 
+                WHERE p.stall_id = :stall_id;";
+        
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':stall_id' => $stallId));
+        $result = $query->fetchAll();
     
+        if ($result === false) {
+            return false;
+        }
+    
+        return $result;
+    }
 }
