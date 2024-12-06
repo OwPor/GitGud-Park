@@ -139,12 +139,19 @@ class User {
 
         $user = $query->fetch();
         
+        if (!$user) {
+            return false;
+        }
+
+        $name = $user['first_name'] . ' ' . $user['last_name'];
+
         $info = [
             'id' => $user['id'],
             'email' => $user['email'],
             'role' => $user['role'],
             'first_name' => $user['first_name'],
             'last_name' => $user['last_name'],
+            'full_name' => $name,
             'phone' => $user['phone'],
             'birth_date' => $user['birth_date'],
             'sex' => $user['sex'],

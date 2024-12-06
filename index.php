@@ -1,5 +1,6 @@
 <?php
-    include_once 'landingheader.php'; 
+    include_once 'header.php';
+    // include_once 'landingheader.php';
     include_once 'links.php'; 
     include_once 'modals.php';
     require_once __DIR__ . '/classes/db.class.php';
@@ -8,7 +9,7 @@
     $parkObj = new Park();
     $isLoggedIn = false;
     
-    if (isset($_SESSION['user']['id'])) {
+    if (isset($_SESSION['user'])) {
         if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
             $isLoggedIn = true;
         } else {

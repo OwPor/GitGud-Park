@@ -88,28 +88,28 @@
                                     echo '    <div class="d-flex gap-4 align-items-center proinf">';
                                     echo '        <div class="position-relative">';
                                     echo '            <img src="' . htmlspecialchars($product['file_path']) . '" alt="">';
-                                    echo '            <div class="prostockstat" style="background-color: #ff9800;">LOW STOCK</div>'; // Example static text
-                                    echo '            <div class="prodis">-20%</div>'; // Example static text
+                                    echo '            <div class="prostockstat" style="background-color: #ff9800;">LOW STOCK</div>';
+                                    echo '            <div class="prodis">-20%</div>';
                                     echo '        </div>';
                                     echo '        <div>';
                                     echo '            <div class="d-flex gap-3 m-0 small">';
                                     echo '                <span>' . htmlspecialchars($product['code']) . '</span>';
                                     echo '                <span>|</span>';
-                                    echo '                <span>' . htmlspecialchars($product['category_name']) . '</span>'; // Assuming category name is included
+                                    echo '                <span>' . htmlspecialchars($product['category_name']) . '</span>';
                                     echo '            </div>';
                                     echo '            <h5 class="fw-bold my-2">' . htmlspecialchars($product['name']) . '</h5>';
                                     echo '            <span class="small">' . htmlspecialchars($product['description']) . '</span>';
                                     echo '            <div class="d-flex gap-5 align-items-center propl">';
                                     echo '                <span class="proprice">P' . number_format($product['price'], 2) . '</span>';
-                                    echo '                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>'; // Example static text
+                                    echo '                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>';
                                     echo '            </div>';
                                     echo '            <button class="moreinfo" data-bs-toggle="modal" data-bs-target="#moreinfoproduct"><i class="fa-solid fa-circle-info"></i> More info</button>';
                                     echo '        </div>';
                                     echo '    </div>';
                                     echo '    <div class="proaction d-flex gap-2 mt-3">';
                                     echo '        <i class="fa-solid fa-box" onclick="window.location.href=\'stocks.php\';"></i>';
-                                    echo '        <i class="fa-solid fa-pen-to-square" onclick="window.location.href=\'editproduct.php?id=' . $product['id'] . '\';"></i>'; // Pass product ID for editing
-                                    echo '        <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deleteproduct" data-product-id="' . $product['id'] . '"></i>'; // Pass product ID for deletion
+                                    echo '        <i class="fa-solid fa-pen-to-square" onclick="window.location.href=\'editproduct.php?id=' . $product['id'] . '\';"></i>';
+                                    echo '        <i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#deleteproduct" data-product-id="' . $product['id'] . '"></i>';
                                     echo '    </div>';
                                     echo '</div>';
                                 }
