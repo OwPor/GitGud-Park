@@ -93,7 +93,7 @@
     <?php
         $current_page = basename($_SERVER['PHP_SELF']);
 
-        if ($current_page == 'stall.php') {
+        if ($current_page !== 'index.php') {
         ?>
             <div class="bottom">
                 <a href="index.php">

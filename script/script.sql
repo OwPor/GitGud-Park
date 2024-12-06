@@ -77,19 +77,9 @@ INSERT INTO stalls (user_id, park_id, name, description, location, img, owner_na
 CREATE TABLE categories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
-INSERT INTO categories (name, description)
-VALUES ('Main Course', 'Main dishes that are served in a meal.');
-
-INSERT INTO categories (name, description)
-VALUES ('Dessert', 'Sweet treats that are served after a meal.');
-
-INSERT INTO categories (name, description)
-VALUES ('Drinks', 'Beverages that are served to quench thirst.');
 
 CREATE TABLE products (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -118,8 +108,6 @@ CREATE TABLE product_variants (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
-
-INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1, 'uploads/images/adobo.jpg');
 
 CREATE TABLE business (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -153,8 +141,13 @@ CREATE TABLE cart(
 );
 
 
+-- INSERT INTO categories (name) VALUES ('Main Course');
 
+-- INSERT INTO categories (name) VALUES ('Dessert');
 
+-- INSERT INTO categories (name) VALUES ('Drinks');
+
+--INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) VALUES ('Adobo', 'AD001', 'A Filipino dish that is made of pork or chicken.', 100.00, 1, 1, 'uploads/images/adobo.jpg');
 
 -- UPDATE users SET role = 'Stall' WHERE id = 1;
 

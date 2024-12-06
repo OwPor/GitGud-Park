@@ -237,27 +237,53 @@
 </div>
 <!-- Add Category -->
 <div class="modal fade" id="addcategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="text-center">
-            <h4 class="fw-bold mb-4">Add Category</h4>
-            <div class="form-floating m-0">
-                <input type="text" class="form-control" id="category" placeholder="Category">
-                <label for="category">Category</label>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4">Add Category</h4>
+                    <div class="form-floating m-0">
+                        <input type="text" class="form-control" id="category" placeholder="Category">
+                        <label for="category">Category</label>
+                    </div>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="addCategoryBtn">Add</button>
+                    </div>
+                </div>
             </div>
-            <div class="mt-5 mb-3">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add</button>
-            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#addCategoryBtn').click(function() {
+            var category = $('#category').val();
+            if (category) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'add_category.php',
+                    data: { category: category },
+                    success: function(response) {
+                        alert(response);
+                        $('#addcategory').modal('hide');
+                        $('#category').val('');
+                    },
+                    error: function() {
+                        alert('Error adding category.');
+                    }
+                });
+            } else {
+                alert('Please enter a category name.');
+            }
+        });
+    });
+</script>
 
 <!-- Edit Category -->
 <div class="modal fade" id="editcategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -69,6 +69,14 @@ class Product {
         }
     }
 
+    function addCategory($category) {
+        $sql = "INSERT INTO categories (name) VALUES (:name);";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':name' => $category));
+    
+        return $query->rowCount() > 0;
+    }
+
     function getCategories(){
         $sql = "SELECT * FROM categories;";
         $query = $this->db->connect()->prepare($sql);

@@ -94,8 +94,8 @@
             <div class="d-flex justify-content-center" style="width: 40%;">
                 <div class="text-center flex-grow-1">
                     <img id="profileImage" src="<?= $user['profile_img'] ?>" alt="Profile Image" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"><br><br>
-                    <button id="selectImageBtn" type="button" class="disatc m-0">Select Image</button>
-                    <input name="profile_img" id="fileInput" class="d-none" type="file" accept="image/jpeg, image/png, image/jpg">
+                    <!-- <button id="selectImageBtn" type="button" class="disatc m-0">Select Image</button> -->
+                    <input name="profile_img" id="fileInput" class="" type="file" accept="image/jpeg, image/png, image/jpg">
                     <br><br>
                     <span class="text-muted">File size: maximum 5 MB<br>File extension: .JPEG, .PNG</span>
                 </div>
@@ -159,7 +159,7 @@
         </div>
     </form>
     <br><br><br><br>
-    <script>
+    <!-- <script>
          document.getElementById("selectImageBtn").addEventListener("click", function () {
             document.getElementById("fileInput").click();
         });
@@ -181,6 +181,6 @@
                 }
             }
         });
-    </script>
+    </script> -->
 </main>
 <?php include_once 'footer.php'; ?>
