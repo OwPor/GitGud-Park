@@ -1604,7 +1604,7 @@
     </div>
 </div>
 
-<!-- Change Password -->
+<!-- Change Password Modal -->
 <div class="modal fade" id="changepassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 40%">
         <div class="modal-content">
@@ -1614,31 +1614,56 @@
                 </div>
                 <div class="">
                     <h4 class="fw-bold">Change Password</h4>
-                    <p class="small m-0 my-3">Your password must be at least 6 characters and should include a combination of numbers, letters and special characters (!$@%).</p>
+                    <p class="small m-0 my-3">Your password must be at least 8 characters.</p>
 
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="currentpassword" placeholder="Current Password (Updated 10/21/2023">
-                        <label for="currentpassword">Current password (Updated 10/21/2023)</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="newpassword" placeholder="New Password">
-                        <label for="newpassword">New password</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="retypepassword" placeholder="Re-type new password">
-                        <label for="retypepassword">Re-type new password</label>
-                    </div>
-                    <a href="resetpassword.php" class="text-decoration-none" style=" color: #CD5C08;">Forgot Password?</a>
-                    <div class="form-check mt-3 mb-5">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                        <label class="form-check-label" for="flexCheckDefault">Log out of other devices. Choose this if someone else used your account.</label>
-                    </div>
-                    <input type="submit" value="Change Password" class="button" />
+                    <form id="changePasswordForm" action="classes/change_password.php" method="POST">
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="currentpassword" placeholder="Current Password" required>
+                            <label for="currentpassword">Current Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="newpassword" placeholder="New Password" required>
+                            <label for="newpassword">New Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" name="retypepassword" placeholder="Re-type New Password" required>
+                            <label for="retypepassword">Re-type New Password</label>
+                        </div>
+                        <a href="resetpassword.php" class="text-decoration-none" style=" color: #CD5C08;">Forgot Password?</a>
+                        <div class="form-check mt-3 mb-5">
+                            <input class="form-check-input" type="checkbox" name="logout_other_devices" value="1" id="flexCheckDefault" checked>
+                            <label class="form-check-label" for="flexCheckDefault">Log out of other devices. Choose this if someone else used your account.</label>
+                        </div>
+                        <input type="submit" value="Change Password" class="button" />
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Check for message -->
+<script>
+    // Check for session messages and open the modal
+    <?php if (isset($_SESSION['error'])): ?>
+        alert("<?php echo $_SESSION['error']; ?>");
+        // Open the modal
+        var myModal = new bootstrap.Modal(document.getElementById('changepassword'));
+        myModal.show();
+        <?php unset($_SESSION['error']); ?>
+    <?php elseif (isset($_SESSION['success'])): ?>
+        alert("<?php echo $_SESSION['success']; ?>");
+        // Open the modal
+        var myModal = new bootstrap.Modal(document.getElementById('changepassword'));
+        myModal.show();
+        
+        // Save the user session as xdata
+        var xdata = "<?php echo isset($_SESSION['user_session']) ? $_SESSION['user_session'] : ''; ?>";
+        localStorage.setItem('xdata', xdata); // Store xdata in local storage
+
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+</script>
 
 <!-- Delete Account -->
 <div class="modal fade" id="deleteaccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

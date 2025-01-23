@@ -33,6 +33,11 @@
                     if ($user) {
                         $_SESSION['user'] = [];
                         $_SESSION['user']['id'] = $user['id'];
+                        
+                        // Save user['user_session] in localStorage
+                        echo "<script>
+                            localStorage.setItem('xdata', '" . $user['user_session'] . "');
+                        </script>";
 
                         $remember = $_POST['remember_me'] ?? false;
 
@@ -40,13 +45,13 @@
                             $safeEmail = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
                             echo "<script>
                                 localStorage.setItem('email', '$safeEmail');
-                                localStorage.setItem('password', '" . htmlspecialchars($password, ENT_QUOTES, 'UTF-8') . "');
-                            </script>";
+                                </script>";
+                                // localStorage.setItem('password', '" . htmlspecialchars($password, ENT_QUOTES, 'UTF-8') . "');
                         } else {
                             echo "<script>
                                     localStorage.removeItem('email');
-                                    localStorage.removeItem('password');
-                            </script>";
+                                    </script>";
+                                    // localStorage.removeItem('password');
                         }
 
                         if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
