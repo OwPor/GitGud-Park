@@ -36,11 +36,11 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors = [];
 
-        $name = filter_var($_POST['productname'], FILTER_SANITIZE_STRING);
-        $code = filter_var($_POST['productcode'], FILTER_SANITIZE_STRING);
-        $category = filter_var($_POST['category'], FILTER_SANITIZE_STRING);
-        $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
-        $price = filter_var($_POST['sellingPrice'], FILTER_SANITIZE_STRING);
+        $name = htmlspecialchars($_POST['productname'], ENT_QUOTES, 'UTF-8');
+        $code = htmlspecialchars($_POST['productcode'], ENT_QUOTES, 'UTF-8');
+        $category = htmlspecialchars($_POST['category'], ENT_QUOTES, 'UTF-8');
+        $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
+        $price = htmlspecialchars($_POST['sellingPrice'], ENT_QUOTES, 'UTF-8');
 
         if (empty($name)) {
             $errors['nameErr'] = 'Product name is required.';
@@ -124,8 +124,8 @@
                     }
                     
                     $variants[] = [
-                        'type' => filter_var($type, FILTER_SANITIZE_STRING),
-                        'name' => filter_var($variantName, FILTER_SANITIZE_STRING),
+                        'type' => htmlspecialchars($type, ENT_QUOTES, 'UTF-8'),
+                        'name' => htmlspecialchars($variantName, ENT_QUOTES, 'UTF-8'),
                         'additional_price' => filter_var($additionalPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
                         'subtract_price' => filter_var($subtractPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
                         'image_path' => $variantImagePath

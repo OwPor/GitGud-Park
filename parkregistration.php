@@ -51,13 +51,13 @@ if (isset($_SESSION['user']['id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $first_name = filter_var(trim($_POST['firstname']), FILTER_SANITIZE_STRING);
-    $last_name = filter_var(trim($_POST['lastname']), FILTER_SANITIZE_STRING);
+    $first_name = htmlspecialchars(trim($_POST['firstname']), ENT_QUOTES, 'UTF-8');
+    $last_name = htmlspecialchars(trim($_POST['lastname']), ENT_QUOTES, 'UTF-8');
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-    $phone = filter_var(trim($_POST['phonenumber']), FILTER_SANITIZE_STRING);
-    $business_name = filter_var(trim($_POST['businessname']), FILTER_SANITIZE_STRING);
-    $business_type = filter_var(trim($_POST['businesstype']), FILTER_SANITIZE_STRING);
-    $branches = filter_var(trim($_POST['branches']), FILTER_SANITIZE_STRING);
+    $phone = htmlspecialchars(trim($_POST['phonenumber']), ENT_QUOTES, 'UTF-8');
+    $business_name = htmlspecialchars(trim($_POST['businessname']), ENT_QUOTES, 'UTF-8');
+    $business_type = htmlspecialchars(trim($_POST['businesstype']), ENT_QUOTES, 'UTF-8');
+    $branches = htmlspecialchars(trim($_POST['branches']), ENT_QUOTES, 'UTF-8');
     
     $email_cb = isset($_POST['flexCheckEmail']);
     $phone_cb = isset($_POST['flexCheckPhone']);
@@ -67,16 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $business_email = filter_var(trim($_POST['businessemail']), FILTER_SANITIZE_EMAIL);
     }
-
+    
     if ($phone_cb) {
         $business_phone = $email;
     } else {
-        $business_phone = filter_var(trim($_POST['businessphonenumber']), FILTER_SANITIZE_STRING);
+        $business_phone = htmlspecialchars(trim($_POST['businessphonenumber']), ENT_QUOTES, 'UTF-8');
     }
 
-    $region_province_city = filter_var(trim($_POST['rpc']), FILTER_SANITIZE_STRING);
-    $barangay = filter_var(trim($_POST['barangay']), FILTER_SANITIZE_STRING);
-    $street_building_house = filter_var(trim($_POST['sbh']), FILTER_SANITIZE_STRING);
+    $region_province_city = htmlspecialchars(trim($_POST['rpc']), ENT_QUOTES, 'UTF-8');
+    $barangay = htmlspecialchars(trim($_POST['barangay']), ENT_QUOTES, 'UTF-8');
+    $street_building_house = htmlspecialchars(trim($_POST['sbh']), ENT_QUOTES, 'UTF-8');
     $business_permit = isset($_FILES['businesspermit']) ? $_FILES['businesspermit'] : '';
 
     // if (is_array($business_permit) && $business_permit['error'] == UPLOAD_ERR_OK) {

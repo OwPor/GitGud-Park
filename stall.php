@@ -10,10 +10,10 @@
     $productObj = new Product();
 
     if (isset($_GET['pid']) && isset($_GET['sid'])) {
-        $park_link = filter_var($_GET['pid'] , FILTER_SANITIZE_STRING);
+        $park_link = htmlspecialchars($_GET['pid'], ENT_QUOTES, 'UTF-8');
         $park = $parkObj->getPark($park_link);
 
-        $stall_id = filter_var($_GET['sid'] , FILTER_SANITIZE_STRING);
+        $stall_id = htmlspecialchars($_GET['sid'], ENT_QUOTES, 'UTF-8');
 
         if (!$park) {
             header('Location: index.php');
