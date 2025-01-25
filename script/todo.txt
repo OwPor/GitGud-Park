@@ -1,0 +1,4 @@
+Sa inventory at ordering gawin mo mga transactions doon. Gawa gawa nalang muna stalls sa db then pagadd ng mga product each stall, pagorder ng customer
+after magorder sa cart mapupunta order nila sa purchase.php (bale tracker to kung san na order nila) tapos sa stall side naman is order.php don nila makita mga nagorder sakanila
+
+Magdagdag ka or magalis don. If may madagdag ka idesign ko lang after
