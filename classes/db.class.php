@@ -18,7 +18,7 @@ class User {
         $this->db = new Database();
     }
 
-    function generateUniqueUserSession() {
+    private function generateUniqueUserSession($email) {
         do {
             $user_session = bin2hex(random_bytes(86));
     
@@ -33,11 +33,11 @@ class User {
 
         return $query->execute(array(
             ':user_session' => $user_session,
-            ':email' => $this->email
+            ':email' => $email
         ));
     }
 
-    function addUser(){
+    public function addUser(){
         $age = $this->calculateAge($this->birth_date);
         if ($age < 18)
             return false;
@@ -72,12 +72,12 @@ class User {
             ':phone' => $this->phone,
             ':password' => $this->password
         ))) {
-            return $this->generateUniqueUserSession($this->db->connect());
+            return $this->generateUniqueUserSession($this->email);
         }
         return false;
     }
 
-    function editUser($user_id, $current_password, $current_phone) {
+    public function editUser($user_id, $current_password, $current_phone) {
         // $age = $this->calculateAge($this->birth_date);
         // if ($age < 18)
         //     return false;
@@ -120,7 +120,7 @@ class User {
         }
     }
 
-    function deleteUser($user_id){
+    public function deleteUser($user_id){
         $sql = "DELETE FROM users WHERE id = :id;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(
@@ -130,7 +130,7 @@ class User {
         return $query;
     }
 
-    function getUser($user_id){
+    public function getUser($user_id){
         $sql = "SELECT * FROM users WHERE id = :id;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(
@@ -185,13 +185,27 @@ class User {
                 'last_name' => $user['last_name'],
                 'phone' => $user['phone'],
                 'birth_date' => $user['birth_date'],
-                'sex' => $user['sex']
+                'sex' => $user['sex'],
+                'user_session' => $user['user_session']
             ];
 
             return $info;
         }
         
         return false;
+    }
+
+    private function getUserById($id) {
+        $sql = "SELECT * FROM users WHERE id = :id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':id' => $id));
+        $user = $query->fetch();
+        
+        if (!$user) {
+            return false;
+        }
+        
+        return $user;
     }
 
 
@@ -262,6 +276,37 @@ class User {
         return $query->fetch();
     }
 
+    public function changePassword($id, $currentPassword, $newPassword, $logoutOtherDevices) {
+        $user = $this->getUserById($id);
+        
+        if (!$user) {
+            return ['success' => false, 'message' => 'User not found.'];
+        }
+    
+        if (!password_verify($currentPassword, $user['password'])) {
+            return ['success' => false, 'message' => $user['password']];
+        } else if ($currentPassword == $newPassword) {
+            return ['success' => false, 'message' => 'New password must be different from the current password.'];
+        }
+    
+        $hashedNewPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute([$hashedNewPassword, $id]);
+    
+        if ($query->rowCount() > 0) {
+            // Only generate a new user session if the logoutOtherDevices option is ticked
+            if ($logoutOtherDevices) {
+                $new_session = $this->generateUniqueUserSession($user->email);
+                return ['success' => true, 'user_session' => $new_session]; // Return the new session
+            }
+            
+            // If not logging out other devices, return the current session
+            return ['success' => true, 'user_session' => $user['user_session']];
+        }
+    
+        return ['success' => false, 'message' => 'Failed to update password.'];
+    }
 
     function isVerified($user_id) {
         $sql = "SELECT is_verified FROM verification WHERE user_id = :user_id;";
