@@ -208,7 +208,6 @@ class User {
         return $user;
     }
 
-
     private function calculateAge($birthDate){
         if (!$birthDate) {
             return false;
