@@ -21,6 +21,7 @@
         }
 
         $stall = $stallObj->getStall($stall_id);
+        $totalProducts = $stallObj->getTotalProducts($stall_id);
 
         if (!$stall) {
             header('Location: index.php');
@@ -61,7 +62,7 @@
                         </div>
                         <div class="d-flex gap-2">
                             <span>Products</span>
-                            <span class="likpro">999</span>
+                            <span class="likpro"><?php echo $totalProducts; ?></span>
                         </div>
                     </div>
                 </div>
