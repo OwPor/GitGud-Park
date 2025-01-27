@@ -1,5 +1,5 @@
 -- Stall Management System of Amethyst Food Park
-DROP DATABASE gitgud;
+DROP DATABASE IF EXISTS gitgud;
 
 CREATE DATABASE gitgud;
 
@@ -72,7 +72,7 @@ CREATE TABLE stalls (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-INSERT INTO stalls (user_id, park_id, name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status) VALUES (1, 1, 'YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', 'uploads/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'janedoe@jane.com', '08:00:00', '22:00:00', 100.00, 'Open');
+-- INSERT INTO stalls (user_id, park_id, name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status) VALUES (1, 1, 'YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', 'uploads/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'janedoe@jane.com', '08:00:00', '22:00:00', 100.00, 'Open');
 
 CREATE TABLE categories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
