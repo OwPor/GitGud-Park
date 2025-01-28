@@ -88,8 +88,20 @@
                                     echo '    <div class="d-flex gap-4 align-items-center proinf">';
                                     echo '        <div class="position-relative">';
                                     echo '            <img src="' . htmlspecialchars($product['file_path']) . '" alt="">';
-                                    echo '            <div class="prostockstat" style="background-color: #ff9800;">LOW STOCK</div>';
-                                    echo '            <div class="prodis">-20%</div>';
+                                    if ($product['stock'] > 0 && $product['stock_warn'] >= $product['stock']) 
+                                        echo '<div class="prostockstat" style="background-color: #ff9800;">LOW STOCK</div>';
+                                    else if ($product['stock'] == 0)
+                                        echo '<div class="prostockstat" style="background-color: #dc3545;">OUT OF STOCK</div>';
+
+                                    $hasDiscount = false;
+                                    if ($product['discount'] > 0) {
+                                        $hasDiscount = true;
+                                        if ($product['discount_type'] == 'Percentage')
+                                            echo '<div class="prodis">' . $product['discount'] . '%</div>';
+                                        else
+                                            echo '<div class="prodis">P' . $product['discount'] . '</div>';
+                                    }
+
                                     echo '        </div>';
                                     echo '        <div>';
                                     echo '            <div class="d-flex gap-3 m-0 small">';
@@ -100,7 +112,16 @@
                                     echo '            <h5 class="fw-bold my-2">' . htmlspecialchars($product['name']) . '</h5>';
                                     echo '            <span class="small">' . htmlspecialchars($product['description']) . '</span>';
                                     echo '            <div class="d-flex gap-5 align-items-center propl">';
-                                    echo '                <span class="proprice">P' . number_format($product['price'], 2) . '</span>';
+
+                                    if ($hasDiscount) {
+                                        if ($product['discount_type'] == 'Percentage')
+                                            echo '<span class="proprice">P' . number_format($product['price'] - ($product['price'] * ($product['discount'] / 100)), 2) . '</span>';
+                                        else
+                                            echo '<span class="proprice">P' . number_format($product['price'] - $product['discount'], 2) . '</span>';
+                                    } else {
+                                        echo '<span class="proprice">P' . number_format($product['price'], 2) . '</span>';
+                                    }
+                                    
                                     echo '                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>';
                                     echo '            </div>';
                                     echo '            <button class="moreinfo" data-bs-toggle="modal" data-bs-target="#moreinfoproduct"><i class="fa-solid fa-circle-info"></i> More info</button>';

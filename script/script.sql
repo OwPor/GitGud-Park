@@ -72,7 +72,7 @@ CREATE TABLE stalls (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- INSERT INTO stalls (user_id, park_id, name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status) VALUES (1, 1, 'YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', 'uploads/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'janedoe@jane.com', '08:00:00', '22:00:00', 100.00, 'Open');
+INSERT INTO stalls (user_id, park_id, name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status) VALUES (1, 1, 'YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', 'uploads/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'janedoe@jane.com', '08:00:00', '22:00:00', 100.00, 'Open');
 
 CREATE TABLE categories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -90,11 +90,21 @@ CREATE TABLE products (
     category_id INT UNSIGNED NOT NULL,
     stall_id INT UNSIGNED NOT NULL,
     file_path VARCHAR(255) NOT NULL,
+    stock INT UNSIGNED NOT NULL DEFAULT 0,
+    stock_warn INT UNSIGNED NOT NULL DEFAULT 0,
+    discount DECIMAL(10, 2) DEFAULT 0.00,
+    discount_type ENUM('Percentage', 'Fixed') DEFAULT 'Percentage',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
     FOREIGN KEY (stall_id) REFERENCES stalls(id) ON DELETE CASCADE
 );
+
+-- Alter products add stock and stock_warn
+-- ALTER TABLE products ADD COLUMN stock INT UNSIGNED NOT NULL DEFAULT 0;
+-- ALTER TABLE products ADD COLUMN stock_warn INT UNSIGNED NOT NULL DEFAULT 0;
+-- ALTER TABLE products ADD COLUMN discount DECIMAL(10, 2) DEFAULT 0.00;
+-- ALTER TABLE products ADD COLUMN discount_type ENUM('Percentage', 'Fixed') DEFAULT 'Percentage';
 
 CREATE TABLE product_variants (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
