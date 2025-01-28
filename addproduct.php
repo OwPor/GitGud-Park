@@ -37,7 +37,8 @@
         $errors = [];
 
         $name = htmlspecialchars($_POST['productname'], ENT_QUOTES, 'UTF-8');
-        $code = htmlspecialchars($_POST['productcode'], ENT_QUOTES, 'UTF-8');
+        // $code = htmlspecialchars($_POST['productcode'], ENT_QUOTES, 'UTF-8');
+        $code = uniqid();
         $category = htmlspecialchars($_POST['category'], ENT_QUOTES, 'UTF-8');
         $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
         $price = htmlspecialchars($_POST['sellingPrice'], ENT_QUOTES, 'UTF-8');
@@ -199,10 +200,10 @@
                 <input type="productname" name="productname" id="productname" placeholder="Enter product name"/>            
             </div>
             <div class="d-flex gap-3">
-                <div class="input-group m-0 mb-4">
+                <!-- <div class="input-group m-0 mb-4">
                     <label for="productcode">Product Code</label>
                     <input type="productcode" name="productcode" id="productcode" placeholder="Enter product code"/>            
-                </div>
+                </div> -->
                 <div class="input-group m-0 mb-4">
                     <label for="category">Category</label>
                     <select name="category" id="category" style="padding: 10.5px 0.75rem">
