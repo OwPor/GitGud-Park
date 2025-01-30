@@ -831,41 +831,70 @@
                     <h4 class="fw-bold m-0">More Info</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <h5 class="fw-bold mb-3">Branches</h5>
-                <div class="mb-4">
-                    <span>1/3</span>
-                </div>
+
                 <h5 class="fw-bold mb-3">Business Contact</h5>
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <span>Business Email</span>
-                        <span>example@gmail.com</span>
+                        <span data-email></span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <span>Business Phone Number</span>
-                        <span class="text-muted">+639123456789</span>
+                        <span data-phone class="text-muted"></span>
                     </div>
                 </div>
+
                 <h5 class="fw-bold mb-3">Operating Hours</h5>
-                <div class="mb-4">
-                    <div class="mb-2">
-                        <p class="mb-1">Monday, Tuesday, Thursday</p>
-                        <span>7AM - 7PM</span>
-                    </div>
-                    <div class="">
-                        <p class="mb-1">Wednesday, Friday, Saturday</p>
-                        <span>8AM - 9PM</span>
-                    </div>
+                <div class="mb-4" data-hours>
+                    <!-- Dynamically added operating hours -->
                 </div>
+
                 <h5 class="fw-bold mb-3">Business Permit</h5>
-                <div  class="mb-4">
+                <div class="mb-4">
                     <i class="fa-solid fa-circle-check text-success me-2"></i>
-                    <a href="#">screenshot.jpg</a>
+                    <a data-permit href="#" target="_blank"></a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const modal = document.getElementById('moreparkinfo');
+
+    modal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+
+        // Get data attributes
+        const email = button.getAttribute('data-email');
+        const phone = button.getAttribute('data-phone');
+        const hours = button.getAttribute('data-hours');
+        const permit = button.getAttribute('data-permit'); // File name (e.g., "permit.pdf")
+
+        // Populate modal fields
+        modal.querySelector('.modal-body span[data-email]').textContent = email || 'N/A';
+        modal.querySelector('.modal-body span[data-phone]').textContent = phone || 'N/A';
+
+        // Populate operating hours
+        const hoursContainer = modal.querySelector('.modal-body div[data-hours]');
+        hoursContainer.innerHTML = hours 
+            ? hours.split('; ').map(hour => `<p>${hour}</p>`).join('') 
+            : '<p>No operating hours available</p>';
+
+        // Populate permit link
+        const permitLink = modal.querySelector('.modal-body a[data-permit]');
+        if (permit) {
+            permitLink.textContent = permit; // Display file name
+            permitLink.href = `${permit}`; // Set file path
+            permitLink.target = '_blank'; // Open in new tab
+        } else {
+            permitLink.textContent = 'No permit file';
+            permitLink.removeAttribute('href');
+            permitLink.removeAttribute('target');
+        }
+    });
+
+</script>
 
  <!-- Edit Food Park Modal -->
  <div class="modal fade" id="editfoodpark" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

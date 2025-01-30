@@ -18,10 +18,10 @@ try {
     $admin = new Admin();
 
     if ($action === 'approve') {
-        $admin->updateBusinessStatus($business_id, 'Open');
+        $admin->updateBusinessStatus($business_id, 'Approved');
         echo json_encode(['success' => true, 'message' => 'Business approved']);
     } elseif ($action === 'deny') {
-        $admin->updateBusinessStatus($business_id, 'Closed');
+        $admin->updateBusinessStatus($business_id, 'Rejected');
         echo json_encode(['success' => true, 'message' => 'Business denied']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Invalid action']);

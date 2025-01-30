@@ -322,7 +322,7 @@ class User {
         return $result['is_verified'];
     }
 
-    function registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit) {
+    function registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit, $operatingHours) {
         $sql = "SELECT * FROM users WHERE id = :user_id AND role != 'Park Owner';";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':user_id' => $user_id));
@@ -337,8 +337,6 @@ class User {
 
         $business = $query->fetch();
         
-        
-
         if ($business) {
             if ($business['business_name'] == $business_name) {
                 return "Existing Business";
@@ -349,8 +347,11 @@ class User {
             }
         }
 
-        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit, business_status) VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit, :business_status);";
-        $query = $this->db->connect()->prepare($sql);
+        $conn = $this->db->connect(); 
+
+        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit, business_status) 
+                VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit, :business_status);";
+        $query = $conn->prepare($sql);
 
         if ($query->execute(array(
             ':user_id' => $user_id,
@@ -364,11 +365,32 @@ class User {
             ':business_permit' => $business_permit,
             ':business_status' => 'Pending Approval'
         ))) {
-            $sql = "UPDATE users SET role = 'Park Owner' WHERE id = :user_id;";
-            $query = $this->db->connect()->prepare($sql);
+            $business_id = $conn->lastInsertId();
             
+            if (!$business_id) {
+                return "Error retrieving business ID.";
+            }
+
+            $stmt = $conn->prepare("INSERT INTO operating_hours (business_id, days, open_time, close_time) VALUES (:business_id, :days, :open_time, :close_time)");
+
+            foreach ($operatingHours as $schedule) {
+                $days = implode(', ', $schedule['days']);
+                $openTime = $schedule['openTime'];
+                $closeTime = $schedule['closeTime'];
+
+                $stmt->execute(array(
+                    ':business_id' => $business_id,
+                    ':days' => $days,
+                    ':open_time' => $openTime,
+                    ':close_time' => $closeTime
+                ));
+            }
+
+            $sql = "UPDATE users SET role = 'Park Owner' WHERE id = :user_id;";
+            $query = $conn->prepare($sql);
             return $query->execute(array(':user_id' => $user_id));
         }
+
     }
 
     function getBusinessStatus($user_id) {
@@ -378,4 +400,5 @@ class User {
 
         return $query->fetch()['business_status'];
     }
+
 }

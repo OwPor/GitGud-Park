@@ -8,15 +8,15 @@ class Park {
     function __construct(){
         $this->db = new Database();
     }
-
+ 
     function getParks(){
-        $sql = "SELECT * FROM parks;";
+        $sql = "SELECT * FROM business;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
-    function getPark($url){
+    /*function getPark($url){
         $sql = "SELECT * FROM parks WHERE url = :url;";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':url' => $url));
@@ -83,7 +83,7 @@ class Park {
         $stmt->execute();
 
         // echo "Stall inserted successfully";
-    }
+    }*/
 }
 
 // $parkObj = new Park();

@@ -2,7 +2,7 @@
     include_once 'links.php'; 
     include_once 'secondheader.php';
     
-    if (isset($_SESSION['user']['id'])) {
+    /*if (isset($_SESSION['user']['id'])) {
         if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
             $user = $userObj->getUser($_SESSION['user']['id']);
             if ($user) {
@@ -36,7 +36,7 @@
     } else {
         header('Location: signin.php');
         exit();
-    }
+    }*/
 ?>
 <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
 <style>

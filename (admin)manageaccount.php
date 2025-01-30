@@ -199,10 +199,23 @@
                         $status = 'Pending';
                     
                         echo '<tr>';
+                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['owner_name']) . '</td>';
                         echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['business_name']) . '</td>';
-                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['business_type']) . '</td>';
-                        echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['region_province_city']) . ", " . htmlspecialchars($business['barangay']) . ", " . htmlspecialchars($business['street_building_house']) . '</td>';
-                        echo '<td class="fw-normal small py-3 px-4"><i class="fa-solid fa-chevron-down rename small" data-bs-toggle="modal" data-bs-target="#moreparkinfo"></i></td>';
+                        echo '<td class="fw-normal small py-3 px-4">' . 
+                            htmlspecialchars($business['region_province_city']) . ', ' . 
+                            htmlspecialchars($business['barangay']) . ', ' . 
+                            htmlspecialchars($business['street_building_house']) . 
+                            '</td>';
+                        echo '<td class="fw-normal small py-3 px-4">
+                            <i class="fa-solid fa-chevron-down rename small" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#moreparkinfo" 
+                                data-email="' . htmlspecialchars($business['business_email']) . '"
+                                data-phone="' . htmlspecialchars($business['business_phone']) . '"
+                                data-hours="' . htmlspecialchars($business['operating_hours']) . '"
+                                data-permit="' . htmlspecialchars($business['business_permit']) . '">
+                            </i>
+                        </td>';
                         echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($business['created_at']) . '</td>';
                         echo '<td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-warning border border-warning p-1 border-2 fw-bold">' . $status . '</span></td>';
                         echo '<td class="fw-normal small py-3 px-4">';
@@ -215,23 +228,27 @@
                     }
                 }
             ?>
-
-            <!-- <tr>
-                <td class="fw-normal small py-3 px-4">Athena Maia Casino</td>
-                <td class="fw-normal small py-3 px-4">Amethyst Food Park</td>
-                <td class="fw-normal small py-3 px-4">Unit, Building, Street, Barangay, Zamboanga</td>
-                <td class="fw-normal small py-3 px-4"><i class="fa-solid fa-chevron-down rename small" data-bs-toggle="modal" data-bs-target="#moreparkinfo"></i></td>
-                <td class="fw-normal small py-3 px-4">07/29/2024</td>
-                <td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-warning border border-warning p-1 border-2 fw-bold">Pending</span></td>
-                <td class="fw-normal small py-3 px-4">
-                    <div class="d-flex gap-2 justify-content-center">
-                        <button class="bg-success text-white border-0 small py-1 rounded-1" style="width:60px">Approve</button>
-                        <button class="bg-danger text-white border-0 small py-1 rounded-1" style="width:60px">Deny</button>
-                    </div>
-                </td>
-            </tr> -->
            
         </table>
+        <!-- Approve/Deny Confirmation Modal -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirm Action</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to <span id="actionText"></span> this application?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="confirmAction">Yes, Proceed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex gap-3 saletabpag align-items-center justify-content-center mt-3">
             <!-- Pagination will be dynamically generated -->
         </div>
@@ -393,7 +410,7 @@
     <script src="assets/js/navigation.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/pagination.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/activate.js?v=<?php echo time(); ?>"></script>
-    <script src="assets/js/adminresponse.js"></script>
+    <script src="assets/js/adminresponse.js?v=<?php echo time(); ?>"></script>
 
     <br><br><br><br>
 </main>
