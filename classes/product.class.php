@@ -8,7 +8,7 @@ class Product {
         $this->db = new Database();
     }
 
-    function addProduct($name, $code, $description, $price, $category_id, $stall_id, $image, $variants) {
+    function addProduct($name, $code, $description, $price, $category_id, $stall_id, $stocks, $stock_warn, $image, $discountType, $discountValue, $variants) {
         try {
             $db = $this->db->connect();
     
@@ -34,8 +34,8 @@ class Product {
                 return false;
             }
     
-            $sql = "INSERT INTO products (name, code, description, price, category_id, stall_id, file_path) 
-                    VALUES (:name, :code, :description, :price, :category_id, :stall_id, :file_path)";
+            $sql = "INSERT INTO products (name, code, description, price, category_id, stall_id, stock, stock_warn, file_path, discount_type, discount) 
+                    VALUES (:name, :code, :description, :price, :category_id, :stall_id, :stock, :stock_warn, :file_path, :discount_type, :discount)";
             $query = $db->prepare($sql);
             $query->bindParam(':name', $name);
             $query->bindParam(':code', $code);
@@ -43,7 +43,11 @@ class Product {
             $query->bindParam(':price', $price);
             $query->bindParam(':category_id', $category_id);
             $query->bindParam(':stall_id', $stall_id);
+            $query->bindParam(':stock', $stocks);
+            $query->bindParam(':stock_warn', $stock_warn);
             $query->bindParam(':file_path', $image);
+            $query->bindParam(':discount_type', $discountType);
+            $query->bindParam(':discount', $discountValue);
             $query->execute();
     
             $productId = $db->lastInsertId();

@@ -1,9 +1,11 @@
 <?php
 require_once(__DIR__ . '/../classes/db.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
+if (!class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+    die('PHPMailer class is not loaded. Please check the autoloader and ensure PHPMailer is installed.');
+}
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require_once(__DIR__ . '/../vendor/autoload.php');
 
 class Verification {
     protected $db;
@@ -17,7 +19,7 @@ class Verification {
         
         // TEMPORARY LINK
         $verificationLink = "http://localhost/GitGudPark/email/verify.php?token={$token}&id={$user_id}";
-
+        
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();

@@ -1,5 +1,5 @@
 -- Stall Management System of Amethyst Food Park
-DROP DATABASE gitgud;
+DROP DATABASE IF EXISTS gitgud;
 
 CREATE DATABASE gitgud;
 
@@ -90,11 +90,21 @@ CREATE TABLE products (
     category_id INT UNSIGNED NOT NULL,
     stall_id INT UNSIGNED NOT NULL,
     file_path VARCHAR(255) NOT NULL,
+    stock INT UNSIGNED NOT NULL DEFAULT 0,
+    stock_warn INT UNSIGNED NOT NULL DEFAULT 0,
+    discount DECIMAL(10, 2) DEFAULT 0.00,
+    discount_type ENUM('Percentage', 'Fixed') DEFAULT 'Percentage',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
     FOREIGN KEY (stall_id) REFERENCES stalls(id) ON DELETE CASCADE
 );
+
+-- Alter products add stock and stock_warn
+-- ALTER TABLE products ADD COLUMN stock INT UNSIGNED NOT NULL DEFAULT 0;
+-- ALTER TABLE products ADD COLUMN stock_warn INT UNSIGNED NOT NULL DEFAULT 0;
+-- ALTER TABLE products ADD COLUMN discount DECIMAL(10, 2) DEFAULT 0.00;
+-- ALTER TABLE products ADD COLUMN discount_type ENUM('Percentage', 'Fixed') DEFAULT 'Percentage';
 
 CREATE TABLE product_variants (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

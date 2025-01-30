@@ -17,7 +17,7 @@
     }
     
     if (isset($_GET['id'])) {
-        $park_link = filter_var($_GET['id'], FILTER_SANITIZE_STRING);
+        $park_link = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
         $park = $parkObj->getPark($park_link);
 
         if (!$park) {

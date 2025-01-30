@@ -33,7 +33,12 @@ if (curl_errno($ch)) {
     $responseData = json_decode($response, true);
 
     if (isset($responseData['data']['attributes']['checkout_url'])) {
-        echo json_encode(['checkout_url' => $responseData['data']['attributes']['checkout_url']]);
+        $jsonString = ['checkout_url' => $responseData['data']['attributes']['checkout_url']];
+        $jsonEncodedString = json_encode($jsonString);
+        $cleanedString = stripslashes($jsonEncodedString);
+        echo $cleanedString;
+
+        echo "<br><br><br><a href='".$responseData['data']['attributes']['checkout_url']."'>Click here to pay</a>";
     } else {
         echo json_encode(['error' => 'Error creating payment link: Unknown error occurred.']);
     }

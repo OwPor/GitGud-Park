@@ -7,7 +7,7 @@
     $userObj = new User();
     $stallObj = new Stall();
     $code = $name = $category = $description = $price = $image = $stall_id = '';
-    $codeErr = $nameErr = $categoryErr = $priceErr = $imageErr = $stall_idErr = '';
+    $codeErr = $nameErr = $categoryErr = $priceErr = $imageErr = $stall_idErr = $currentStock_Err = $lowStock_Err = '';
 
     if (isset($_SESSION['user']['id'])) {
         if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
@@ -36,11 +36,16 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors = [];
 
-        $name = filter_var($_POST['productname'], FILTER_SANITIZE_STRING);
-        $code = filter_var($_POST['productcode'], FILTER_SANITIZE_STRING);
-        $category = filter_var($_POST['category'], FILTER_SANITIZE_STRING);
-        $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
-        $price = filter_var($_POST['sellingPrice'], FILTER_SANITIZE_STRING);
+        $name = htmlspecialchars($_POST['productname'], ENT_QUOTES, 'UTF-8');
+        // $code = htmlspecialchars($_POST['productcode'], ENT_QUOTES, 'UTF-8');
+        $code = uniqid();
+        $category = htmlspecialchars($_POST['category'], ENT_QUOTES, 'UTF-8');
+        $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
+        $price = htmlspecialchars($_POST['sellingPrice'], ENT_QUOTES, 'UTF-8');
+        $stock = htmlspecialchars($_POST['currentStocks'], ENT_QUOTES, 'UTF-8');
+        $lowStock = htmlspecialchars($_POST['lowStocks'], ENT_QUOTES, 'UTF-8');
+        $discountType = htmlspecialchars($_POST['discount_type'], ENT_QUOTES, 'UTF-8');
+        $discountValue = htmlspecialchars((float)$_POST['discount'], ENT_QUOTES, 'UTF-8');
 
         if (empty($name)) {
             $errors['nameErr'] = 'Product name is required.';
@@ -64,6 +69,28 @@
             $errors['priceErr'] = 'Only numbers are allowed.';
         } elseif ($price <= 0) {
             $errors['priceErr'] = 'Price must be greater than 0.';
+        }
+
+        if (empty($stock)) {
+            $errors['currentStock_Err'] = '';
+        } elseif (!is_numeric($stock)) {
+            $errors['currentStock_Err'] = '';
+        } elseif ($stock <= 0) {
+            $errors['currentStock_Err'] = '';
+        }
+
+        if (empty($lowStock)) {
+            $errors['lowStock_Err'] = '';
+        } elseif (!is_numeric($lowStock)) {
+            $errors['lowStock_Err'] = '';
+        } elseif ($lowStock <= 0) {
+            $errors['lowStock_Err'] = '';
+        }
+
+        if (empty($discountValue) || $discountValue < 0) {
+            $discountValue = 0;
+        } elseif (!is_numeric($discountValue)) {
+            $errors['discountErr'] = 'Only numbers are allowed.';
         }
 
         $codeExists = $productObj->isProductCodeExists($code);
@@ -124,8 +151,8 @@
                     }
                     
                     $variants[] = [
-                        'type' => filter_var($type, FILTER_SANITIZE_STRING),
-                        'name' => filter_var($variantName, FILTER_SANITIZE_STRING),
+                        'type' => htmlspecialchars($type, ENT_QUOTES, 'UTF-8'),
+                        'name' => htmlspecialchars($variantName, ENT_QUOTES, 'UTF-8'),
                         'additional_price' => filter_var($additionalPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
                         'subtract_price' => filter_var($subtractPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
                         'image_path' => $variantImagePath
@@ -135,7 +162,7 @@
             }
     
             if (empty($errors)) {
-                if ($productObj->addProduct($name, $code, $description, $price, $category, $stall_id, $targetImage, $variants)) {
+                if ($productObj->addProduct($name, $code, $description, $price, $category, $stall_id, $stock, $lowStock, $targetImage, $discountType, $discountValue, $variants)) {
                     header('Location: managemenu.php');
                     exit();
                 } else {
@@ -199,10 +226,10 @@
                 <input type="productname" name="productname" id="productname" placeholder="Enter product name"/>            
             </div>
             <div class="d-flex gap-3">
-                <div class="input-group m-0 mb-4">
+                <!-- <div class="input-group m-0 mb-4">
                     <label for="productcode">Product Code</label>
                     <input type="productcode" name="productcode" id="productcode" placeholder="Enter product code"/>            
-                </div>
+                </div> -->
                 <div class="input-group m-0 mb-4">
                     <label for="category">Category</label>
                     <select name="category" id="category" style="padding: 10.5px 0.75rem">
@@ -224,6 +251,20 @@
                 <div class="input-group m-0 mb-4">
                     <label for="sellingPrice">Selling Price</label>
                     <input type="number" name="sellingPrice" id="sellingPrice" placeholder="Enter selling price" step="0.01" min="0" />
+                </div>
+            </div>
+
+            <div class="d-flex gap-3">
+                <div class="input-group m-0 mb-4">
+                    <label for="currentStocks">Current Stocks</label>
+                    <input type="number" name="currentStocks" id="currentStocks" placeholder="Enter current stocks" step="1" min="0" />
+                </div>
+            </div>
+
+            <div class="d-flex gap-3">
+                <div class="input-group m-0 mb-4">
+                    <label for="lowStocks">Low Stocks Warn</label>
+                    <input type="number" name="lowStocks" id="lowStocks" placeholder="Enter low stocks warn" step="1" min="0" />
                 </div>
             </div>
 
@@ -268,7 +309,13 @@
             <div class="d-flex gap-3">
                 <div class="input-group w-50 m-0 mb-4">
                     <label for="discount">Discount (Optional)</label>
-                    <input type="number" name="discount" id="discount" placeholder="Enter discount" step="0.01"/>
+                    <div class="discount-type">
+                        <select name="discount_type" id="discount_type">
+                            <option value="amount">Amount</option>
+                            <option value="percentage">Percentage</option>
+                        </select>
+                    </div>
+                    <input type="number" name="discount" id="discount" placeholder="Enter discount" step="0.01" />
                 </div>
                 <div class="d-flex gap-2 w-50">
                     <div class="input-group m-0 mb-4">

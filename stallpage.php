@@ -3,6 +3,20 @@
     include_once 'header.php'; 
     include_once 'nav.php'; 
     include_once 'modals.php'; 
+    require_once __DIR__ . '/classes/stall.class.php';
+    require_once __DIR__ . '/classes/product.class.php';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        $user_id = $_SESSION['user']['id'];
+        $stallObj = new Stall();
+        $stall_id = $stallObj->getStallId($_SESSION['user']['id']);
+        $stall = $stallObj->getStall($stall_id);
+        $totalProducts = $stallObj->getTotalProducts($stall_id);
+        $stall_name = $stall['name'];
+        $description = $stall['description'];
+        
+        $productObj = new Product();
+    }
 ?>
 <main>
     <div class="pageinfo pb-4">
@@ -17,8 +31,8 @@
                         <span class="dot text-muted"></span>
                         <span class="text-muted m-0">Category</span>
                     </div>
-                    <h5 class="my-2 fw-bold fs-2">Food Stall Name</h5>
-                    <p class="text-muted m-0">Description</p>
+                    <h5 class="my-2 fw-bold fs-2"><?php echo $stall_name; ?></h5>
+                    <p class="text-muted m-0"><?php echo $description; ?></p>
 
                     <div class="d-flex gap-2 align-items-center my-2">
                         <span class="pageon">Open now</span>
@@ -33,7 +47,7 @@
                         </div>
                         <div class="d-flex gap-2">
                             <span>Products</span>
-                            <span class="likpro">999</span>
+                            <span class="likpro"><?php echo $totalProducts; ?></span>
                         </div>
                     </div>
                 </div>
@@ -98,6 +112,50 @@
                     </div>
                 </a>
             </div>
+            <?php
+                $products = $productObj->getProducts($stall_id);
+
+                if ($products) {
+                    foreach ($products as $product) {
+                        echo '
+                            <div class="col">
+                                <a href="#" 
+                                class="card-link text-decoration-none" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#menumodal"
+                                data-name="' . htmlspecialchars($product['name']) . '"
+                                data-description="' . htmlspecialchars($product['description']) . '"
+                                data-price="' . number_format($product['price'], 2) . '"
+                                data-image="' . htmlspecialchars($product['file_path']) . '"
+                                data-product-id="' . htmlspecialchars($product['id']) . '"
+                                data-stall-id="' . htmlspecialchars($stall_id) . '"
+                                >
+                                    <div class="card position-relative">
+                                        <img src="' . htmlspecialchars($product['file_path']) . '" class="card-img-top" alt="' . htmlspecialchars($product['name']) . '">
+                                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
+                                        <div class="card-body">
+                                            <p class="card-text text-muted m-0">' . htmlspecialchars($product['category']) . '</p>
+                                            <h5 class="card-title my-2">' . htmlspecialchars($product['name']) . '</h5>
+                                            <p class="card-text text-muted m-0">' . htmlspecialchars($product['description']) . '</p>
+                                            <div class="d-flex align-items-center justify-content-between my-3">
+                                                <div>
+                                                    <span class="proprice">₱' . number_format($product['price'], 2) . '</span>
+                                                </div>
+                                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
+                                            </div>                          
+                                            <div class="m-0">
+                                                <span class="opennow">Popular</span>
+                                                <span class="discount">10% off</span>
+                                                <span class="newopen">New</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        ';
+                    }
+                }
+            ?>
         </div>
     </section>
 
