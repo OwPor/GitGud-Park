@@ -10,3 +10,6 @@ pagorder ng customer after magorder sa cart mapupunta order nila sa purchase.php
 
 - delete database folder, unused directory
 
+
+
+bitaw na ya
