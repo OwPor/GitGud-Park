@@ -176,16 +176,69 @@ CREATE TABLE orders (
     FOREIGN KEY (user_id) REFERENCES users(user_session) ON DELETE CASCADE
 );
 
-CREATE TABLE order_items (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    order_id INT UNSIGNED NOT NULL,
-    product_id INT UNSIGNED NOT NULL,
-    quantity INT UNSIGNED NOT NULL,
-    unit_price DECIMAL(10, 2) NOT NULL,
-    subtotal DECIMAL(10, 2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+
+-- NEW ORDERS TABLE
+CREATE TABLE orders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(255) NOT NULL,
+    order_id VARCHAR(50) NOT NULL,
+    food_stall_name VARCHAR(100) NOT NULL,
+    food_name VARCHAR(100) NOT NULL,
+    variation VARCHAR(100),
+    quantity INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    status ENUM ('Cart', 'ToPay', 'Preparing', 'ToReceive', 'Completed', 'Cancelled', 'Scheduled') NOT NULL DEFAULT 'Cart',
+    order_date DATETIME NOT NULL
 );
+
+-- Insert sample orders
+INSERT INTO orders (
+    user_id, 
+    order_id, 
+    food_stall_name, 
+    food_name, 
+    variation, 
+    quantity, 
+    price, 
+    payment_method, 
+    status, 
+    order_date
+) VALUES 
+-- To Pay Orders
+('USER001', 'ORD-2025-001', 'Tasty Treats', 'Chicken Adobo', 'Large Serving', 2, 150.00, 'Cash', 'ToPay', '2025-02-01 10:30:00'),
+('USER001', 'ORD-2025-002', 'Sweet Corner', 'Chocolate Cake', 'Medium Size', 1, 299.00, 'GCash', 'ToPay', '2025-02-01 11:00:00'),
+
+-- Preparing Orders
+('USER001', 'ORD-2025-003', 'Burger House', 'Classic Burger', 'With Cheese', 3, 89.00, 'Cash', 'Preparing', '2025-02-01 09:45:00'),
+('USER001', 'ORD-2025-004', 'Pizza Palace', 'Pepperoni Pizza', 'Large', 1, 450.00, 'Credit Card', 'Preparing', '2025-02-01 09:15:00'),
+
+-- To Receive Orders
+('USER001', 'ORD-2025-005', 'Noodle House', 'Beef Mami', 'Special', 2, 120.00, 'Cash', 'ToReceive', '2025-02-01 08:30:00'),
+('USER001', 'ORD-2025-006', 'Sushi Bar', 'California Roll', 'Regular', 3, 250.00, 'GCash', 'ToReceive', '2025-02-01 08:00:00'),
+
+-- Completed Orders
+('USER001', 'ORD-2025-007', 'Grilled Masters', 'BBQ Ribs', 'Full Rack', 1, 599.00, 'Cash', 'Completed', '2025-01-31 15:30:00'),
+('USER001', 'ORD-2025-008', 'Ice Cream Shop', 'Sundae Supreme', 'Large', 2, 150.00, 'GCash', 'Completed', '2025-01-31 14:45:00'),
+
+-- Cancelled Orders
+('USER001', 'ORD-2025-009', 'Dimsum Place', 'Siomai Platter', 'Family Size', 1, 299.00, 'Cash', 'Cancelled', '2025-01-31 13:20:00'),
+('USER001', 'ORD-2025-010', 'Milk Tea Shop', 'Pearl Milk Tea', 'Large', 2, 120.00, 'GCash', 'Cancelled', '2025-01-31 12:00:00'),
+
+-- Scheduled Orders
+('USER001', 'ORD-2025-011', 'Cake House', 'Birthday Cake', 'Large', 1, 899.00, 'Cash', 'Scheduled', '2025-02-05 14:00:00'),
+('USER001', 'ORD-2025-012', 'Party Platters', 'Party Package A', 'For 50 pax', 1, 2500.00, 'Bank Transfer', 'Scheduled', '2025-02-10 11:00:00');
+
+-- CREATE TABLE order_items (
+--     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+--     order_id INT UNSIGNED NOT NULL,
+--     product_id INT UNSIGNED NOT NULL,
+--     quantity INT UNSIGNED NOT NULL,
+--     unit_price DECIMAL(10, 2) NOT NULL,
+--     subtotal DECIMAL(10, 2) NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+--     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+-- );
 

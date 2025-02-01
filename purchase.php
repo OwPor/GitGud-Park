@@ -2,7 +2,14 @@
     include_once 'header.php'; 
     include_once 'links.php'; 
     include_once 'nav.php';
-    include_once 'modals.php'; 
+    include_once 'modals.php';
+
+    if (!isset($_SESSION['user'])) {
+        header('Location: signin.php');
+        exit();
+    }
+    
+    $orders = $userObj->getOrders($_SESSION['user']['id']);
 ?> 
 <style>
     main{
