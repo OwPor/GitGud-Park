@@ -400,28 +400,24 @@ class User {
         return $query->fetch()['business_status'];
     }
 
-    function getOrders($user_id, $status = null, $search = null) {
+    function getOrders($user_id, $search = null) {
         try {
             $sql = "SELECT * FROM orders WHERE user_id = :user_id";
             $params = [":user_id" => $user_id];
-
-            if ($status && $status !== 'All') {
-                $sql .= " AND status = :status";
-                $params[":status"] = $status;
-            }
-
+    
             if ($search) {
                 $sql .= " AND (food_name LIKE :search 
                             OR food_stall_name LIKE :search 
                             OR order_id LIKE :search)";
                 $params[":search"] = "%{$search}%";
             }
-
-            $sql .= " ORDER BY order_date DESC";
-
+    
+            // Order by food_stall_name first, then by order_date in descending order
+            $sql .= " ORDER BY food_stall_name ASC, order_date DESC";
+    
             $stmt = $this->db->connect()->prepare($sql);
             $stmt->execute($params);
-
+    
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error fetching orders: " . $e->getMessage());
