@@ -10,6 +10,7 @@ pagorder ng customer after magorder sa cart mapupunta order nila sa purchase.php
 
 - delete database folder, unused directory
 
+- purchase.php order footer (All, To Pay almost finished)
 
 
 bitaw na ya
