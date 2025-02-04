@@ -405,4 +405,40 @@ class User {
     }
     
 
+    function getOrders($user_id, $search = null) {
+        try {
+            $sql = "SELECT * FROM orders WHERE user_id = :user_id";
+            $params = [":user_id" => $user_id];
+    
+            if ($search) {
+                $sql .= " AND (food_name LIKE :search 
+                            OR food_stall_name LIKE :search 
+                            OR order_id LIKE :search)";
+                $params[":search"] = "%{$search}%";
+            }
+    
+            // Order by food_stall_name first, then by order_date in descending order
+            $sql .= " ORDER BY food_stall_name ASC, order_date DESC";
+    
+            $stmt = $this->db->connect()->prepare($sql);
+            $stmt->execute($params);
+    
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching orders: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    function getStatusMessage($status) {
+        $messages = [
+            'ToPay' => 'Your order is awaiting payment',
+            'Preparing' => 'Your order is being prepared',
+            'ToReceive' => 'Your order is ready for pickup',
+            'Completed' => 'Order completed',
+            'Cancelled' => 'Order was cancelled',
+            'Scheduled' => 'Order is scheduled'
+        ];
+        return $messages[$status] ?? '';
+    }
 }
