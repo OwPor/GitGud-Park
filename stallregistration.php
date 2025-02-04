@@ -11,9 +11,12 @@
     $userObj = new User();
     $parkObj = new Park();
 
-    $stalllogo = $businessname = $description = $businessemail = $businessphonenumber = $website = '';
+    $businessname = $description = $businessemail = $businessphonenumber = $website = '';
     $errors = [];
-
+    if (!empty($stalllogo)) {
+        $_SESSION['stalllogo'] = $stalllogo; // Store in session
+    }
+    
     if (isset($_GET['owner_email']) && isset($_GET['owner_id']) && isset($_GET['park_id'])) {
         $owner_email = $_GET['owner_email'];
         $owner_id = $_GET['owner_id'];
@@ -184,22 +187,29 @@
             
             <div class="flex-grow-1 ms-4">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" style="color: black;" id="businessname" name="businessname" placeholder="Business Name">
+                    <input type="text" class="form-control" id="businessname" name="businessname" placeholder="Business Name" value="<?php echo htmlspecialchars($businessname); ?>">
                     <label for="businessname">Business Name <span style="color: #CD5C08;">*</span></label>
                 </div>
 
                 <div class="form-group m-0 select2Part select2multiple w-100 floating-group">
                     <label class="floating-label">Categories <span style="color: #CD5C08;">*</span></label>
                     <select name="categories[]" id="categories" class="form-control customSelectMultiple floating-control" multiple>
-                        <option value="Drinks">Drinks</option>
-                        <option value="Vegetables">Vegetables</option>
-                        <option value="Desserts">Desserts</option>
+                        <?php 
+                        $selectedCategories = isset($_POST['categories']) ? $_POST['categories'] : [];
+                        $categories = ["Drinks", "Vegetables", "Desserts"];
+                        
+                        foreach ($categories as $category) {
+                            $selected = in_array($category, $selectedCategories) ? 'selected' : '';
+                            echo "<option value='$category' $selected>$category</option>";
+                        }
+                        ?>
                     </select>
+
                 </div>
                 <script src="assets/js/selectcategory.js"></script>
                 
                 <div class="form-floating mt-3">
-                    <textarea class="form-control" style="color: black;" placeholder="Description" id="description" name="description"></textarea>
+                    <textarea class="form-control" id="description" name="description" placeholder="Description"><?php echo htmlspecialchars($description); ?></textarea>
                     <label for="description">Description <span style="color: #CD5C08;">*</span></label>
                 </div>
             </div>
@@ -207,18 +217,18 @@
 
         <div class="contact mt-4">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email">
+                <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email" value="<?php echo htmlspecialchars($businessemail); ?>">
                 <label for="businessemail">Business Email</label>
             </div>
             <div class="input-group mb-3 mt-0">
                 <span class="input-group-text">+63</span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" id="businessphonenumber" name="businessphonenumber" placeholder="Business Phone Number">
+                    <input type="text" class="form-control" id="businessphonenumber" name="businessphonenumber" placeholder="Business Phone Number" value="<?php echo htmlspecialchars($businessphonenumber); ?>">
                     <label for="businessphonenumber">Business Phone Number</label>
                 </div>
             </div>
             <div class="form-floating mb-4">
-                <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+                <input type="text" class="form-control" id="website" name="website" placeholder="Website" value="<?php echo htmlspecialchars($website); ?>">
                 <label for="website">Website</label>
             </div>
         </div>

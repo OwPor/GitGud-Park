@@ -75,628 +75,190 @@
         <button class="addpro" type="button" data-bs-toggle="modal" data-bs-target="#invitestall">+ Add Stall</button>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-3">
-        <div class="col">
-            <div class="card h-100">
-                <div class="position-relative">
-                    <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
-                    <div class="position-absolute rentstatus paid"><i class="fa-solid fa-circle-check"></i> Paid: Rent for this period has been fully settled</div>
-                    <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
-                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
-                        <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
-                    </div>
-                </div>
-                <div class="card-body px-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <div class="d-flex gap-2 align-items-center">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <span class="dot text-muted"></span>
-                                <p class="card-text text-muted m-0">Category</p>
-                            </div>
-                            <h5 class="card-title my-2 fw-bold">Food Stall Name</h5>
-                            <p class="card-text text-muted m-0">Description</p>
-                        </div>
-                        <div class="smopen">
-                            <i class="fa-solid fa-clock"></i>
-                            <span>OPEN</span>
-                        </div>
-                    </div>
-                    <div class="stats py-2 mt-3 mb-2 d-flex justify-content-between align-items-center">
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-heart fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">Likes</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-lemon fs-5"></i>
-                                <span class="fw-bold fs-4">668</span>
-                            </div>
-                            <p class="m-0 small">Orders</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-user fs-5"></i>
-                                <span class="fw-bold fs-4">565</span>
-                            </div>
-                            <p class="m-0 small">Visits</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-solid fa-peseta-sign fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">AOV</p>
-                        </div>
-                    </div>
+        <?php
+            $stalls = $parkObj->getStalls($park_id); 
 
-                    <div class="accordion accordion-flush" id="accCol1">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu1" aria-expanded="false" aria-controls="col1flu1">Contact information</button>
-                            </h2>
-                            <div id="col1flu1" class="accordion-collapse collapse" data-bs-parent="#accCol1">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span>Business Email</span>
-                                        <span>example@gmail.com</span>
+            date_default_timezone_set('Asia/Manila'); 
+            $currentDay = date('l'); 
+            $currentTime = date('H:i');
+
+            foreach ($stalls as $stall) { 
+                $isOpen = false;
+                $operatingHours = explode('; ', $stall['stall_operating_hours']); 
+
+                foreach ($operatingHours as $hours) {
+                    list($days, $timeRange) = explode('<br>', $hours); 
+                    $daysArray = array_map('trim', explode(',', $days)); 
+
+                    if (in_array($currentDay, $daysArray)) { 
+                        list($openTime, $closeTime) = array_map('trim', explode(' - ', $timeRange));
+                        
+                        $openTime24 = date('H:i', strtotime($openTime));
+                        $closeTime24 = date('H:i', strtotime($closeTime));
+
+                        if ($currentTime >= $openTime24 && $currentTime <= $closeTime24) {
+                            $isOpen = true;
+                            break;
+                        }
+                    }
+                }
+                ?>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img src="<?= $stall['logo'] ?>" class="card-img-top" alt="Stall Logo">
+                            <div class="position-absolute rentstatus paid">
+                                <i class="fa-solid fa-circle-check"></i> Paid: Rent for this period has been fully settled
+                            </div>
+                            <div class="position-absolute d-flex gap-2 smaction">
+                                <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
+                                <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
+                                <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
+                            </div>
+                        </div>
+                        <div class="card-body px-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <div class="d-flex gap-2 align-items-center">
+                                        <?php 
+                                            $stall_categories = explode(',', $stall['stall_categories']); 
+                                            foreach ($stall_categories as $index => $category) { 
+                                        ?>
+                                            <p class="card-text text-muted m-0"><?= trim($category) ?></p>
+                                            <?php if ($index !== array_key_last($stall_categories)) { ?>
+                                                <span class="dot text-muted"></span>
+                                            <?php } ?>
+                                        <?php } ?>
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>Business Phone Number</span>
-                                        <span class="text-muted">+639123456789</span>
+
+                                    <h5 class="card-title my-2 fw-bold"><?= $stall['name'] ?></h5>
+                                    <p class="card-text text-muted m-0"><?= $stall['description'] ?></p>
+                                </div>
+
+                                <!-- Display OPEN or CLOSE based on operating hours -->
+                                <?php if ($isOpen) { ?>
+                                    <div class="smopen">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <span>OPEN</span>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="smclose">
+                                        <i class="fa-solid fa-door-closed"></i>
+                                        <span>CLOSE</span>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                                <div class="stats py-2 mt-3 mb-2 d-flex justify-content-between align-items-center">
+                                    <div class="text-center">
+                                        <div class="d-flex gap-1 align-items-center m-0">
+                                            <i class="fa-regular fa-heart fs-5"></i>
+                                            <span class="fw-bold fs-4">56</span>
+                                        </div>
+                                        <p class="m-0 small">Likes</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="d-flex gap-1 align-items-center m-0">
+                                            <i class="fa-regular fa-lemon fs-5"></i>
+                                            <span class="fw-bold fs-4">668</span>
+                                        </div>
+                                        <p class="m-0 small">Orders</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="d-flex gap-1 align-items-center m-0">
+                                            <i class="fa-regular fa-user fs-5"></i>
+                                            <span class="fw-bold fs-4">565</span>
+                                        </div>
+                                        <p class="m-0 small">Visits</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="d-flex gap-1 align-items-center m-0">
+                                            <i class="fa-solid fa-peseta-sign fs-5"></i>
+                                            <span class="fw-bold fs-4">56</span>
+                                        </div>
+                                        <p class="m-0 small">AOV</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu2" aria-expanded="false" aria-controls="col1flu2">Opening Hours</button>
-                            </h2>
-                            <div id="col1flu2" class="accordion-collapse collapse" data-bs-parent="#accCol1">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="mb-2">
-                                        <p class="mb-1">Monday, Tuesday, Thursday</p>
-                                        <span>7AM - 7PM</span>
+                                <!-- Accordion for Details -->
+                                <div class="accordion accordion-flush" id="accCol<?= $stall['id'] ?>">
+                                    <!-- Contact Information -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu<?= $stall['id'] ?>1" aria-expanded="false" aria-controls="col1flu<?= $stall['id'] ?>1">
+                                                Contact Information
+                                            </button>
+                                        </h2>
+                                        <div id="col1flu<?= $stall['id'] ?>1" class="accordion-collapse collapse" data-bs-parent="#accCol<?= $stall['id'] ?>">
+                                            <div class="accordion-body p-0 mb-3 small">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span>Email</span>
+                                                    <span><?= $stall['email'] ?></span>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span>Phone</span>
+                                                    <span class="text-muted"><?= $stall['phone'] ?? 'N/A' ?></span>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span>Website</span>
+                                                    <span class="text-muted"><?= $stall['website'] ?? 'N/A' ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="">
-                                        <p class="mb-1">Wednesday, Friday, Saturday</p>
-                                        <span>8AM - 9PM</span>
+
+                                    <!-- Opening Hours -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu<?= $stall['id'] ?>2" aria-expanded="false" aria-controls="col1flu<?= $stall['id'] ?>2">
+                                                Opening Hours
+                                            </button>
+                                        </h2>
+                                        <div id="col1flu<?= $stall['id'] ?>2" class="accordion-collapse collapse" data-bs-parent="#accCol<?= $stall['id'] ?>">
+                                            <div class="accordion-body p-0 mb-3 small">
+                                                <?= !empty($stall['stall_operating_hours']) ? str_replace('; ', '<br>', $stall['stall_operating_hours']) : 'Not available' ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Payment Method -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu<?= $stall['id'] ?>3" aria-expanded="false" aria-controls="col1flu<?= $stall['id'] ?>3">
+                                                Payment Methods
+                                            </button>
+                                        </h2>
+                                        <div id="col1flu<?= $stall['id'] ?>3" class="accordion-collapse collapse" data-bs-parent="#accCol<?= $stall['id'] ?>">
+                                            <div class="accordion-body p-0 mb-3 small">
+                                                <ul>
+                                                    <?php if (!empty($stall['stall_payment_methods'])) {
+                                                        $payment_methods = explode(', ', $stall['stall_payment_methods']);
+                                                        foreach ($payment_methods as $method) {
+                                                            echo "<li class='mb-2'>$method</li>";
+                                                        }
+                                                    } else {
+                                                        echo "<li>No payment methods available</li>";
+                                                    } ?>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col1flu3" aria-expanded="false" aria-controls="col1flu3">Payment Method</button>
-                            </h2>
-                            <div id="col1flu3" class="accordion-collapse collapse" data-bs-parent="#accCol1">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <ul>
-                                        <li class="mb-2">Cash</li>
-                                        <li>GCash</li>
-                                    </ul>
+
+                                <!-- Owner Information -->
+                                <div class="owner mt-1 py-2 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex gap-3 align-items-center">
+                                        <img src="<?= $stall['profile_img'] ?: 'assets/images/user.jpg' ?>" alt="Owner Profile">
+                                        <div>
+                                            <span class="fw-bold"><?= $stall['owner_name'] ?></span>
+                                            <p class="m-0"><?= $stall['email'] ?></p>
+                                        </div>
+                                    </div>
+                                    <i class="text-muted">Owner</i>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="owner mt-1 py-2 d-flex justify-content-between align-items-center">
-                        <div class="d-flex gap-3 align-items-center">
-                            <img src="assets/images/user.jpg" alt="">
-                            <div>
-                                <span class="fw-bold">Naila Haliluddin</span>
-                                <p class="m-0">example@gmail.com</p>
-                            </div>
-                        </div>
-                        <i class="text-muted">Owner</i>
+                            </div> 
+                        </div> 
                     </div>
-
-                </div> 
-            </div> 
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <div class="position-relative">
-                    <img src="assets/images/stall2.jpg" class="card-img-top" alt="...">
-                    <div class="position-absolute rentstatus pending"><i class="fa-solid fa-hourglass-half"></i> Pending: Rent payment is due in 3 days</div>
-                    <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
-                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
-                        <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
-                    </div>
-                </div>
-                <div class="card-body px-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <div class="d-flex gap-2 align-items-center">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <span class="dot text-muted"></span>
-                                <p class="card-text text-muted m-0">Category</p>
-                            </div>
-                            <h5 class="card-title my-2 fw-bold">Food Stall Name</h5>
-                            <p class="card-text text-muted m-0">Description</p>
-                        </div>
-                        <div class="smclose">
-                            <i class="fa-solid fa-door-closed"></i>
-                            <span>CLOSE</span>
-                        </div>
-                    </div>
-                    <div class="stats py-2 mt-3 mb-2 d-flex justify-content-between align-items-center">
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-heart fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">Likes</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-lemon fs-5"></i>
-                                <span class="fw-bold fs-4">668</span>
-                            </div>
-                            <p class="m-0 small">Orders</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-user fs-5"></i>
-                                <span class="fw-bold fs-4">565</span>
-                            </div>
-                            <p class="m-0 small">Visits</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-solid fa-peseta-sign fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">AOV</p>
-                        </div>
-                    </div>
-
-                    <div class="accordion accordion-flush" id="accCol2">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col2flu1" aria-expanded="false" aria-controls="col2flu1">Contact information</button>
-                            </h2>
-                            <div id="col2flu1" class="accordion-collapse collapse" data-bs-parent="#accCol2">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span>Business Email</span>
-                                        <span>example@gmail.com</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>Business Phone Number</span>
-                                        <span class="text-muted">+639123456789</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col2flu2" aria-expanded="false" aria-controls="col2flu2">Opening Hours</button>
-                            </h2>
-                            <div id="col2flu2" class="accordion-collapse collapse" data-bs-parent="#accCol2">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="mb-2">
-                                        <p class="mb-1">Monday, Tuesday, Thursday</p>
-                                        <span>7AM - 7PM</span>
-                                    </div>
-                                    <div class="">
-                                        <p class="mb-1">Wednesday, Friday, Saturday</p>
-                                        <span>8AM - 9PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col2flu3" aria-expanded="false" aria-controls="col2flu3">Payment Method</button>
-                            </h2>
-                            <div id="col2flu3" class="accordion-collapse collapse" data-bs-parent="#accCol2">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <ul>
-                                        <li class="mb-2">Cash</li>
-                                        <li>GCash</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="owner mt-1 py-2 d-flex justify-content-between align-items-center">
-                        <div class="d-flex gap-3 align-items-center">
-                            <img src="assets/images/user.jpg" alt="">
-                            <div>
-                                <span class="fw-bold">Naila Haliluddin</span>
-                                <p class="m-0">example@gmail.com</p>
-                            </div>
-                        </div>
-                        <i class="text-muted">Owner</i>
-                    </div>
-
-                </div> 
-            </div> 
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <div class="position-relative">
-                    <img src="assets/images/stall3.jpg" class="card-img-top" alt="...">
-                    <div class="position-absolute rentstatus overdue"><i class="fa-solid fa-circle-exclamation"></i> Overdue: Rent payment is overdue by 4 days</div>
-                    <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
-                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
-                        <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
-                    </div>
-                </div>
-                <div class="card-body px-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <div class="d-flex gap-2 align-items-center">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <span class="dot text-muted"></span>
-                                <p class="card-text text-muted m-0">Category</p>
-                            </div>
-                            <h5 class="card-title my-2 fw-bold">Food Stall Name</h5>
-                            <p class="card-text text-muted m-0">Description</p>
-                        </div>
-                        <div class="smopen">
-                            <i class="fa-solid fa-clock"></i>
-                            <span>OPEN</span>
-                        </div>
-                    </div>
-                    <div class="stats py-2 mt-3 mb-2 d-flex justify-content-between align-items-center">
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-heart fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">Likes</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-lemon fs-5"></i>
-                                <span class="fw-bold fs-4">668</span>
-                            </div>
-                            <p class="m-0 small">Orders</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-user fs-5"></i>
-                                <span class="fw-bold fs-4">565</span>
-                            </div>
-                            <p class="m-0 small">Visits</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-solid fa-peseta-sign fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">AOV</p>
-                        </div>
-                    </div>
-
-                    <div class="accordion accordion-flush" id="accCol3">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col3flu1" aria-expanded="false" aria-controls="col3flu1">Contact information</button>
-                            </h2>
-                            <div id="col3flu1" class="accordion-collapse collapse" data-bs-parent="#accCol3">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span>Business Email</span>
-                                        <span>example@gmail.com</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span>Business Phone Number</span>
-                                        <span class="text-muted">+639123456789</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>Website</span>
-                                        <span class="text-muted">asdfghjkl.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col3flu2" aria-expanded="false" aria-controls="col3flu2">Opening Hours</button>
-                            </h2>
-                            <div id="col3flu2" class="accordion-collapse collapse" data-bs-parent="#accCol3">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="mb-2">
-                                        <p class="mb-1">Monday, Tuesday, Thursday</p>
-                                        <span>7AM - 7PM</span>
-                                    </div>
-                                    <div class="">
-                                        <p class="mb-1">Wednesday, Friday, Saturday</p>
-                                        <span>8AM - 9PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col3flu3" aria-expanded="false" aria-controls="col3flu3">Payment Method</button>
-                            </h2>
-                            <div id="col3flu3" class="accordion-collapse collapse" data-bs-parent="#accCol3">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <ul>
-                                        <li class="mb-2">Cash</li>
-                                        <li>GCash</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="owner mt-1 py-2 d-flex justify-content-between align-items-center">
-                        <div class="d-flex gap-3 align-items-center">
-                            <img src="assets/images/user.jpg" alt="">
-                            <div>
-                                <span class="fw-bold">Naila Haliluddin</span>
-                                <p class="m-0">example@gmail.com</p>
-                            </div>
-                        </div>
-                        <i class="text-muted">Owner</i>
-                    </div>
-
-                </div> 
-            </div> 
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <div class="position-relative">
-                    <img src="assets/images/stall4.jpg" class="card-img-top" alt="...">
-                    <div class="position-absolute rentstatus overdue"><i class="fa-solid fa-circle-exclamation"></i> Overdue: Rent payment is overdue by 4 days</div>
-                    <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
-                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
-                        <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
-                    </div>
-                </div>
-                <div class="card-body px-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <div class="d-flex gap-2 align-items-center">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <span class="dot text-muted"></span>
-                                <p class="card-text text-muted m-0">Category</p>
-                            </div>
-                            <h5 class="card-title my-2 fw-bold">Food Stall Name</h5>
-                            <p class="card-text text-muted m-0">Description</p>
-                        </div>
-                        <div class="smopen">
-                            <i class="fa-solid fa-clock"></i>
-                            <span>OPEN</span>
-                        </div>
-                    </div>
-                    <div class="stats py-2 mt-3 mb-2 d-flex justify-content-between align-items-center">
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-heart fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">Likes</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-lemon fs-5"></i>
-                                <span class="fw-bold fs-4">668</span>
-                            </div>
-                            <p class="m-0 small">Orders</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-user fs-5"></i>
-                                <span class="fw-bold fs-4">565</span>
-                            </div>
-                            <p class="m-0 small">Visits</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-solid fa-peseta-sign fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">AOV</p>
-                        </div>
-                    </div>
-
-                    <div class="accordion accordion-flush" id="accCol4">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col4flu1" aria-expanded="false" aria-controls="col4flu1">Contact information</button>
-                            </h2>
-                            <div id="col4flu1" class="accordion-collapse collapse" data-bs-parent="#accCol4">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span>Business Email</span>
-                                        <span>example@gmail.com</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span>Business Phone Number</span>
-                                        <span class="text-muted">+639123456789</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>Website</span>
-                                        <span class="text-muted">asdfghjkl.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col4flu2" aria-expanded="false" aria-controls="col4flu2">Opening Hours</button>
-                            </h2>
-                            <div id="col4flu2" class="accordion-collapse collapse" data-bs-parent="#accCol4">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="mb-2">
-                                        <p class="mb-1">Monday, Tuesday, Thursday</p>
-                                        <span>7AM - 7PM</span>
-                                    </div>
-                                    <div class="">
-                                        <p class="mb-1">Wednesday, Friday, Saturday</p>
-                                        <span>8AM - 9PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col4flu3" aria-expanded="false" aria-controls="col4flu3">Payment Method</button>
-                            </h2>
-                            <div id="col4flu3" class="accordion-collapse collapse" data-bs-parent="#accCol4">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <ul>
-                                        <li class="mb-2">Cash</li>
-                                        <li>GCash</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="owner mt-1 py-2 d-flex justify-content-between align-items-center">
-                        <div class="d-flex gap-3 align-items-center">
-                            <img src="assets/images/user.jpg" alt="">
-                            <div>
-                                <span class="fw-bold">Naila Haliluddin</span>
-                                <p class="m-0">example@gmail.com</p>
-                            </div>
-                        </div>
-                        <i class="text-muted">Owner</i>
-                    </div>
-
-                </div> 
-            </div> 
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <div class="position-relative">
-                    <img src="assets/images/stall5.jpg" class="card-img-top" alt="...">
-                    <div class="position-absolute rentstatus overdue"><i class="fa-solid fa-circle-exclamation"></i> Overdue: Rent payment is overdue by 4 days</div>
-                    <div class="position-absolute d-flex gap-2 smaction">
-                        <i class="fa-solid fa-sack-dollar" onclick="window.location.href='rent.php';"></i>
-                        <i class="fa-solid fa-pen-to-square" onclick="window.location.href='editpage.php';"></i>
-                        <i class="fa-solid fa-trash-can" data-bs-toggle="modal" data-bs-target="#deletestall"></i>
-                    </div>
-                </div>
-                <div class="card-body px-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <div class="d-flex gap-2 align-items-center">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <span class="dot text-muted"></span>
-                                <p class="card-text text-muted m-0">Category</p>
-                            </div>
-                            <h5 class="card-title my-2 fw-bold">Food Stall Name</h5>
-                            <p class="card-text text-muted m-0">Description</p>
-                        </div>
-                        <div class="smopen">
-                            <i class="fa-solid fa-clock"></i>
-                            <span>OPEN</span>
-                        </div>
-                    </div>
-                    <div class="stats py-2 mt-3 mb-2 d-flex justify-content-between align-items-center">
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-heart fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">Likes</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-lemon fs-5"></i>
-                                <span class="fw-bold fs-4">668</span>
-                            </div>
-                            <p class="m-0 small">Orders</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-regular fa-user fs-5"></i>
-                                <span class="fw-bold fs-4">565</span>
-                            </div>
-                            <p class="m-0 small">Visits</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="d-flex gap-1 align-items-center m-0">
-                                <i class="fa-solid fa-peseta-sign fs-5"></i>
-                                <span class="fw-bold fs-4">56</span>
-                            </div>
-                            <p class="m-0 small">AOV</p>
-                        </div>
-                    </div>
-
-                    <div class="accordion accordion-flush" id="accCol5">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col5flu1" aria-expanded="false" aria-controls="col5flu1">Contact information</button>
-                            </h2>
-                            <div id="col5flu1" class="accordion-collapse collapse" data-bs-parent="#accCol5">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span>Business Email</span>
-                                        <span>example@gmail.com</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span>Business Phone Number</span>
-                                        <span class="text-muted">+639123456789</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span>Website</span>
-                                        <span class="text-muted">asdfghjkl.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col5flu2" aria-expanded="false" aria-controls="col5flu2">Opening Hours</button>
-                            </h2>
-                            <div id="col5flu2" class="accordion-collapse collapse" data-bs-parent="#accCol5">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <div class="mb-2">
-                                        <p class="mb-1">Monday, Tuesday, Thursday</p>
-                                        <span>7AM - 7PM</span>
-                                    </div>
-                                    <div class="">
-                                        <p class="mb-1">Wednesday, Friday, Saturday</p>
-                                        <span>8AM - 9PM</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed px-0" type="button" data-bs-toggle="collapse" data-bs-target="#col5flu3" aria-expanded="false" aria-controls="col5flu3">Payment Method</button>
-                            </h2>
-                            <div id="col5flu3" class="accordion-collapse collapse" data-bs-parent="#accCol5">
-                                <div class="accordion-body p-0 mb-3 small">
-                                    <ul>
-                                        <li class="mb-2">Cash</li>
-                                        <li>GCash</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="owner mt-1 py-2 d-flex justify-content-between align-items-center">
-                        <div class="d-flex gap-3 align-items-center">
-                            <img src="assets/images/user.jpg" alt="">
-                            <div>
-                                <span class="fw-bold">Naila Haliluddin</span>
-                                <p class="m-0">example@gmail.com</p>
-                            </div>
-                        </div>
-                        <i class="text-muted">Owner</i>
-                    </div>
-
-                </div> 
-            </div> 
-        </div>
+                <?php } ?>
     </div> 
     <br><br><br><br><br>
 </main>
@@ -720,17 +282,43 @@
                     <select id="emailSelect" name="emails[]" multiple="multiple" style="width: 100%;"></select>
                 </div>
                 <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
+                <?php
+                    $owner = $parkObj->getParkOwner($park_id);
+                    if($owner) {
+                ?>
                 <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
                     <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/user.jpg" alt="">
+                        <img src="<?= $owner['profile_img'] ?>" alt="">
                         <div>
-                            <span class="fw-bold">Naila Haliluddin (you)</span>
-                            <p class="m-0">example@gmail.com</p>
+                            <span class="fw-bold"><?= $owner['owner_name'] ?> (you)</span>
+                            <p class="m-0"><?= $owner['email'] ?></p>
                         </div>
                     </div>
                     <i class="text-muted small mr-1">Park Owner</i>
                 </div>
+                <?php
+                    }
+                ?>
+                <?php
+                    $owners = $parkObj->getStallOwners($park_id);
+                    if (!empty($owners)) {
+                        foreach ($owners as $owner) {
+                ?>
                 <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="<?= $owner['profile_img'] ?>" alt="">
+                        <div>
+                            <span class="fw-bold"><?= $owner['owner_name'] ?></span>
+                            <p class="m-0"><?= $owner['email'] ?></p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Stall Owner</i>
+                </div>
+                <?php
+                        }
+                    }
+                ?>
+                <!--<div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
                     <div class="d-flex gap-3 align-items-center">
                         <img src="assets/images/profile.jpg" alt="">
                         <div>
@@ -739,17 +327,7 @@
                         </div>
                     </div>
                     <i class="text-muted small mr-1">Stall Owner</i>
-                </div>
-                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/profile.jpg" alt="">
-                        <div>
-                            <span class="fw-bold">Naila Haliluddin</span>
-                            <p class="m-0">example@gmail.com</p>
-                        </div>
-                    </div>
-                    <i class="text-muted small mr-1">Stall Owner</i>
-                </div>
+                </div>-->
             </div>
             <div class="modal-footer pt-0 border-0">
                 <button type="button" class="btn btn-primary send p-2" id="createStallBtn">Create Stall Page</button>

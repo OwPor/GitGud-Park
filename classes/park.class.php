@@ -28,11 +28,28 @@ class Park {
         return $stmt->fetch(PDO::FETCH_ASSOC); 
     }
 
-    function getStalls($parkId){
-        $sql = "SELECT * FROM stalls WHERE park_id = :park_id;";
+    function getStalls($parkId) {
+        $sql = "
+            SELECT 
+                stalls.*, 
+                CONCAT(users.first_name, ' ', users.last_name) AS owner_name,
+                users.email,
+                users.profile_img,
+                GROUP_CONCAT(DISTINCT CONCAT(stall_operating_hours.days, '<br>', stall_operating_hours.open_time, ' - ', stall_operating_hours.close_time) SEPARATOR '; ') AS stall_operating_hours,
+                GROUP_CONCAT(DISTINCT stall_categories.name SEPARATOR ', ') AS stall_categories,
+                GROUP_CONCAT(DISTINCT stall_payment_methods.method SEPARATOR ', ') AS stall_payment_methods
+            FROM stalls
+            JOIN users ON stalls.user_id = users.id
+            LEFT JOIN stall_operating_hours ON stalls.id = stall_operating_hours.stall_id
+            LEFT JOIN stall_categories ON stalls.id = stall_categories.stall_id
+            LEFT JOIN stall_payment_methods ON stalls.id = stall_payment_methods.stall_id
+            WHERE stalls.park_id = :park_id
+            GROUP BY stalls.id
+        ";
+        
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':park_id' => $parkId));
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Check if the user is the owner of the food park
@@ -110,6 +127,33 @@ class Park {
             }
         }
     }
+
+    function getParkOwner($park_id) {
+        $sql = "SELECT CONCAT(users.first_name, ' ', users.last_name) AS owner_name, users.email, users.profile_img 
+                FROM users 
+                JOIN business ON users.id = business.user_id 
+                WHERE business.id = :business_id";
+    
+        $stmt = $this->db->connect()->prepare($sql);
+        $stmt->execute(['business_id' => $park_id]); 
+        return $stmt->fetch(PDO::FETCH_ASSOC); 
+    }
+    
+
+    function getStallOwners($park_id) {
+        $sql = "SELECT CONCAT(users.first_name, ' ', users.last_name) AS owner_name, users.email, users.profile_img
+                FROM users 
+                JOIN stalls ON users.id = stalls.user_id 
+                WHERE stalls.park_id = :park_id";
+    
+        $stmt = $this->db->connect()->prepare($sql);
+        $stmt->execute(['park_id' => $park_id]); // Corrected parameter binding
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    
+    
+    
     
     
     
