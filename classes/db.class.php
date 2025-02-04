@@ -321,7 +321,7 @@ class User {
         return $result['is_verified'];
     }
 
-    function registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit, $operatingHours) {
+    function registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit, $business_logo, $operatingHours) {
         $sql = "SELECT * FROM users WHERE id = :user_id AND role != 'Park Owner';";
         $query = $this->db->connect()->prepare($sql);
         $query->execute(array(':user_id' => $user_id));
@@ -347,9 +347,11 @@ class User {
         }
 
         $conn = $this->db->connect(); 
+        
+        $uniqueUrl = uniqid();
 
-        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit, business_status) 
-                VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit, :business_status);";
+        $sql = "INSERT INTO business (user_id, business_name, business_type, region_province_city, barangay, street_building_house, business_phone, business_email, business_permit, business_status, business_logo, url) 
+                VALUES (:user_id, :business_name, :business_type, :region_province_city, :barangay, :street_building_house, :business_phone, :business_email, :business_permit, :business_status, :business_logo, :url);";
         $query = $conn->prepare($sql);
 
         if ($query->execute(array(
@@ -362,7 +364,9 @@ class User {
             ':business_phone' => $business_phone,
             ':business_email' => $business_email,
             ':business_permit' => $business_permit,
-            ':business_status' => 'Pending Approval'
+            ':business_status' => 'Pending Approval',
+            ':business_logo' => $business_logo,
+            ':url' =>  $uniqueUrl
         ))) {
             $business_id = $conn->lastInsertId();
             
@@ -399,5 +403,6 @@ class User {
 
         return $query->fetch()['business_status'];
     }
+    
 
 }

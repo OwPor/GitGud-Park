@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     //include_once 'header.php';
     // include_once 'landingheader.php';
     include_once 'links.php'; 
@@ -63,36 +65,52 @@
     <h2>All Food Parks in Zamboanga City</h2><br>
     
     <div class="row row-cols-1 row-cols-md-4 g-3">
-        <!-- <div class="col">
-            <a href="./homepage.php" class="card-link text-decoration-none">
-                <div class="card" style="position: relative;">
-                    <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
-                    <i class="fa-solid fa-ellipsis-vertical ellipsis-icon"></i>
-                    <div class="card-body">
-                        <h5 class="card-title">Food Park Name</h5>
-                        <p class="card-text text-muted "><i class="fa-solid fa-location-dot"></i> Street Name, Barangay, Zamboanga City</p>
-                        <span class="opennow">Open Now</span>
-                    </div>
-                </div>
-            </a>
-        </div> -->
-        <?php
+        <?php 
             $parks = $parkObj->getParks();
+            date_default_timezone_set('Asia/Manila'); 
+            $currentDay = date('l'); 
+            $currentTime = date('H:i');
             foreach ($parks as $park) { 
-                if ($park['status'] != 'Maintenance' && $park['status'] != 'Pending Approval') {
-                    $uniqueLink = "./park.php?id=" . $park['url'];
+                if ($park['business_status'] != 'Reject' && $park['business_status'] != 'Pending Approval') {
+                    //$uniqueLink = "./park.php?id=" . $park['url'];
+                    
+                    $isOpen = false;
+                    $operatingHours = explode('; ', $park['operating_hours']); 
+
+                    foreach ($operatingHours as $hours) {
+                        list($days, $timeRange) = explode('<br>', $hours); 
+                        $daysArray = array_map('trim', explode(',', $days)); 
+
+                        if (in_array($currentDay, $daysArray)) { 
+                            list($openTime, $closeTime) = array_map('trim', explode(' - ', $timeRange));
+                            
+                            $openTime24 = date('H:i', strtotime($openTime));
+                            $closeTime24 = date('H:i', strtotime($closeTime));
+
+                            if ($currentTime >= $openTime24 && $currentTime <= $closeTime24) {
+                                $isOpen = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    $statusClass = $isOpen ? 'opennow' : 'cnow';
+                    $statusText = $isOpen ? 'Open Now' : 'Closed';
                     ?>
                     <div class="col">
                         <div class="card">
-                            <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none">
-                                <img src="<?= $park['image'] ?>" class="card-img-top" alt="...">
+                            <a href="enter_park.php?id=<?= $park['id'] ?>" class="card-link text-decoration-none">
+                                <img src="<?= $park['business_logo'] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title text-dark"><?= $park['name'] ?></h5>
-                                    <p class="card-text text-muted"><i class="fa-solid fa-location-dot me-2"></i><?= $park['location'] ?></p>
-                                    <span class="opennow">Open Now</span>
+                                    <h5 class="card-title text-dark"><?= $park['business_name'] ?></h5>
+                                    <p class="card-text text-muted"><i class="fa-solid fa-location-dot me-2"></i><?= $park['street_building_house'] ?>, <?= $park['barangay'] ?>, Zamboanga City</p>
+                                    <span class="<?= $statusClass ?>"><?= $statusText ?></span>
                                 </div>
                             </a>
-                            <div class="text-center p-2 lpseemore rounded-4 mx-3 mb-3 small" data-bs-toggle="modal" data-bs-target="#seemorepark">See more...</div>
+                            <div class="text-center p-2 lpseemore rounded-4 mx-3 mb-3 small" data-bs-toggle="modal" data-bs-target="#seemorepark"
+                            data-email="<?= htmlspecialchars($park['business_email']) ?>"
+                            data-phone="<?= htmlspecialchars($park['business_phone']) ?>"
+                            data-hours="<?= htmlspecialchars($park['operating_hours']) ?>">See more...</div>
                         </div>
                     </div>
             <?php 
@@ -106,3 +124,57 @@
     include_once 'footer.php'; 
 ?>
 
+<!-- See more food park -->
+<div class="modal fade" id="seemorepark" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-bold m-0">More Info</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <h5 class="fw-bold mb-3">Business Contact</h5>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>Business Email</span>
+                        <span data-email></span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Business Phone Number</span>
+                        <span data-phone></span>
+                    </div>
+                </div>
+                <h5 class="fw-bold mb-3">Operating Hours</h5>
+                <div class="mb-4" data-hours>
+                    <!-- Dynamically added operating hours -->
+                </div>
+
+                <button class="border-0 py-2 px-3 rounded-5 me-2"><i class="fa-regular fa-copy me-2 fs-5"></i>Share Link</button>
+                <button class="border-0 py-2 px-3 rounded-5" data-bs-toggle="modal" data-bs-target="#report"><i class="fa-regular fa-flag me-2 fs-5"></i>Report</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('seemorepark');
+
+    modal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+
+        // Get data attributes
+        const email = button.getAttribute('data-email');
+        const phone = button.getAttribute('data-phone');
+        const hours = button.getAttribute('data-hours');
+
+        // Populate modal fields
+        modal.querySelector('.modal-body span[data-email]').textContent = email || 'N/A';
+        modal.querySelector('.modal-body span[data-phone]').textContent = phone || 'N/A';
+
+        // Populate operating hours
+        const hoursContainer = modal.querySelector('.modal-body div[data-hours]');
+        hoursContainer.innerHTML = hours
+            ? hours.split('; ').map(hour => `<p>${hour}</p>`).join('')
+            : '<p>No operating hours available</p>';
+    });
+</script>

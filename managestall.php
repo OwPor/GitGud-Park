@@ -1,15 +1,58 @@
-<?php 
+<?php  
     include_once 'header.php'; 
     include_once 'links.php'; 
     include_once 'nav.php';
     include_once 'bootstrap.php'; 
-    include_once 'modals.php'; 
 ?>
+
 <style>
-    main{
+     main{
         padding: 20px 120px;
     }
+    .btn{
+        width: 150px;
+    }
+    .ip{
+        color: #CD5C08;
+        font-weight: bold;
+    }
+    .select2-selection__choice {
+        display: flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        padding: 5px 10px !important;
+        background-color: #f8f8f8 !important; 
+        border: 1px solid #ccc !important; 
+        padding: 0 10px !important;
+        border-radius: 30px !important; 
+        margin: 4px !important;
+    }
+
+    .select2-selection__choice__remove {
+        font-size: 20px !important;
+        margin-left: auto !important; 
+        order: 2 !important; 
+    }
+    .select2-selection {
+        padding: 10px !important;
+    }
+
+    .select2-selection__choice img {
+        width: 25px !important;
+        height: 25px !important;
+        border-radius: 50% !important;
+    }
+
+    .select2-results__option{
+        padding: 7px 15px !important;
+        background-color: white !important;
+        color: black !important;
+    }
+    .select2-results__option--highlighted{
+        background-color: #e0e0e0 !important;
+    }
 </style>
+
 <main>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex gap-3 align-items-center">
@@ -657,6 +700,153 @@
     </div> 
     <br><br><br><br><br>
 </main>
+
+<div class="modal fade" id="invitestall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header pb-0 border-0">
+                <div class="d-flex gap-3 align-items-center">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Stall Owners</h1>
+                    <i class="fa-regular fa-circle-question m-0" data-bs-toggle="tooltip" data-bs-placement="right" title="An email will be sent to them with an invitaion link to register their stall under your food park. Once they complete the registration, their stall will be added to your food park."></i>
+                    <script>
+                        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+                        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                    </script>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <select id="emailSelect" name="emails[]" multiple="multiple" style="width: 100%;"></select>
+                </div>
+                <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/user.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin (you)</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Park Owner</i>
+                </div>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/profile.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Stall Owner</i>
+                </div>
+                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/profile.jpg" alt="">
+                        <div>
+                            <span class="fw-bold">Naila Haliluddin</span>
+                            <p class="m-0">example@gmail.com</p>
+                        </div>
+                    </div>
+                    <i class="text-muted small mr-1">Stall Owner</i>
+                </div>
+            </div>
+            <div class="modal-footer pt-0 border-0">
+                <button type="button" class="btn btn-primary send p-2" id="createStallBtn">Create Stall Page</button>
+                <button type="button" class="btn btn-primary send p-2">Send Invitation Link</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+$(document).ready(function () {
+    $("#emailSelect").select2({
+        placeholder: "Add emails to send invitation link",
+        allowClear: true,
+        templateResult: formatEmailWithImage, // For dropdown items
+        templateSelection: formatSelectedEmail, // For selected items
+        dropdownParent: $("#invitestall"), // Ensure it renders within the modal
+        ajax: {
+            url: "fetch_emails.php",
+            type: "GET",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return { search: params.term };
+            },
+            processResults: function (data) {
+                return { 
+                    results: data.map(user => ({
+                        id: user.id,  // Use user ID instead of email as ID
+                        text: user.email,
+                        profile_img: user.profile_img
+                    }))
+                };
+            },
+            cache: true
+        }
+
+    });
+
+    // Format items in dropdown with an image
+    function formatEmailWithImage(item) {
+        if (!item.id) return item.text; // If no ID, show plain text
+
+        let imgSrc = item.profile_img ? item.profile_img : "default-avatar.png"; // Fallback image
+        return $(
+            `<div style="display: flex; align-items: center;">
+                <img src="${imgSrc}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                <span>${item.text}</span>
+            </div>`
+        );
+    }
+
+    // Format the selected items inside the box
+    function formatSelectedEmail(item) {
+        if (!item.id) return item.text;
+
+        let imgSrc = item.profile_img ? item.profile_img : "default-avatar.png"; // Fallback image
+        return $(
+            `<div style="display: flex; align-items: center; gap: 5px;">
+                <img src="${imgSrc}" style="width: 20px; height: 20px; border-radius: 50%;">
+                <span>${item.text}</span>
+            </div>`
+        );
+    }
+
+    $('#invitestall').on('shown.bs.modal', function () {
+        $("#emailSelect").val(null).trigger("change"); // Reset selection
+    });
+
+    $("#createStallBtn").on("click", function () {
+        let selectedUsers = $("#emailSelect").select2("data"); // Get selected user objects
+        let parkId = "<?php echo $_SESSION['current_park_id']; ?>"; // Get park ID
+
+        if (!selectedUsers || selectedUsers.length === 0) {
+            alert("Please select at least one user!");
+            return;
+        }
+
+        // Open a new window/tab for each selected user
+        selectedUsers.forEach(function (user) {
+            let userId = user.id; // Fetch user ID from selection
+            let userEmail = encodeURIComponent(user.text); // Fetch user email
+
+            window.open(
+                `stallregistration.php?owner_email=${userEmail}&owner_id=${userId}&park_id=${parkId}`, 
+                "_blank"
+            );
+        });
+    });
+
+
+
+
+});
+
+</script>
 
 <?php 
     include_once 'footer.php'; 

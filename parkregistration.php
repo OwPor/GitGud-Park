@@ -6,7 +6,7 @@ include_once 'secondheader.php';
 require_once './classes/db.class.php';
 $userObj = new User();
 
-$first_name = $last_name = $email = $phone = $business_name = $business_type = $branches = $business_email = $business_phone = $region_province_city = $barangay = $street_building_house = $business_permit = '';
+$first_name = $last_name = $email = $phone = $business_name = $business_type = $branches = $business_email = $business_phone = $region_province_city = $barangay = $street_building_house = $business_permit = $business_logo = '';
 //$err = $first_name_err = $last_name_err = $email_err = $phone_err = $business_name_err = $business_type_err = $branches_err = $business_email_err = $business_phone_err = $region_province_city_err = $barangay_err = $street_building_house_err = $business_permit_err = '';
 
 $business_email = '';
@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $barangay = htmlspecialchars(trim($_POST['barangay']), ENT_QUOTES, 'UTF-8');
     $street_building_house = htmlspecialchars(trim($_POST['sbh']), ENT_QUOTES, 'UTF-8');
     $business_permit = isset($_FILES['businesspermit']) ? $_FILES['businesspermit'] : '';
+    $business_logo = isset($_FILES['businesslogo']) ? $_FILES['businesslogo'] : '';
 
     if (isset($_FILES['businesspermit']) && $_FILES['businesspermit']['error'] == UPLOAD_ERR_OK) {
         $uploadDir = 'uploads/business/';
@@ -94,6 +95,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $business_permit_err = 'Failed to upload the business permit.';
         }
+    }
+
+    if (isset($_FILES['businesslogo']) && $_FILES['businesslogo']['error'] == UPLOAD_ERR_OK) {
+        $uploadDir = 'uploads/business/';
+    
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+    
+        $fileExtension = pathinfo($_FILES['businesslogo']['name'], PATHINFO_EXTENSION);
+        $uniqueFileName = $uploadDir . uniqid('logo_', true) . '.' . $fileExtension;
+    
+        if (move_uploaded_file($_FILES['businesslogo']['tmp_name'], $uniqueFileName)) {
+            $business_logo = $uniqueFileName;
+        } else {
+            $business_logo_err = 'Failed to upload the business logo.';
+        }
     }    
 
     $user_id = $_SESSION['user']['id'];
@@ -101,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $operatingHoursJson = $_POST['operating_hours'];
     $operatingHours = json_decode($operatingHoursJson, true);
     
-    $business_id = $userObj->registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit, $operatingHours);
+    $business_id = $userObj->registerBusiness($user_id, $business_name, $business_type, $region_province_city, $barangay, $street_building_house, $business_phone, $business_email, $business_permit, $business_logo, $operatingHours);
     if ($business_id) {
         header('Location: pendingapproval.php');
         //var_dump($business_id);
@@ -298,6 +316,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                 </script>
 
+                <div class="mb-4">
+                    <label for="businesslogo">Upload your business logo<span style="color: #CD5C08;">*</span></label>
+                    <div class="logocon px-3 py-4 mt-3 text-center border" onclick="document.getElementById('businesslogo').click();">
+                        <img src="assets/images/upload-icon.png" class="w-50 h-50 mb-2" alt=""><br>
+                        <span>Maximum of 5MB and can accept only JPG, JPEG, PNG format</span>
+                        <input type="file" id="businesslogo" accept="image/jpeg, image/png, image/jpg" name="businesslogo" style="display:none;" />
+                    </div>
+                    <div id="uploaded-parkfiles" class="mt-4">
+                        <!-- Uploaded Park Image files list -->
+                    </div>
+                </div>
+
                 <input type="hidden" name="operating_hours" id="operating_hours">
                 <div class="add-schedule mb-4 small">
                     <label class="mb-3">What is your business operating hours? <span style="color: #CD5C08;">*</span></label>
@@ -445,8 +475,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         document.querySelectorAll('input[name="days"]').forEach(checkbox => checkbox.checked = false);
                     }
                 </script>
-
-
             </div>
             <div class="btns-group">
                 <a href="#" class="button btn-prev">Previous</a>
@@ -485,17 +513,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </p>
                 <div>
                     <label for="fplogo">Upload FULL pages of your Business Permit <span style="color: #CD5C08;">*</span></label>
-                    <div class="logocon px-3 py-4 mt-3 text-center border">
+                    <div class="logocon px-3 py-4 mt-3 text-center border" onclick="document.getElementById('fplogo').click();">
                         <img src="assets/images/upload-icon.png" class="w-50 h-50 mb-2" alt=""><br>
                         <span>Maximum of 5MB and can accept only JPG, JPEG, PNG or PDF format</span>
                         <input type="file" id="fplogo" accept="image/jpeg, image/png, image/jpg, application/pdf" name="businesspermit" style="display:none;" />
                     </div>
-                    
                     <div id="uploaded-files" class="mt-4">
-                        <!-- Uploaded files list will appear here -->
+                        <!-- Uploaded Business Permit files list -->
                     </div>
                 </div>
-                <script src="assets/js/uploadedfiles.js?v=<?php echo time(); ?>"></script>
             </div>
             <div class="btns-group">
                 <a href="" class="button btn-prev">Previous</a>
@@ -503,114 +529,116 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
         <div class="form-step">
-    <div class="mb">
-        <h4 class="fw-bold">Review your details</h4>
-        <p class="par mb-4">
-            Check carefully before you send us all the important information.
-        </p>
-        <div class="box py-3 fs">
-            <!-- Business Owner Section -->
-            <div class="mb-2">
-                <h6 class="fw-bold">Business Owner</h6>
-                <a href="#" class="edit-btn" data-step="0">Edit</a>
+            <div class="mb">
+                <h4 class="fw-bold">Review your details</h4>
+                <p class="par mb-4">
+                    Check carefully before you send us all the important information.
+                </p>
+                <div class="box py-3 fs">
+                    <!-- Business Owner Section -->
+                    <div class="mb-2">
+                        <h6 class="fw-bold">Business Owner</h6>
+                        <a href="#" class="edit-btn" data-step="0">Edit</a>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">First Name</span>
+                        <span class="first-name">N/A</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Last Name</span>
+                        <span class="last-name">N/A</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Email</span>
+                        <span class="email">N/A</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Mobile Phone Number</span>
+                        <span class="phone">N/A</span>
+                    </div>
+                </div>
+                
+                <!-- Business Details Section -->
+                <div class="box py-3 fs">
+                    <div class="mb-2">
+                        <h6 class="fw-bold">Business Details</h6>
+                        <a href="#" class="edit-btn" data-step="1">Edit</a>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Business Name</span>
+                        <span class="business-name">N/A</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Business Type</span>
+                        <span class="business-type">Food Park</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Business Email</span>
+                        <span class="business-email">N/A</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Business Phone Number</span>
+                        <span class="business-phone">N/A</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Business Logo</span>
+                        <span class="business-logo">N/A</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Operating Hours</span>
+                        <span id="review-operating-hours">N/A</span>
+                    </div>
+                </div>
+
+                <!-- Business Address Section -->
+                <div class="box py-3 fs">
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Business Address</h6>
+                        <a href="#" class="edit-btn" data-step="2">Edit</a>
+                    </div>
+                    <span class="mb-1"><span class="sbh">N/A</span>, <span class="barangay">N/A</span>, Zamboanga City, Zamboanga Del Sur, Mindanao, 7000</span>
+                </div>
+                
+                <!-- Business Document Section -->
+                <div class="box py-3 mb-4 fs">
+                    <div class="mb-2">
+                        <h6 class="fw-bold">Business Document</h6>
+                        <a href="#" class="edit-btn" data-step="3">Edit</a>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">File</span>
+                        <span class="fplogo">N/A</span>
+                    </div>
+                </div>
+
+                <!-- Terms and Conditions Checkbox -->
+                <div class="form-check mb-4 last">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        By clicking this box, I confirm that I am authorised by the Vendor to accept this Registration Form and the following <a href="#">Terms and Conditions.</a>
+                    </label>
+                </div>
             </div>
-            <div class="mb-2">
-                <span class="text-muted">First Name</span>
-                <span class="first-name">N/A</span>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">Last Name</span>
-                <span class="last-name">N/A</span>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">Email</span>
-                <span class="email">N/A</span>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">Mobile Phone Number</span>
-                <span class="phone">N/A</span>
+
+            <!-- Buttons -->
+            <div class="btns-group">
+                <a href="#" class="button btn-prev">Previous</a>
+                <input type="submit" value="Submit" class="button" id="submitButton" />
             </div>
         </div>
-        
-        <!-- Business Details Section -->
-        <div class="box py-3 fs">
-            <div class="mb-2">
-                <h6 class="fw-bold">Business Details</h6>
-                <a href="#" class="edit-btn" data-step="1">Edit</a>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">Business Name</span>
-                <span class="business-name">N/A</span>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">Business Type</span>
-                <span class="business-type">Food Park</span>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">Business Email</span>
-                <span class="business-email">N/A</span>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">Business Phone Number</span>
-                <span class="business-phone">N/A</span>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">Operating Hours</span>
-                <span id="review-operating-hours">N/A</span>
-            </div>
-        </div>
-
-        <!-- Business Address Section -->
-        <div class="box py-3 fs">
-            <div class="mb-3">
-                <h6 class="fw-bold">Business Address</h6>
-                <a href="#" class="edit-btn" data-step="2">Edit</a>
-            </div>
-            <span class="mb-1"><span class="sbh">N/A</span>, <span class="barangay">N/A</span>, Zamboanga City, Zamboanga Del Sur, Mindanao, 7000</span>
-        </div>
-        
-        <!-- Business Document Section -->
-        <div class="box py-3 mb-4 fs">
-            <div class="mb-2">
-                <h6 class="fw-bold">Business Document</h6>
-                <a href="#" class="edit-btn" data-step="3">Edit</a>
-            </div>
-            <div class="mb-2">
-                <span class="text-muted">File</span>
-                <span class="fplogo">N/A</span>
-            </div>
-        </div>
-
-        <!-- Terms and Conditions Checkbox -->
-        <div class="form-check mb-4 last">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                By clicking this box, I confirm that I am authorised by the Vendor to accept this Registration Form and the following <a href="#">Terms and Conditions.</a>
-            </label>
-        </div>
-    </div>
-
-    <!-- Buttons -->
-    <div class="btns-group">
-        <a href="#" class="button btn-prev">Previous</a>
-        <input type="submit" value="Submit" class="button" id="submitButton" />
-    </div>
-</div>
-
-<!-- JavaScript -->
-<script>
-    document.getElementById("submitButton").addEventListener("click", function (e) {
-        // Check if the checkbox is selected
-        const checkbox = document.getElementById("flexCheckDefault");
-        if (!checkbox.checked) {
-            e.preventDefault(); // Prevent form submission
-            alert("Please confirm the Terms and Conditions by checking the box.");
-        }
-    });
-</script>
-
-
+        <script>
+            document.getElementById("submitButton").addEventListener("click", function (e) {
+                // Check if the checkbox is selected
+                const checkbox = document.getElementById("flexCheckDefault");
+                if (!checkbox.checked) {
+                    e.preventDefault(); // Prevent form submission
+                    alert("Please confirm the Terms and Conditions by checking the box.");
+                }
+            });
+        </script>`
     </form>
+
+    <script src="assets/js/uploadedfiles.js?v=<?php echo time(); ?>"></script>
 
     <!-- Bootstrap Modal -->
     <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
@@ -655,6 +683,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             barangay: "",
             sbh: "",
             fplogo: "",
+            businessLogo: "",
         };
 
         nextBtns.forEach((btn) => {
@@ -726,6 +755,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     else if (id === "barangay") formData.barangay = value;
                     else if (id === "sbh") formData.sbh = value;
                     else if (id === "fplogo") formData.fplogo = value;
+                    else if (id === "businesslogo") formData.businessLogo = value;
 
                     else formData[id] = value;
                 }
@@ -801,6 +831,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                 }
 
+                if (id === "businesslogo") {
+                    if (input.files.length === 0) {
+                        errors.push("The business logo is required.");
+                    } else {
+                        const file = input.files[0];
+                        const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+                        const maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
+
+                        if (!allowedTypes.includes(file.type)) {
+                            errors.push("The business logo must be a PNG, JPEG, or JPG file.");
+                        }
+                        if (file.size > maxSizeInBytes) {
+                            errors.push("The business logo must not exceed 5 MB.");
+                        }
+                    }
+                }
+
                 if (id === "businessemail" && !emailCheckbox.checked) {
                     if (value === "") {
                         errors.push("The business email is required.");
@@ -850,6 +897,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             document.querySelector(".barangay").textContent = formData.barangay;
             document.querySelector(".sbh").textContent = formData.sbh;
             document.querySelector(".fplogo").textContent = formData.fplogo;
+            document.querySelector(".business-logo").textContent = formData.businessLogo;
 
             // Update Operating Hours
             const reviewOperatingHours = document.getElementById("review-operating-hours");

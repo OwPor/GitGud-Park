@@ -190,9 +190,13 @@ nav ul li a{text-decoration: none;}
     -webkit-text-stroke: 0.3px black;
     font-size: 20px;
 }
-.discount, .newopen, .opennow{
+.discount, .newopen, .opennow, .cnow{
     font-size: 11px;
     padding: 3px 10px;
+}
+.cnow{
+  background-color: gray;
+  color: white;
 }
 .discount {
     color: #FFF5E4;

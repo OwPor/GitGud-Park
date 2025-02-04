@@ -28,7 +28,8 @@ class Admin {
                 business.business_status, 
                 business.business_email, 
                 business.business_phone, 
-                business.business_permit, 
+                business.business_permit,
+                business.business_logo, 
                 business.created_at, 
                 CONCAT(users.first_name, ' ', users.last_name) AS owner_name,
                 GROUP_CONCAT(DISTINCT CONCAT(operating_hours.days, '<br>', operating_hours.open_time, ' - ', operating_hours.close_time) SEPARATOR '; ') AS operating_hours

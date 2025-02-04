@@ -2,59 +2,6 @@
     .btn{
         width: 150px;
     }
-    .ip{
-        color: #CD5C08;
-        font-weight: bold;
-    }
-    .select2-selection__choice__remove{
-    font-size: 20px;
-    margin-left: 10px;
-    }
-    .select2-selection {
-    padding: 10px;
-    }
-    .select2-selection__choice {
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-    background-color: #f8f8f8 !important; 
-    border: 1px solid #ccc; 
-    padding: 0 10px !important;
-    border-radius: 30px !important; 
-    margin: 4px !important;
-    }
-
-    .select2-selection__choice img,
-    .select2-results__option img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin: 0;
-    border: 1px solid #ccc; 
-    margin-right: 7px;
-    }
-    .select2-selection__choice img{
-    width: 25px;
-    height: 25px;
-    margin-right: 5px;
-    }
-
-    .select2-results__option{
-    padding: 7px 15px;
-    background-color: white !important;
-    color: black !important;
-    }
-    .select2-results__option--highlighted{
-    background-color: #e0e0e0 !important;
-    }
-    .actlog{
-        border-bottom: 1px #ddd solid;
-        padding: 10px 0;
-    }
-     .actlog:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
 </style>
 <!-- Menu Modal -->
 <div class="modal fade" id="menumodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -822,80 +769,6 @@
     </div>
 </div>
 
-<!-- More Park Info -->
-<div class="modal fade" id="moreparkinfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold m-0">More Info</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <h5 class="fw-bold mb-3">Business Contact</h5>
-                <div class="mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span>Business Email</span>
-                        <span data-email></span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span>Business Phone Number</span>
-                        <span data-phone class="text-muted"></span>
-                    </div>
-                </div>
-
-                <h5 class="fw-bold mb-3">Operating Hours</h5>
-                <div class="mb-4" data-hours>
-                    <!-- Dynamically added operating hours -->
-                </div>
-
-                <h5 class="fw-bold mb-3">Business Permit</h5>
-                <div class="mb-4">
-                    <i class="fa-solid fa-circle-check text-success me-2"></i>
-                    <a data-permit href="#" target="_blank"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    const modal = document.getElementById('moreparkinfo');
-
-    modal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-
-        // Get data attributes
-        const email = button.getAttribute('data-email');
-        const phone = button.getAttribute('data-phone');
-        const hours = button.getAttribute('data-hours');
-        const permit = button.getAttribute('data-permit'); // File name (e.g., "permit.pdf")
-
-        // Populate modal fields
-        modal.querySelector('.modal-body span[data-email]').textContent = email || 'N/A';
-        modal.querySelector('.modal-body span[data-phone]').textContent = phone || 'N/A';
-
-        // Populate operating hours
-        const hoursContainer = modal.querySelector('.modal-body div[data-hours]');
-        hoursContainer.innerHTML = hours 
-            ? hours.split('; ').map(hour => `<p>${hour}</p>`).join('') 
-            : '<p>No operating hours available</p>';
-
-        // Populate permit link
-        const permitLink = modal.querySelector('.modal-body a[data-permit]');
-        if (permit) {
-            permitLink.textContent = permit; // Display file name
-            permitLink.href = `${permit}`; // Set file path
-            permitLink.target = '_blank'; // Open in new tab
-        } else {
-            permitLink.textContent = 'No permit file';
-            permitLink.removeAttribute('href');
-            permitLink.removeAttribute('target');
-        }
-    });
-
-</script>
-
  <!-- Edit Food Park Modal -->
  <div class="modal fade" id="editfoodpark" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-custom-width">
@@ -1086,68 +959,6 @@
                         <button type="button" class="btn btn-primary">Delete</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Invite Stall Modal -->
-<div class="modal fade" id="invitestall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header pb-0 border-0">
-                <div class="d-flex gap-3 align-items-center">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Stall Owners</h1>
-                    <i class="fa-regular fa-circle-question m-0" data-bs-toggle="tooltip" data-bs-placement="right" title="An email will be sent to them with an invitaion link to register their stall under your food park. Once they complete the registration, their stall will be added to your food park."></i>
-                    <script>
-                        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-                        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-                    </script>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <select id="emailInput" name="emails[]" class="form-control select2" multiple="multiple" aria-label="Email input with profile circle">
-                    </select>
-                </div>
-                <script src="assets/js/sendemail.js?v=<?php echo time(); ?>"></script>
-
-                <h6 class=" mb-3 mt-3 mt-1">People in your food park</h6>
-                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/user.jpg" alt="">
-                        <div>
-                            <span class="fw-bold">Naila Haliluddin (you)</span>
-                            <p class="m-0">example@gmail.com</p>
-                        </div>
-                    </div>
-                    <i class="text-muted small mr-1">Park Owner</i>
-                </div>
-                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/profile.jpg" alt="">
-                        <div>
-                            <span class="fw-bold">Naila Haliluddin</span>
-                            <p class="m-0">example@gmail.com</p>
-                        </div>
-                    </div>
-                    <i class="text-muted small mr-1">Stall Owner</i>
-                </div>
-                <div class="owner mt-1 py-1 px-2 d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/profile.jpg" alt="">
-                        <div>
-                            <span class="fw-bold">Naila Haliluddin</span>
-                            <p class="m-0">example@gmail.com</p>
-                        </div>
-                    </div>
-                    <i class="text-muted small mr-1">Stall Owner</i>
-                </div>
-            </div>
-            <div class="modal-footer pt-0 border-0">
-                <button type="button" class="btn btn-primary send p-2" onclick="window.location.href='stallregistration.php';">Create Stall Page</button>
-                <button type="button" class="btn btn-primary send p-2">Send Invitation Link</button>
             </div>
         </div>
     </div>
@@ -1766,44 +1577,6 @@
     </div>
 </div>
 
-<!-- See more food park -->
-<div class="modal fade" id="seemorepark" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold m-0">More Info</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <h5 class="fw-bold mb-3">Business Contact</h5>
-                <div class="mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span>Business Email</span>
-                        <span>example@gmail.com</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span>Business Phone Number</span>
-                        <span class="text-muted">+639123456789</span>
-                    </div>
-                </div>
-                <h5 class="fw-bold mb-3">Operating Hours</h5>
-                <div class="mb-4">
-                    <div class="mb-2">
-                        <p class="mb-1">Monday, Tuesday, Thursday</p>
-                        <span>7AM - 7PM</span>
-                    </div>
-                    <div class="">
-                        <p class="mb-1">Wednesday, Friday, Saturday</p>
-                        <span>8AM - 9PM</span>
-                    </div>
-                </div>
-                <button class="border-0 py-2 px-3 rounded-5 me-2"><i class="fa-regular fa-copy me-2 fs-5"></i>Share Link</button>
-                <button class="border-0 py-2 px-3 rounded-5" data-bs-toggle="modal" data-bs-target="#report"><i class="fa-regular fa-flag me-2 fs-5"></i>Report</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Report -->
 <div class="modal fade" id="report" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered">
@@ -1826,3 +1599,23 @@
     </div>
   </div>
 </div>
+
+
+ <!-- Pending Cashless Approval 
+    <div class="modal fade" id="pendingcashless" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <br>
+                    <div class="text-center">
+                        <i class="fa-solid fa-wallet mb-4"  style="color: #CD5C08; font-size: 80px"></i>
+                        <p class="mb-4">Your selected payment method (GCash) is pending approval. Please note that the admin will review and set up the API before this payment method can be used. You will receive a notification once an action has been taken.</p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="button" class="button w-25" onclick="window.location.href='stallpage.php';">OK</button>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>-->

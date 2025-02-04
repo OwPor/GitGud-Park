@@ -1,10 +1,12 @@
 <?php 
     include_once 'links.php'; 
     include_once 'header.php';
-    require_once __DIR__ . '/classes/db.class.php';
-    require_once __DIR__ . '/classes/park.class.php';
-    $userObj = new User();
+
+    $stalls = $parkObj->getStalls($park_id); 
+    
+    /*$userObj = new User();
     $parkObj = new Park();
+    
     $isLoggedIn = false;
 
     if (isset($_SESSION['user']['id'])) {
@@ -33,8 +35,7 @@
     } else {
         header('Location: index.php');
         exit();
-    }
-
+    }*/
 ?>
 
 <style>
@@ -298,8 +299,8 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-4 g-3">
-        <div class="col">
-            <!-- <a href="stall.php" class="card-link text-decoration-none bg-white"> -->
+        <!--<div class="col">
+            <a href="stall.php" class="card-link text-decoration-none bg-white">
                 <div class="card" style="position: relative;">
                     <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
                     <div class="closed">Closed until Wed 10:00 AM</div>
@@ -322,34 +323,39 @@
                     </div>
                 </div>
             </a>
-        </div>
-        <!-- <div class="col">
-            <a href="stall.php" class="card-link text-decoration-none bg-white">
-                <div class="card" style="position: relative;">
-                    <img src="assets/images/foodpark.jpg" class="card-img-top" alt="...">
-                    <button class="add"><i class="fa-regular fa-heart"></i></button>
-                    <div class="card-body">
-                         <div class="d-flex gap-2 align-items-center">
-                        <p class="card-text text-muted m-0">Category</p>
-                        <span class="dot text-muted"></span>
-                        <p class="card-text text-muted m-0">Category</p>
-                    </div>
-                        <h5 class="card-title my-2">Food Stall Name</h5>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text text-muted m-0">Description</p>
-                            <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="opennow">Top Rated</span>
-                            <span class="discount">With Promo</span>
-                            <span class="newopen">New Open</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div> -->
-
+        </div>-->
         <?php
+            foreach ($stalls as $stall) { ?>
+                <div class="col">
+                    <a href="stall.php" class="card-link text-decoration-none bg-white">
+                        <div class="card" style="position: relative;">
+                            <img src="<?= $stall['logo'] ?>" class="card-img-top" alt="...">
+                            <button class="add"><i class="fa-regular fa-heart"></i></button>
+                            <div class="card-body">
+                                <div class="d-flex gap-2 align-items-center">
+                                <p class="card-text text-muted m-0">Category</p>
+                                <span class="dot text-muted"></span>
+                                <p class="card-text text-muted m-0">Category</p>
+                            </div>
+                                <h5 class="card-title my-2"><?= $stall['name'] ?></h5>
+                                <div class="d-flex justify-content-between">
+                                    <p class="card-text text-muted m-0"><?= $stall['description'] ?></p>
+                                    <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="opennow">Top Rated</span>
+                                    <span class="discount">With Promo</span>
+                                    <span class="newopen">New Open</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+        <?php
+            }
+        ?>
+
+        <!--<?php
             foreach ($stalls as $stall) {
                 if ($stall['status'] == 'Open') {
                     $uniqueLink = "./stall.php?pid=" . $_GET['id'] . '&' . 'sid=' . $stall['id'];
@@ -392,10 +398,14 @@
                 <?php
                 }
             } 
-        ?>
+        ?>-->
+
     </div>
+
     <br><br>
+
 </section>
+
 <SCript>
     // Select all anchor tags with the class 'add'
     document.querySelectorAll('.add').forEach(anchor => {
