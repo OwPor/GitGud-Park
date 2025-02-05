@@ -11,12 +11,8 @@
     $userObj = new User();
     $parkObj = new Park();
 
-    $businessname = $description = $businessemail = $businessphonenumber = $website = '';
-    $errors = [];
-    if (!empty($stalllogo)) {
-        $_SESSION['stalllogo'] = $stalllogo; // Store in session
-    }
-    
+    $stalllogo = $businessname = $description = $businessemail = $businessphonenumber = $website = '';
+
     if (isset($_GET['owner_email']) && isset($_GET['owner_id']) && isset($_GET['park_id'])) {
         $owner_email = $_GET['owner_email'];
         $owner_id = $_GET['owner_id'];
@@ -26,86 +22,44 @@
     } 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $businessname = trim($_POST['businessname']);
-        $description = trim($_POST['description']);
-        $businessemail = trim($_POST['businessemail']);
-        $businessphonenumber = trim($_POST['businessphonenumber']);
-        $website = trim($_POST['website']);
-        
-        $categories = $_POST['categories'] ?? [];
-        $payment_methods = $_POST['payment_methods'] ?? [];
-        $operatingHoursJson = $_POST['operating_hours'] ?? '';
+        $businessname = clean_input($_POST['businessname']);
+        $description = clean_input($_POST['description']);
+        $businessemail = clean_input($_POST['businessemail']);
+        $businessphonenumber = clean_input($_POST['businessphonenumber']);
+        $website = clean_input($_POST['website']);
     
-        if (empty($businessname)) {
-            $errors[] = "Business name is required.";
-        }
-    
-        if (empty($categories)) {
-            $errors[] = "At least one category must be selected.";
-        }
-    
-        if (empty($description)) {
-            $errors[] = "Business description is required.";
-        }
-    
-        if (!filter_var($businessemail, FILTER_VALIDATE_EMAIL)) {
-            $errors[] = "Enter a valid business email.";
-        }
-    
-        if (!preg_match('/^[0-9]{10}$/', $businessphonenumber)) {
-            $errors[] = "Enter a valid 10-digit Philippine phone number.";
-        }
+        $categories = isset($_POST['categories']) ? $_POST['categories'] : []; // Get categories
+        $payment_methods = isset($_POST['payment_methods']) ? $_POST['payment_methods'] : []; // Get payment methods
     
         if (isset($_FILES['stalllogo']) && $_FILES['stalllogo']['error'] == UPLOAD_ERR_OK) {
-            $file = $_FILES['stalllogo'];
-            $fileSize = $file['size'];
-            $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    
-            if ($fileSize > 5 * 1024 * 1024) {
-                $errors[] = "Business logo must be less than 5MB.";
+            $uploadDir = 'uploads/business/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
             }
     
-            if (!in_array($fileExtension, ['jpg', 'jpeg', 'png'])) {
-                $errors[] = "Invalid file format. Only JPG, JPEG, and PNG allowed.";
+            $fileExtension = pathinfo($_FILES['stalllogo']['name'], PATHINFO_EXTENSION);
+            $uniqueFileName = uniqid('stall_', true) . '.' . $fileExtension;
+            $uploadPath = $uploadDir . $uniqueFileName;
+    
+            if (move_uploaded_file($_FILES['stalllogo']['tmp_name'], $uploadPath)) {
+                $stalllogo = $uploadPath;
             }
-        } else {
-            $errors[] = "Business logo is required.";
         }
     
-        if (empty($payment_methods)) {
-            $errors[] = "At least one payment method must be selected.";
-        }
+        $operatingHoursJson = $_POST['operating_hours'];
+        $operatingHours = json_decode($operatingHoursJson, true);
     
-        if (empty($operatingHoursJson)) {
-            $errors[] = "Operating hours are required.";
-        }
-    
-        if (!isset($_POST['agreement'])) {
-            $errors[] = "You must agree to the terms before proceeding.";
-        }
-    
-        if (empty($errors)) {
-            $stalllogo = ''; 
-    
-            if (isset($_FILES['stalllogo']) && $_FILES['stalllogo']['error'] == UPLOAD_ERR_OK) {
-                $uploadDir = 'uploads/business/';
-                if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
-    
-                $uniqueFileName = uniqid('stall_', true) . '.' . $fileExtension;
-                $uploadPath = $uploadDir . $uniqueFileName;
-    
-                if (move_uploaded_file($_FILES['stalllogo']['tmp_name'], $uploadPath)) {
-                    $stalllogo = $uploadPath;
-                }
-            }
-    
-            $operatingHours = json_decode($operatingHoursJson, true);
-    
-            $stall = $parkObj->addStall($owner_id, $park_id, $businessname, $description, $businessemail, $businessphonenumber, $website, $stalllogo, $operatingHours, $categories, $payment_methods);
-    
-        }
-    }
-    
+        // Pass categories and payment methods to addStall function
+        $stall = $parkObj->addStall($owner_id, $park_id, $businessname, $description, $businessemail, $businessphonenumber, $website, $stalllogo, $operatingHours, $categories, $payment_methods);
+
+        echo "<script>
+            alert('Stall has been successfully added to your food park. The stall owner can now be part of the service.');
+            window.location.href = 'managestall.php';
+            setTimeout(() => { window.close(); }, 1000);
+        </script>";
+        exit;
+
+    } 
 ?>
 <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
 <style>
@@ -158,6 +112,7 @@
             </div>
             <i class="text-muted">Stall Owner</i>
         </div>
+        
         <div class="d-flex gap-3 align-items-center">
             <div class="logo px-4 py-5 text-center border flex-shrink-0" id="logoContainer" onclick="document.getElementById('stalllogo').click();" 
                 style="background-size: cover; background-position: center;">
@@ -187,29 +142,22 @@
             
             <div class="flex-grow-1 ms-4">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="businessname" name="businessname" placeholder="Business Name" value="<?php echo htmlspecialchars($businessname); ?>">
+                    <input type="text" class="form-control" style="color: black;" id="businessname" name="businessname" placeholder="Business Name">
                     <label for="businessname">Business Name <span style="color: #CD5C08;">*</span></label>
                 </div>
 
                 <div class="form-group m-0 select2Part select2multiple w-100 floating-group">
                     <label class="floating-label">Categories <span style="color: #CD5C08;">*</span></label>
                     <select name="categories[]" id="categories" class="form-control customSelectMultiple floating-control" multiple>
-                        <?php 
-                        $selectedCategories = isset($_POST['categories']) ? $_POST['categories'] : [];
-                        $categories = ["Drinks", "Vegetables", "Desserts"];
-                        
-                        foreach ($categories as $category) {
-                            $selected = in_array($category, $selectedCategories) ? 'selected' : '';
-                            echo "<option value='$category' $selected>$category</option>";
-                        }
-                        ?>
+                        <option value="Drinks">Drinks</option>
+                        <option value="Vegetables">Vegetables</option>
+                        <option value="Desserts">Desserts</option>
                     </select>
-
                 </div>
                 <script src="assets/js/selectcategory.js"></script>
                 
                 <div class="form-floating mt-3">
-                    <textarea class="form-control" id="description" name="description" placeholder="Description"><?php echo htmlspecialchars($description); ?></textarea>
+                    <textarea class="form-control" style="color: black;" placeholder="Description" id="description" name="description"></textarea>
                     <label for="description">Description <span style="color: #CD5C08;">*</span></label>
                 </div>
             </div>
@@ -217,18 +165,18 @@
 
         <div class="contact mt-4">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email" value="<?php echo htmlspecialchars($businessemail); ?>">
+                <input type="text" class="form-control" id="businessemail" name="businessemail" placeholder="Business Email">
                 <label for="businessemail">Business Email</label>
             </div>
             <div class="input-group mb-3 mt-0">
                 <span class="input-group-text">+63</span>
                 <div class="form-floating flex-grow-1">
-                    <input type="text" class="form-control" id="businessphonenumber" name="businessphonenumber" placeholder="Business Phone Number" value="<?php echo htmlspecialchars($businessphonenumber); ?>">
+                    <input type="text" class="form-control" id="businessphonenumber" name="businessphonenumber" placeholder="Business Phone Number">
                     <label for="businessphonenumber">Business Phone Number</label>
                 </div>
             </div>
             <div class="form-floating mb-4">
-                <input type="text" class="form-control" id="website" name="website" placeholder="Website" value="<?php echo htmlspecialchars($website); ?>">
+                <input type="text" class="form-control" id="website" name="website" placeholder="Website">
                 <label for="website">Website</label>
             </div>
         </div>
@@ -401,23 +349,26 @@
 
 
         <div class="form-check mt-4">
-            <input class="form-check-input" type="checkbox" id="agreement" name="agreement" value="1">
-            <label class="form-check-label" for="agreement">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
                 By clicking this box, I confirm that I am authorised by the Vendor to accept this Registration Form and the following <a href="">Terms and Conditions.</a>
             </label>
         </div>
         <div class="text-center pt-4 mt-4 createpage">
             <button type="submit" class="btn btn-primary send px-5">CREATE PAGE</button>
         </div>
+        
     </form>
 </main>
-<!-- Bootstrap Modal for Errors -->
-<div class="modal fade" id="errorModal" tabindex="-1">
+
+
+<!-- Bootstrap Modal for Error Messages -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger">Form Errors</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title" id="errorModalLabel">Form Errors</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <ul id="errorList" class="text-danger"></ul>
@@ -429,18 +380,80 @@
     </div>
 </div>
 
-<!-- Frontend Script to Trigger Error Modal -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const errors = <?php echo json_encode($errors); ?>;
+document.querySelector('.srform').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    let errors = [];
+
+    let logoInput = document.getElementById('stalllogo');
+    if (!logoInput.files.length) {
+        errors.push("Business logo is required.");
+    } else {
+        let file = logoInput.files[0];
+        let allowedExtensions = ['jpg', 'jpeg', 'png'];
+        let fileExtension = file.name.split('.').pop().toLowerCase();
+        if (!allowedExtensions.includes(fileExtension)) {
+            errors.push("Business logo must be a JPG, JPEG, or PNG.");
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            errors.push("Business logo must be less than 5MB.");
+        }
+    }
+
+    let businessName = document.getElementById('businessname').value.trim();
+    if (businessName === "") errors.push("Business name is required.");
+
+    let categories = document.getElementById('categories').selectedOptions;
+    if (categories.length === 0) errors.push("At least one category is required.");
+
+    let description = document.getElementById('description').value.trim();
+    if (description === "") errors.push("Business description is required.");
+
+    let email = document.getElementById('businessemail').value.trim();
+    let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (email === "") {
+        errors.push("Business email is required.");
+    } else if (!emailPattern.test(email)) {
+        errors.push("Enter a valid email address.");
+    }
+
+    let phone = document.getElementById('businessphonenumber').value.trim();
+    let phonePattern = /^[0-9]{10}$/; // Ensures exactly 10 digits
+    if (phone === "") {
+        errors.push("Business phone number is required.");
+    } else if (!phonePattern.test(phone)) {
+        errors.push("Enter a valid 10-digit phone number.");
+    }
+
+    let operatingHoursInput = document.getElementById('operating_hours').value;
+    try {
+        let operatingHours = JSON.parse(operatingHoursInput);
+        if (!Array.isArray(operatingHours) || operatingHours.length === 0) {
+            errors.push("Operating hours are required.");
+        }
+    } catch (e) {
+        errors.push("Operating hours are required.");
+    }
+
+    let paymentMethods = document.querySelectorAll('input[name="payment_methods[]"]:checked');
+    if (paymentMethods.length === 0) errors.push("At least one payment method is required.");
+
+    let termsCheckbox = document.getElementById('flexCheckDefault');
+    if (!termsCheckbox.checked) errors.push("You must accept the Terms and Conditions.");
+
     if (errors.length > 0) {
-        let errorList = document.getElementById("errorList");
+        let errorList = document.getElementById('errorList');
+        errorList.innerHTML = ""; 
         errors.forEach(error => {
-            let li = document.createElement("li");
+            let li = document.createElement('li');
             li.textContent = error;
             errorList.appendChild(li);
         });
-        new bootstrap.Modal(document.getElementById('errorModal')).show();
+
+        let errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+        errorModal.show();
+    } else {
+        event.target.submit();
     }
 });
 </script>

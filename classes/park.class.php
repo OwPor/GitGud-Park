@@ -151,6 +151,31 @@ class Park {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    function fetchRecord($recordID) {
+        $sql = "
+            SELECT 
+                stalls.*, 
+                GROUP_CONCAT(DISTINCT stall_categories.name SEPARATOR ', ') AS categories,
+                GROUP_CONCAT(DISTINCT stall_payment_methods.method SEPARATOR ', ') AS payment_methods,
+                GROUP_CONCAT(DISTINCT CONCAT(stall_operating_hours.days, ' ', stall_operating_hours.open_time, ' - ', stall_operating_hours.close_time) SEPARATOR '; ') AS operating_hours
+            FROM stalls
+            LEFT JOIN stall_categories ON stalls.id = stall_categories.stall_id
+            LEFT JOIN stall_payment_methods ON stalls.id = stall_payment_methods.stall_id
+            LEFT JOIN stall_operating_hours ON stalls.id = stall_operating_hours.stall_id
+            WHERE stalls.id = :recordID
+            GROUP BY stalls.id;
+        ";
+    
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':recordID', $recordID);
+    
+        if ($query->execute()) {
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }
+        return [];
+    }
+    
+
     
     
     
