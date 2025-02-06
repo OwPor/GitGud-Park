@@ -405,25 +405,39 @@ class User {
     }
     
 
-    function getOrders($user_id, $search = null) {
+    public function getOrders($user_id, $search = null) {
         try {
-            $sql = "SELECT * FROM orders WHERE user_id = :user_id";
+            // Join orders with products table to get product information
+            $sql = "SELECT o.*, p.file_path, p.description as product_description 
+                    FROM orders o 
+                    LEFT JOIN products p ON o.product_id = p.id 
+                    WHERE o.user_id = :user_id";
+            
             $params = [":user_id" => $user_id];
     
             if ($search) {
-                $sql .= " AND (food_name LIKE :search 
-                            OR food_stall_name LIKE :search 
-                            OR order_id LIKE :search)";
+                $sql .= " AND (o.food_name LIKE :search 
+                            OR o.food_stall_name LIKE :search 
+                            OR o.order_id LIKE :search)";
                 $params[":search"] = "%{$search}%";
             }
     
             // Order by food_stall_name first, then by order_date in descending order
-            $sql .= " ORDER BY food_stall_name ASC, order_date DESC";
+            $sql .= " ORDER BY o.food_stall_name ASC, o.order_date DESC";
     
             $stmt = $this->db->connect()->prepare($sql);
             $stmt->execute($params);
+            
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // Format the results if needed
+            foreach ($result as &$order) {
+                // Add any additional formatting here
+                $order['price'] = number_format($order['price'], 2); // Format price to 2 decimal places
+                $order['order_date'] = date('Y-m-d H:i:s', strtotime($order['order_date']));
+            }
+    
+            return $result;
         } catch (PDOException $e) {
             error_log("Error fetching orders: " . $e->getMessage());
             return [];
