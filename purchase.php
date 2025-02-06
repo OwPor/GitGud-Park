@@ -89,6 +89,123 @@
                                 <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
                             </div>
                         </div>
+                        <?php
+                            if ($status == 'ToPay') {
+                                ?>
+                                <div class="d-flex justify-content-between pt-2">
+                                    <div class="d-flex gap-3 align-items-center text-muted small">
+                                        <span>Payment Method: <?php echo htmlspecialchars($order['payment_method']); ?></span>
+                                        <span class="dot text-muted"></span>
+                                        <span>Your order is awaiting payment</span>
+                                    </div>
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <button class="cancelorder rounded-2" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
+                                        <span class="dot text-muted"></span>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <span class="text-muted">Sub Total:</span>
+                                            <span class="fw-bold fs-4">₱<?php echo htmlspecialchars($order['price']); ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            } else if ($status == 'Preparing') {
+                                ?>
+                                <div class="d-flex justify-content-between pt-2">
+                                    <div class="d-flex gap-3 align-items-center text-muted small">
+                                        <span>Payment Method: Cash</span>
+                                        <span class="dot text-muted"></span>
+                                        <span>Your order is being prepared</span>
+                                    </div>
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <button class="preparing rounded-2">Preparing</button>
+                                        <span class="dot text-muted"></span>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <span class="text-muted">Sub Total:</span>
+                                            <span class="fw-bold fs-4">₱103</span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            } else if ($status == 'ToReceive') {
+                                ?>
+                                <div class="d-flex justify-content-between pt-2">
+                                    <div class="d-flex gap-3 align-items-center text-muted small">
+                                        <span>Payment Method: Cash</span>
+                                        <span class="dot text-muted"></span>
+                                        <span> Your order is ready to pickup</span>
+                                    </div>
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <button class="cancelorder rounded-2" data-bs-toggle="modal" data-bs-target="#orderreceived">Order Received</button>
+                                        <span class="dot text-muted"></span>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <span class="text-muted">Sub Total:</span>
+                                            <span class="fw-bold fs-4">₱103</span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            } else if ($status == 'Completed') {
+                                ?>
+                                <div class="d-flex justify-content-between pt-2">
+                                    <div class="d-flex gap-3 align-items-center text-muted small">
+                                        <span>Payment Method: Cash</span>
+                                        <span class="dot text-muted"></span>
+                                        <span> Your order is completed</span>
+                                    </div>
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <div class="d-flex gap-2">
+                                            <button class="likeorder rounded-2"><i class="fa-regular fa-heart me-2"></i>Like</button>
+                                            <button class="cancelorder rounded-2">Buy Again</button>
+                                        </div>
+                                        <span class="dot text-muted"></span>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <span class="text-muted">Sub Total:</span>
+                                            <span class="fw-bold fs-4">₱103</span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            } else if ($status == 'Cancelled') {
+                                ?>
+                                <div class="d-flex justify-content-between pt-2">
+                                    <div class="d-flex gap-3 align-items-center text-muted small">
+                                        <span>Payment Method: Cash</span>
+                                        <span class="dot text-muted"></span>
+                                        <span>Canceled by you (Don't want to buy anymore)</span>
+                                    </div>
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <div class="d-flex gap-2">
+                                            <button class="likeorder rounded-2"><i class="fa-regular fa-heart me-2"></i>Like</button>
+                                            <button class="cancelorder rounded-2">Buy Again</button>
+                                        </div>
+                                        <span class="dot text-muted"></span>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <span class="text-muted">Sub Total:</span>
+                                            <span class="fw-bold fs-4">₱103</span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            } else if ($status == 'Scheduled') {
+                                ?>
+                                <div class="d-flex justify-content-between pt-2">
+                                    <div class="d-flex gap-3 align-items-center text-muted small">
+                                        <span>Payment Method: Cash</span>
+                                        <span class="dot text-muted"></span>
+                                        <span>Scheduled on October 15, 2024 at 1:00 PM</span>
+                                    </div>
+                                    <div class="d-flex gap-4 align-items-center">
+                                        <button class="cancelorder rounded-2" data-product-id="<?php echo $item['product_id']; ?>">Cancel Order</button>
+                                        <span class="dot text-muted"></span>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <span class="text-muted">Sub Total:</span>
+                                            <span class="fw-bold fs-4">₱103</span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            }
+                        ?>
                     </div>
                     <?php
                     }
@@ -215,7 +332,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
     <div id="toreceive" class="section-content d-none">
@@ -276,7 +392,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
     <div id="completed" class="section-content d-none">

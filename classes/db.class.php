@@ -444,15 +444,15 @@ class User {
         }
     }
 
-    function getStatusMessage($status) {
-        $messages = [
-            'ToPay' => 'Your order is awaiting payment',
-            'Preparing' => 'Your order is being prepared',
-            'ToReceive' => 'Your order is ready for pickup',
-            'Completed' => 'Order completed',
-            'Cancelled' => 'Order was cancelled',
-            'Scheduled' => 'Order is scheduled'
-        ];
-        return $messages[$status] ?? '';
-    }
+    // function getStatusMessage($status) {
+    //     $messages = [
+    //         'ToPay' => 'Your order is awaiting payment',
+    //         'Preparing' => 'Your order is being prepared',
+    //         'ToReceive' => 'Your order is ready for pickup',
+    //         'Completed' => 'Order completed',
+    //         'Cancelled' => 'Order was cancelled',
+    //         'Scheduled' => 'Order is scheduled'
+    //     ];
+    //     return $messages[$status] ?? '';
+    // }
 }
