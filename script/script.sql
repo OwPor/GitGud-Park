@@ -100,23 +100,29 @@ CREATE TABLE products (
     FOREIGN KEY (stall_id) REFERENCES stalls(id) ON DELETE CASCADE
 );
 
--- Alter products add stock and stock_warn
--- ALTER TABLE products ADD COLUMN stock INT UNSIGNED NOT NULL DEFAULT 0;
--- ALTER TABLE products ADD COLUMN stock_warn INT UNSIGNED NOT NULL DEFAULT 0;
--- ALTER TABLE products ADD COLUMN discount DECIMAL(10, 2) DEFAULT 0.00;
--- ALTER TABLE products ADD COLUMN discount_type ENUM('Percentage', 'Fixed') DEFAULT 'Percentage';
+CREATE TABLE variation_types (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT UNSIGNED NOT NULL,
+    name VARCHAR(100) NOT NULL,  -- e.g., "Size", "Color", "Spice Level"
+    is_required BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_variation_type (product_id, name)
+);
 
 CREATE TABLE product_variants (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    product_id INT UNSIGNED NOT NULL,
-    variation_type VARCHAR(100) NOT NULL,
-    name VARCHAR(100) NOT NULL,
+    variation_type_id INT UNSIGNED NOT NULL,
+    name VARCHAR(100) NOT NULL,  -- e.g., "Large", "Red", "Extra Spicy"
     additional_price DECIMAL(10, 2) DEFAULT 0.00,
     subtract_price DECIMAL(10, 2) DEFAULT 0.00,
     image_path VARCHAR(255),
+    is_default BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    FOREIGN KEY (variation_type_id) REFERENCES variation_types(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_variant (variation_type_id, name)
 );
 
 CREATE TABLE business (
@@ -185,7 +191,7 @@ CREATE TABLE orders (
     order_id VARCHAR(50) NOT NULL,
     food_stall_name VARCHAR(100) NOT NULL,
     food_name VARCHAR(100) NOT NULL,
-    variation VARCHAR(100),
+    variant_id INT UNSIGNED,
     quantity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     payment_method VARCHAR(50) NOT NULL,
@@ -200,23 +206,27 @@ INSERT INTO orders (
     order_id, 
     food_stall_name, 
     food_name, 
-    variation, 
+    variant_id, 
     quantity, 
     price, 
     payment_method, 
     status, 
     order_date
 ) VALUES 
-('1', 1, 'ORD001', 'YumYim', 'Adobo', 'Spicy', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
-('1', 1, 'ORD002', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
-('1', 1, 'ORD003', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
-('1', 1, 'ORD004', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00'),
-('1', 1, 'ORD005', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00'),
-('1', 1, 'ORD006', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
-('1', 1, 'ORD007', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
-('1', 1, 'ORD008', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
-('1', 1, 'ORD009', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00'),
-('1', 1, 'ORD010', 'YumYim', 'Adobo', 'Spicy', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00');
+('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD002', 'YumYim', 'Adobo', '2', 1, 100.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD003', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
+('1', 1, 'ORD004', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00'),
+('1', 1, 'ORD005', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00'),
+('1', 1, 'ORD006', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
+('1', 1, 'ORD007', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
+('1', 1, 'ORD008', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
+('1', 1, 'ORD009', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00'),
+('1', 1, 'ORD010', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00');
+
+-- INSERT INTO product_variants (product_id, variation_type, name, additional_price, subtract_price, image_path) VALUES (4, 'Size', 'Large', 20.00, 0.00, 'uploads/images/large.jpg');
 
 -- CREATE TABLE order_items (
 --     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -242,3 +252,76 @@ CREATE TABLE `operating_hours` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `business_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+-- First, let's insert sample data for a product with variations
+INSERT INTO products (id, name, code, description, price, category_id, stall_id, file_path) 
+VALUES (1, 'Adobo', 'ADO001', 'Filipino dish', 100.00, 1, 1, '/images/adobo.jpg');
+
+-- Insert variation types
+INSERT INTO variation_types (id, product_id, name, is_required) 
+VALUES 
+(1, 1, 'Size', true),
+(2, 1, 'Spice Level', false);
+
+-- Insert product variants
+INSERT INTO product_variants (id, variation_type_id, name, additional_price, is_default) 
+VALUES 
+(1, 1, 'Regular', 0.00, true),
+(2, 1, 'Large', 20.00, false),
+(3, 2, 'Mild', 0.00, true),
+(4, 2, 'Spicy', 10.00, false);
+
+-- Now insert the orders with proper variant references
+INSERT INTO orders (
+    user_id, 
+    product_id,
+    order_id, 
+    food_stall_name, 
+    food_name, 
+    variant_id, 
+    quantity, 
+    price, 
+    payment_method, 
+    status, 
+    order_date
+) VALUES 
+-- Orders with variants (Large size)
+('1', 1, 'ORD001', 'YumYim', 'Adobo', 2, 2, 240.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD001', 'YumYim', 'Adobo', 2, 2, 240.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD002', 'YumYim', 'Adobo', 2, 1, 120.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+
+-- Orders without variants (using 0 for variant_id)
+('1', 1, 'ORD003', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
+('1', 1, 'ORD004', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00'),
+('1', 1, 'ORD005', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00'),
+('1', 1, 'ORD006', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
+('1', 1, 'ORD007', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
+('1', 1, 'ORD008', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
+('1', 1, 'ORD009', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00'),
+('1', 1, 'ORD010', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00');
+
+
+-- UNFINISHED --
+-- INSERT INTO products (name, code, description, base_price, category_id, stall_id, file_path) 
+-- VALUES ('Adobo', 'ADO001', 'Filipino dish', 100.00, 1, 1, '/images/adobo.jpg');
+
+-- -- Insert variation types for the product
+-- INSERT INTO variation_types (product_id, name, is_required) 
+-- VALUES 
+-- (1, 'Size', true),
+-- (1, 'Spice Level', false);
+
+-- -- Insert variants for each variation type
+-- INSERT INTO product_variants (variation_type_id, name, additional_price, is_default) 
+-- VALUES 
+-- -- Size variants
+-- (1, 'Regular', 0.00, true),
+-- (1, 'Large', 20.00, false),
+-- (1, 'Extra Large', 40.00, false),
+-- -- Spice Level variants
+-- (2, 'Mild', 0.00, true),
+-- (2, 'Medium', 0.00, false),
+-- (2, 'Spicy', 5.00, false);

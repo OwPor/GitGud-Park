@@ -407,10 +407,19 @@ class User {
 
     public function getOrders($user_id, $search = null) {
         try {
-            // Join orders with products table to get product information
-            $sql = "SELECT o.*, p.file_path, p.description as product_description 
+            // Modified query to handle variation types and variants correctly
+            $sql = "SELECT o.*, 
+                           p.file_path, 
+                           p.description as product_description,
+                           CASE 
+                               WHEN o.variant_id > 0 THEN 
+                                   CONCAT(vt.name, ': ', pv.name)
+                               ELSE 'No variations'
+                           END as variation_details
                     FROM orders o 
                     LEFT JOIN products p ON o.product_id = p.id 
+                    LEFT JOIN product_variants pv ON o.variant_id = pv.id
+                    LEFT JOIN variation_types vt ON pv.variation_type_id = vt.id
                     WHERE o.user_id = :user_id";
             
             $params = [":user_id" => $user_id];
@@ -430,11 +439,16 @@ class User {
             
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            // Format the results if needed
+            // Format the results
             foreach ($result as &$order) {
-                // Add any additional formatting here
-                $order['price'] = number_format($order['price'], 2); // Format price to 2 decimal places
+                $order['price'] = number_format($order['price'], 2);
                 $order['order_date'] = date('Y-m-d H:i:s', strtotime($order['order_date']));
+                
+                // Clean up variation display
+                $order['formatted_variations'] = $order['variation_details'];
+                
+                // Remove redundant fields
+                unset($order['variation_details']);
             }
     
             return $result;
