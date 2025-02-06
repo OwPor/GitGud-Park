@@ -1528,55 +1528,6 @@
     </div>
 </div>
 
-<!-- More stall info -->
-<div class="modal fade" id="morestallinfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold m-0">More Info</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <h5 class="fw-bold mb-3">Business Contact</h5>
-                <div class="mb-4">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span>Business Email</span>
-                        <span>example@gmail.com</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span>Business Phone Number</span>
-                        <span class="text-muted">+639123456789</span>
-                    </div>
-                </div>
-                <h5 class="fw-bold mb-3">Operating Hours</h5>
-                <div class="mb-4">
-                    <div class="mb-2">
-                        <p class="mb-1">Monday, Tuesday, Thursday</p>
-                        <span>7AM - 7PM</span>
-                    </div>
-                    <div class="">
-                        <p class="mb-1">Wednesday, Friday, Saturday</p>
-                        <span>8AM - 9PM</span>
-                    </div>
-                </div>
-                <h5 class="fw-bold mb-3">Payment Accepted</h5>
-                <div class="mb-4">
-                    <div class="mb-2">
-                        <i class="fa-solid fa-check me-2"></i>
-                        <span>Cash</span>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-check me-2"></i>
-                        <span>GCash</span>
-                    </div>
-                </div>
-                <button class="border-0 py-2 px-3 rounded-5 me-2"><i class="fa-regular fa-copy me-2 fs-5"></i>Share Link</button>
-                <button class="border-0 py-2 px-3 rounded-5" data-bs-toggle="modal" data-bs-target="#report"><i class="fa-regular fa-flag me-2 fs-5"></i>Report</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Report -->
 <div class="modal fade" id="report" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered">

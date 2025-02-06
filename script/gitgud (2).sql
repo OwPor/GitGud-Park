@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2025 at 11:17 AM
+-- Generation Time: Feb 06, 2025 at 06:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,8 +50,8 @@ CREATE TABLE `business` (
 --
 
 INSERT INTO `business` (`id`, `user_id`, `business_name`, `business_type`, `region_province_city`, `barangay`, `street_building_house`, `business_phone`, `business_email`, `business_permit`, `business_status`, `created_at`, `updated_at`, `business_logo`, `url`) VALUES
-(49, 3, 'Yum', 'Food Park', 'Mindanao, Zamboanga Del Sur, Zamboanga City', 'Sample', 'Sample', '9554638281', 'tomatoregional@soscandia.org', 'uploads/business/permit_679cabf482c8f9.58631853.jpg', 'Approved', '2025-01-31 10:54:44', '2025-01-31 10:55:15', 'uploads/business/logo_679cabf4830fd7.51576607.jpg', '679cabf484d27'),
-(50, 1, 'Sample', 'Food Park', 'Mindanao, Zamboanga Del Sur, Zamboanga City', 'Sample', 'Sample', '9554638281', 'hnailataji@gmail.com', 'image.jpeg', 'Approved', '2025-01-31 11:42:03', '2025-01-31 11:42:03', 'image.png', 'lols');
+(1, 1, 'Sample lang po', 'Food Park', 'Sample', 'Sample', 'Sample', '9554638281', 'hnailataji@gmail.com', 'image.jpg', 'Approved', '2025-02-06 12:12:25', '2025-02-06 12:12:25', 'image.jpg', 'Sample'),
+(51, 3, 'Sample', 'Food Park', 'Mindanao, Zamboanga Del Sur, Zamboanga City', 'Sample', 'Sample', '9554638281', 'tomatoregional@soscandia.org', 'uploads/business/permit_67a4a18b491602.53399014.jpg', 'Approved', '2025-02-06 11:48:27', '2025-02-06 11:48:53', 'uploads/business/logo_67a4a18b4a4080.52413691.jpg', '67a4a18b4c3d8');
 
 -- --------------------------------------------------------
 
@@ -102,8 +102,8 @@ CREATE TABLE `operating_hours` (
 --
 
 INSERT INTO `operating_hours` (`id`, `days`, `open_time`, `close_time`, `created_at`, `business_id`) VALUES
-(30, 'Monday', '01:00 AM', '01:00 AM', '2025-01-31 10:54:44', 49),
-(31, 'Monday', '01:00 AM', '01:00 PM', '2025-01-31 11:49:29', 50);
+(1, 'Monday, Tuesday, Wednesday, Thursday, Friday', '01:00 AM', '01:00 PM', '2025-02-06 12:13:33', 1),
+(32, 'Monday, Tuesday, Wednesday, Thursday, Friday', '07:00 AM', '07:00 PM', '2025-02-06 11:48:27', 51);
 
 -- --------------------------------------------------------
 
@@ -233,7 +233,7 @@ CREATE TABLE `stalls` (
 --
 
 INSERT INTO `stalls` (`id`, `user_id`, `name`, `description`, `email`, `phone`, `website`, `logo`, `created_at`, `updated_at`, `park_id`, `payment_method`) VALUES
-(104, 1, 'Sample', 'Sample', 'hnailataji@gmail.com', '9554638281', 'Sample', 'uploads/business/stall_67a4898d69d7a6.82481120.jpg', '2025-02-06 10:06:05', '2025-02-06 10:06:05', 49, 'Cash');
+(105, 1, 'Sample', 'Sample', 'hnailataji@gmail.com', '9554638281', 'Sample', 'uploads/business/stall_67a4bf5d34d102.37012063.jpg', '2025-02-06 13:55:41', '2025-02-06 13:55:41', 51, 'Cash');
 
 -- --------------------------------------------------------
 
@@ -252,8 +252,8 @@ CREATE TABLE `stall_categories` (
 --
 
 INSERT INTO `stall_categories` (`id`, `stall_id`, `name`) VALUES
-(26, 104, 'Drinks'),
-(27, 104, 'Vegetables');
+(28, 105, 'Drinks'),
+(29, 105, 'Vegetables');
 
 -- --------------------------------------------------------
 
@@ -274,8 +274,7 @@ CREATE TABLE `stall_operating_hours` (
 --
 
 INSERT INTO `stall_operating_hours` (`id`, `stall_id`, `days`, `open_time`, `close_time`) VALUES
-(36, 104, 'Monday, Tuesday, Wednesday', '01:00 AM', '01:00 AM'),
-(37, 104, 'Thursday, Friday, Saturday', '01:00 AM', '01:00 PM');
+(38, 105, 'Monday, Tuesday, Wednesday, Thursday, Friday', '07:00 AM', '07:00 PM');
 
 -- --------------------------------------------------------
 
@@ -294,8 +293,8 @@ CREATE TABLE `stall_payment_methods` (
 --
 
 INSERT INTO `stall_payment_methods` (`id`, `stall_id`, `method`) VALUES
-(21, 104, 'Cash'),
-(22, 104, 'GCash');
+(23, 105, 'Cash'),
+(24, 105, 'GCash');
 
 -- --------------------------------------------------------
 
@@ -325,8 +324,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `last_name`, `first_name`, `email`, `sex`, `phone`, `password`, `birth_date`, `status`, `role`, `profile_img`, `user_session`, `created_at`, `updated_at`) VALUES
-(1, 'Alvarez', 'April', 'aprilalvarez@gmail.com', 'male', '9056321314', 'lols', '2003-12-04', 'Active', 'Park Owner', 'assets/images/profile.jpg', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2025-01-31 10:31:43', '2025-01-31 11:44:36'),
-(3, 'Haliluddin', 'Naila', 'tomatoregional@soscandia.org', 'male', '9554638281', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2003-12-04', 'Active', 'Park Owner', 'assets/images/profile.jpg', 'c7b8409f0f64251c23625859f9982068667d64c0a768bdace4034f7975a900496727629247e450d1f849214bfff0a426ebbf7af9868a5d0f90bc98d209b5173961bc3c5d3ea35ea8779dc3f97952654e55d36bb7b05d', '2025-01-26 15:50:02', '2025-01-31 10:54:44');
+(1, 'Alvarez', 'April', 'aprilalvarez@gmail.com', 'male', '9056321314', 'lols', '2003-12-04', 'Active', 'Customer', 'assets/images/profile.jpg', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2025-01-31 10:31:43', '2025-02-06 11:45:07'),
+(3, 'Haliluddin', 'Naila', 'tomatoregional@soscandia.org', 'male', '9554638281', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2003-12-04', 'Active', 'Park Owner', 'assets/images/profile.jpg', 'c7b8409f0f64251c23625859f9982068667d64c0a768bdace4034f7975a900496727629247e450d1f849214bfff0a426ebbf7af9868a5d0f90bc98d209b5173961bc3c5d3ea35ea8779dc3f97952654e55d36bb7b05d', '2025-01-26 15:50:02', '2025-02-06 11:48:27');
 
 -- --------------------------------------------------------
 
@@ -474,7 +473,7 @@ ALTER TABLE `verification`
 -- AUTO_INCREMENT for table `business`
 --
 ALTER TABLE `business`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -492,7 +491,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `operating_hours`
 --
 ALTER TABLE `operating_hours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -528,25 +527,25 @@ ALTER TABLE `product_variants`
 -- AUTO_INCREMENT for table `stalls`
 --
 ALTER TABLE `stalls`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `stall_categories`
 --
 ALTER TABLE `stall_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `stall_operating_hours`
 --
 ALTER TABLE `stall_operating_hours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `stall_payment_methods`
 --
 ALTER TABLE `stall_payment_methods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `users`

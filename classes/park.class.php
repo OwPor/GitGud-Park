@@ -244,7 +244,26 @@ class Park {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    function getStall($stallId) {
+        $sql = "
+            SELECT 
+                stalls.*, 
+                GROUP_CONCAT(DISTINCT CONCAT(stall_operating_hours.days, '<br>', stall_operating_hours.open_time, ' - ', stall_operating_hours.close_time) SEPARATOR '; ') AS stall_operating_hours,
+                GROUP_CONCAT(DISTINCT stall_categories.name ORDER BY stall_categories.name SEPARATOR ', ') AS stall_categories,
+                GROUP_CONCAT(DISTINCT stall_payment_methods.method ORDER BY stall_payment_methods.method SEPARATOR ', ') AS stall_payment_methods
+            FROM stalls
+            LEFT JOIN stall_operating_hours ON stalls.id = stall_operating_hours.stall_id
+            LEFT JOIN stall_categories ON stalls.id = stall_categories.stall_id
+            LEFT JOIN stall_payment_methods ON stalls.id = stall_payment_methods.stall_id
+            WHERE stalls.id = :stall_id
+            GROUP BY stalls.id
+        ";
     
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute(array(':stall_id' => $stallId));
+        
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
     
     
     

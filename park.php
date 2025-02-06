@@ -327,7 +327,7 @@
         <?php
             foreach ($stalls as $stall) { ?>
                 <div class="col">
-                    <a href="stall.php" class="card-link text-decoration-none bg-white">
+                    <a href="stall.php?id=<?= $stall['id'] ?>" class="card-link text-decoration-none bg-white">
                         <div class="card" style="position: relative;">
                             <img src="<?= $stall['logo'] ?>" class="card-img-top" alt="...">
                             <button class="add"><i class="fa-regular fa-heart"></i></button>
