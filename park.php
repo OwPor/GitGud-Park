@@ -333,10 +333,16 @@
                             <button class="add"><i class="fa-regular fa-heart"></i></button>
                             <div class="card-body">
                                 <div class="d-flex gap-2 align-items-center">
-                                <p class="card-text text-muted m-0">Category</p>
-                                <span class="dot text-muted"></span>
-                                <p class="card-text text-muted m-0">Category</p>
-                            </div>
+                                    <?php 
+                                        $stall_categories = explode(',', $stall['stall_categories']); 
+                                        foreach ($stall_categories as $index => $category) { 
+                                    ?>
+                                        <p class="card-text text-muted m-0"><?= trim($category) ?></p>
+                                        <?php if ($index !== array_key_last($stall_categories)) { ?>
+                                            <span class="dot text-muted"></span>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </div>
                                 <h5 class="card-title my-2"><?= $stall['name'] ?></h5>
                                 <div class="d-flex justify-content-between">
                                     <p class="card-text text-muted m-0"><?= $stall['description'] ?></p>

@@ -175,7 +175,68 @@ class Park {
         return [];
     }
     
-
+    function editStall($stall_id, $businessname, $description, $businessemail, $businessphonenumber, $website, $stalllogo, $operatingHours, $categories, $payment_methods) { 
+        $conn = $this->db->connect();
+    
+        // Update stall details
+        $sql = "UPDATE stalls 
+                SET
+                    name = :businessname, 
+                    description = :description, 
+                    email = :businessemail, 
+                    phone = :businessphonenumber, 
+                    website = :website, 
+                    logo = :stalllogo
+                WHERE id = :stall_id";
+        
+        $query = $conn->prepare($sql);
+        
+        if ($query->execute([
+            ':stall_id' => $stall_id,
+            ':businessname' => $businessname,
+            ':description' => $description,
+            ':businessemail' => $businessemail,
+            ':businessphonenumber' => $businessphonenumber,
+            ':website' => $website,
+            ':stalllogo' => $stalllogo
+        ])) {
+            
+    
+            // Remove old categories
+            $conn->prepare("DELETE FROM stall_categories WHERE stall_id = :stall_id")
+                ->execute([':stall_id' => $stall_id]);
+    
+            // Insert updated categories
+            if (!empty($categories)) {
+                $stmt = $conn->prepare("INSERT INTO stall_categories (stall_id, name) VALUES (:stall_id, :name)");
+                foreach ($categories as $category) {
+                    $stmt->execute([
+                        ':stall_id' => $stall_id,
+                        ':name' => $category
+                    ]);
+                }
+            }
+    
+            // Remove old payment methods
+            $conn->prepare("DELETE FROM stall_payment_methods WHERE stall_id = :stall_id")
+                ->execute([':stall_id' => $stall_id]);
+    
+            // Insert updated payment methods
+            if (!empty($payment_methods)) {
+                $stmt = $conn->prepare("INSERT INTO stall_payment_methods (stall_id, method) VALUES (:stall_id, :method)");
+                foreach ($payment_methods as $method) {
+                    $stmt->execute([
+                        ':stall_id' => $stall_id,
+                        ':method' => $method
+                    ]);
+                }
+            }
+    
+            return true;
+        }
+    
+        return false;
+    }
     
     
     

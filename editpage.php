@@ -22,6 +22,9 @@
             } 
         } 
     } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+        $id = $_GET['id'] ?? $_POST['id'] ?? null;
+
         $businessname = clean_input($_POST['businessname']);
         $description = clean_input($_POST['description']);
         $businessemail = clean_input($_POST['businessemail']);
@@ -50,7 +53,7 @@
         $operatingHours = json_decode($operatingHoursJson, true);
     
         // Pass categories and payment methods to addStall function
-        $stall = $parkObj->editStall($owner_id, $park_id, $businessname, $description, $businessemail, $businessphonenumber, $website, $stalllogo, $operatingHours, $categories, $payment_methods);
+        $stall = $parkObj->editStall($id, $businessname, $description, $businessemail, $businessphonenumber, $website, $stalllogo, $operatingHours, $categories, $payment_methods);
     } 
 ?>
 
@@ -67,7 +70,7 @@
     <div class="d-flex justify-content-end">
         <button class="addpro mb-3 prev" onclick="window.location.href='stallpage.php';"><i class="fa-solid fa-chevron-left me-2"></i> Previous</button>
     </div>
-    <form action="" class="srform rounded-2 bg-white p-5">
+    <form action="" class="srform rounded-2 bg-white p-5" method="POST" enctype="multipart/form-data">
         <div class="pagehead mb-4 border-bottom">
             <div>
                 <h4 class="fw-bold m-0">Edit Business Page</h4>
@@ -76,14 +79,21 @@
             <p class="par mt-2">Update your page to ensure it has the latest and most accurate information about your business. This will help people find and connect with your business more effectively.</p>
         </div>
         <div class="d-flex gap-3 align-items-center">
-            <div class="logo px-4 py-5 text-center border flex-shrink-0" id="logoContainer" onclick="document.getElementById('stalllogo').click();" 
-                style="background-size: cover; background-position: center;">
-                <i class="fa-solid fa-arrow-up-from-bracket fs-3 p-2 mb-1"></i><br>
-                <label for="stalllogo" class="fw-bold m-0 fs-6">Add Business Logo</label><br>
-                <input type="file" id="stalllogo" name="stalllogo" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayImage(event)" value="<?= $stalllogo ?>">
-                <p class="small mb-2">or drag and drop</p>
-                <span class="text-muted logorem">Image size must be less than 5MB. Only JPG, JPEG, and PNG formats are allowed.</span>
+            <div class="logo px-4 py-5 text-center border flex-shrink-0" id="logoContainer" 
+                onclick="document.getElementById('stalllogo').click();" 
+                style="background-size: cover; background-position: center; <?= !empty($stalllogo) ? 'background-image: url(\'' . $stalllogo . '\');' : '' ?>">
+                
+                <?php if (empty($stalllogo)) : ?>
+                    <i class="fa-solid fa-arrow-up-from-bracket fs-3 p-2 mb-1"></i><br>
+                    <label for="stalllogo" class="fw-bold m-0 fs-6">Add Business Logo</label><br>
+                    <p class="small mb-2">or drag and drop</p>
+                    <span class="text-muted logorem">Image size must be less than 5MB. Only JPG, JPEG, and PNG formats are allowed.</span>
+                <?php endif; ?>
+
+                <input type="file" id="stalllogo" name="stalllogo" accept="image/jpeg, image/png, image/jpg" 
+                    style="display:none;" onchange="displayImage(event)">
             </div>
+
             <script>
                 function displayImage(event) {
                     const file = event.target.files[0];
@@ -120,7 +130,7 @@
                 <script src="assets/js/selectcategory.js"></script>
                 
                 <div class="form-floating mt-3">
-                    <textarea class="form-control" style="color: black;" placeholder="Description" id="description" name="description" value="<?= $description ?>"></textarea>
+                    <textarea class="form-control" style="color: black;" placeholder="Description" id="description" name="description"><?= $description ?></textarea>
                     <label for="description">Description <span style="color: #CD5C08;">*</span></label>
                 </div>
             </div>

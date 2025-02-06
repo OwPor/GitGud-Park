@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2025 at 07:43 AM
+-- Generation Time: Feb 06, 2025 at 11:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,15 +40,18 @@ CREATE TABLE `business` (
   `business_permit` varchar(255) NOT NULL,
   `business_status` enum('Approved','Rejected','Pending Approval') NOT NULL DEFAULT 'Pending Approval',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `business_logo` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `business`
 --
 
-INSERT INTO `business` (`id`, `user_id`, `business_name`, `business_type`, `region_province_city`, `barangay`, `street_building_house`, `business_phone`, `business_email`, `business_permit`, `business_status`, `created_at`, `updated_at`) VALUES
-(38, 3, 'Yum', 'Food Park', 'Mindanao, Zamboanga Del Sur, Zamboanga City', 'Sample', 'Sample', '9554638281', 'tomatoregional@soscandia.org', 'uploads/business/permit_6798654aacc696.42891853.jpg', 'Pending Approval', '2025-01-28 05:04:10', '2025-01-28 05:04:10');
+INSERT INTO `business` (`id`, `user_id`, `business_name`, `business_type`, `region_province_city`, `barangay`, `street_building_house`, `business_phone`, `business_email`, `business_permit`, `business_status`, `created_at`, `updated_at`, `business_logo`, `url`) VALUES
+(49, 3, 'Yum', 'Food Park', 'Mindanao, Zamboanga Del Sur, Zamboanga City', 'Sample', 'Sample', '9554638281', 'tomatoregional@soscandia.org', 'uploads/business/permit_679cabf482c8f9.58631853.jpg', 'Approved', '2025-01-31 10:54:44', '2025-01-31 10:55:15', 'uploads/business/logo_679cabf4830fd7.51576607.jpg', '679cabf484d27'),
+(50, 1, 'Sample', 'Food Park', 'Mindanao, Zamboanga Del Sur, Zamboanga City', 'Sample', 'Sample', '9554638281', 'hnailataji@gmail.com', 'image.jpeg', 'Approved', '2025-01-31 11:42:03', '2025-01-31 11:42:03', 'image.png', 'lols');
 
 -- --------------------------------------------------------
 
@@ -74,7 +77,7 @@ CREATE TABLE `cart` (
 
 CREATE TABLE `categories` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `stall_id` varchar(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -99,8 +102,8 @@ CREATE TABLE `operating_hours` (
 --
 
 INSERT INTO `operating_hours` (`id`, `days`, `open_time`, `close_time`, `created_at`, `business_id`) VALUES
-(16, 'Monday, Tuesday, Wednesday, Thursday, Friday', '01:00 AM', '01:00 AM', '2025-01-28 05:04:10', 38),
-(17, 'Saturday, Sunday', '01:00 AM', '01:00 AM', '2025-01-28 05:04:10', 38);
+(30, 'Monday', '01:00 AM', '01:00 AM', '2025-01-31 10:54:44', 49),
+(31, 'Monday', '01:00 AM', '01:00 PM', '2025-01-31 11:49:29', 50);
 
 -- --------------------------------------------------------
 
@@ -163,7 +166,9 @@ CREATE TABLE `parks` (
 --
 
 INSERT INTO `parks` (`id`, `name`, `description`, `location`, `image`, `owner_name`, `contact_number`, `email`, `opening_time`, `closing_time`, `price_range`, `status`, `url`, `created_at`, `updated_at`) VALUES
-(1, 'Amethyst Food Park', 'A food park located in the heart of the city.', 'Johnston St., Zamboanga City', 'assets/images/foodpark.jpg', 'John Doe', '123-456-7890', '222@gmail.com', '08:00:00', '22:00:00', 100.00, 'Open', 'aeb32xc', '2025-01-25 07:35:47', '2025-01-25 07:35:47');
+(1, 'Amethyst Food Park', 'A food park located in the heart of the city.', 'Johnston St., Zamboanga City', 'assets/images/foodpark.jpg', 'John Doe', '123-456-7890', '222@gmail.com', '08:00:00', '22:00:00', 100.00, 'Open', 'aeb32xc', '2025-01-25 07:35:47', '2025-01-25 07:35:47'),
+(2, 'lols', 'lols', 'lols', 'image.jpg', 'lols', 'lols', 'lols', '10:00:00', '10:00:00', 100.00, 'Open', 'lols', '2025-01-31 10:33:58', '2025-01-31 10:33:58'),
+(5, 'lols', 'lols', 'lols', 'image.jpg', 'lols', 'lols', 'lols', '08:00:00', '08:00:00', 100.00, 'Open', 'xxxx', '2025-01-31 10:36:21', '2025-01-31 10:36:21');
 
 -- --------------------------------------------------------
 
@@ -211,21 +216,86 @@ CREATE TABLE `product_variants` (
 CREATE TABLE `stalls` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `park_id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `description` text DEFAULT NULL,
-  `location` varchar(50) DEFAULT NULL,
-  `img` varchar(255) DEFAULT NULL,
-  `owner_name` varchar(100) DEFAULT NULL,
-  `contact_number` varchar(20) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `opening_time` time DEFAULT NULL,
-  `closing_time` time DEFAULT NULL,
-  `price_range` decimal(10,2) NOT NULL,
-  `status` enum('Open','Closed','Maintenance','Pending Approval') NOT NULL DEFAULT 'Pending Approval',
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `logo` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `park_id` int(11) NOT NULL,
+  `payment_method` enum('Cash','GCash') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stalls`
+--
+
+INSERT INTO `stalls` (`id`, `user_id`, `name`, `description`, `email`, `phone`, `website`, `logo`, `created_at`, `updated_at`, `park_id`, `payment_method`) VALUES
+(104, 1, 'Sample', 'Sample', 'hnailataji@gmail.com', '9554638281', 'Sample', 'uploads/business/stall_67a4898d69d7a6.82481120.jpg', '2025-02-06 10:06:05', '2025-02-06 10:06:05', 49, 'Cash');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stall_categories`
+--
+
+CREATE TABLE `stall_categories` (
+  `id` int(11) NOT NULL,
+  `stall_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stall_categories`
+--
+
+INSERT INTO `stall_categories` (`id`, `stall_id`, `name`) VALUES
+(26, 104, 'Drinks'),
+(27, 104, 'Vegetables');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stall_operating_hours`
+--
+
+CREATE TABLE `stall_operating_hours` (
+  `id` int(11) NOT NULL,
+  `stall_id` int(10) UNSIGNED NOT NULL,
+  `days` varchar(255) NOT NULL,
+  `open_time` varchar(10) NOT NULL,
+  `close_time` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stall_operating_hours`
+--
+
+INSERT INTO `stall_operating_hours` (`id`, `stall_id`, `days`, `open_time`, `close_time`) VALUES
+(36, 104, 'Monday, Tuesday, Wednesday', '01:00 AM', '01:00 AM'),
+(37, 104, 'Thursday, Friday, Saturday', '01:00 AM', '01:00 PM');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stall_payment_methods`
+--
+
+CREATE TABLE `stall_payment_methods` (
+  `id` int(11) NOT NULL,
+  `stall_id` int(10) UNSIGNED NOT NULL,
+  `method` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stall_payment_methods`
+--
+
+INSERT INTO `stall_payment_methods` (`id`, `stall_id`, `method`) VALUES
+(21, 104, 'Cash'),
+(22, 104, 'GCash');
 
 -- --------------------------------------------------------
 
@@ -255,7 +325,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `last_name`, `first_name`, `email`, `sex`, `phone`, `password`, `birth_date`, `status`, `role`, `profile_img`, `user_session`, `created_at`, `updated_at`) VALUES
-(3, 'Haliluddin', 'Naila', 'tomatoregional@soscandia.org', 'male', '9554638281', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2003-12-04', 'Active', 'Park Owner', 'assets/images/profile.jpg', 'c7b8409f0f64251c23625859f9982068667d64c0a768bdace4034f7975a900496727629247e450d1f849214bfff0a426ebbf7af9868a5d0f90bc98d209b5173961bc3c5d3ea35ea8779dc3f97952654e55d36bb7b05d', '2025-01-26 15:50:02', '2025-01-28 05:04:10');
+(1, 'Alvarez', 'April', 'aprilalvarez@gmail.com', 'male', '9056321314', 'lols', '2003-12-04', 'Active', 'Park Owner', 'assets/images/profile.jpg', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2025-01-31 10:31:43', '2025-01-31 11:44:36'),
+(3, 'Haliluddin', 'Naila', 'tomatoregional@soscandia.org', 'male', '9554638281', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2003-12-04', 'Active', 'Park Owner', 'assets/images/profile.jpg', 'c7b8409f0f64251c23625859f9982068667d64c0a768bdace4034f7975a900496727629247e450d1f849214bfff0a426ebbf7af9868a5d0f90bc98d209b5173961bc3c5d3ea35ea8779dc3f97952654e55d36bb7b05d', '2025-01-26 15:50:02', '2025-01-31 10:54:44');
 
 -- --------------------------------------------------------
 
@@ -356,8 +427,29 @@ ALTER TABLE `product_variants`
 --
 ALTER TABLE `stalls`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `park_id` (`park_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `park_id` (`park_id`);
+
+--
+-- Indexes for table `stall_categories`
+--
+ALTER TABLE `stall_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stall_id` (`stall_id`);
+
+--
+-- Indexes for table `stall_operating_hours`
+--
+ALTER TABLE `stall_operating_hours`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stall_id` (`stall_id`);
+
+--
+-- Indexes for table `stall_payment_methods`
+--
+ALTER TABLE `stall_payment_methods`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stall_id` (`stall_id`);
 
 --
 -- Indexes for table `users`
@@ -382,7 +474,7 @@ ALTER TABLE `verification`
 -- AUTO_INCREMENT for table `business`
 --
 ALTER TABLE `business`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -400,7 +492,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `operating_hours`
 --
 ALTER TABLE `operating_hours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -418,7 +510,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `parks`
 --
 ALTER TABLE `parks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -436,7 +528,25 @@ ALTER TABLE `product_variants`
 -- AUTO_INCREMENT for table `stalls`
 --
 ALTER TABLE `stalls`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+
+--
+-- AUTO_INCREMENT for table `stall_categories`
+--
+ALTER TABLE `stall_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `stall_operating_hours`
+--
+ALTER TABLE `stall_operating_hours`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `stall_payment_methods`
+--
+ALTER TABLE `stall_payment_methods`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -498,8 +608,26 @@ ALTER TABLE `product_variants`
 -- Constraints for table `stalls`
 --
 ALTER TABLE `stalls`
-  ADD CONSTRAINT `stalls_ibfk_1` FOREIGN KEY (`park_id`) REFERENCES `parks` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `stalls_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `stalls_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `stalls_ibfk_3` FOREIGN KEY (`park_id`) REFERENCES `business` (`id`);
+
+--
+-- Constraints for table `stall_categories`
+--
+ALTER TABLE `stall_categories`
+  ADD CONSTRAINT `stall_categories_ibfk_1` FOREIGN KEY (`stall_id`) REFERENCES `stalls` (`id`);
+
+--
+-- Constraints for table `stall_operating_hours`
+--
+ALTER TABLE `stall_operating_hours`
+  ADD CONSTRAINT `stall_operating_hours_ibfk_1` FOREIGN KEY (`stall_id`) REFERENCES `stalls` (`id`);
+
+--
+-- Constraints for table `stall_payment_methods`
+--
+ALTER TABLE `stall_payment_methods`
+  ADD CONSTRAINT `stall_payment_methods_ibfk_1` FOREIGN KEY (`stall_id`) REFERENCES `stalls` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
