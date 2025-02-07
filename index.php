@@ -2,7 +2,7 @@
     session_start();
     
     //include_once 'header.php';
-    // include_once 'landingheader.php';
+    include_once 'landingheader.php';
     include_once 'links.php'; 
     include_once 'modals.php';
     require_once __DIR__ . '/classes/db.class.php';
@@ -80,6 +80,7 @@
 
 </style>
 <section class="first">
+    <br>
     <div class="firstinside">
         <div>
             <h1>Bringing taste and community together</h1>
@@ -92,6 +93,7 @@
         </div>
         <img src="assets/images/first.png">
     </div>
+    <br>
 </section>
 
 <section class="second">

@@ -9,13 +9,13 @@ $is_food_park_owner = false;
 $is_stall_owner = false;
 $nav_links = [];
 
+$userObj = new User();
+$parkObj = new Park();
+
 // Check if user is logged in
 if (isset($_SESSION['user'])) {
     $park_id = $_SESSION['current_park_id'];
     $user_id = $_SESSION['user']['id'];
-
-    $userObj = new User();
-    $parkObj = new Park();
 
     $user = $userObj->getUser($user_id);
 
@@ -47,6 +47,8 @@ if (isset($_SESSION['user'])) {
             'centralized.php' => ['label' => 'Centralized', 'icon' => 'fa-solid fa-layer-group'],
         ];
     }
+} else {
+    $park_id = $_SESSION['current_park_id'];
 }
 ?>
 
