@@ -10,7 +10,7 @@ pagorder ng customer after magorder sa cart mapupunta order nila sa purchase.php
 
 - delete database folder, unused directory
 
-- purchase.php order footer (All, To Pay almost finished) (read code)
+- purchase.php same order id, same stall name, same container. If not same stall but same order id, display new container.
 
 
 bitaw na ya
