@@ -196,10 +196,10 @@ CREATE TABLE orders (
     price DECIMAL(10, 2) NOT NULL,
     payment_method VARCHAR(50) NOT NULL,
     status ENUM ('Cart', 'ToPay', 'Preparing', 'ToReceive', 'Completed', 'Cancelled', 'Scheduled') NOT NULL DEFAULT 'Cart',
-    order_date DATETIME NOT NULL
+    order_date DATETIME NOT NULL,
+    scheduled_date DATETIME
 );
 
--- Insert sample orders
 INSERT INTO orders (
     user_id, 
     product_id,
@@ -211,20 +211,50 @@ INSERT INTO orders (
     price, 
     payment_method, 
     status, 
-    order_date
+    order_date,
+    scheduled_date
 ) VALUES 
-('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
-('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
-('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
-('1', 1, 'ORD002', 'YumYim', 'Adobo', '2', 1, 100.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
-('1', 1, 'ORD003', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
-('1', 1, 'ORD004', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00'),
-('1', 1, 'ORD005', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00'),
-('1', 1, 'ORD006', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
-('1', 1, 'ORD007', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
-('1', 1, 'ORD008', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
-('1', 1, 'ORD009', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00'),
-('1', 1, 'ORD010', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00');
+-- Orders with variants (Large size)
+('1', 1, 'ORD001', 'YumYim', 'Adobo', 2, 2, 240.00, 'Cash', 'ToPay', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD001', 'YumYim', 'Adobo', 2, 2, 240.00, 'Cash', 'ToPay', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD002', 'YumYim', 'Adobo', 2, 1, 120.00, 'Cash', 'ToPay', '2021-07-01 08:00:00', ''),
+
+-- Orders without variants (using 0 for variant_id)
+('1', 1, 'ORD003', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD004', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD005', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD006', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD007', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD008', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD009', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00', ''),
+('1', 1, 'ORD010', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00', '2021-07-01 12:00:00');
+
+-- Insert sample orders
+-- INSERT INTO orders (
+--     user_id, 
+--     product_id,
+--     order_id, 
+--     food_stall_name, 
+--     food_name, 
+--     variant_id, 
+--     quantity, 
+--     price, 
+--     payment_method, 
+--     status, 
+--     order_date
+-- ) VALUES 
+-- ('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD002', 'YumYim', 'Adobo', '2', 1, 100.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD003', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD004', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD005', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD006', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD007', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD008', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD009', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00'),
+-- ('1', 1, 'ORD010', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00');
 
 -- INSERT INTO product_variants (product_id, variation_type, name, additional_price, subtract_price, image_path) VALUES (4, 'Size', 'Large', 20.00, 0.00, 'uploads/images/large.jpg');
 
@@ -301,7 +331,7 @@ INSERT INTO orders (
 ('1', 1, 'ORD007', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
 ('1', 1, 'ORD008', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
 ('1', 1, 'ORD009', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00'),
-('1', 1, 'ORD010', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00');
+('1', 1, 'ORD010', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00', '2021-07-01 12:00:00');
 
 
 -- UNFINISHED --

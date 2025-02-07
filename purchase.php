@@ -521,7 +521,7 @@
                 <div class="d-flex gap-3 align-items-center text-muted small">
                     <span>Payment Method: <?= $order['payment_method'] ?></span>
                     <span class="dot text-muted"></span>
-                    <span>Scheduled on October 15, 2024 at 1:00 PM</span>
+                    <span>Scheduled on <?= $order['scheduled_date'] ?></span>
                 </div>
                 <div class="d-flex gap-4 align-items-center">
                     <button class="cancelorder rounded-2" data-product-id="<?php echo $item['product_id']; ?>">Cancel Order</button>
