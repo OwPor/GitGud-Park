@@ -75,6 +75,7 @@
             $currentStallName = null;
             $currentOrderId = null;
             $notfirst = false;
+            $notfirst1 = false;
             $total = 0;
 
             foreach ($ordersByStatus as $status => $statusOrders) {
@@ -82,51 +83,14 @@
                     $displayStatus = isset($statusDisplayNames[$status]) ? $statusDisplayNames[$status] : $status;
                     foreach ($statusOrders as $order) {
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
+                            if ($notfirst1)
+                                $notfirst = true;
+
+                            $notfirst1 = true;
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             if ($notfirst) {
-                                echo '</div>';
-                            }
-        ?>
-                        <!-- HEADER -->
-                        <div class="border py-3 px-4 rounded-2 bg-white mb-3">
-                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
-                                <div class="d-flex gap-3 align-items-center">
-                                    <span class="fw-bold">ORDER ID: <?php echo htmlspecialchars($order['order_id']); ?></span>
-                                    <span class="dot text-muted"></span>
-                                    <div class="d-flex gap-2 align-items-center">
-                                        <span class="fw-bold"><?php echo $order['food_stall_name']; ?></span>
-                                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php';">View Stall</button>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-3 align-items-center">
-                                    <span style="color: #6A9C89" class="small"><?php echo htmlspecialchars($order['order_date']); ?></span>
-                                    <span class="dot text-muted"></span>
-                                    <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
-                                </div>
-                            </div>
-                        <?php } ?>
-
-                        <!-- BODY -->
-                        <div class="d-flex justify-content-between border-bottom py-2">
-                            <div class="d-flex gap-3 align-items-center">
-                                <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
-                                <div>
-                                    <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
-                                    <span>x1</span>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
-                            </div>
-                        </div>
-                        
-                        <!-- FOOTER -->
-                        <?php
-                        // If the next order id or next order stall name is different, display the footer
-                            if ($notfirst && $currentOrderId !== $order['order_id'] || $notfirst && $currentStallName !== $order['food_stall_name']) {
-                                
+                                // <!-- FOOTER -->
                                 if ($status == 'ToPay') {
                                     ?>
                                     <div class="d-flex justify-content-between pt-2">
@@ -242,10 +206,43 @@
                                     </div>
                             <?php
                                 }
-                            }
-                        ?>
-                    <?php
-                    $notfirst = true;
+                                    echo '</div>';
+                                }
+        ?>
+                        <!-- HEADER -->
+                        <div class="border py-3 px-4 rounded-2 bg-white mb-3">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                                <div class="d-flex gap-3 align-items-center">
+                                    <span class="fw-bold">ORDER ID: <?php echo htmlspecialchars($order['order_id']); ?></span>
+                                    <span class="dot text-muted"></span>
+                                    <div class="d-flex gap-2 align-items-center">
+                                        <span class="fw-bold"><?php echo $order['food_stall_name']; ?></span>
+                                        <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php';">View Stall</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <span style="color: #6A9C89" class="small"><?php echo htmlspecialchars($order['order_date']); ?></span>
+                                    <span class="dot text-muted"></span>
+                                    <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
+                                </div>
+                            </div>
+                        <?php } ?>
+
+                        <!-- BODY -->
+                        <div class="d-flex justify-content-between border-bottom py-2">
+                            <div class="d-flex gap-3 align-items-center">
+                                <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
+                                <div>
+                                    <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
+                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <span>x1</span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-end">
+                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
+                            </div>
+                        </div>
+                        <?php
                     }
                 }
             }
