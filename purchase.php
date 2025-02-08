@@ -80,6 +80,7 @@
             $notfirst = false;
             $notfirst1 = false;
             $total = 0;
+            $lastStatus = null;
 
             foreach ($ordersByStatus as $status => $statusOrders) {
                 if (!empty($statusOrders)) {
@@ -94,7 +95,7 @@
                             $currentOrderId = $order['order_id'];
                             if ($notfirst) {
                                 // <!-- FOOTER -->
-                                if ($status == 'ToPay') {
+                                if ($lastStatus == 'ToPay') {
                                     ?>
                                     <div class="d-flex justify-content-between pt-2">
                                         <div class="d-flex gap-3 align-items-center text-muted small">
@@ -112,7 +113,7 @@
                                         </div>
                                     </div>
                             <?php
-                                } else if ($status == 'Preparing') {
+                                } else if ($lastStatus == 'Preparing') {
                                     ?>
                                     <div class="d-flex justify-content-between pt-2">
                                         <div class="d-flex gap-3 align-items-center text-muted small">
@@ -130,7 +131,7 @@
                                         </div>
                                     </div>
                             <?php
-                                } else if ($status == 'ToReceive') {
+                                } else if ($lastStatus == 'ToReceive') {
                                     ?>
                                     <div class="d-flex justify-content-between pt-2">
                                         <div class="d-flex gap-3 align-items-center text-muted small">
@@ -148,7 +149,7 @@
                                         </div>
                                     </div>
                             <?php
-                                } else if ($status == 'Completed') {
+                                } else if ($lastStatus == 'Completed') {
                                     ?>
                                     <div class="d-flex justify-content-between pt-2">
                                         <div class="d-flex gap-3 align-items-center text-muted small">
@@ -169,7 +170,7 @@
                                         </div>
                                     </div>
                             <?php
-                                } else if ($status == 'Cancelled') {
+                                } else if ($lastStatus == 'Cancelled') {
                                     ?>
                                     <div class="d-flex justify-content-between pt-2">
                                         <div class="d-flex gap-3 align-items-center text-muted small">
@@ -190,7 +191,7 @@
                                         </div>
                                     </div>
                             <?php
-                                } else if ($status == 'Scheduled') {
+                                } else if ($lastStatus == 'Scheduled') {
                                     ?>
                                     <div class="d-flex justify-content-between pt-2">
                                         <div class="d-flex gap-3 align-items-center text-muted small">
@@ -209,6 +210,7 @@
                                     </div>
                             <?php
                                 }
+                                    $lastStatus = $status;
                                     echo '</div>';
                                 }
         ?>
@@ -250,7 +252,10 @@
                 }
             }
         ?>
+        </div>
     </div>
+    
+    <!-- SECTIONS -->
     <div id="topay" class="section-content">
         <?php
             foreach ($orders as $order) {
@@ -273,15 +278,12 @@
                             <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($order['status']); ?></span>
                         </div>
                     </div>
-                    <?php
-                    // foreach ($order['items'] as $item) {
-                        ?>
                         <div class="d-flex justify-content-between border-bottom py-2">
                             <div class="d-flex gap-3 align-items-center">
                                 <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted">Variation: Chocolate, Medium</span><br>
+                                    <span class="small text-muted">Variation: <?= $order['formatted_variations'] ?></span><br>
                                     <span>x1</span>
                                 </div>
                             </div>
@@ -290,7 +292,6 @@
                             </div>
                         </div>
                         <?php
-                    // }
                     ?>
                     <div class="d-flex justify-content-between pt-2">
                         <div class="d-flex gap-3 align-items-center text-muted small">
