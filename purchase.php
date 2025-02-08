@@ -11,6 +11,9 @@
     
     $status = $_GET['status'] ?? 'all';
     $orders = $userObj->getOrders($_SESSION['user']['id']);
+
+    // Create a display footer function for less redundancy
+    // Fix the footer for last display, it doesn't display
 ?> 
 <style>
     main{
