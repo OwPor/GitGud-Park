@@ -14,6 +14,125 @@
 
     // Create a display footer function for less redundancy
     // Fix the footer for last display, it doesn't display
+    function displayFooter($lastStatus, $order) {
+        // <!-- FOOTER -->
+        if ($lastStatus == 'ToPay') {
+            ?>
+            <div class="d-flex justify-content-between pt-2">
+                <div class="d-flex gap-3 align-items-center text-muted small">
+                    <span>Payment Method: <?php echo htmlspecialchars($order['payment_method']); ?></span>
+                    <span class="dot text-muted"></span>
+                    <span>Your order is awaiting payment</span>
+                </div>
+                <div class="d-flex gap-4 align-items-center">
+                    <button class="cancelorder rounded-2" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
+                    <span class="dot text-muted"></span>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span class="text-muted">Sub Total:</span>
+                        <span class="fw-bold fs-4">₱<?php echo htmlspecialchars($order['price']); ?></span>
+                    </div>
+                </div>
+            </div>
+    <?php
+        } else if ($lastStatus == 'Preparing') {
+            ?>
+            <div class="d-flex justify-content-between pt-2">
+                <div class="d-flex gap-3 align-items-center text-muted small">
+                    <span>Payment Method: <?php echo $order['payment_method']; ?></span>
+                    <span class="dot text-muted"></span>
+                    <span>Your order is being prepared</span>
+                </div>
+                <div class="d-flex gap-4 align-items-center">
+                    <button class="preparing rounded-2">Preparing</button>
+                    <span class="dot text-muted"></span>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span class="text-muted">Sub Total:</span>
+                        <span class="fw-bold fs-4">₱103</span>
+                    </div>
+                </div>
+            </div>
+    <?php
+        } else if ($lastStatus == 'ToReceive') {
+            ?>
+            <div class="d-flex justify-content-between pt-2">
+                <div class="d-flex gap-3 align-items-center text-muted small">
+                    <span>Payment Method: <?php echo $order['payment_method']; ?></span>
+                    <span class="dot text-muted"></span>
+                    <span> Your order is ready to pickup</span>
+                </div>
+                <div class="d-flex gap-4 align-items-center">
+                    <button class="cancelorder rounded-2" data-bs-toggle="modal" data-bs-target="#orderreceived">Order Received</button>
+                    <span class="dot text-muted"></span>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span class="text-muted">Sub Total:</span>
+                        <span class="fw-bold fs-4">₱103</span>
+                    </div>
+                </div>
+            </div>
+    <?php
+        } else if ($lastStatus == 'Completed') {
+            ?>
+            <div class="d-flex justify-content-between pt-2">
+                <div class="d-flex gap-3 align-items-center text-muted small">
+                    <span>Payment Method: <?php echo $order['payment_method']; ?></span>
+                    <span class="dot text-muted"></span>
+                    <span> Your order is completed</span>
+                </div>
+                <div class="d-flex gap-4 align-items-center">
+                    <div class="d-flex gap-2">
+                        <button class="likeorder rounded-2"><i class="fa-regular fa-heart me-2"></i>Like</button>
+                        <button class="cancelorder rounded-2">Buy Again</button>
+                    </div>
+                    <span class="dot text-muted"></span>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span class="text-muted">Sub Total:</span>
+                        <span class="fw-bold fs-4">₱103</span>
+                    </div>
+                </div>
+            </div>
+    <?php
+        } else if ($lastStatus == 'Cancelled') {
+            ?>
+            <div class="d-flex justify-content-between pt-2">
+                <div class="d-flex gap-3 align-items-center text-muted small">
+                    <span>Payment Method: <?php echo $order['payment_method']; ?></span>
+                    <span class="dot text-muted"></span>
+                    <span>Cancelled by you (Don't want to buy anymore)</span>
+                </div>
+                <div class="d-flex gap-4 align-items-center">
+                    <div class="d-flex gap-2">
+                        <button class="likeorder rounded-2"><i class="fa-regular fa-heart me-2"></i>Like</button>
+                        <button class="cancelorder rounded-2">Buy Again</button>
+                    </div>
+                    <span class="dot text-muted"></span>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span class="text-muted">Sub Total:</span>
+                        <span class="fw-bold fs-4">₱103</span>
+                    </div>
+                </div>
+            </div>
+    <?php
+        } else if ($lastStatus == 'Scheduled') {
+            ?>
+            <div class="d-flex justify-content-between pt-2">
+                <div class="d-flex gap-3 align-items-center text-muted small">
+                    <span>Payment Method: <?php echo $order['payment_method']; ?></span>
+                    <span class="dot text-muted"></span>
+                    <span>Scheduled on <?= $order['scheduled_date'] ?></span>
+                </div>
+                <div class="d-flex gap-4 align-items-center">
+                    <button class="cancelorder rounded-2" data-product-id="<?php echo $item['product_id']; ?>">Cancel Order</button>
+                    <span class="dot text-muted"></span>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span class="text-muted">Sub Total:</span>
+                        <span class="fw-bold fs-4">₱103</span>
+                    </div>
+                </div>
+            </div>
+    <?php
+        }
+        echo '</div>';
+    }
 ?> 
 <style>
     main{
@@ -94,124 +213,8 @@
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             
-                            // <!-- FOOTER -->
-                            if ($lastStatus == 'ToPay') {
-                                ?>
-                                <div class="d-flex justify-content-between pt-2">
-                                    <div class="d-flex gap-3 align-items-center text-muted small">
-                                        <span>Payment Method: <?php echo htmlspecialchars($order['payment_method']); ?></span>
-                                        <span class="dot text-muted"></span>
-                                        <span>Your order is awaiting payment</span>
-                                    </div>
-                                    <div class="d-flex gap-4 align-items-center">
-                                        <button class="cancelorder rounded-2" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
-                                        <span class="dot text-muted"></span>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <span class="text-muted">Sub Total:</span>
-                                            <span class="fw-bold fs-4">₱<?php echo htmlspecialchars($order['price']); ?></span>
-                                        </div>
-                                    </div>
-                                </div>
-                        <?php
-                            } else if ($lastStatus == 'Preparing') {
-                                ?>
-                                <div class="d-flex justify-content-between pt-2">
-                                    <div class="d-flex gap-3 align-items-center text-muted small">
-                                        <span>Payment Method: <?php echo $order['payment_method']; ?></span>
-                                        <span class="dot text-muted"></span>
-                                        <span>Your order is being prepared</span>
-                                    </div>
-                                    <div class="d-flex gap-4 align-items-center">
-                                        <button class="preparing rounded-2">Preparing</button>
-                                        <span class="dot text-muted"></span>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <span class="text-muted">Sub Total:</span>
-                                            <span class="fw-bold fs-4">₱103</span>
-                                        </div>
-                                    </div>
-                                </div>
-                        <?php
-                            } else if ($lastStatus == 'ToReceive') {
-                                ?>
-                                <div class="d-flex justify-content-between pt-2">
-                                    <div class="d-flex gap-3 align-items-center text-muted small">
-                                        <span>Payment Method: <?php echo $order['payment_method']; ?></span>
-                                        <span class="dot text-muted"></span>
-                                        <span> Your order is ready to pickup</span>
-                                    </div>
-                                    <div class="d-flex gap-4 align-items-center">
-                                        <button class="cancelorder rounded-2" data-bs-toggle="modal" data-bs-target="#orderreceived">Order Received</button>
-                                        <span class="dot text-muted"></span>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <span class="text-muted">Sub Total:</span>
-                                            <span class="fw-bold fs-4">₱103</span>
-                                        </div>
-                                    </div>
-                                </div>
-                        <?php
-                            } else if ($lastStatus == 'Completed') {
-                                ?>
-                                <div class="d-flex justify-content-between pt-2">
-                                    <div class="d-flex gap-3 align-items-center text-muted small">
-                                        <span>Payment Method: <?php echo $order['payment_method']; ?></span>
-                                        <span class="dot text-muted"></span>
-                                        <span> Your order is completed</span>
-                                    </div>
-                                    <div class="d-flex gap-4 align-items-center">
-                                        <div class="d-flex gap-2">
-                                            <button class="likeorder rounded-2"><i class="fa-regular fa-heart me-2"></i>Like</button>
-                                            <button class="cancelorder rounded-2">Buy Again</button>
-                                        </div>
-                                        <span class="dot text-muted"></span>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <span class="text-muted">Sub Total:</span>
-                                            <span class="fw-bold fs-4">₱103</span>
-                                        </div>
-                                    </div>
-                                </div>
-                        <?php
-                            } else if ($lastStatus == 'Cancelled') {
-                                ?>
-                                <div class="d-flex justify-content-between pt-2">
-                                    <div class="d-flex gap-3 align-items-center text-muted small">
-                                        <span>Payment Method: <?php echo $order['payment_method']; ?></span>
-                                        <span class="dot text-muted"></span>
-                                        <span>Canceled by you (Don't want to buy anymore)</span>
-                                    </div>
-                                    <div class="d-flex gap-4 align-items-center">
-                                        <div class="d-flex gap-2">
-                                            <button class="likeorder rounded-2"><i class="fa-regular fa-heart me-2"></i>Like</button>
-                                            <button class="cancelorder rounded-2">Buy Again</button>
-                                        </div>
-                                        <span class="dot text-muted"></span>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <span class="text-muted">Sub Total:</span>
-                                            <span class="fw-bold fs-4">₱103</span>
-                                        </div>
-                                    </div>
-                                </div>
-                        <?php
-                            } else if ($lastStatus == 'Scheduled') {
-                                ?>
-                                <div class="d-flex justify-content-between pt-2">
-                                    <div class="d-flex gap-3 align-items-center text-muted small">
-                                        <span>Payment Method: <?php echo $order['payment_method']; ?></span>
-                                        <span class="dot text-muted"></span>
-                                        <span>Scheduled on <?= $order['scheduled_date'] ?></span>
-                                    </div>
-                                    <div class="d-flex gap-4 align-items-center">
-                                        <button class="cancelorder rounded-2" data-product-id="<?php echo $item['product_id']; ?>">Cancel Order</button>
-                                        <span class="dot text-muted"></span>
-                                        <div class="d-flex gap-3 align-items-center">
-                                            <span class="text-muted">Sub Total:</span>
-                                            <span class="fw-bold fs-4">₱103</span>
-                                        </div>
-                                    </div>
-                                </div>
-                        <?php
-                            }
-                                $lastStatus = $status;
-                                echo '</div>';
+                            displayFooter($lastStatus, $order);
+                            $lastStatus = $status;
         ?>
                         <!-- HEADER -->
                         <div class="border py-3 px-4 rounded-2 bg-white mb-3">
@@ -250,6 +253,7 @@
                     }
                 }
             }
+            displayFooter($lastStatus, $order);
         ?>
         </div>
     </div>
