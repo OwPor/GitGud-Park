@@ -13,4 +13,7 @@ pagorder ng customer after magorder sa cart mapupunta order nila sa purchase.php
 - purchase.php same order id, same stall name, same container. If not same stall but same order id, display new container.
 
 
+buhay ay di karera
+
+
 bitaw na ya
