@@ -111,8 +111,9 @@ CREATE TABLE variation_types (
     UNIQUE KEY unique_variation_type (product_id, name)
 );
 
-CREATE TABLE product_variants (
+CREATE TABLE product_variations (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT UNSIGNED NOT NULL,
     variation_type_id INT UNSIGNED NOT NULL,
     name VARCHAR(100) NOT NULL,  -- e.g., "Large", "Red", "Extra Spicy"
     additional_price DECIMAL(10, 2) DEFAULT 0.00,
@@ -191,7 +192,7 @@ CREATE TABLE orders (
     order_id VARCHAR(50) NOT NULL,
     food_stall_name VARCHAR(100) NOT NULL,
     food_name VARCHAR(100) NOT NULL,
-    variant_id INT UNSIGNED,
+    variation_id INT UNSIGNED,
     quantity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     payment_method VARCHAR(50) NOT NULL,
@@ -206,7 +207,7 @@ INSERT INTO orders (
     order_id, 
     food_stall_name, 
     food_name, 
-    variant_id, 
+    variation_id, 
     quantity, 
     price, 
     payment_method, 
@@ -214,12 +215,12 @@ INSERT INTO orders (
     order_date,
     scheduled_date
 ) VALUES 
--- Orders with variants (Large size)
+-- Orders with variations (Large size)
 ('1', 1, 'ORD001', 'YumYim', 'Adobo', 2, 2, 240.00, 'Cash', 'ToPay', '2021-07-01 08:00:00', ''),
 ('1', 1, 'ORD001', 'YumYim', 'Adobo', 2, 2, 240.00, 'Cash', 'ToPay', '2021-07-01 08:00:00', ''),
 ('1', 1, 'ORD002', 'YumYim', 'Adobo', 2, 1, 120.00, 'Cash', 'ToPay', '2021-07-01 08:00:00', ''),
 
--- Orders without variants (using 0 for variant_id)
+-- Orders without variations (using 0 for variation_id)
 ('1', 1, 'ORD003', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00', ''),
 ('1', 1, 'ORD004', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00', ''),
 ('1', 1, 'ORD005', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00', ''),
@@ -230,33 +231,33 @@ INSERT INTO orders (
 ('1', 1, 'ORD010', 'YumYim', 'Adobo', 0, 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00', '2021-07-01 12:00:00');
 
 -- Insert sample orders
--- INSERT INTO orders (
---     user_id, 
---     product_id,
---     order_id, 
---     food_stall_name, 
---     food_name, 
---     variant_id, 
---     quantity, 
---     price, 
---     payment_method, 
---     status, 
---     order_date
--- ) VALUES 
--- ('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD002', 'YumYim', 'Adobo', '2', 1, 100.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD003', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD004', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD005', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD006', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD007', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD008', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD009', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00'),
--- ('1', 1, 'ORD010', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00');
+INSERT INTO orders (
+    user_id, 
+    product_id,
+    order_id, 
+    food_stall_name, 
+    food_name, 
+    variation_id, 
+    quantity, 
+    price, 
+    payment_method, 
+    status, 
+    order_date
+) VALUES 
+('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD001', 'YumYim', 'Adobo', '2', 2, 200.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD002', 'YumYim', 'Adobo', '2', 1, 100.00, 'Cash', 'ToPay', '2021-07-01 08:00:00'),
+('1', 1, 'ORD003', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
+('1', 1, 'ORD004', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00'),
+('1', 1, 'ORD005', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Preparing', '2021-07-01 08:00:00'),
+('1', 1, 'ORD006', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
+('1', 1, 'ORD007', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'ToReceive', '2021-07-01 08:00:00'),
+('1', 1, 'ORD008', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Completed', '2021-07-01 08:00:00'),
+('1', 1, 'ORD009', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Cancelled', '2021-07-01 08:00:00'),
+('1', 1, 'ORD010', 'YumYim', 'Adobo', '', 1, 100.00, 'Cash', 'Scheduled', '2021-07-01 08:00:00');
 
--- INSERT INTO product_variants (product_id, variation_type, name, additional_price, subtract_price, image_path) VALUES (4, 'Size', 'Large', 20.00, 0.00, 'uploads/images/large.jpg');
+INSERT INTO product_variations (product_id, variation_type, name, additional_price, subtract_price, image_path) VALUES (4, 'Size', 'Large', 20.00, 0.00, 'uploads/images/large.jpg');
 
 -- CREATE TABLE order_items (
 --     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -345,13 +346,13 @@ INSERT INTO orders (
 -- (1, 'Spice Level', false);
 
 -- -- Insert variants for each variation type
--- INSERT INTO product_variants (variation_type_id, name, additional_price, is_default) 
--- VALUES 
--- -- Size variants
--- (1, 'Regular', 0.00, true),
--- (1, 'Large', 20.00, false),
--- (1, 'Extra Large', 40.00, false),
--- -- Spice Level variants
--- (2, 'Mild', 0.00, true),
--- (2, 'Medium', 0.00, false),
--- (2, 'Spicy', 5.00, false);
+INSERT INTO product_variations (product_id, variation_type_id, name, additional_price, is_default) 
+VALUES 
+-- Size variants
+(1, 1, 'Regular', 0.00, true),
+(1, 1, 'Large', 20.00, false),
+(1, 1, 'Extra Large', 40.00, false),
+-- Spice Level variants
+(1, 2, 'Mild', 0.00, true),
+(1, 2, 'Medium', 0.00, false),
+(1, 2, 'Spicy', 5.00, false);
