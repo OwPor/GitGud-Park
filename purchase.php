@@ -208,11 +208,11 @@
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
                             if ($currentOrderId !== null) {
                                 displayFooter($lastStatus, $order, $total);
+                                $total = 0;
                             }            
 
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
-                            $total = 0;
                             $lastStatus = $status;
         ?>
                         <!-- HEADER -->
@@ -233,8 +233,8 @@
                                 </div>
                             </div>
                         <?php
-                            $total += $order['price'];
                          }    
+                         $total += $order['price'];
                         ?>
 
                         <!-- BODY -->
@@ -276,10 +276,13 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
+                            if ($currentOrderId !== null) {
+                                displayFooter($lastStatus, $order, $total);
+                                $total = 0;
+                            }            
+
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
-                            
-                            displayFooter($lastStatus, $order);
                             $lastStatus = $status;
         ?>
                         <!-- HEADER -->
@@ -299,7 +302,10 @@
                                     <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php
+                        }
+                        $total += $order['price'];
+                        ?>
 
                         <!-- BODY -->
                         <div class="d-flex justify-content-between border-bottom py-2">
@@ -308,7 +314,7 @@
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
                                     <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
-                                    <span>x1</span>
+                                    <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
@@ -319,7 +325,7 @@
                     }
                 }
             }
-            displayFooter($lastStatus, $order);
+            displayFooter($lastStatus, $order, $total);
         ?>
         </div>
     </div>
@@ -340,10 +346,13 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
+                            if ($currentOrderId !== null) {
+                                displayFooter($lastStatus, $order, $total);
+                                $total = 0;
+                            }            
+
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
-                            
-                            displayFooter($lastStatus, $order);
                             $lastStatus = $status;
         ?>
                         <!-- HEADER -->
@@ -363,7 +372,10 @@
                                     <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php
+                        }
+                        $total += $order['price'];
+                        ?>
 
                         <!-- BODY -->
                         <div class="d-flex justify-content-between border-bottom py-2">
@@ -372,7 +384,7 @@
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
                                     <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
-                                    <span>x1</span>
+                                    <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
@@ -383,7 +395,7 @@
                     }
                 }
             }
-            displayFooter($lastStatus, $order);
+            displayFooter($lastStatus, $order, $total);
         ?>
         </div>
     </div>
@@ -404,10 +416,13 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
+                            if ($currentOrderId !== null) {
+                                displayFooter($lastStatus, $order, $total);
+                                $total = 0;
+                            }            
+
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
-                            
-                            displayFooter($lastStatus, $order);
                             $lastStatus = $status;
         ?>
                         <!-- HEADER -->
@@ -427,7 +442,10 @@
                                     <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php 
+                        }
+                        $total += $order['price'];
+                        ?>
 
                         <!-- BODY -->
                         <div class="d-flex justify-content-between border-bottom py-2">
@@ -436,7 +454,7 @@
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
                                     <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
-                                    <span>x1</span>
+                                    <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
@@ -447,7 +465,7 @@
                     }
                 }
             }
-            displayFooter($lastStatus, $order);
+            displayFooter($lastStatus, $order, $total);
         ?>
         </div>
     </div>
@@ -468,10 +486,13 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
+                            if ($currentOrderId !== null) {
+                                displayFooter($lastStatus, $order, $total);
+                                $total = 0;
+                            }            
+
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
-                            
-                            displayFooter($lastStatus, $order);
                             $lastStatus = $status;
         ?>
                         <!-- HEADER -->
@@ -491,7 +512,10 @@
                                     <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php
+                        }
+                        $total += $order['price'];
+                        ?>
 
                         <!-- BODY -->
                         <div class="d-flex justify-content-between border-bottom py-2">
@@ -500,7 +524,7 @@
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
                                     <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
-                                    <span>x1</span>
+                                    <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
@@ -511,7 +535,7 @@
                     }
                 }
             }
-            displayFooter($lastStatus, $order);
+            displayFooter($lastStatus, $order, $total);
         ?>
         </div>
     </div>
@@ -532,10 +556,13 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
+                            if ($currentOrderId !== null) {
+                                displayFooter($lastStatus, $order, $total);
+                                $total = 0;
+                            }            
+
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
-                            
-                            displayFooter($lastStatus, $order);
                             $lastStatus = $status;
         ?>
                         <!-- HEADER -->
@@ -555,7 +582,10 @@
                                     <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php
+                        }
+                        $total += $order['price'];
+                        ?>
 
                         <!-- BODY -->
                         <div class="d-flex justify-content-between border-bottom py-2">
@@ -564,7 +594,7 @@
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
                                     <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
-                                    <span>x1</span>
+                                    <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
@@ -575,7 +605,7 @@
                     }
                 }
             }
-            displayFooter($lastStatus, $order);
+            displayFooter($lastStatus, $order, $total);
         ?>
         </div>
     </div>
@@ -596,10 +626,13 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
+                            if ($currentOrderId !== null) {
+                                displayFooter($lastStatus, $order, $total);
+                                $total = 0;
+                            }            
+
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
-                            
-                            displayFooter($lastStatus, $order);
                             $lastStatus = $status;
         ?>
                         <!-- HEADER -->
@@ -619,7 +652,10 @@
                                     <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php
+                        }
+                        $total += $order['price'];
+                        ?>
 
                         <!-- BODY -->
                         <div class="d-flex justify-content-between border-bottom py-2">
@@ -628,7 +664,7 @@
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
                                     <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
-                                    <span>x1</span>
+                                    <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
@@ -639,7 +675,7 @@
                     }
                 }
             }
-            displayFooter($lastStatus, $order);
+            displayFooter($lastStatus, $order, $total);
         ?>
         </div>
     </div>
