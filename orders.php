@@ -47,59 +47,41 @@
         }
     }
 
-    function displayFooter($lastStatus, $order, $total) {
-        // Only close the flex-grow-1 div if we're displaying a footer
+    function displayFooter($status, $order, $total) {
         ?>
-        </div> <!-- Close the flex-grow-1 div -->
-        <?php
-        
-        if ($lastStatus === "ToPay") {
-            ?>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <div class="d-flex justify-content-between py-2 px-4 w-100">
-                    <div class="d-flex gap-3 align-items-center text-muted small">
-                        <span>Payment Method: <?= htmlspecialchars($order['payment_method']) ?></span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱<?= number_format($total, 2) ?></span>
-                    </div>
-                </div>
+        <div class="d-flex justify-content-between py-2 px-5">
+            <div class="d-flex gap-3 align-items-center text-muted small">
+                <span>Payment Method: <?= htmlspecialchars($order['payment_method']); ?></span>
+                <span class="dot text-muted"></span>
+                <span><?= htmlspecialchars($order['order_type'] ?? 'Dine in'); ?></span>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+                <span class="text-muted">Total:</span>
+                <span class="fw-bold fs-4">₱<?= number_format($total, 2); ?></span>
+            </div>
+        </div>
+        </div>
+        <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
+            <?php if ($status === 'ToPay'): ?>
                 <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#prepareorder">Prepare Order</button>
                 <button class="rounded-2" style="background-color: #6A9C89;" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
                 <button class="rounded-2" style="background-color: gray;">Remind Payment</button>
-            </div>
-            <?php
-        } else if ($lastStatus === "Preparing") {
-            ?>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <div class="d-flex justify-content-between py-2 px-4 w-100">
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱<?= number_format($total, 2) ?></span>
-                    </div>
-                </div>
+            <?php elseif ($status === 'Preparing'): ?>
+                <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#orderready">Order Ready</button>
+            <?php elseif ($status === 'ToReceive'): ?>
                 <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#completeorder">Complete Order</button>
                 <button class="rounded-2" style="background-color: #6A9C89;" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
-            </div>
-            <?php
-        } else if ($lastStatus === "Completed") {
-            ?>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <div class="d-flex justify-content-between py-2 px-4 w-100">
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱<?= number_format($total, 2) ?></span>
-                    </div>
-                </div>
+            <?php elseif ($status === 'Completed'): ?>
                 <span class="text-muted">Completed</span>
-            </div>
-            <?php
-        }
-        ?>
-        </div> <!-- Close the main border rounded-2 container -->
+            <?php elseif ($status === 'Cancelled'): ?>
+                <span class="text-muted text-center">Canceled by the customer<br>(Need to modify order)</span>
+            <?php elseif ($status === 'Scheduled'): ?>
+                <span class="text-muted text-center p-3 small">Scheduled on <?= date('F j, Y \a\t g:i A', strtotime($order['scheduled_date'])); ?><br>
+            <?php endif; ?>
+        </div>
+        </div>
         <?php
-    }
+    }    
 ?>
 <style>
     /*
@@ -147,7 +129,6 @@
             <input type="text" name="search" placeholder="Search" style="width: 100%;">
             <button type="submit" class="m-0 ms-2"><i class="fas fa-search fa-lg small"></i></button>
         </form> -->
-
         <?php
             $currentStallName = null;
             $currentOrderId = null;
@@ -156,11 +137,10 @@
 
             foreach ($ordersByStatus as $status => $statusOrders) {
                 if (!empty($statusOrders)) {
-                    $displayStatus = isset($statusDisplayNames[$status]) ? $statusDisplayNames[$status] : $status;
                     foreach ($statusOrders as $order) {
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
                             if ($currentOrderId !== null) {
-                                displayFooter($lastStatus, $order, $total);
+                                displayFooter($lastStatus, $lastOrder, $total);
                             }
                             
                             $total = 0;
@@ -168,47 +148,104 @@
                             $currentOrderId = $order['order_id'];
                             $lastStatus = $status;
                             ?>
-                            <!-- HEADER -->
                             <div class="border rounded-2 bg-white mb-3 d-flex">
                                 <div class="flex-grow-1 border-end">
                                     <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
                                         <span class="fw-bold">ORDER ID: <?= htmlspecialchars($order['order_id']); ?></span>
                                         <div class="d-flex gap-3 align-items-center">
-                                            <span style="color: #6A9C89" class="small"><?= htmlspecialchars(date('m/d/Y H:i', strtotime($order['order_date']))); ?></span>
+                                            <span style="color: #6A9C89" class="small"><?= date('m/d/Y H:i', strtotime($order['order_date'])); ?></span>
                                             <span class="dot text-muted"></span>
-                                            <span class="fw-bold" style="color: #CD5C08"><?= htmlspecialchars($displayStatus); ?></span>
+                                            <span class="fw-bold" style="color: #CD5C08"><?= htmlspecialchars($order['status']); ?></span>
                                         </div>
                                     </div>
                         <?php
                         }
                         
-                        // Calculate running total
-                        $total += $order['price'];
+                        $itemTotal = $order['price'];
+                        $total += $itemTotal;
                         ?>
-                        <!-- BODY -->
                         <div class="d-flex justify-content-between border-bottom py-2 px-5">
                             <div class="d-flex gap-3 align-items-center">
-                                <img src="<?= htmlspecialchars($order['image'] ?? 'assets/images/food1.jpg') ?>" width="85px" height="85px" class="border rounded-2">
+                                <img src="<?= htmlspecialchars($order['product_image'] ?? 'assets/images/food1.jpg'); ?>" 
+                                    width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?= htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <?php if (!empty($order['formatted_variations'])): ?>
+                                        <span class="small text-muted">Variation: <?= htmlspecialchars($order['formatted_variations']); ?></span><br>
+                                    <?php endif; ?>
                                     <span>x<?= htmlspecialchars($order['quantity']); ?></span>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold">₱<?= number_format($order['price'], 2); ?></span>
+                                <span class="fw-bold">₱<?= number_format($itemTotal, 2); ?></span>
                             </div>
                         </div>
                         <?php
+                        $lastOrder = $order;
                     }
                 }
             }
             
             // Display footer for the last order
             if ($currentOrderId !== null) {
-                displayFooter($lastStatus, $order, $total);
+                displayFooter($lastStatus, $lastOrder, $total);
             }
-            ?>
+        ?>
+        <!-- <div class="border rounded-2 bg-white mb-3 d-flex">
+            <div class="flex-grow-1 border-end">
+                <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
+                    <span class="fw-bold">ORDER ID: 0000</span>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span style="color: #6A9C89" class="small">07/29/2024 22:59</span>
+                        <span class="dot text-muted"></span>
+                        <span class="fw-bold" style="color: #CD5C08">PENDING PAYMENT</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between border-bottom py-2 px-5">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
+                        <div>
+                            <span class="fs-5">Food Name</span><br>
+                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
+                            <span>x1</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-end">
+                        <span class="fw-bold">₱103</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between border-bottom py-2 px-5">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/food2.jpg" width="85px" height="85px" class="border rounded-2">
+                        <div>
+                            <span class="fs-5">Food Name</span><br>
+                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
+                            <span>x1</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column justify-content-end">
+                        <span class="fw-bold">₱103</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between py-2 px-5">
+                    <div class="d-flex gap-3 align-items-center text-muted small">
+                        <span>Payment Method: Cash</span>
+                        <span class="dot text-muted"></span>
+                        <span>Dine in</span>
+                    </div>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span class="text-muted">Total:</span>
+                        <span class="fw-bold fs-4">₱103</span>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
+                <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#prepareorder">Prepare Order</button>
+                <button class="rounded-2" style="background-color: #6A9C89;" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
+                <button class="rounded-2" style="background-color: gray;">Remind Payment</button>
+            </div>
+        </div> -->
         <div class="border rounded-2 bg-white mb-3 d-flex">
             <div class="flex-grow-1 border-end">
                 <div class="border-bottom py-3 px-5">
