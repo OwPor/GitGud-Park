@@ -8,13 +8,51 @@
         header('Location: signin.php');
         exit();
     }
-    
+
     $status = $_GET['status'] ?? 'all';
     $orders = $userObj->getOrders($_SESSION['user']['id']);
 
+    $ordersByStatus = [
+        'ToPay' => [],
+        'Preparing' => [],
+        'ToReceive' => [],
+        'Completed' => [],
+        'Cancelled' => [],
+        'Scheduled' => []
+    ];
+
+    $statusDisplayNames = [
+        'ToPay' => 'To Pay',
+        'ToReceive' => 'To Receive'
+    ];
+    
+    // First, sort the orders array
+    usort($orders, function($a, $b) {
+        // Compare order IDs first
+        $orderCompare = $a['order_id'] <=> $b['order_id'];
+        
+        // If order IDs are equal, compare stall names
+        if ($orderCompare === 0) {
+            return strcmp($a['food_stall_name'], $b['food_stall_name']);
+        }
+        
+        return $orderCompare;
+    });
+
+    // Then group by status
+    $ordersByStatus = [];
+    foreach ($orders as $order) {
+        $status = $order['status'];
+        if (isset($ordersByStatus[$status])) {
+            $ordersByStatus[$status][] = $order;
+        } else {
+            $ordersByStatus[$status] = [$order];
+        }
+    }
+
     // Create a display footer function for less redundancy
     // Fix the footer for last display, it doesn't display
-    function displayFooter($lastStatus, $order) {
+    function displayFooter($lastStatus, $order, $total) {
         // <!-- FOOTER -->
         if ($lastStatus == 'ToPay') {
             ?>
@@ -29,7 +67,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
                         <span class="text-muted">Sub Total:</span>
-                        <span class="fw-bold fs-4">₱<?php echo htmlspecialchars($order['price']); ?></span>
+                        <span class="fw-bold fs-4">₱<?= $total ?></span>
                     </div>
                 </div>
             </div>
@@ -47,7 +85,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
                         <span class="text-muted">Sub Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
+                        <span class="fw-bold fs-4">₱<?= $total ?></span>
                     </div>
                 </div>
             </div>
@@ -65,7 +103,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
                         <span class="text-muted">Sub Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
+                        <span class="fw-bold fs-4">₱<?= $total ?></span>
                     </div>
                 </div>
             </div>
@@ -86,7 +124,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
                         <span class="text-muted">Sub Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
+                        <span class="fw-bold fs-4">₱<?= $total ?></span>
                     </div>
                 </div>
             </div>
@@ -107,7 +145,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
                         <span class="text-muted">Sub Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
+                        <span class="fw-bold fs-4">₱<?= $total ?></span>
                     </div>
                 </div>
             </div>
@@ -125,7 +163,7 @@
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
                         <span class="text-muted">Sub Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
+                        <span class="fw-bold fs-4">₱<?= $total ?></span>
                     </div>
                 </div>
             </div>
@@ -158,48 +196,8 @@
     </form>
     <div id="all" class="section-content">
         <?php
-            $ordersByStatus = [
-                'ToPay' => [],
-                'Preparing' => [],
-                'ToReceive' => [],
-                'Completed' => [],
-                'Cancelled' => [],
-                'Scheduled' => []
-            ];
-
-            $statusDisplayNames = [
-                'ToPay' => 'To Pay',
-                'ToReceive' => 'To Receive'
-            ];
-            
-            // First, sort the orders array
-            usort($orders, function($a, $b) {
-                // Compare order IDs first
-                $orderCompare = $a['order_id'] <=> $b['order_id'];
-                
-                // If order IDs are equal, compare stall names
-                if ($orderCompare === 0) {
-                    return strcmp($a['food_stall_name'], $b['food_stall_name']);
-                }
-                
-                return $orderCompare;
-            });
-
-            // Then group by status
-            $ordersByStatus = [];
-            foreach ($orders as $order) {
-                $status = $order['status'];
-                if (isset($ordersByStatus[$status])) {
-                    $ordersByStatus[$status][] = $order;
-                } else {
-                    $ordersByStatus[$status] = [$order];
-                }
-            }
-
             $currentStallName = null;
             $currentOrderId = null;
-            $notfirst = false;
-            $notfirst1 = false;
             $total = 0;
             $lastStatus = null;
 
@@ -208,14 +206,13 @@
                     $displayStatus = isset($statusDisplayNames[$status]) ? $statusDisplayNames[$status] : $status;
                     foreach ($statusOrders as $order) {
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
-                            if ($notfirst1)
-                                $notfirst = true;
-                            
-                            $notfirst1 = true;
+                            if ($currentOrderId !== null) {
+                                displayFooter($lastStatus, $order, $total);
+                            }            
+
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
-                            
-                            displayFooter($lastStatus, $order);
+                            $total = 0;
                             $lastStatus = $status;
         ?>
                         <!-- HEADER -->
@@ -235,7 +232,10 @@
                                     <span class="fw-bold" style="color: #CD5C08"><?php echo htmlspecialchars($displayStatus); ?></span>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php
+                            $total += $order['price'];
+                         }    
+                        ?>
 
                         <!-- BODY -->
                         <div class="d-flex justify-content-between border-bottom py-2">
@@ -244,7 +244,7 @@
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
                                     <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
-                                    <span>x1</span>
+                                    <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
@@ -255,7 +255,7 @@
                     }
                 }
             }
-            displayFooter($lastStatus, $order);
+            displayFooter($lastStatus, $order, $total);
         ?>
         </div>
     </div>
@@ -265,8 +265,6 @@
         <?php
             $currentStallName = null;
             $currentOrderId = null;
-            $notfirst = false;
-            $notfirst1 = false;
             $total = 0;
             $lastStatus = null;
 
@@ -278,10 +276,6 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
-                            if ($notfirst1)
-                                $notfirst = true;
-                            
-                            $notfirst1 = true;
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             
@@ -335,8 +329,6 @@
         <?php
             $currentStallName = null;
             $currentOrderId = null;
-            $notfirst = false;
-            $notfirst1 = false;
             $total = 0;
             $lastStatus = null;
 
@@ -348,10 +340,6 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
-                            if ($notfirst1)
-                                $notfirst = true;
-                            
-                            $notfirst1 = true;
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             
@@ -405,8 +393,6 @@
         <?php
             $currentStallName = null;
             $currentOrderId = null;
-            $notfirst = false;
-            $notfirst1 = false;
             $total = 0;
             $lastStatus = null;
 
@@ -418,10 +404,6 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
-                            if ($notfirst1)
-                                $notfirst = true;
-                            
-                            $notfirst1 = true;
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             
@@ -475,8 +457,6 @@
         <?php
             $currentStallName = null;
             $currentOrderId = null;
-            $notfirst = false;
-            $notfirst1 = false;
             $total = 0;
             $lastStatus = null;
 
@@ -488,10 +468,6 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
-                            if ($notfirst1)
-                                $notfirst = true;
-                            
-                            $notfirst1 = true;
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             
@@ -545,8 +521,6 @@
         <?php 
             $currentStallName = null;
             $currentOrderId = null;
-            $notfirst = false;
-            $notfirst1 = false;
             $total = 0;
             $lastStatus = null;
 
@@ -558,10 +532,6 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
-                            if ($notfirst1)
-                                $notfirst = true;
-                            
-                            $notfirst1 = true;
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             
@@ -615,8 +585,6 @@
         <?php 
             $currentStallName = null;
             $currentOrderId = null;
-            $notfirst = false;
-            $notfirst1 = false;
             $total = 0;
             $lastStatus = null;
 
@@ -628,10 +596,6 @@
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
-                            if ($notfirst1)
-                                $notfirst = true;
-                            
-                            $notfirst1 = true;
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             

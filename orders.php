@@ -3,6 +3,49 @@
     include_once 'links.php'; 
     include_once 'modals.php'; 
     include_once 'nav.php';
+    require_once 'classes/stall.class.php';
+
+    $stall = new Stall();
+    $stallId = $stall->getStallId($_SESSION['user']['id']);
+    $orders = $stall->getOrdersByStallId($stallId);
+
+    $ordersByStatus = [
+        'ToPay' => [],
+        'Preparing' => [],
+        'ToReceive' => [],
+        'Completed' => [],
+        'Cancelled' => [],
+        'Scheduled' => []
+    ];
+
+    $statusDisplayNames = [
+        'ToPay' => 'To Pay',
+        'ToReceive' => 'To Receive'
+    ];
+    
+    // First, sort the orders array
+    usort($orders, function($a, $b) {
+        // Compare order IDs first
+        $orderCompare = $a['order_id'] <=> $b['order_id'];
+        
+        // If order IDs are equal, compare stall names
+        if ($orderCompare === 0) {
+            return strcmp($a['food_stall_name'], $b['food_stall_name']);
+        }
+        
+        return $orderCompare;
+    });
+
+    // Then group by status
+    $ordersByStatus = [];
+    foreach ($orders as $order) {
+        $status = $order['status'];
+        if (isset($ordersByStatus[$status])) {
+            $ordersByStatus[$status][] = $order;
+        } else {
+            $ordersByStatus[$status] = [$order];
+        }
+    }
 ?>
 <style>
     /*
@@ -46,10 +89,13 @@
     </div>
 
     <div id="all" class="section-content">
-        <form action="#" method="get" class="searchmenu rounded-2 mb-3 bg-white py-2 px-3">
+        <!-- <form action="#" method="get" class="searchmenu rounded-2 mb-3 bg-white py-2 px-3">
             <input type="text" name="search" placeholder="Search" style="width: 100%;">
             <button type="submit" class="m-0 ms-2"><i class="fas fa-search fa-lg small"></i></button>
-        </form>
+        </form> -->
+
+        <?php
+        ?>
         <div class="border rounded-2 bg-white mb-3 d-flex">
             <div class="flex-grow-1 border-end">
                 <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">

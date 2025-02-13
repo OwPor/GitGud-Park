@@ -60,4 +60,28 @@ class Stall {
         }
         return $result['total_products'];
     }
+
+    public function getOrdersByStallId($stallId) {
+        $sql = "SELECT 
+                    o.*,
+                    u.first_name,
+                    u.last_name,
+                    u.email AS user_email
+                FROM orders o 
+                JOIN users u ON o.user_id = u.id 
+                JOIN stalls s ON o.food_stall_name = s.name
+                WHERE s.id = :stall_id
+                ORDER BY o.order_date DESC;";
+        
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindValue(':stall_id', $stallId, PDO::PARAM_INT);
+        
+        try {
+            $query->execute();
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
