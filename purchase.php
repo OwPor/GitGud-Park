@@ -12,6 +12,26 @@
     $status = $_GET['status'] ?? 'all';
     $orders = $userObj->getOrders($_SESSION['user']['id']);
 
+    // Define status order and display names
+    $statusOrder = [
+        'ToPay' => 1,
+        'Preparing' => 2,
+        'ToReceive' => 3,
+        'Completed' => 4,
+        'Cancelled' => 5,
+        'Scheduled' => 6
+    ];
+
+    $statusDisplayNames = [
+        'ToPay' => 'To Pay',
+        'ToReceive' => 'To Receive',
+        'Preparing' => 'Preparing',
+        'Completed' => 'Completed',
+        'Cancelled' => 'Cancelled',
+        'Scheduled' => 'Scheduled'
+    ];
+
+    // Initialize ordersByStatus with correct order
     $ordersByStatus = [
         'ToPay' => [],
         'Preparing' => [],
@@ -21,33 +41,23 @@
         'Scheduled' => []
     ];
 
-    $statusDisplayNames = [
-        'ToPay' => 'To Pay',
-        'ToReceive' => 'To Receive'
-    ];
-    
-    // First, sort the orders array
-    usort($orders, function($a, $b) {
-        // Compare order IDs first
-        $orderCompare = $a['order_id'] <=> $b['order_id'];
+    // Sort orders by status priority, then by order date
+    usort($orders, function($a, $b) use ($statusOrder) {
+        // Compare status priority
+        $statusCompare = $statusOrder[$a['status']] <=> $statusOrder[$b['status']];
         
-        // If order IDs are equal, compare stall names
-        if ($orderCompare === 0) {
-            return strcmp($a['food_stall_name'], $b['food_stall_name']);
+        if ($statusCompare === 0) {
+            // If same status, sort by order date (newest first)
+            return strtotime($b['order_date']) <=> strtotime($a['order_date']);
         }
         
-        return $orderCompare;
+        return $statusCompare;
     });
 
-    // Then group by status
-    $ordersByStatus = [];
+    // Group orders by status while maintaining sort order
     foreach ($orders as $order) {
         $status = $order['status'];
-        if (isset($ordersByStatus[$status])) {
-            $ordersByStatus[$status][] = $order;
-        } else {
-            $ordersByStatus[$status] = [$order];
-        }
+        $ordersByStatus[$status][] = $order;
     }
 
     // Create a display footer function for less redundancy

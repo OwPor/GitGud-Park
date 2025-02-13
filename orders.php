@@ -9,6 +9,26 @@
     $stallId = $stall->getStallId($_SESSION['user']['id']);
     $orders = $stall->getOrdersByStallId($stallId);
 
+    // Define status order and display names
+    $statusOrder = [
+        'ToPay' => 1,
+        'Preparing' => 2,
+        'ToReceive' => 3,
+        'Completed' => 4,
+        'Cancelled' => 5,
+        'Scheduled' => 6
+    ];
+
+    $statusDisplayNames = [
+        'ToPay' => 'To Pay',
+        'ToReceive' => 'To Receive',
+        'Preparing' => 'Preparing',
+        'Completed' => 'Completed',
+        'Cancelled' => 'Cancelled',
+        'Scheduled' => 'Scheduled'
+    ];
+
+    // Initialize ordersByStatus with correct order
     $ordersByStatus = [
         'ToPay' => [],
         'Preparing' => [],
@@ -18,33 +38,23 @@
         'Scheduled' => []
     ];
 
-    $statusDisplayNames = [
-        'ToPay' => 'To Pay',
-        'ToReceive' => 'To Receive'
-    ];
-    
-    // First, sort the orders array
-    usort($orders, function($a, $b) {
-        // Compare order IDs first
-        $orderCompare = $a['order_id'] <=> $b['order_id'];
+    // Sort orders by status priority, then by order date
+    usort($orders, function($a, $b) use ($statusOrder) {
+        // Compare status priority
+        $statusCompare = $statusOrder[$a['status']] <=> $statusOrder[$b['status']];
         
-        // If order IDs are equal, compare stall names
-        if ($orderCompare === 0) {
-            return strcmp($a['food_stall_name'], $b['food_stall_name']);
+        if ($statusCompare === 0) {
+            // If same status, sort by order date (newest first)
+            return strtotime($b['order_date']) <=> strtotime($a['order_date']);
         }
         
-        return $orderCompare;
+        return $statusCompare;
     });
 
-    // Then group by status
-    $ordersByStatus = [];
+    // Group orders by status while maintaining sort order
     foreach ($orders as $order) {
         $status = $order['status'];
-        if (isset($ordersByStatus[$status])) {
-            $ordersByStatus[$status][] = $order;
-        } else {
-            $ordersByStatus[$status] = [$order];
-        }
+        $ordersByStatus[$status][] = $order;
     }
 
     function displayFooter($status, $order, $total) {
@@ -141,9 +151,9 @@
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
                             if ($currentOrderId !== null) {
                                 displayFooter($lastStatus, $lastOrder, $total);
+                                $total = 0;
                             }
                             
-                            $total = 0;
                             $currentStallName = $order['food_stall_name'];
                             $currentOrderId = $order['order_id'];
                             $lastStatus = $status;
@@ -166,7 +176,7 @@
                         ?>
                         <div class="d-flex justify-content-between border-bottom py-2 px-5">
                             <div class="d-flex gap-3 align-items-center">
-                                <img src="<?= htmlspecialchars($order['product_image'] ?? 'assets/images/food1.jpg'); ?>" 
+                                <img src="assets/images/food1.jpg" 
                                     width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?= htmlspecialchars($order['food_name']); ?></span><br>
@@ -246,402 +256,73 @@
                 <button class="rounded-2" style="background-color: gray;">Remind Payment</button>
             </div>
         </div> -->
-        <div class="border rounded-2 bg-white mb-3 d-flex">
-            <div class="flex-grow-1 border-end">
-                <div class="border-bottom py-3 px-5">
-                    <span class="text-danger" style="font-size: 13px;"><i class="fa-solid fa-circle-exclamation me-2"></i>This order is scheduled on 1:00 PM. Please prioritize this order based on its scheduled time.</span>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="d-flex gap-3 align-items-center">
-                            <span class="prequeue fw-bold text-white d-flex align-items-center justify-content-center">01</span>
-                            <span class="dot text-muted"></span>
-                            <span class="fw-bold">ORDER ID: 0000</span>
-                        </div>
-                        <div class="d-flex gap-3 align-items-center">
-                            <span style="color: #6A9C89" class="small">07/29/2024 22:59</span>
-                            <span class="dot text-muted"></span>
-                            <span class="fw-bold" style="color: #CD5C08">PREPARING</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food3.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food4.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center text-muted small">
-                        <span>Payment Method: Cash</span>
-                        <span class="dot text-muted"></span>
-                        <span>Dine in</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#orderready">Order Ready</button>
-            </div>
-        </div>
-        <div class="border rounded-2 bg-white mb-3 d-flex">
-            <div class="flex-grow-1 border-end">
-                <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="prequeue fw-bold text-white d-flex align-items-center justify-content-center">02</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold">ORDER ID: 0000</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span style="color: #6A9C89" class="small">07/29/2024 22:59</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold" style="color: #CD5C08">PREPARING</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food2.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center text-muted small">
-                        <span>Payment Method: Cash</span>
-                        <span class="dot text-muted"></span>
-                        <span>Dine in</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#orderready">Order Ready</button>
-            </div>
-        </div>
-        <div class="border rounded-2 bg-white mb-3 d-flex">
-            <div class="flex-grow-1 border-end">
-                <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="prequeue fw-bold text-white d-flex align-items-center justify-content-center">01</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold">ORDER ID: 0000</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span style="color: #6A9C89" class="small">07/29/2024 22:59</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold" style="color: #CD5C08">READY FOR PICKUP</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food2.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center text-muted small">
-                        <span>Payment Method: Cash</span>
-                        <span class="dot text-muted"></span>
-                        <span>Dine in</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#ordercomplete">Order Complete</button>
-                <button class="rounded-2" style="background-color: #6A9C89;">Notify Cusomer</button>
-            </div>
-        </div>
-        <div class="border rounded-2 bg-white mb-3 d-flex">
-            <div class="flex-grow-1 border-end">
-                <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="prequeue fw-bold text-white d-flex align-items-center justify-content-center">01</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold">ORDER ID: 0000</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span style="color: #6A9C89" class="small">07/29/2024 22:59</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold" style="color: #CD5C08">COMPLETED</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food2.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center text-muted small">
-                        <span>Payment Method: Cash</span>
-                        <span class="dot text-muted"></span>
-                        <span>Dine in</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <span class="text-muted">Completed</span>
-            </div>
-        </div>
-        <div class="border rounded-2 bg-white mb-3 d-flex">
-            <div class="flex-grow-1 border-end">
-                <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
-                    <span class="fw-bold">ORDER ID: 0000</span>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span style="color: #6A9C89" class="small">07/29/2024 22:59</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold" style="color: #CD5C08">CANCELED</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food2.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center text-muted small">
-                        <span>Payment Method: Cash</span>
-                        <span class="dot text-muted"></span>
-                        <span>Dine in</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <span class="text-muted text-center">Canceled by the customer<br>(Need to modify order)</span>
-            </div>
-        </div>
-        <div class="border rounded-2 bg-white mb-3 d-flex">
-            <div class="flex-grow-1 border-end">
-                <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
-                    <span class="fw-bold">ORDER ID: 0000</span>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span style="color: #6A9C89" class="small">07/29/2024 22:59</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold" style="color: #CD5C08">SCHEDULED</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food2.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center text-muted small">
-                        <span>Payment Method: Cash</span>
-                        <span class="dot text-muted"></span>
-                        <span>Dine in</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <span class="text-muted text-center p-3 small">Scheduled on October 15, 2024 at 1:00 PM<br>
-                (The system will automatically move this order to PREPARING 5 minutes before the scheduled time is reached)</span>
-            </div>
-        </div>
     </div>
     <div id="pendingpayment" class="section-content d-none">
-        <div class="border rounded-2 bg-white mb-3 d-flex">
-            <div class="flex-grow-1 border-end">
-                <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
-                    <span class="fw-bold">ORDER ID: 0000</span>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span style="color: #6A9C89" class="small">07/29/2024 22:59</span>
-                        <span class="dot text-muted"></span>
-                        <span class="fw-bold" style="color: #CD5C08">PENDING PAYMENT</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
+        <?php
+            $currentStallName = null;
+            $currentOrderId = null;
+            $total = 0;
+            $lastStatus = null;
+
+            foreach ($ordersByStatus as $status => $statusOrders) {
+                if (!empty($statusOrders)) {
+                    foreach ($statusOrders as $order) {
+                        if ($status !== 'ToPay') {
+                            continue;
+                        }
+                        if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
+                            if ($currentOrderId !== null) {
+                                displayFooter($lastStatus, $lastOrder, $total);
+                                $total = 0;
+                            }
+                            
+                            $currentStallName = $order['food_stall_name'];
+                            $currentOrderId = $order['order_id'];
+                            $lastStatus = $status;
+                            ?>
+                            <div class="border rounded-2 bg-white mb-3 d-flex">
+                                <div class="flex-grow-1 border-end">
+                                    <div class="d-flex justify-content-between align-items-center border-bottom py-3 px-5">
+                                        <span class="fw-bold">ORDER ID: <?= htmlspecialchars($order['order_id']); ?></span>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <span style="color: #6A9C89" class="small"><?= date('m/d/Y H:i', strtotime($order['order_date'])); ?></span>
+                                            <span class="dot text-muted"></span>
+                                            <span class="fw-bold" style="color: #CD5C08"><?= htmlspecialchars($order['status']); ?></span>
+                                        </div>
+                                    </div>
+                        <?php
+                        }
+                        
+                        $itemTotal = $order['price'];
+                        $total += $itemTotal;
+                        ?>
+                        <div class="d-flex justify-content-between border-bottom py-2 px-5">
+                            <div class="d-flex gap-3 align-items-center">
+                                <img src="assets/images/food1.jpg" 
+                                    width="85px" height="85px" class="border rounded-2">
+                                <div>
+                                    <span class="fs-5"><?= htmlspecialchars($order['food_name']); ?></span><br>
+                                    <?php if (!empty($order['formatted_variations'])): ?>
+                                        <span class="small text-muted">Variation: <?= htmlspecialchars($order['formatted_variations']); ?></span><br>
+                                    <?php endif; ?>
+                                    <span>x<?= htmlspecialchars($order['quantity']); ?></span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column justify-content-end">
+                                <span class="fw-bold">₱<?= number_format($itemTotal, 2); ?></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between border-bottom py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center">
-                        <img src="assets/images/food2.jpg" width="85px" height="85px" class="border rounded-2">
-                        <div>
-                            <span class="fs-5">Food Name</span><br>
-                            <span class="small text-muted">Variation: Chocolate, Medium</span><br>
-                            <span>x1</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column justify-content-end">
-                        <span class="fw-bold">₱103</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between py-2 px-5">
-                    <div class="d-flex gap-3 align-items-center text-muted small">
-                        <span>Payment Method: Cash</span>
-                        <span class="dot text-muted"></span>
-                        <span>Dine in</span>
-                    </div>
-                    <div class="d-flex gap-3 align-items-center">
-                        <span class="text-muted">Total:</span>
-                        <span class="fw-bold fs-4">₱103</span>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-                <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#prepareorder">Prepare Order</button>
-                <button class="rounded-2" style="background-color: #6A9C89;" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
-                <button class="rounded-2" style="background-color: gray;">Remind Payment</button>
-            </div>
-        </div>
+                        <?php
+                        $lastOrder = $order;
+                    }
+                }
+            }
+            
+            // Display footer for the last order
+            if ($currentOrderId !== null) {
+                displayFooter($lastStatus, $lastOrder, $total);
+            }
+        ?>
     </div>
     <div id="preparing" class="section-content d-none">
         <div class="border rounded-2 bg-white mb-3 d-flex">
