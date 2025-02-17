@@ -182,8 +182,6 @@ class Stall {
         return $this->db->connect();
     }
     
-
-    
     public function getTotalProducts($stallId) {
         $sql = "SELECT COUNT(*) AS total_products FROM products WHERE stall_id = :stall_id;";
         $query = $this->db->connect()->prepare($sql);
