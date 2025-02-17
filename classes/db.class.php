@@ -407,18 +407,18 @@ class User {
 
     public function getOrders($user_id, $search = null) {
         try {
-            // Modified query to handle variation types and variants correctly
+            // Modified query to handle variation types and variationss correctly
             $sql = "SELECT o.*, 
                            p.file_path, 
                            p.description as product_description,
                            CASE 
-                               WHEN o.variant_id > 0 THEN 
+                               WHEN o.variation_id > 0 THEN 
                                    CONCAT(vt.name, ': ', pv.name)
                                ELSE 'No variations'
                            END as variation_details
                     FROM orders o 
                     LEFT JOIN products p ON o.product_id = p.id 
-                    LEFT JOIN product_variants pv ON o.variant_id = pv.id
+                    LEFT JOIN product_variations pv ON o.variation_id = pv.id
                     LEFT JOIN variation_types vt ON pv.variation_type_id = vt.id
                     WHERE o.user_id = :user_id";
             
