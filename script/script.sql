@@ -5,74 +5,129 @@ CREATE DATABASE gitgud;
 
 USE gitgud;
 
-CREATE TABLE users (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    last_name VARCHAR(100) NOT NULL,
-    first_name VARCHAR(100) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    sex VARCHAR(10) NOT NULL,
-    phone VARCHAR(20) UNIQUE NOT NULL,
-    password CHAR(255) NOT NULL,
-    birth_date DATE NOT NULL,
-    status ENUM('Active', 'Inactive') NOT NULL DEFAULT 'Active',
-    role ENUM('Customer', 'Park Owner', 'Stall Owner', 'Admin') NOT NULL DEFAULT 'Customer',
-    profile_img VARCHAR(255) DEFAULT 'assets/images/profile.jpg',
-    user_session VARCHAR(255) UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `sex` varchar(10) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `password` char(255) NOT NULL,
+  `birth_date` date NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
+  `role` enum('Customer','Park Owner','Stall Owner','Admin') NOT NULL DEFAULT 'Customer',
+  `profile_img` varchar(255) DEFAULT 'assets/images/profile.jpg',
+  `user_session` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE verification (
-    user_id INT UNSIGNED PRIMARY KEY NOT NULL,
-    verification_token VARCHAR(255) NOT NULL,
-    token_expiration DATETIME NOT NULL,
-    is_verified TINYINT DEFAULT 0,
-    last_sent VARCHAR(255) NULL
-);
+INSERT INTO `users` (`id`, `last_name`, `first_name`, `email`, `sex`, `phone`, `password`, `birth_date`, `status`, `role`, `profile_img`, `user_session`, `created_at`, `updated_at`) VALUES
+(1, 'Alvarez', 'April', 'aprilalvarez@gmail.com', 'male', '9056321314', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2003-12-04', 'Active', 'Stall Owner', 'assets/images/profile.jpg', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2025-01-31 10:31:43', '2025-02-10 02:10:55'),
+(2, 'Luzon', 'Alfaith', 'alfaithluzon@gmail.com', 'male', '9123456789', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6\r\n', '2003-12-04', 'Active', 'Customer', 'assets/images/profile.jpg', NULL, '2025-02-10 01:57:20', '2025-02-10 01:58:29'),
+(3, 'Haliluddin', 'Naila', 'tomatoregional@soscandia.org', 'male', '9554638281', '$2y$10$8qKZSYay9R/pERywKXLfaOJWqYkQ5qAJspd41TAqGO7EJGVQOhtr6', '2003-12-04', 'Active', 'Park Owner', 'assets/images/profile.jpg', 'c7b8409f0f64251c23625859f9982068667d64c0a768bdace4034f7975a900496727629247e450d1f849214bfff0a426ebbf7af9868a5d0f90bc98d209b5173961bc3c5d3ea35ea8779dc3f97952654e55d36bb7b05d', '2025-01-26 15:50:02', '2025-02-10 01:50:27');
 
-CREATE TABLE parks (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    description TEXT,
-    location VARCHAR(50),
-    image VARCHAR(255),
-    owner_name VARCHAR(100),
-    contact_number VARCHAR(20),
-    email VARCHAR(100),
-    opening_time TIME,
-    closing_time TIME,
-    price_range DECIMAL(10, 2) NOT NULL,
-    status ENUM('Open', 'Closed', 'Maintenance', 'Pending Approval') NOT NULL DEFAULT 'Pending Approval',
-    url VARCHAR(255) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
 
-INSERT INTO parks (name, description, location, image, owner_name, contact_number, email, opening_time, closing_time, price_range, status, url)
-VALUES ('Amethyst Food Park', 'A food park located in the heart of the city.', 'Johnston St., Zamboanga City', 'assets/images/foodpark.jpg', 'John Doe', '123-456-7890', '222@gmail.com', '08:00:00', '22:00:00', 100.00, 'Open', 'aeb32xc');
+CREATE TABLE `verification` (
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `verification_token` varchar(255) NOT NULL,
+  `token_expiration` datetime NOT NULL,
+  `is_verified` tinyint(4) DEFAULT 0,
+  `last_sent` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE stalls (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL,
-    park_id INT UNSIGNED NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    description TEXT,
-    location VARCHAR(50),
-    img VARCHAR(255),
-    owner_name VARCHAR(100),
-    contact_number VARCHAR(20),
-    email VARCHAR(100),
-    opening_time TIME,
-    closing_time TIME,
-    price_range DECIMAL(10, 2) NOT NULL,
-    status ENUM('Open', 'Closed', 'Maintenance', 'Pending Approval') NOT NULL DEFAULT 'Pending Approval',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (park_id) REFERENCES parks(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+INSERT INTO `verification` (`user_id`, `verification_token`, `token_expiration`, `is_verified`, `last_sent`) VALUES
+(1, '679494f216b71', '2025-01-26 08:38:26', 1, '1737790706'),
+(2, '6796581b7f52d', '2025-01-27 16:43:23', 1, '1737906203'),
+(3, '679659aa92ce1', '2025-01-27 16:50:02', 1, '1737906602');
 
-INSERT INTO stalls (user_id, park_id, name, description, location, img, owner_name, contact_number, email, opening_time, closing_time, price_range, status) VALUES (1, 1, 'YumYim', 'A stall that serves delicious food.', 'Amethyst Food Park', 'uploads/images/foodpark.jpg', 'Jane Doe', '098-765-4321', 'janedoe@jane.com', '08:00:00', '22:00:00', 100.00, 'Open');
+
+CREATE TABLE `business` (
+  `id` int(11) NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `business_name` varchar(100) NOT NULL,
+  `business_type` varchar(100) NOT NULL,
+  `region_province_city` varchar(100) NOT NULL,
+  `barangay` varchar(100) NOT NULL,
+  `street_building_house` varchar(100) NOT NULL,
+  `business_phone` varchar(20) NOT NULL,
+  `business_email` varchar(100) NOT NULL,
+  `business_permit` varchar(255) NOT NULL,
+  `business_status` enum('Approved','Rejected','Pending Approval') NOT NULL DEFAULT 'Pending Approval',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `business_logo` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `business` (`id`, `user_id`, `business_name`, `business_type`, `region_province_city`, `barangay`, `street_building_house`, `business_phone`, `business_email`, `business_permit`, `business_status`, `created_at`, `updated_at`, `business_logo`, `url`) VALUES
+(1, 1, 'Sample lang po', 'Food Park', 'Sample', 'Sample', 'Sample', '9554638281', 'hnailataji@gmail.com', 'image.jpg', 'Approved', '2025-02-06 12:12:25', '2025-02-06 12:12:25', 'image.jpg', 'Sample'),
+(52, 3, 'Sample', 'Food Park', 'Mindanao, Zamboanga Del Sur, Zamboanga City', 'Sample', 'Sample', '9554638281', 'tomatoregional@soscandia.org', 'uploads/business/permit_67a95b63980837.26890848.jpg', 'Approved', '2025-02-10 01:50:27', '2025-02-10 01:50:57', 'uploads/business/logo_67a95b639859d7.31524292.jpg', '67a95b639dfd9');
+
+CREATE TABLE `operating_hours` (
+  `id` int(11) NOT NULL,
+  `days` varchar(255) DEFAULT NULL,
+  `open_time` varchar(10) DEFAULT NULL,
+  `close_time` varchar(10) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `business_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `operating_hours` (`id`, `days`, `open_time`, `close_time`, `created_at`, `business_id`) VALUES
+(34, 'Monday, Tuesday, Wednesday, Thursday, Friday', '01:00 AM', '01:00 PM', '2025-02-10 01:50:27', 52),
+(35, 'Saturday, Sunday', '07:00 AM', '07:00 PM', '2025-02-10 01:50:27', 52);
+
+CREATE TABLE `stalls` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `logo` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `park_id` int(11) NOT NULL,
+  `payment_method` enum('Cash','GCash') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `stalls` (`id`, `user_id`, `name`, `description`, `email`, `phone`, `website`, `logo`, `created_at`, `updated_at`, `park_id`, `payment_method`) VALUES
+(107, 1, 'Sample', 'Sample', 'hnailataji@gmail.com', '9554638281', 'Sample', 'uploads/business/stall_67a9602faa65c6.90135347.jpg', '2025-02-10 02:10:55', '2025-02-10 02:10:55', 52, 'Cash');
+
+
+CREATE TABLE `stall_categories` (
+  `id` int(11) NOT NULL,
+  `stall_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `stall_categories` (`id`, `stall_id`, `name`) VALUES
+(32, 107, 'Drinks'),
+(33, 107, 'Vegetables');
+
+CREATE TABLE `stall_operating_hours` (
+  `id` int(11) NOT NULL,
+  `stall_id` int(10) UNSIGNED NOT NULL,
+  `days` varchar(255) NOT NULL,
+  `open_time` varchar(10) NOT NULL,
+  `close_time` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `stall_operating_hours` (`id`, `stall_id`, `days`, `open_time`, `close_time`) VALUES
+(40, 107, 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday', '01:00 AM', '01:00 PM');
+
+CREATE TABLE `stall_payment_methods` (
+  `id` int(11) NOT NULL,
+  `stall_id` int(10) UNSIGNED NOT NULL,
+  `method` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `stall_payment_methods` (`id`, `stall_id`, `method`) VALUES
+(26, 107, 'Cash'),
+(27, 107, 'GCash');
+
 
 CREATE TABLE categories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -124,25 +179,7 @@ CREATE TABLE product_variants (
     FOREIGN KEY (variation_type_id) REFERENCES variation_types(id) ON DELETE CASCADE,
     UNIQUE KEY unique_variant (variation_type_id, name)
 );
-
-CREATE TABLE business (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL,
-    business_name VARCHAR(100) NOT NULL,
-    business_type VARCHAR(100) NOT NULL,
-    region_province_city VARCHAR(100) NOT NULL,
-    barangay VARCHAR(100) NOT NULL,
-    street_building_house VARCHAR(100) NOT NULL,
-    business_phone VARCHAR(20) NOT NULL,
-    business_email VARCHAR(100) NOT NULL,
-    business_permit VARCHAR(255) NOT NULL,
-    business_status ENUM('Approved', 'Rejected', 'Pending Approval') NOT NULL DEFAULT 'Pending Approval',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
-
+z
 CREATE TABLE cart(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(255) NOT NULL,
@@ -240,20 +277,6 @@ INSERT INTO orders (
 --     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
 --     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 -- );
-
-
-
--- NAILA
-CREATE TABLE `operating_hours` (
-  `id` int(11) NOT NULL,
-  `days` varchar(255) DEFAULT NULL,
-  `open_time` varchar(10) DEFAULT NULL,
-  `close_time` varchar(10) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `business_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
 
 
 -- First, let's insert sample data for a product with variations

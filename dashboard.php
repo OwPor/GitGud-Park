@@ -3,22 +3,24 @@
     include_once 'links.php'; 
     include_once 'nav.php';
     include_once 'modals.php'; 
+
+    $park = $parkObj->getPark($park_id);
+    $parkOwner = $parkObj->getParkOwner($park_id);
 ?>
 <style>
     main{
         padding: 20px 120px;
     }
 </style>
-
 <main>
     <div class="d-flex justify-content-between align-items-center">
-        <h2 class="fw-bold m-0">Hello, Park Owner!</h2>
+        <h2 class="fw-bold m-0">Hello, <?= $parkOwner['owner_name'] ?>!</h2>
         <div class="py-2 px-3 rounded-2 border bg-white w-25 d-flex align-items-center justify-content-between" data-bs-toggle="offcanvas" data-bs-target="#foodparkbranch" aria-controls="foodparkbranch" style="cursor: pointer;">
             <div class="d-flex align-items-center gap-3">
-                <img src="assets/images/foodpark.jpg" width="50px" height="50px" class="rounded-5">
+                <img src="<?= $park['business_logo'] ?>" width="50px" height="50px" class="rounded-5">
                 <div>
-                    <p class="m-0 fw-bold">Food Park Name</p>
-                    <span class="text-muted small">Food Park Location</span>
+                    <p class="m-0 fw-bold"><?= $park['business_name'] ?></p>
+                    <span class="text-muted small"><?= $park['street_building_house'] ?>, <?= $park['barangay'] ?>, Zamboanga City</span>
                 </div>
             </div>
             <i class="fa-solid fa-angle-down"></i>
@@ -33,17 +35,17 @@
         <div class="offcanvas-body">
             <div class="text-center mb-4 border-bottom pb-3">
                 <div class="profile-picture" data-bs-toggle="modal" data-bs-target="#editfoodpark">
-                    <img src="assets/images/stall1.jpg" alt="Profile Picture" class="profile-img rounded-5">
+                    <img src="<?= $park['business_logo'] ?>" alt="Profile Picture" class="profile-img rounded-5">
                     <div class="camera-overlay">
                         <i class="fa-solid fa-camera"></i>
                     </div>
                 </div>
-                <h4 class="fw-bold m-0 mb-1 mt-3">Food Park Name</h4>
-                <span class="text-muted mb-1">Amethyst St. Johnston Subd. San Jose Rd. 7000 Zamboanga City, Philippines</span>
+                <h4 class="fw-bold m-0 mb-1 mt-3"><?= $park['business_name'] ?></h4>
+                <span class="text-muted mb-1"><?= $park['street_building_house'] ?>, <?= $park['barangay'] ?>, Zamboanga City, Philippines</span>
                 <div class="d-flex gap-2 text-muted align-items-center justify-content-center mb-1">
-                    <span><i class="fa-solid fa-envelope"></i> example@gmail.com</span>
+                    <span><i class="fa-solid fa-envelope"></i> <?= $park['business_email'] ?></span>
                     <span class="dot"></span>
-                    <span><i class="fa-solid fa-phone small"></i> +639554638281</span>
+                    <span><i class="fa-solid fa-phone small"></i> +63<?= $park['business_phone'] ?></span>
                 </div>
                 <button class="variation-btn addrem m-2" data-bs-toggle="modal" data-bs-target="#editfoodpark">Edit Park</button>
                 <button class="variation-btn addrem" data-bs-toggle="modal" data-bs-target="#deletepark">Delete Park</button>

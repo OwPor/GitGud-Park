@@ -125,6 +125,10 @@ class Park {
                     ]);
                 }
             }
+
+            $sql = "UPDATE users SET role = 'Stall Owner' WHERE id = :user_id;";
+            $query = $conn->prepare($sql);
+            return $query->execute(array(':user_id' => $user_id));
         }
     }
 

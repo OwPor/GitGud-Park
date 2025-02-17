@@ -1,183 +1,112 @@
 <?php
-    ob_start(); 
-    include_once 'links.php'; 
-    include_once 'header.php';
-    require_once __DIR__ . '/classes/db.class.php';
-    require_once __DIR__ . '/classes/stall.class.php';
-    $userObj = new User();
-    $stallObj = new Stall();
-    $code = $name = $category = $description = $price = $image = $stall_id = '';
-    $codeErr = $nameErr = $categoryErr = $priceErr = $imageErr = $stall_idErr = $currentStock_Err = $lowStock_Err = '';
+ob_start();
+include_once 'links.php'; 
+include_once 'header.php'; 
+require_once __DIR__ . '/classes/product.class.php';
+require_once __DIR__ . '/classes/stall.class.php';
 
-    if (isset($_SESSION['user']['id'])) {
-        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
-            $stall_id = $stallObj->getStallId($_SESSION['user']['id']);
+$productObj = new Product();
+$stallObj = new Stall();
+
+$productName = $productCode = $category = $description = $basePrice = $discount = $startDate = $endDate = $imagePath = '';
+$imagePathErr = $productNameErr = $productCodeErr = $categoryErr = $descriptionErr = $basePriceErr = $startDateErr = $endDateErr = $discountErr = '';
+
+$stall_id = $stallObj->getStallId($_SESSION['user']['id']);
+
+$selectCategories = $productObj->getCategories($stall_id);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $productName = clean_input($_POST['productname']);
+    $productCode = clean_input($_POST['productcode']);
+    $category = isset($_POST['category']) ? clean_input($_POST['category']) : '';
+    $description = clean_input($_POST['description']);
+    $basePrice = clean_input($_POST['sellingPrice']);
+    $discount = clean_input($_POST['discount'] ?? 0);
+    $startDate = !empty($_POST['startDate']) ? clean_input($_POST['startDate']) : NULL;
+    $endDate = !empty($_POST['endDate']) ? clean_input($_POST['endDate']) : NULL;
+    
+    // Validation
+    if (empty($productName)) {
+        $productNameErr = 'Product name is required.';
+    }
+
+    if (empty($productCode)) {
+        $productCodeErr = 'Product code is required.';
+    } elseif ($productObj->isProductCodeExists($productCode)) {
+        $productCodeErr = 'Product code already exists. Choose a different one.';
+    }
+
+    if (empty($category)) {
+        $categoryErr = 'Category is required.';
+    }
+
+    if (empty($description)) {
+        $descriptionErr = 'Description is required.';
+    }
+
+    if (empty($basePrice) || !is_numeric($basePrice) || $basePrice <= 0) {
+        $basePriceErr = 'Selling price must be a positive number.';
+    }
+
+    if (!empty($discount) && (!is_numeric($discount) || $discount < 0)) {
+        $discountErr = 'Discount must be a non-negative number.';
+    }
+
+    if (!empty($_FILES["productimage"]["name"])) {
+        $targetDir = "uploads/";
+        $imageFileType = strtolower(pathinfo($_FILES["productimage"]["name"], PATHINFO_EXTENSION));
+        $imageSize = $_FILES["productimage"]["size"];
+
+        if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
+            $imagePathErr = "Only JPG, JPEG, and PNG formats are allowed.";
+        } elseif ($imageSize > 500000) { // 500KB limit
+            $imagePathErr = "Image size must be less than 500KB.";
         } else {
-            header('Location: email/verify_email.php');
-            exit();
+            $imagePath = $targetDir . basename($_FILES["productimage"]["name"]);
+            move_uploaded_file($_FILES["productimage"]["tmp_name"], $imagePath);
         }
     } else {
-        header('Location: signin.php');
-        exit();
+        $imagePathErr = "Product image is required.";
     }
 
-    require_once __DIR__ . '/classes/product.class.php';
-    $productObj = new Product();
+    if (empty($productNameErr) && empty($productCodeErr) && empty($categoryErr) && empty($descriptionErr) && empty($basePriceErr) && empty($imagePathErr)) {
+        $productId = $productObj->addProduct($stall_id, $productName, $productCode, $category, $description, $basePrice, $discount, $startDate, $endDate, $imagePath);
 
-    $selectCategories = $productObj->getCategories();
-    
-    $uploadDir = 'uploads/images/';
-    $allowedTypes = ['jpg', 'jpeg', 'png'];
+        if ($productId) {
+            if (isset($_POST['variation_name_1'])) {
+                foreach ($_POST as $key => $value) {
+                    if (strpos($key, 'variation_name_') !== false) {
+                        $variationIndex = explode("_", $key)[2];
+                        $variationName = $_POST["variation_title_{$variationIndex}"] ?? "Variation {$variationIndex}";
 
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
+                        $variationId = $productObj->addVariations($productId, $variationName);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $errors = [];
+                        foreach ($_POST["variation_name_{$variationIndex}"] as $optionIndex => $optionName) {
+                            $addPrice = $_POST["variation_additional_price_{$variationIndex}"][$optionIndex] ?? 0;
+                            $subtractPrice = $_POST["variation_subtract_price_{$variationIndex}"][$optionIndex] ?? 0;
 
-        $name = htmlspecialchars($_POST['productname'], ENT_QUOTES, 'UTF-8');
-        // $code = htmlspecialchars($_POST['productcode'], ENT_QUOTES, 'UTF-8');
-        $code = uniqid();
-        $category = htmlspecialchars($_POST['category'], ENT_QUOTES, 'UTF-8');
-        $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
-        $price = htmlspecialchars($_POST['sellingPrice'], ENT_QUOTES, 'UTF-8');
-        $stock = htmlspecialchars($_POST['currentStocks'], ENT_QUOTES, 'UTF-8');
-        $lowStock = htmlspecialchars($_POST['lowStocks'], ENT_QUOTES, 'UTF-8');
-        $discountType = htmlspecialchars($_POST['discount_type'], ENT_QUOTES, 'UTF-8');
-        $discountValue = htmlspecialchars((float)$_POST['discount'], ENT_QUOTES, 'UTF-8');
-
-        if (empty($name)) {
-            $errors['nameErr'] = 'Product name is required.';
-        } elseif (!preg_match("/^[a-zA-Z0-9 ]*$/", $name)) {
-            $errors['nameErr'] = 'Only letters, numbers, and white spaces are allowed.';
-        }
-
-        if (empty($code)) {
-            $errors['codeErr'] = 'Product code is required.';
-        } elseif (!preg_match("/^[a-zA-Z0-9 ]*$/", $code)) {
-            $errors['codeErr'] = 'Only letters, numbers, and white spaces are allowed.';
-        }
-
-        if (empty($category)) {
-            $errors['categoryErr'] = 'Category is required.';
-        }
-
-        if (empty($price)) {
-            $errors['priceErr'] = 'Selling price is required.';
-        } elseif (!is_numeric($price)) {
-            $errors['priceErr'] = 'Only numbers are allowed.';
-        } elseif ($price <= 0) {
-            $errors['priceErr'] = 'Price must be greater than 0.';
-        }
-
-        if (empty($stock)) {
-            $errors['currentStock_Err'] = '';
-        } elseif (!is_numeric($stock)) {
-            $errors['currentStock_Err'] = '';
-        } elseif ($stock <= 0) {
-            $errors['currentStock_Err'] = '';
-        }
-
-        if (empty($lowStock)) {
-            $errors['lowStock_Err'] = '';
-        } elseif (!is_numeric($lowStock)) {
-            $errors['lowStock_Err'] = '';
-        } elseif ($lowStock <= 0) {
-            $errors['lowStock_Err'] = '';
-        }
-
-        if (empty($discountValue) || $discountValue < 0) {
-            $discountValue = 0;
-        } elseif (!is_numeric($discountValue)) {
-            $errors['discountErr'] = 'Only numbers are allowed.';
-        }
-
-        $codeExists = $productObj->isProductCodeExists($code);
-        var_dump($codeExists);
-        if ($codeExists) {
-            $errors['codeErr'] = 'Product code already exists.';
-        } else {
-            $code = strtoupper($code);
-            if (isset($_FILES['product_image'])) {
-                $image = $_FILES['product_image']['name'] ?? '';
-                $imageTemp = $_FILES['product_image']['tmp_name'] ?? '';
-                $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
-    
-                if (empty($image)) {
-                    $errors['imageErr'] = 'Product image is required.';
-                } elseif (!in_array($imageFileType, $allowedTypes)) {
-                    $errors['imageErr'] = 'Accepted files are jpg, jpeg, and png only.';
-                } elseif ($_FILES['product_image']['size'] > 5000000) {
-                    $errors['imageErr'] = "Only files under 5MB are allowed.";
-                } else {
-                    $targetImage = $uploadDir . uniqid() . '.' . $imageFileType;
-                    if (!move_uploaded_file($imageTemp, $targetImage)) {
-                        $errors['imageErr'] = 'Failed to upload image.';
-                    }
-                }
-            } else {
-                $errors['imageErr'] = 'Product image is required.';
-            }
-    
-            $variants = [];
-            $variantIndex = 1;
-    
-            while (isset($_POST['variation_name_' . $variantIndex])) {
-                foreach ($_POST['variation_name_' . $variantIndex] as $index => $variantName) {
-                    $type = $_POST["variation-title-$variantIndex"];
-                    $additionalPrice = $_POST['variation_additional_price_' . $variantIndex][$index] ?? 0;
-                    $subtractPrice = $_POST['variation_subtract_price_' . $variantIndex][$index] ?? 0;
-                    $variantImage = $_FILES['variationimage-' . $variantIndex . '-' . $index + 1] ?? '';
-                    $variantImageTemp = $_FILES['variationimage-' . $variantIndex . '-' . $index + 1]['tmp_name'] ?? '';
-    
-                    $variantImagePath = null;
-                    if (!empty($variantImage['name'])) {
-                        $variantImageFileType = strtolower(pathinfo($variantImage['name'], PATHINFO_EXTENSION));
-                        if (in_array($variantImageFileType, $allowedTypes) && $variantImage['size'] <= 5000000) {
-                            $variantImagePath = $uploadDir . uniqid() . '.' . $variantImageFileType;
-                            if (!move_uploaded_file($variantImageTemp, $variantImagePath)) {
-                                $errors['variantImageErr'] = 'Failed to upload variant image.';
-                                error_log('Failed to move uploaded file for variant image: ' . $variantImage['name']);
-                            } else {
-                                error_log('Successfully uploaded variant image to: ' . $variantImagePath);
+                            $variationImagePath = NULL;
+                            if (!empty($_FILES["variationimage_{$variationIndex}"]["name"][$optionIndex])) {
+                                $variationImagePath = "uploads/" . basename($_FILES["variationimage_{$variationIndex}"]["name"][$optionIndex]);
+                                move_uploaded_file($_FILES["variationimage_{$variationIndex}"]["tmp_name"][$optionIndex], $variationImagePath);
                             }
-                        } else {
-                            $errors['variantImageErr'] = 'Variant image must be jpg, jpeg, or png and under 5MB.';
-                            error_log('Invalid file type or size for variant image: ' . $variantImage['name']);
-                        }
-                    } else {
-                        error_log('No variant image provided for index: ' . $index);
-                    }
-                    
-                    $variants[] = [
-                        'type' => htmlspecialchars($type, ENT_QUOTES, 'UTF-8'),
-                        'name' => htmlspecialchars($variantName, ENT_QUOTES, 'UTF-8'),
-                        'additional_price' => filter_var($additionalPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
-                        'subtract_price' => filter_var($subtractPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
-                        'image_path' => $variantImagePath
-                    ];
-                }
-                $variantIndex++;
-            }
-    
-            if (empty($errors)) {
-                if ($productObj->addProduct($name, $code, $description, $price, $category, $stall_id, $stock, $lowStock, $targetImage, $discountType, $discountValue, $variants)) {
-                    header('Location: managemenu.php');
-                    exit();
-                } else {
-                    $errors['generalErr'] = 'Failed to add product. Please try again.';
-                }
-            }
-    
-            foreach ($errors as $error) {
-                echo "<p>Error: $error</p>";
-            }
-        }
 
-        ob_end_flush();
+                            $variationOptionId = $productObj->addVariationOptions($variationId, $optionName, $addPrice, $subtractPrice, $variationImagePath);
+
+                            $addStockSuccess = $productObj->addStock($productId, $variationOptionId);
+                        }
+                    }
+                }
+            }
+            
+            header("Location: managemenu.php");
+            exit;
+        }
     }
+}
+ob_end_flush();
 ?>
+
 <style>
     main{
         padding: 40px 200px
@@ -198,6 +127,10 @@
     .addchogro:hover{
         color: black;
     }
+    .errormessage{
+        color: red;
+        font-size: small;
+    }
     
 </style>
 <div class="prohelp d-flex align-items-center gap-4 justify-content-center">
@@ -206,30 +139,52 @@
     <a href="">Terms and Conditions <i class="fa-solid fa-arrow-right"></i></a>
 </div>
 <main>
-    <form class="productcon" method="POST" enctype="multipart/form-data">
+    <form class="productcon" method="post" enctype="multipart/form-data">
         <div>
             <label for="productimage" class="mb-2">Product Image</label>
-            <div class="productimage text-center py-5 px-3 mb-3" id="productimageContainer" onclick="document.getElementById('product_image').click();">
-                <div id="product_image_div">
+            <div class="productimage text-center py-5 px-3 mb-3" id="productimageContainer" onclick="document.getElementById('productimage').click();">
+                <div id="placeholderContent">
                     <i class="fa-solid fa-arrow-up-long mb-3"></i>
                     <p class="small m-0">Select an image to upload. Or drag the image file here.</p>
                 </div>
-                <input type="file" name="product_image" id="product_image" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayProductImage(event)">
+                <input type="file" id="productimage" name="productimage" accept="image/jpeg, image/png, image/jpg" style="display:none;" onchange="displayProductImage(event)">
             </div>
-            <p class="text-muted pirem m-0">Recommended size is 160x151. Image must be less than 500kb. Only JPG, JPEG, and PNG formats are allowed. File name can only be in English letters and numbers.</p>
-            <script src="assets/js/displayimage.js?v=<?php echo time(); ?>"></script>
+            <p class="text-muted pirem m-0 mb-3">Recommended size is 160x151. Image must be less than 500kb. Only JPG, JPEG, and PNG formats are allowed. File name can only be in English letters and numbers.</p>
+            <span class="errormessage"><?php echo $imagePathErr; ?></span>
+            <script>
+                function displayProductImage(event) {
+                    const file = event.target.files[0];
+                    if (file && file.size <= 500 * 1024) { // Ensure file size is less than 500KB
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const productImageContainer = document.getElementById('productimageContainer');
+                            const placeholderContent = document.getElementById('placeholderContent');
+
+                            productImageContainer.style.backgroundImage = `url(${e.target.result})`;
+                            productImageContainer.style.backgroundSize = 'cover';
+                            productImageContainer.style.backgroundPosition = 'center';
+                            placeholderContent.style.display = 'none'; // Hide placeholder content
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        alert('File is too large or not supported. Please select a JPG, JPEG, or PNG image under 500KB.');
+                    }
+                }
+            </script>
         </div>
 
         <div class="flex-grow-1">
             <div class="input-group m-0 mb-4">
                 <label for="productname">Product Name</label>
-                <input type="productname" name="productname" id="productname" placeholder="Enter product name"/>            
+                <input type="productname" name="productname" id="productname" placeholder="Enter product name"/>     
+                <span class="errormessage"><?php echo $productNameErr; ?></span>       
             </div>
             <div class="d-flex gap-3">
-                <!-- <div class="input-group m-0 mb-4">
+                <div class="input-group m-0 mb-4">
                     <label for="productcode">Product Code</label>
-                    <input type="productcode" name="productcode" id="productcode" placeholder="Enter product code"/>            
-                </div> -->
+                    <input type="productcode" name="productcode" id="productcode" placeholder="Enter product code"/>  
+                    <span class="errormessage"><?php echo $productCodeErr; ?></span>                
+                </div>
                 <div class="input-group m-0 mb-4">
                     <label for="category">Category</label>
                     <select name="category" id="category" style="padding: 10.5px 0.75rem">
@@ -240,32 +195,19 @@
                             }
                         ?>
                     </select>
+                    <span class="errormessage"><?php echo $categoryErr; ?></span>
                 </div>
             </div>
             <div class="input-group m-0 mb-4">
                 <label for="description">Description</label>
                 <textarea name="description" id="description" placeholder="Enter product description"></textarea>
+                <span class="errormessage"><?php echo $descriptionErr; ?></span>
             </div>
             
-            <div class="d-flex gap-3">
-                <div class="input-group m-0 mb-4">
-                    <label for="sellingPrice">Selling Price</label>
-                    <input type="number" name="sellingPrice" id="sellingPrice" placeholder="Enter selling price" step="0.01" min="0" />
-                </div>
-            </div>
-
-            <div class="d-flex gap-3">
-                <div class="input-group m-0 mb-4">
-                    <label for="currentStocks">Current Stocks</label>
-                    <input type="number" name="currentStocks" id="currentStocks" placeholder="Enter current stocks" step="1" min="0" />
-                </div>
-            </div>
-
-            <div class="d-flex gap-3">
-                <div class="input-group m-0 mb-4">
-                    <label for="lowStocks">Low Stocks Warn</label>
-                    <input type="number" name="lowStocks" id="lowStocks" placeholder="Enter low stocks warn" step="1" min="0" />
-                </div>
+            <div class="input-group m-0 mb-4">
+                <label for="sellingPrice">Selling Price</label>
+                <input type="number" name="sellingPrice" id="sellingPrice" placeholder="Enter selling price" step="0.01"/>
+                <span class="errormessage"><?php echo $basePriceErr; ?></span>
             </div>
 
             <!-- Variation -->
@@ -278,44 +220,13 @@
                     <div class="variation-forms-wrapper" id="variation-forms-list"></div>
                 </div>
             </div>
-            <script src="./assets/js/variation.js?v=<?php echo time(); ?>"></script>
-
-            <!-- Choice Group -->
-            <!-- <div class="input-group m-0 mb-5">
-                <label for="choicegroup">Choice Groups (Optional)</label>
-                <table class="border bg-white w-100 getcg">
-                    <tr>
-                        <td class="pe-0"><input type="checkbox"></td>
-                        <td class="st text-nowrap">
-                            <p class="mb-1">Choice of First Pizza</p>
-                            <span class="cg">Required (Single), 6 Choices</span>
-                        </td>
-                        <td class="st ">Pepperoni, Margarita, Hawaiian, Vegetarian Special, Meat Special, Tomatoes</td>
-                        <td><i class="fa-solid fa-pen rename" onclick="window.location.href='editchoicegroup.php';"></i></td>
-                    </tr>
-                    <tr>
-                        <td class="pe-0"><input type="checkbox"></td>
-                        <td class="st text-nowrap">
-                            <p class="mb-1">Choice of Drink</p>
-                            <span class="cg">Optional (Multiple), 3 Choices</span>
-                        </td>
-                        <td class="st ">Coca Cola, Bottled Water, Green Tee</td>
-                        <td><i class="fa-solid fa-pen rename" onclick="window.location.href='editchoicegroup.php';"></i></td>
-                    </tr>
-                </table>
-                <a href="createchoicegroup.php" class="addchogro">+ Add Choice Group</a>
-            </div> -->
+            <script src="assets/js/variation.js?v=<?php echo time(); ?>"></script>
 
             <div class="d-flex gap-3">
                 <div class="input-group w-50 m-0 mb-4">
                     <label for="discount">Discount (Optional)</label>
-                    <div class="discount-type">
-                        <select name="discount_type" id="discount_type">
-                            <option value="amount">Amount</option>
-                            <option value="percentage">Percentage</option>
-                        </select>
-                    </div>
-                    <input type="number" name="discount" id="discount" placeholder="Enter discount" step="0.01" />
+                    <input type="number" name="discount" id="discount" placeholder="Enter discount" step="0.01"/>
+                    <span class="errormessage"><?php echo $discountErr; ?></span>
                 </div>
                 <div class="d-flex gap-2 w-50">
                     <div class="input-group m-0 mb-4">
