@@ -1,12 +1,9 @@
-// Select All checkbox
 function toggleSelectAll(selectAllCheckbox) {
     const checkboxes = document.querySelectorAll('.item-checkbox, .stall-checkbox');
     checkboxes.forEach(checkbox => {
         checkbox.checked = selectAllCheckbox.checked;
     });
 }
-
-// Stall-specific checkbox
 function toggleStallItems(stallCheckbox, stallClass) {
     const items = document.querySelectorAll(`.${stallClass} .item-checkbox`);
     items.forEach(item => {
@@ -19,8 +16,6 @@ function updateQuantity(button, change) {
     quantity = Math.max(1, quantity + change);
     quantitySpan.innerText = quantity;
 }
-
-// Toggle Order Type buttons
 document.querySelectorAll('.btn-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
     document.querySelectorAll('.btn-toggle').forEach(b => b.classList.remove('active'));
@@ -28,7 +23,6 @@ document.querySelectorAll('.btn-toggle').forEach(btn => {
     });
 });
 
-// Enable/Disable Date and Time fields
 const scheduleDate = document.getElementById('scheduleDate');
 const scheduleTime = document.getElementById('scheduleTime');
 document.getElementById('immediately').addEventListener('click', () => {

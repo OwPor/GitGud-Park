@@ -222,22 +222,17 @@
                                                 let modal = document.getElementById("menumodal" + productId);
                                                 let variationGroups = modal.querySelectorAll(".variation-group");
                                                 let variationOptionIds = [];
-                                                let totalAdditional = 0;
-                                                let totalSubtraction = 0;
-                                                
+                                                let basePriceText = modal.querySelector(".proprice").innerText;
+                                                let basePrice = parseFloat(basePriceText.replace("₱", "").trim());
+
                                                 variationGroups.forEach(group => {
                                                     let checked = group.querySelector("input[type='radio']:checked");
                                                     if (checked) {
                                                         variationOptionIds.push(checked.id.replace("variation", ""));
-                                                        totalAdditional += parseFloat(checked.dataset.addprice) || 0;
-                                                        totalSubtraction += parseFloat(checked.dataset.subtractprice) || 0;
                                                     }
                                                 });
                                                 
-                                                let basePriceText = modal.querySelector(".proprice").innerText;
-                                                let basePrice = parseFloat(basePriceText.replace("₱", "").trim());
-                                                let finalPrice = basePrice + totalAdditional - totalSubtraction;
-                                                let params = `product_id=${productId}&quantity=${quantity}&price=${finalPrice}&request=${encodeURIComponent(specialInstructions)}`;
+                                                let params = `product_id=${productId}&quantity=${quantity}&base_price=${basePrice}&request=${encodeURIComponent(specialInstructions)}`;
                                                 variationOptionIds.forEach(id => {
                                                     params += `&variation_options[]=${id}`;
                                                 });
@@ -253,6 +248,7 @@
                                                 
                                                 xhr.send(params);
                                             }
+
                                         </script>
                                     </form>
                                 </div>
