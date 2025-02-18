@@ -413,7 +413,7 @@ class User {
                            p.description as product_description,
                            CASE 
                                WHEN o.variation_id > 0 THEN 
-                                   CONCAT(vt.name, ': ', pv.name)
+                                   pv.name
                                ELSE 'No variations'
                            END as variation_details
                     FROM orders o 

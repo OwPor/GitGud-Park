@@ -253,7 +253,7 @@
                                 <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <span class="small text-muted">Variation: <?= $order['formatted_variations']; ?></span><br>
                                     <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
@@ -323,7 +323,7 @@
                                 <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <span class="small text-muted">Variation: <?= $order['formatted_variations']; ?></span><br>
                                     <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
@@ -393,7 +393,7 @@
                                 <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <span class="small text-muted">Variation: <?= $order['formatted_variations']; ?></span><br>
                                     <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
@@ -463,7 +463,7 @@
                                 <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <span class="small text-muted">Variation: <?= $order['formatted_variations']; ?></span><br>
                                     <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
@@ -533,7 +533,7 @@
                                 <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <span class="small text-muted">Variation: <?= $order['formatted_variations']; ?></span><br>
                                     <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
@@ -603,7 +603,7 @@
                                 <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <span class="small text-muted">Variation: <?= $order['formatted_variations']; ?></span><br>
                                     <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
@@ -673,7 +673,7 @@
                                 <img src="assets/images/food1.jpg" width="85px" height="85px" class="border rounded-2">
                                 <div>
                                     <span class="fs-5"><?php echo htmlspecialchars($order['food_name']); ?></span><br>
-                                    <span class="small text-muted"><?= $order['formatted_variations']; ?></span><br>
+                                    <span class="small text-muted">Variation: <?= $order['formatted_variations']; ?></span><br>
                                     <span>x<?= $order['quantity']; ?></span>
                                 </div>
                             </div>
