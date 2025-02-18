@@ -27,6 +27,7 @@
                     $seconds = $result['cd'] % 60;
                     echo "<script>alert('Please wait for {$minutes} minutes and {$seconds} seconds before resending the verification email.');</script>";
                 } else {
+                    echo "ERROR: " . $result;
                     echo "<script>alert('Failed to resend verification email. Please try again.');</script>";
                 }
             } else {

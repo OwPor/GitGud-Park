@@ -4,7 +4,53 @@ DROP DATABASE IF EXISTS gitgud;
 CREATE DATABASE gitgud;
 
 USE gitgud;
-    
+-- Core Tables
+
+CREATE TABLE business (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  user_id int(10) UNSIGNED NOT NULL,
+  business_name varchar(255) NOT NULL,
+  business_type varchar(255) NOT NULL,
+  region_province_city varchar(255) NOT NULL,
+  barangay varchar(255) NOT NULL, 
+  street_building_house varchar(255) NOT NULL,
+  business_phone varchar(255) NOT NULL,
+  business_email varchar(255) NOT NULL,
+  business_permit varchar(255) NOT NULL,
+  business_status enum('Pending','Approved','Rejected') NOT NULL DEFAULT 'Pending',
+  created_at timestamp NOT NULL DEFAULT current_timestamp(),
+  updated_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  business_logo varchar(255) NOT NULL,
+  url varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE inventory (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  product_id int(11) NOT NULL,
+  variation_option_id int(11) DEFAULT NULL,
+  type enum('Stock In','Stock Out') NOT NULL,
+  quantity int(11) NOT NULL,
+  reason varchar(255) DEFAULT NULL,
+  created_at timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE stocks (
+  id int(11) NOT NULL,
+  product_id int(11) NOT NULL,
+  variation_option_id int(11) DEFAULT NULL,
+  quantity int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE stall_payment_methods (
+  id int(11) NOT NULL,
+  stall_id int(10) UNSIGNED NOT NULL,
+  method varchar(255) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     last_name VARCHAR(100) NOT NULL,
@@ -190,6 +236,7 @@ CREATE TABLE orders (
     scheduled_date DATETIME
 );
 
+
 INSERT INTO orders (
     user_id, 
     product_id,
@@ -331,3 +378,61 @@ VALUES
 (1, 2, 'Mild', 0.00, true),
 (1, 2, 'Medium', 0.00, false),
 (1, 2, 'Spicy', 5.00, false);
+
+
+
+
+
+
+
+
+-- Tables with Conflicts (Multiple Versions Exist)
+-- CONFLICT MARKER START --
+
+-- Version 1 (from script.sql)
+CREATE TABLE categories (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Version 2 (from gitgud.sql) 
+CREATE TABLE categories_v2 (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(100) NOT NULL,
+  created_at timestamp NOT NULL DEFAULT current_timestamp(),
+  updated_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  stall_id int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (id)
+);
+
+-- Version 1 (from script.sql)
+CREATE TABLE cart (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(255) NOT NULL,
+    product_id INT UNSIGNED NOT NULL,
+    quantity INT UNSIGNED NOT NULL,
+    stall_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_session) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (stall_id) REFERENCES stalls(id) ON DELETE CASCADE
+);
+
+-- Version 2 (from gitgud.sql)
+CREATE TABLE cart_v2 (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  user_id int(10) UNSIGNED NOT NULL,
+  product_id int(11) NOT NULL,
+  variation_option_id int(11) DEFAULT NULL,
+  request varchar(255) NOT NULL,
+  quantity int(11) NOT NULL,
+  created_at timestamp NOT NULL DEFAULT current_timestamp(),
+  updated_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  price int(11) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+-- CONFLICT MARKER END --

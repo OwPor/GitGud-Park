@@ -265,7 +265,7 @@
                     }
                 }
             }
-            displayFooter($lastStatus, $order, $total);
+            displayFooter($lastStatus, end($orders), $total);
         ?>
         </div>
     </div>

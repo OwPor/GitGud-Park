@@ -71,6 +71,7 @@
                                 header('Location: ./email/verify_email.php');
                                 exit();
                             } else {
+                                echo "ERROR: " . $verification;
                                 echo '<script>alert("Failed to send verification email")</script>';
                             }
                         } else {
