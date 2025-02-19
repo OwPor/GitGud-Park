@@ -246,9 +246,9 @@ class Stall {
             // Order results by the stall order status and then by order creation date (descending)
             $sql .= " ORDER BY 
                         CASE os.status
-                            WHEN 'ToPay' THEN 1
+                            WHEN 'Pending' THEN 1
                             WHEN 'Preparing' THEN 2
-                            WHEN 'ToReceive' THEN 3
+                            WHEN 'Ready' THEN 3
                             WHEN 'Completed' THEN 4
                             WHEN 'Cancelled' THEN 5
                             ELSE 6

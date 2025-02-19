@@ -92,7 +92,7 @@
             <?php elseif ($status === 'Cancelled'): ?>
                 <span class="text-muted text-center">Cancelled by the customer<br>(Need to modify order)</span>
             <?php elseif ($status === 'Scheduled'): ?>
-                <span class="text-muted text-center p-3 small">Scheduled on <?= date('F j, Y \a\t g:i A', strtotime($order['scheduled_date'])); ?><br>
+                <span class="text-muted text-center p-3 small">Scheduled on <?= date('F j, Y \a\t g:i A', strtotime($order['scheduled_time'])); ?><br>
             <?php endif; ?>
         </div>
         </div>

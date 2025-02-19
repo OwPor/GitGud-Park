@@ -168,10 +168,10 @@
                 <div class="d-flex gap-3 align-items-center text-muted small">
                     <span>Payment Method: <?php echo $order['payment_method']; ?></span>
                     <span class="dot text-muted"></span>
-                    <span>Scheduled on <?= $order['scheduled_date'] ?></span>
+                    <span>Scheduled on <?= $order['scheduled_time'] ?></span>
                 </div>
                 <div class="d-flex gap-4 align-items-center">
-                    <button class="cancelorder rounded-2" data-product-id="<?php echo $order['product_id']; ?>">Cancel Order</button>
+                    <button class="cancelorder rounded-2">Cancel Order</button>
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
                         <span class="text-muted">Sub Total:</span>
