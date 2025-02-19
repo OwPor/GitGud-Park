@@ -1,4 +1,4 @@
-<?php 
+<?php  
 include_once 'links.php'; 
 include_once 'header.php';
 require_once __DIR__ . '/classes/cart.class.php';
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <div class="border py-3 px-4 rounded-2 bg-white mb-3">
         <h4 class="fw-bold mb-3">My Cart</h4>
         <div class="d-flex gap-3 align-items-center carttop">
-            <input class="form-check-input m-0" type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+            <input class="form-check-input m-0" type="checkbox">
             <label class="form-check-label" for="selectAll">Select All</label>
             <button>Delete</button>
             <button>Like</button>
@@ -35,10 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
              data-stall-id="<?= htmlspecialchars($stall_id) ?>" 
              data-supported-methods="<?= htmlspecialchars($supportedMethods) ?>">
             <div class="d-flex justify-content-between align-items-center border-bottom pb-2 stall-header">
-                <div class="d-flex gap-3 align-items-center">
-                    <input class="form-check-input m-0 stall-checkbox" type="checkbox" onclick="toggleStallItems(this, this.closest('.stall-group'))">
-                    <span class="fw-bold"><?= htmlspecialchars($stallName) ?></span>
-                </div>
+                <span class="fw-bold"><?= htmlspecialchars($stallName) ?></span>
                 <span class="stall-error text-danger" style="font-size: 13px; display:none;">
                     <i class="fa-solid fa-circle-exclamation me-2"></i>
                     This stall does not offer <span class="error-method"></span> payment
@@ -53,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             ?>
             <div class="d-flex border-bottom py-2 cart-item">
                 <div class="d-flex gap-3 align-items-center" style="width: 65%">
-                    <input class="form-check-input m-0 item-checkbox" type="checkbox" onchange="updateGrandTotal()">
                     <img src="<?= htmlspecialchars($item['product_image']) ?>" width="80px" height="80px" class="border rounded-2">
                     <div>
                         <span class="fs-5"><?= htmlspecialchars($item['product_name']) ?></span><br>
@@ -131,24 +127,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         <br><br><br><br><br><br>
     </form>
 </main>
+<!-- Placed Order with Cash Paymenyt -->
+<div class="modal fade" id="ifcash" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <i class="fa-regular fa-face-smile mb-3" style="color: #CD5C08; font-size: 80px"></i><br>
+                    <span>Thank you for your order!</span>
+                    <h5 class="fw-bold mt-2 mb-4">Your Order ID is <span style="color: #CD5C08;">0001</span></h5>
+                    <p class="mb-3">Please proceed to each stall with this Order ID to complete your payment. Once payment is confirmed, your order will be in preparation queue. </p>
+                    <span>For more details about your order, go to Purchase.</span>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Purchase</button>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
-    function toggleSelectAll(selectAllCheckbox) {
-        const allCheckboxes = document.querySelectorAll('.item-checkbox, .stall-checkbox');
-        allCheckboxes.forEach(checkbox => {
-            checkbox.checked = selectAllCheckbox.checked;
-        });
-        updateGrandTotal();
-    }
-
-    function toggleStallItems(stallCheckbox, stallGroup) {
-        const itemCheckboxes = stallGroup.querySelectorAll('.item-checkbox');
-        itemCheckboxes.forEach(chk => {
-            chk.checked = stallCheckbox.checked;
-        });
-        updateGrandTotal();
-    }
-
     function updateCartQuantity(button, change, productId, request) {
         const quantitySpan = button.parentElement.querySelector('.ordquanum');
         let quantity = parseInt(quantitySpan.innerText);
@@ -170,8 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
     function updateGrandTotal() {
         let grandTotal = 0;
-        document.querySelectorAll('.item-checkbox:checked').forEach(chk => {
-            const cartItem = chk.closest('.cart-item');
+        document.querySelectorAll('.cart-item').forEach(cartItem => {
             const priceContainer = cartItem.querySelector('[data-unit-price]');
             const unitPrice = parseFloat(priceContainer.getAttribute('data-unit-price'));
             const quantity = parseInt(cartItem.querySelector('.ordquanum').innerText);
@@ -190,9 +193,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             if (!supportedMethods.includes(selectedMethod.toLowerCase())) {
                 errorSpan.style.display = 'inline';
                 errorSpan.querySelector('.error-method').innerText = selectedMethod;
-                stall.querySelectorAll('.item-checkbox').forEach(chk => chk.checked = false);
-                const stallChk = stall.querySelector('.stall-checkbox');
-                if (stallChk) stallChk.checked = false;
             } else {
                 errorSpan.style.display = 'none';
             }
@@ -226,8 +226,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             }
         }
     });
+    
+    document.addEventListener('DOMContentLoaded', updateGrandTotal);
 </script>
 
 <?php 
 include_once 'footer.php'; 
-?>
+?> 
