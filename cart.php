@@ -10,10 +10,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     $payment_method = $_POST['payment_method'] ?? null; 
     $order_type     = $_POST['order_type'] ?? null;     
     $order_class    = $_POST['order_class'] ?? 'Immediately';  
-    $scheduled_time = $_POST['scheduled_time'] ?? null;  
+    $schedule_date  = $_POST['schedule_date'] ?? null;  
+    $schedule_time  = $_POST['schedule_time'] ?? null;  
+
+    if ($order_class === "Scheduled" && !empty($schedule_date) && !empty($schedule_time)) {
+        $scheduled_time = $schedule_date . ' ' . $schedule_time;
+    } else {
+        $scheduled_time = null; 
+    }
 
     $order_id = $cartObj->placeOrder($user_id, $payment_method, $order_type, $order_class, $scheduled_time, $cartGrouped);
+
+    if ($payment_method === "Cash") {
+        echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var cashModal = new bootstrap.Modal(document.getElementById('ifcash'));
+                    cashModal.show();
+                });
+              </script>";
+    }
 }
+
 ?>
 
 <main style="padding: 20px 120px;">
@@ -207,25 +224,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         });
     });
 
-    document.getElementById('immediately').addEventListener('click', () => {
-        document.getElementById('scheduleDate').disabled = true;
-        document.getElementById('scheduleTime').disabled = true;
-    });
     document.getElementById('scheduleLater').addEventListener('click', () => {
         document.getElementById('scheduleDate').disabled = false;
         document.getElementById('scheduleTime').disabled = false;
     });
 
+    document.getElementById('immediately').addEventListener('click', () => {
+        document.getElementById('scheduleDate').disabled = true;
+        document.getElementById('scheduleTime').disabled = true;
+        document.getElementById('scheduleDate').value = ''; // Reset values
+        document.getElementById('scheduleTime').value = ''; 
+        document.getElementById('scheduled_time').value = ''; // Clear hidden input
+    });
+
     document.querySelector('form').addEventListener('submit', function(e) {
         const orderClass = document.getElementById('order_class').value;
+
         if (orderClass === 'Scheduled') {
             const date = document.getElementById('scheduleDate').value;
             const time = document.getElementById('scheduleTime').value;
+
             if (date && time) {
                 document.getElementById('scheduled_time').value = date + ' ' + time;
+            } else {
+                alert('Please select a valid schedule date and time.');
+                e.preventDefault(); // Prevent form submission if schedule is missing
             }
         }
     });
+
+
     
     document.addEventListener('DOMContentLoaded', updateGrandTotal);
 </script>
