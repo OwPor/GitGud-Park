@@ -407,50 +407,64 @@ class User {
 
     public function getOrders($user_id, $search = null) {
         try {
-            // Modified query to handle variation types and variationss correctly
-            $sql = "SELECT o.*, 
-                           p.file_path, 
-                           p.description as product_description,
-                           CASE 
-                               WHEN o.variation_id > 0 THEN 
-                                   pv.name
-                               ELSE 'No variations'
-                           END as variation_details
-                    FROM orders o 
-                    LEFT JOIN products p ON o.product_id = p.id 
-                    LEFT JOIN product_variations pv ON o.variation_id = pv.id
-                    LEFT JOIN variation_types vt ON pv.variation_type_id = vt.id
+            $sql = "SELECT 
+                        o.id AS order_id,
+                        o.total_price,
+                        o.payment_method,
+                        o.order_type,
+                        o.order_class,
+                        o.scheduled_time,
+                        o.created_at AS order_date,
+                        os.status,
+                        p.image AS file_path,
+                        p.description AS product_description,
+                        p.name AS food_name,
+                        s.name AS food_stall_name,
+                        oi.price AS price,
+                        oi.quantity AS quantity,
+                        CASE 
+                            WHEN oi.variation_option_id IS NOT NULL THEN pv.name 
+                            ELSE 'No variations'
+                        END AS variation_details
+                    FROM orders o
+                    JOIN order_stalls os ON os.order_id = o.id
+                    JOIN stalls s ON s.id = os.stall_id
+                    JOIN order_items oi ON oi.order_stall_id = os.id
+                    JOIN products p ON p.id = oi.product_id
+                    LEFT JOIN variation_options vo ON vo.id = oi.variation_option_id
+                    LEFT JOIN product_variations pv ON vo.variation_id = pv.id
                     WHERE o.user_id = :user_id";
-            
+                        
             $params = [":user_id" => $user_id];
-    
+        
             if ($search) {
-                $sql .= " AND (o.food_name LIKE :search 
-                            OR o.food_stall_name LIKE :search 
-                            OR o.order_id LIKE :search)";
-                $params[":search"] = "%{$search}%";
+                $sql .= " AND (
+                            p.name LIKE :search 
+                            OR s.name LIKE :search 
+                            OR o.id LIKE :search 
+                            OR os.status LIKE :search
+                          )";
+                $params[':search'] = "%{$search}%";
             }
-    
-            // Order by food_stall_name first, then by order_date in descending order
-            $sql .= " ORDER BY o.food_stall_name ASC, o.order_date DESC";
-    
+        
+            // Order the results by stall name (ascending) and then by the order creation date (descending)
+            $sql .= " ORDER BY s.name ASC, o.created_at DESC";
+        
             $stmt = $this->db->connect()->prepare($sql);
             $stmt->execute($params);
-            
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-            // Format the results
+        
+            // Format the data as required by purchase.php
             foreach ($result as &$order) {
+                // Use the price from the order_items table (not the product's base_price)
                 $order['price'] = number_format($order['price'], 2);
                 $order['order_date'] = date('Y-m-d H:i:s', strtotime($order['order_date']));
                 
-                // Clean up variation display
+                // Copy variation details into a formatted_variations key for display and then remove the original
                 $order['formatted_variations'] = $order['variation_details'];
-                
-                // Remove redundant fields
                 unset($order['variation_details']);
             }
-    
+        
             return $result;
         } catch (PDOException $e) {
             error_log("Error fetching orders: " . $e->getMessage());

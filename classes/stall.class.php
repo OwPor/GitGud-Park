@@ -197,43 +197,55 @@ class Stall {
     public function getOrdersByStallId($stallId, $search = null) {
         try {
             $sql = "SELECT 
-                        o.*,
+                        o.id AS order_id,
+                        o.total_price,
+                        o.payment_method,
+                        o.order_type,
+                        o.order_class,
+                        o.scheduled_time,
+                        o.created_at AS order_date,
+                        os.status,
                         u.first_name,
                         u.last_name,
                         u.email AS user_email,
                         u.phone AS user_phone,
-                        p.file_path AS product_image,
+                        p.image AS product_image,
                         p.description AS product_description,
+                        p.name AS food_name,
+                        s.name AS food_stall_name,
+                        oi.price AS price,
+                        oi.quantity AS quantity,
                         CASE 
-                            WHEN o.variation_id > 0 THEN 
-                                pv.name
+                            WHEN oi.variation_option_id IS NOT NULL THEN pv.name
                             ELSE 'No variations'
-                        END as variation_details
-                    FROM orders o 
-                    JOIN users u ON o.user_id = u.id 
-                    JOIN stalls s ON o.food_stall_name = s.name
-                    LEFT JOIN products p ON o.product_id = p.id 
-                    LEFT JOIN product_variations pv ON o.variation_id = pv.id
-                    LEFT JOIN variation_types vt ON pv.variation_type_id = vt.id
+                        END AS variation_details
+                    FROM orders o
+                    JOIN order_stalls os ON os.order_id = o.id
+                    JOIN stalls s ON s.id = os.stall_id
+                    JOIN users u ON o.user_id = u.id
+                    JOIN order_items oi ON oi.order_stall_id = os.id
+                    JOIN products p ON p.id = oi.product_id
+                    LEFT JOIN variation_options vo ON vo.id = oi.variation_option_id
+                    LEFT JOIN product_variations pv ON vo.variation_id = pv.id
                     WHERE s.id = :stall_id";
-    
+            
             $params = [":stall_id" => $stallId];
-    
-            // Add search functionality
+            
+            // Add search functionality if the $search parameter is provided.
             if ($search) {
                 $sql .= " AND (
-                    o.order_id LIKE :search 
-                    OR o.food_name LIKE :search
-                    OR CONCAT(u.first_name, ' ', u.last_name) LIKE :search
-                    OR u.email LIKE :search
-                    OR u.phone LIKE :search
-                )";
-                $params[":search"] = "%{$search}%";
+                            o.id LIKE :search OR
+                            p.name LIKE :search OR
+                            CONCAT(u.first_name, ' ', u.last_name) LIKE :search OR
+                            u.email LIKE :search OR
+                            u.phone LIKE :search
+                         )";
+                $params[':search'] = "%{$search}%";
             }
-    
-            // Add ordering
+            
+            // Order results by the stall order status and then by order creation date (descending)
             $sql .= " ORDER BY 
-                        CASE o.status
+                        CASE os.status
                             WHEN 'ToPay' THEN 1
                             WHEN 'Preparing' THEN 2
                             WHEN 'ToReceive' THEN 3
@@ -241,45 +253,41 @@ class Stall {
                             WHEN 'Cancelled' THEN 5
                             ELSE 6
                         END,
-                        o.order_date DESC";
-    
+                        o.created_at DESC";
+            
             $query = $this->db->connect()->prepare($sql);
             
             // Bind parameters
             foreach ($params as $key => $value) {
-                $query->bindValue($key, $value, 
+                $query->bindValue(
+                    $key,
+                    $value,
                     is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR
                 );
             }
-    
+            
             $query->execute();
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    
-            // Format the results
+            
+            // Format the results for output.
             foreach ($result as &$order) {
-                // Format prices
-                $order['price'] = number_format($order['price'], 2);
-                
-                // Format dates
+                // Store the original numeric price for accurate calculation
+                $originalPrice = $order['price'];
+                $order['price'] = number_format($originalPrice, 2);
                 $order['order_date'] = date('Y-m-d H:i:s', strtotime($order['order_date']));
-                if ($order['scheduled_date']) {
-                    $order['scheduled_date'] = date('Y-m-d H:i:s', 
-                        strtotime($order['scheduled_date']));
+                if ($order['scheduled_time']) {
+                    $order['scheduled_time'] = date('Y-m-d H:i:s', strtotime($order['scheduled_time']));
                 }
-    
-                // Format customer name
+                // Create a full customer name field.
                 $order['customer_name'] = trim($order['first_name'] . ' ' . $order['last_name']);
-                
-                // Clean up variation display
+                // Copy variation details for display and remove the redundant key.
                 $order['formatted_variations'] = $order['variation_details'];
                 unset($order['variation_details']);
-    
-                // Calculate total amount
-                $order['total_amount'] = $order['price'] * $order['quantity'];
+                // Calculate the total amount for this order item (unit price multiplied by quantity).
+                $order['total_amount'] = number_format($originalPrice * $order['quantity'], 2);
             }
-    
+            
             return $result;
-    
         } catch (PDOException $e) {
             error_log("Error fetching stall orders: " . $e->getMessage());
             return false;

@@ -9,19 +9,21 @@
     $stallId = $stall->getStallId($_SESSION['user']['id']);
     $orders = $stall->getOrdersByStallId($stallId);
 
+    // var_dump($orders);
+    
     // Define status order and display names
     $statusOrder = [
-        'ToPay' => 1,
+        'Pending' => 1,
         'Preparing' => 2,
-        'ToReceive' => 3,
+        'Ready' => 3,
         'Completed' => 4,
         'Cancelled' => 5,
         'Scheduled' => 6
     ];
 
     $statusDisplayNames = [
-        'ToPay' => 'To Pay',
-        'ToReceive' => 'To Receive',
+        'Pending' => 'Pending',
+        'Ready' => 'Ready',
         'Preparing' => 'Preparing',
         'Completed' => 'Completed',
         'Cancelled' => 'Cancelled',
@@ -30,31 +32,35 @@
 
     // Initialize ordersByStatus with correct order
     $ordersByStatus = [
-        'ToPay' => [],
+        'Pending' => [],
         'Preparing' => [],
-        'ToReceive' => [],
+        'Ready' => [],
         'Completed' => [],
         'Cancelled' => [],
         'Scheduled' => []
     ];
 
     // Sort orders by status priority, then by order date
-    usort($orders, function($a, $b) use ($statusOrder) {
-        // Compare status priority
-        $statusCompare = $statusOrder[$a['status']] <=> $statusOrder[$b['status']];
-        
-        if ($statusCompare === 0) {
-            // If same status, sort by order date (newest first)
-            return strtotime($b['order_date']) <=> strtotime($a['order_date']);
-        }
-        
-        return $statusCompare;
-    });
+    if ($orders) {
+        usort($orders, function($a, $b) use ($statusOrder) {
+            // Compare status priority
+            $statusCompare = $statusOrder[$a['status']] <=> $statusOrder[$b['status']];
+            
+            if ($statusCompare === 0) {
+                // If same status, sort by order date (newest first)
+                return strtotime($b['order_date']) <=> strtotime($a['order_date']);
+            }
+            
+            return $statusCompare;
+        });
+    }
 
     // Group orders by status while maintaining sort order
-    foreach ($orders as $order) {
-        $status = $order['status'];
-        $ordersByStatus[$status][] = $order;
+    if ($orders) {
+        foreach ($orders as $order) {
+            $status = $order['status'];
+            $ordersByStatus[$status][] = $order;
+        }
     }
 
     function displayFooter($status, $order, $total) {
@@ -72,13 +78,13 @@
         </div>
         </div>
         <div class="d-flex flex-column gap-4 justify-content-center align-items-center flex-shrink-0 w-25 orderbtns">
-            <?php if ($status === 'ToPay'): ?>
+            <?php if ($status === 'Pending'): ?>
                 <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#prepareorder">Prepare Order</button>
                 <button class="rounded-2" style="background-color: #6A9C89;" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
                 <button class="rounded-2" style="background-color: gray;">Remind Payment</button>
             <?php elseif ($status === 'Preparing'): ?>
                 <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#orderready">Order Ready</button>
-            <?php elseif ($status === 'ToReceive'): ?>
+            <?php elseif ($status === 'Ready'): ?>
                 <button class="rounded-2" data-bs-toggle="modal" data-bs-target="#completeorder">Complete Order</button>
                 <button class="rounded-2" style="background-color: #6A9C89;" data-bs-toggle="modal" data-bs-target="#cancelorder">Cancel Order</button>
             <?php elseif ($status === 'Completed'): ?>
@@ -171,7 +177,7 @@
                         <?php
                         }
                         
-                        $itemTotal = $order['price'];
+                        $itemTotal = $order['price'] * $order['quantity'];
                         $total += $itemTotal;
                         ?>
                         <div class="d-flex justify-content-between border-bottom py-2 px-5">
@@ -267,7 +273,7 @@
             foreach ($ordersByStatus as $status => $statusOrders) {
                 if (!empty($statusOrders)) {
                     foreach ($statusOrders as $order) {
-                        if ($status !== 'ToPay') {
+                        if ($status !== 'Pending') {
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
@@ -401,7 +407,7 @@
             foreach ($ordersByStatus as $status => $statusOrders) {
                 if (!empty($statusOrders)) {
                     foreach ($statusOrders as $order) {
-                        if ($status !== 'ToReceive') {
+                        if ($status !== 'Ready') {
                             continue;
                         } else 
                             $order['status'] = 'Ready for Pickup';

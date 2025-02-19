@@ -12,19 +12,21 @@
     $status = $_GET['status'] ?? 'all';
     $orders = $userObj->getOrders($_SESSION['user']['id']);
 
+    // var_dump($orders);
+
     // Define status order and display names
     $statusOrder = [
-        'ToPay' => 1,
+        'Pending' => 1,
         'Preparing' => 2,
-        'ToReceive' => 3,
+        'Ready' => 3,
         'Completed' => 4,
         'Cancelled' => 5,
         'Scheduled' => 6
     ];
 
     $statusDisplayNames = [
-        'ToPay' => 'To Pay',
-        'ToReceive' => 'To Receive',
+        'Pending' => 'Pending',
+        'Ready' => 'Ready',
         'Preparing' => 'Preparing',
         'Completed' => 'Completed',
         'Cancelled' => 'Cancelled',
@@ -33,9 +35,9 @@
 
     // Initialize ordersByStatus with correct order
     $ordersByStatus = [
-        'ToPay' => [],
+        'Pending' => [],
         'Preparing' => [],
-        'ToReceive' => [],
+        'Ready' => [],
         'Completed' => [],
         'Cancelled' => [],
         'Scheduled' => []
@@ -64,7 +66,7 @@
     // Fix the footer for last display, it doesn't display
     function displayFooter($lastStatus, $order, $total) {
         // <!-- FOOTER -->
-        if ($lastStatus == 'ToPay') {
+        if ($lastStatus == 'Pending') {
             ?>
             <div class="d-flex justify-content-between pt-2">
                 <div class="d-flex gap-3 align-items-center text-muted small">
@@ -100,7 +102,7 @@
                 </div>
             </div>
     <?php
-        } else if ($lastStatus == 'ToReceive') {
+        } else if ($lastStatus == 'Ready') {
             ?>
             <div class="d-flex justify-content-between pt-2">
                 <div class="d-flex gap-3 align-items-center text-muted small">
@@ -193,9 +195,9 @@
 <main>
     <div class="nav-container d-flex gap-3 my-2">
         <a href="#all" class="nav-link" data-target="all">All</a>
-        <a href="#topay" class="nav-link" data-target="topay">To Pay</a>
+        <a href="#Pending" class="nav-link" data-target="Pending">To Pay</a>
         <a href="#preparing" class="nav-link" data-target="preparing">Preparing</a>
-        <a href="#toreceive" class="nav-link" data-target="toreceive">To Receive</a>
+        <a href="#Ready" class="nav-link" data-target="Ready">To Receive</a>
         <a href="#completed" class="nav-link" data-target="completed">Completed</a>
         <a href="#canceled" class="nav-link" data-target="canceled">Cancelled</a>
         <a href="#scheduled" class="nav-link" data-target="scheduled">Scheduled</a>
@@ -243,8 +245,9 @@
                                 </div>
                             </div>
                         <?php
-                         }    
-                         $total += $order['price'];
+                        }
+                        $itemTotal = $order['price'] * $order['quantity'];
+                        $total += $itemTotal;
                         ?>
 
                         <!-- BODY -->
@@ -258,7 +261,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
+                                <span class="fw-bold">₱<?php echo htmlspecialchars(number_format($itemTotal, 2)); ?></span>
                             </div>
                         </div>
                         <?php
@@ -271,7 +274,7 @@
     </div>
     
     <!-- SECTIONS -->
-    <div id="topay" class="section-content">
+    <div id="Pending" class="section-content">
         <?php
             $currentStallName = null;
             $currentOrderId = null;
@@ -282,7 +285,7 @@
                 if (!empty($statusOrders)) {
                     $displayStatus = isset($statusDisplayNames[$status]) ? $statusDisplayNames[$status] : $status;
                     foreach ($statusOrders as $order) {
-                        if ($status !== 'ToPay') {
+                        if ($status !== 'Pending') {
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
@@ -314,7 +317,8 @@
                             </div>
                         <?php
                         }
-                        $total += $order['price'];
+                        $itemTotal = $order['price'] * $order['quantity'];
+                        $total += $itemTotal;
                         ?>
 
                         <!-- BODY -->
@@ -328,7 +332,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
+                                <span class="fw-bold">₱<?php echo htmlspecialchars(number_format($itemTotal, 2)); ?></span>
                             </div>
                         </div>
                         <?php
@@ -384,7 +388,8 @@
                             </div>
                         <?php
                         }
-                        $total += $order['price'];
+                        $itemTotal = $order['price'] * $order['quantity'];
+                        $total += $itemTotal;
                         ?>
 
                         <!-- BODY -->
@@ -398,7 +403,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
+                                <span class="fw-bold">₱<?php echo htmlspecialchars(number_format($itemTotal, 2)); ?></span>
                             </div>
                         </div>
                         <?php
@@ -411,7 +416,7 @@
     </div>
 
 
-    <div id="toreceive" class="section-content d-none">
+    <div id="Ready" class="section-content d-none">
         <?php
             $currentStallName = null;
             $currentOrderId = null;
@@ -422,7 +427,7 @@
                 if (!empty($statusOrders)) {
                     $displayStatus = isset($statusDisplayNames[$status]) ? $statusDisplayNames[$status] : $status;
                     foreach ($statusOrders as $order) {
-                        if ($status !== 'ToReceive') {
+                        if ($status !== 'Ready') {
                             continue;
                         }
                         if ($currentStallName !== $order['food_stall_name'] || $currentOrderId !== $order['order_id']) {
@@ -454,7 +459,8 @@
                             </div>
                         <?php 
                         }
-                        $total += $order['price'];
+                        $itemTotal = $order['price'] * $order['quantity'];
+                        $total += $itemTotal;
                         ?>
 
                         <!-- BODY -->
@@ -468,7 +474,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
+                                <span class="fw-bold">₱<?php echo htmlspecialchars(number_format($itemTotal, 2)); ?></span>
                             </div>
                         </div>
                         <?php
@@ -524,7 +530,8 @@
                             </div>
                         <?php
                         }
-                        $total += $order['price'];
+                        $itemTotal = $order['price'] * $order['quantity'];
+                        $total += $itemTotal;
                         ?>
 
                         <!-- BODY -->
@@ -538,7 +545,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
+                                <span class="fw-bold">₱<?php echo htmlspecialchars(number_format($itemTotal, 2)); ?></span>
                             </div>
                         </div>
                         <?php
@@ -594,7 +601,8 @@
                             </div>
                         <?php
                         }
-                        $total += $order['price'];
+                        $itemTotal = $order['price'] * $order['quantity'];
+                        $total += $itemTotal;
                         ?>
 
                         <!-- BODY -->
@@ -608,7 +616,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
+                                <span class="fw-bold">₱<?php echo htmlspecialchars(number_format($itemTotal, 2)); ?></span>
                             </div>
                         </div>
                         <?php
@@ -664,7 +672,8 @@
                             </div>
                         <?php
                         }
-                        $total += $order['price'];
+                        $itemTotal = $order['price'] * $order['quantity'];
+                        $total += $itemTotal;
                         ?>
 
                         <!-- BODY -->
@@ -678,7 +687,7 @@
                                 </div>
                             </div>
                             <div class="d-flex flex-column justify-content-end">
-                                <span class="fw-bold"><?php echo htmlspecialchars($order['price']); ?></span>
+                                <span class="fw-bold">₱<?php echo htmlspecialchars(number_format($itemTotal, 2)); ?></span>
                             </div>
                         </div>
                         <?php
