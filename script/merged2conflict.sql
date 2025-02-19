@@ -203,3 +203,48 @@ CREATE TABLE orders (
     FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (variation_id) REFERENCES product_variations(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
+
+
+
+
+CREATE TABLE orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT(10) UNSIGNED NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    payment_method ENUM('Cash', 'GCash') NOT NULL,
+    order_type ENUM('Dine In', 'Take Out') NOT NULL,
+    order_class ENUM('Immediately', 'Scheduled') NOT NULL DEFAULT 'Immediately',
+    scheduled_time DATETIME NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE order_stalls (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    stall_id INT(10) UNSIGNED NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    status ENUM('Pending', 'Preparing', 'Ready', 'Completed', 'Cancelled', 'Scheduled') DEFAULT 'Pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (stall_id) REFERENCES stalls(id) ON DELETE CASCADE
+);
+
+CREATE TABLE order_items (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    order_stall_id INT NOT NULL,
+    product_id INT NOT NULL,
+    variation_option_id INT NULL,
+    quantity INT NOT NULL CHECK (quantity > 0),
+    price DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_stall_id) REFERENCES order_stalls(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (variation_option_id) REFERENCES variation_options(id) ON DELETE CASCADE
+);
