@@ -6,8 +6,14 @@ require_once __DIR__ . '/classes/cart.class.php';
 $cartObj = new Cart();
 $cartGrouped = $cartObj->getCartGroupedItems($user_id, $park_id);
 
-$park_id
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
+    $payment_method = $_POST['payment_method'] ?? null; 
+    $order_type     = $_POST['order_type'] ?? null;     
+    $order_class    = $_POST['order_class'] ?? 'Immediately';  
+    $scheduled_time = $_POST['scheduled_time'] ?? null;  
 
+    $order_id = $cartObj->placeOrder($user_id, $payment_method, $order_type, $order_class, $scheduled_time, $cartGrouped);
+}
 ?>
 
 <main style="padding: 20px 120px;">
@@ -74,51 +80,56 @@ $park_id
         </div>
     <?php endforeach; ?>
 
-    <div class="d-flex justify-content-between align-items-start border py-3 px-4 rounded-2 bg-white">
-        <div style="width: 70%">
-            <div class="d-flex align-items-center mb-4">
-                <label class="form-label w-25 mb-0 fw-bold">Order Type</label>
-                <div class="cartot btn-group w-75" role="group">
-                    <button type="button" class="btn-toggle active rounded" id="dineIn">Dine In</button>
-                    <button type="button" class="btn-toggle rounded" id="takeOut">Take Out</button>
+    <form method="POST">
+        <div class="d-flex justify-content-between align-items-start border py-3 px-4 rounded-2 bg-white">
+            <div style="width: 70%">
+                <div class="d-flex align-items-center mb-4">
+                    <label class="form-label w-25 mb-0 fw-bold">Order Type</label>
+                    <div class="cartot btn-group w-75" role="group">
+                        <button type="button" class="btn-toggle active rounded" id="dineIn" onclick="document.getElementById('order_type').value='Dine In'">Dine In</button>
+                        <button type="button" class="btn-toggle rounded" id="takeOut" onclick="document.getElementById('order_type').value='Take Out'">Take Out</button>
+                    </div>
                 </div>
-            </div>
-            <div class="d-flex align-items-center mb-4">
-                <label class="form-label w-25 mb-0 fw-bold">Payment Method</label>
-                <select class="form-select w-75" id="paymentMethod" onchange="validatePaymentMethods()">
-                    <option value="" disabled selected>Select</option>
-                    <option value="cash">Cash</option>
-                    <option value="gcash">GCash</option>
-                </select>
-            </div>
-            <div class="d-flex mb-4">
-                <label class="form-label w-25 mb-0 fw-bold">Order</label>
-                <div class="w-75">
-                    <div class="d-flex align-items-center mb-2">
-                        <input class="form-check-input me-3 m-0" type="radio" name="orderTime" id="immediately" checked>
-                        <label for="immediately" class="me-5">Immediately</label>
+                <div class="d-flex align-items-center mb-4">
+                    <label class="form-label w-25 mb-0 fw-bold">Payment Method</label>
+                    <select class="form-select w-75" id="paymentMethod" name="payment_method" onchange="validatePaymentMethods()">
+                        <option value="" disabled selected>Select</option>
+                        <option value="Cash">Cash</option>
+                        <option value="GCash">GCash</option>
+                    </select>
+                </div>
+                <div class="d-flex mb-4">
+                    <label class="form-label w-25 mb-0 fw-bold">Order</label>
+                    <div class="w-75">
+                        <div class="d-flex align-items-center mb-2">
+                            <input class="form-check-input me-3 m-0" type="radio" name="orderTime" id="immediately" checked onclick="document.getElementById('order_class').value='Immediately'">
+                            <label for="immediately" class="me-5">Immediately</label>
 
-                        <input class="form-check-input me-3 m-0" type="radio" name="orderTime" id="scheduleLater">
-                        <label for="scheduleLater">Schedule for later</label>
-                    </div>
-                    <div class="d-flex gap-3 cartdis">
-                        <input type="date" class="form-control" id="scheduleDate" disabled>
-                        <input type="time" class="form-control" id="scheduleTime" disabled>
+                            <input class="form-check-input me-3 m-0" type="radio" name="orderTime" id="scheduleLater" onclick="document.getElementById('order_class').value='Scheduled'">
+                            <label for="scheduleLater">Schedule for later</label>
+                        </div>
+                        <div class="d-flex gap-3 cartdis">
+                            <input type="date" class="form-control" id="scheduleDate" name="schedule_date" disabled>
+                            <input type="time" class="form-control" id="scheduleTime" name="schedule_time" disabled>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex">
-                <div class="w-25"></div>
-                <div class="w-75">
-                    <button type="button" class="btn btn-primary rounded-5" style="width: 250px;" id="placeOrderButton">Place Order</button>
+                <input type="hidden" id="order_type" name="order_type" value="Dine In">
+                <input type="hidden" id="order_class" name="order_class" value="Immediately">
+                <input type="hidden" id="scheduled_time" name="scheduled_time" value="">
+
+                <div class="d-flex align-items-center">
+                    <div class="w-25"></div>
+                    <button type="submit" name="place_order" id="placeOrderButton" class="btn btn-primary rounded-5" style="width: 250px;">Place Order</button>
                 </div>
             </div>
+            <div class="d-flex align-items-center gap-4">
+                <p class="fw-bold fs-5 m-0">Total:</p>
+                <h2 class="fw-bold m-0" id="grandTotal" style="color: #CD5C08">₱0.00</h2>
+            </div>
         </div>
-        <div class="d-flex align-items-center gap-4">
-            <p class="fw-bold fs-5 m-0">Total:</p>
-            <h2 class="fw-bold m-0" id="grandTotal" style="color: #CD5C08">₱0.00</h2>
-        </div>
-    </div>
+        <br><br><br><br><br><br>
+    </form>
 </main>
 
 <script>
@@ -170,7 +181,7 @@ $park_id
     }
 
     function validatePaymentMethods() {
-        const selectedMethod = document.getElementById('paymentMethod').value; // "cash" or "gcash"
+        const selectedMethod = document.getElementById('paymentMethod').value; // "Cash" or "GCash"
         document.querySelectorAll('.stall-group').forEach(stall => {
             const supportedMethods = stall.getAttribute('data-supported-methods')
                 .split(',')
@@ -178,7 +189,7 @@ $park_id
             const errorSpan = stall.querySelector('.stall-error');
             if (!supportedMethods.includes(selectedMethod.toLowerCase())) {
                 errorSpan.style.display = 'inline';
-                errorSpan.querySelector('.error-method').innerText = selectedMethod.charAt(0).toUpperCase() + selectedMethod.slice(1);
+                errorSpan.querySelector('.error-method').innerText = selectedMethod;
                 stall.querySelectorAll('.item-checkbox').forEach(chk => chk.checked = false);
                 const stallChk = stall.querySelector('.stall-checkbox');
                 if (stallChk) stallChk.checked = false;
@@ -204,8 +215,18 @@ $park_id
         document.getElementById('scheduleDate').disabled = false;
         document.getElementById('scheduleTime').disabled = false;
     });
-</script>
 
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const orderClass = document.getElementById('order_class').value;
+        if (orderClass === 'Scheduled') {
+            const date = document.getElementById('scheduleDate').value;
+            const time = document.getElementById('scheduleTime').value;
+            if (date && time) {
+                document.getElementById('scheduled_time').value = date + ' ' + time;
+            }
+        }
+    });
+</script>
 
 <?php 
 include_once 'footer.php'; 
