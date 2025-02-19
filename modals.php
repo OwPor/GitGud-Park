@@ -182,24 +182,66 @@
 
 <!-- Order Received -->
 <div class="modal fade" id="orderreceived" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="text-center">
-            <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check"></i> Received Order</h4>
-            <span>Mark this order as received?</span>
-            <div class="mt-5 mb-3">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
-            </div>
+          <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check"></i> Received Order</h4>
+          <span>Mark this order as received?</span>
+          <div class="mt-5 mb-3">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" data-order-id="">Yes</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // When the modal is shown, set the order ID on the "Yes" button
+        $('#orderreceived').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget); // Button that triggered the modal
+            const orderData = button.data('order-id'); // Get the data-order-id value
+
+            // Attach the order data to the "Yes" button inside the modal
+            $(this).find('.btn-primary').data('order-id', orderData);
+        });
+
+        // Handle the "Yes" button click
+        $('.btn-primary').on('click', function () {
+            const orderData = $(this).data('order-id'); // Get the order data from the button
+
+            // Split the order data into separate variables
+            const [oidPart, fsnPart] = orderData.split(', '); // Split by ", "
+            const orderId = oidPart.split(': ')[1]; // Extract the value after "oid: "
+            const foodStallName = fsnPart.split(': ')[1]; // Extract the value after "fsn: "
+            console.log(orderId, foodStallName);
+            // Send the data to order.class.php using AJAX
+            $.ajax({
+                url: 'order.class.php', // PHP file to handle the request
+                type: 'POST',
+                data: {
+                    order_id: orderId,
+                    food_stall_name: foodStallName
+                },
+                success: function (response) {
+                    // Handle success response
+                    alert('Order has been marked as received!');
+                    $('#orderreceived').modal('hide'); // Close the modal
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    alert('Failed to mark the order as received. Please try again.');
+                }
+            });
+        });
+    });
+</script>
 
 <!-- Prepare Order -->
 <div class="modal fade" id="prepareorder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -109,7 +109,7 @@
                     <span> Your order is ready to pickup</span>
                 </div>
                 <div class="d-flex gap-4 align-items-center">
-                    <button class="cancelorder rounded-2" data-bs-toggle="modal" data-bs-target="#orderreceived">Order Received</button>
+                    <button class="cancelorder rounded-2" data-bs-toggle="modal" data-bs-target="#orderreceived" data-order-id="<?php echo 'oid: ' . $order['order_id'] . ', fsn: ' . $order['food_stall_name'] ?>">Order Received</button>
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
                         <span class="text-muted">Sub Total:</span>
@@ -129,7 +129,7 @@
                 <div class="d-flex gap-4 align-items-center">
                     <div class="d-flex gap-2">
                         <button class="likeorder rounded-2"><i class="fa-regular fa-heart me-2"></i>Like</button>
-                        <button class="cancelorder rounded-2">Buy Again</button>
+                        <!-- <button class="cancelorder rounded-2">Buy Again</button> -->
                     </div>
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
@@ -150,7 +150,7 @@
                 <div class="d-flex gap-4 align-items-center">
                     <div class="d-flex gap-2">
                         <button class="likeorder rounded-2"><i class="fa-regular fa-heart me-2"></i>Like</button>
-                        <button class="cancelorder rounded-2">Buy Again</button>
+                        <!-- <button class="cancelorder rounded-2">Buy Again</button> -->
                     </div>
                     <span class="dot text-muted"></span>
                     <div class="d-flex gap-3 align-items-center">
