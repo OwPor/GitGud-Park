@@ -21,16 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
     $order_id = $cartObj->placeOrder($user_id, $payment_method, $order_type, $order_class, $scheduled_time, $cartGrouped);
 
-    if ($payment_method === "Cash") {
-        echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var cashModal = new bootstrap.Modal(document.getElementById('ifcash'));
-                    cashModal.show();
-                });
-              </script>";
-    }
+    echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('orderIdDisplay').innerText = '$order_id';
+                var cashModal = new bootstrap.Modal(document.getElementById('ifcash'));
+                cashModal.show();
+            });
+          </script>";
 }
-
 ?>
 
 <main style="padding: 20px 120px;">
@@ -155,13 +153,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                 <div class="text-center">
                     <i class="fa-regular fa-face-smile mb-3" style="color: #CD5C08; font-size: 80px"></i><br>
                     <span>Thank you for your order!</span>
-                    <h5 class="fw-bold mt-2 mb-4">Your Order ID is <span style="color: #CD5C08;">0001</span></h5>
+                    <h5 class="fw-bold mt-2 mb-4">
+                        Your Order ID is <span id="orderIdDisplay" style="color: #CD5C08;"></span>
+                    </h5>
                     <p class="mb-3">Please proceed to each stall with this Order ID to complete your payment. Once payment is confirmed, your order will be in preparation queue. </p>
                     <span>For more details about your order, go to Purchase.</span>
                 </div>
                 <div class="text-center mt-4">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Purchase</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='purchase.php';">Purchase</button>
                 </div>
                 <br>
             </div>
