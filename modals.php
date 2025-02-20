@@ -200,48 +200,6 @@
     </div>
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // When the modal is shown, set the order ID on the "Yes" button
-        $('#orderreceived').on('show.bs.modal', function (event) {
-            const button = $(event.relatedTarget); // Button that triggered the modal
-            const orderData = button.data('order-id'); // Get the data-order-id value
-
-            // Attach the order data to the "Yes" button inside the modal
-            $(this).find('.btn-primary').data('order-id', orderData);
-        });
-
-        // Handle the "Yes" button click
-        $('.btn-primary').on('click', function () {
-            const orderData = $(this).data('order-id'); // Get the order data from the button
-
-            // Split the order data into separate variables
-            const [oidPart, fsnPart] = orderData.split(', '); // Split by ", "
-            const orderId = oidPart.split(': ')[1]; // Extract the value after "oid: "
-            const foodStallName = fsnPart.split(': ')[1]; // Extract the value after "fsn: "
-            console.log(orderId, foodStallName);
-            // Send the data to order.class.php using AJAX
-            $.ajax({
-                url: 'order.class.php', // PHP file to handle the request
-                type: 'POST',
-                data: {
-                    order_id: orderId,
-                    food_stall_name: foodStallName
-                },
-                success: function (response) {
-                    // Handle success response
-                    alert('Order has been marked as received!');
-                    $('#orderreceived').modal('hide'); // Close the modal
-                },
-                error: function (xhr, status, error) {
-                    // Handle error response
-                    alert('Failed to mark the order as received. Please try again.');
-                }
-            });
-        });
-    });
-</script>
 
 <!-- Prepare Order -->
 <div class="modal fade" id="prepareorder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
