@@ -7,6 +7,8 @@
     include_once 'modals.php';
     require_once __DIR__ . '/classes/db.class.php';
     require_once __DIR__ . '/classes/park.class.php';
+    require_once __DIR__ . '/classes/encdec.class.php';
+
     $userObj = new User();
     $parkObj = new Park();
     $isLoggedIn = false;
@@ -154,7 +156,7 @@
                     ?>
                     <div class="col">
                         <div class="card">
-                            <a href="enter_park.php?id=<?= $park['id'] ?>" class="card-link text-decoration-none">
+                            <a href="enter_park.php?id=<?= encrypt($park['id']) ?>" class="card-link text-decoration-none">
                                 <img src="<?= $park['business_logo'] ?>" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title text-dark"><?= $park['business_name'] ?></h5>

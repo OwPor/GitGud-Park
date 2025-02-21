@@ -17,7 +17,8 @@ $selectCategories = $productObj->getCategories($stall_id);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $productName = clean_input($_POST['productname']);
-    $productCode = clean_input($_POST['productcode']);
+    // $productCode = clean_input($_POST['productcode']);
+    $productCode = uniqid();
     $category = isset($_POST['category']) ? clean_input($_POST['category']) : '';
     $description = clean_input($_POST['description']);
     $basePrice = clean_input($_POST['sellingPrice']);
@@ -180,11 +181,11 @@ ob_end_flush();
                 <span class="errormessage"><?php echo $productNameErr; ?></span>       
             </div>
             <div class="d-flex gap-3">
-                <div class="input-group m-0 mb-4">
+                <!-- <div class="input-group m-0 mb-4">
                     <label for="productcode">Product Code</label>
                     <input type="productcode" name="productcode" id="productcode" placeholder="Enter product code"/>  
                     <span class="errormessage"><?php echo $productCodeErr; ?></span>                
-                </div>
+                </div> -->
                 <div class="input-group m-0 mb-4">
                     <label for="category">Category</label>
                     <select name="category" id="category" style="padding: 10.5px 0.75rem">

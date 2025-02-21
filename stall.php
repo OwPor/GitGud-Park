@@ -3,12 +3,13 @@
     include_once 'header.php'; 
     require_once __DIR__ . '/classes/product.class.php';
     require_once __DIR__ . '/classes/stall.class.php';
+    require_once __DIR__ . '/classes/encdec.class.php';
 
     $stallObj   = new Stall();
     $productObj = new Product();
 
     if (isset($_GET['id'])) {
-        $stall_id = intval($_GET['id']);
+        $stall_id = decrypt($_GET['id']);
         
         $stall = $parkObj->getStall($stall_id); 
         
