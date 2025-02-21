@@ -38,7 +38,39 @@ if (curl_errno($ch)) {
         $cleanedString = stripslashes($jsonEncodedString);
         echo $cleanedString;
 
-        echo "<br><br><br><a href='".$responseData['data']['attributes']['checkout_url']."'>Click here to pay</a>";
+        // Store the payment ID for status checking
+        $paymentId = $responseData['data']['id'];
+        
+        echo "<br><br><a href='".$responseData['data']['attributes']['checkout_url']."' target='_blank'>Click here to pay</a>";
+        
+        // Add payment status checking
+        echo "<div id='payment-status'>Checking payment status...</div>";
+        echo "
+        <script>
+        function checkPaymentStatus() {
+            fetch('check_payment_status.php?payment_id=" . $paymentId . "')
+                .then(response => response.json())
+                .then(data => {
+                    if(data.status === 'paid') {
+                        document.getElementById('payment-status').innerHTML = 'Payment completed successfully!';
+                        window.location.href = 'success_page.php'; // Redirect to success page
+                    } else if(data.status === 'unpaid') {
+                        document.getElementById('payment-status').innerHTML = 'Waiting for payment...';
+                        setTimeout(checkPaymentStatus, 5000); // Check again after 5 seconds
+                    } else {
+                        document.getElementById('payment-status').innerHTML = 'Error checking payment status';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('payment-status').innerHTML = 'Error checking payment status';
+                });
+        }
+        
+        // Start checking payment status
+        checkPaymentStatus();
+        </script>
+        ";
     } else {
         echo json_encode(['error' => 'Error creating payment link: Unknown error occurred.']);
     }
