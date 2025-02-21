@@ -19,6 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
         $scheduled_time = null; 
     }
 
+    // Get the price from the cart items then pass it to paymongo
+    // require_once __DIR__ . '/classes/paymongo.class.php';
+    // $payMongo = new PayMongoHandler();
+
+    // if ($payment_method === 'GCash') {
+    //     $checkout_url = $payMongo->createPaymentLink(30000, 'Payment', ['order_id' => $order_id]);
+    // }
+
     $order_id = $cartObj->placeOrder($user_id, $payment_method, $order_type, $order_class, $scheduled_time, $cartGrouped);
 
     echo "<script>
@@ -103,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                 </div>
                 <div class="d-flex align-items-center mb-4">
                     <label class="form-label w-25 mb-0 fw-bold">Payment Method</label>
-                    <select class="form-select w-75" id="paymentMethod" name="payment_method" onchange="validatePaymentMethods()">
+                    <select class="form-select w-75" id="paymentMethod" name="payment_method" onchange="validatePaymentMethods()" required>
                         <option value="" disabled selected>Select</option>
                         <option value="Cash">Cash</option>
                         <option value="GCash">GCash</option>
