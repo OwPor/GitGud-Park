@@ -15,6 +15,9 @@ pagorder ng customer after magorder sa cart mapupunta order nila sa purchase.php
 update host files
 MUST MERGE DATABASE
 
+generate payment link
+
+
 buhay ay di karera
 
 
