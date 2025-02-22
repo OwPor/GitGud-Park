@@ -408,10 +408,10 @@
             <!-- Pagination will be dynamically generated -->
         </div>
     </div>
+    <script src="assets/js/adminresponse.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/navigation.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/pagination.js?v=<?php echo time(); ?>"></script>
     <script src="assets/js/activate.js?v=<?php echo time(); ?>"></script>
-    <script src="assets/js/adminresponse.js?v=<?php echo time(); ?>"></script>
 
     <br><br><br><br>
 
