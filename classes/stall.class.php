@@ -293,4 +293,79 @@ class Stall {
             return false;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function getUserOrders($user_id, $park_id) {
+        $sql = "SELECT 
+                    o.id AS order_id,
+                    o.created_at AS order_date,
+                    os.id AS order_stall_id,
+                    os.stall_id,
+                    os.status AS order_status,
+                    os.subtotal AS stall_subtotal,
+                    os.queue_number,
+                    s.name AS stall_name,
+                    s.park_id,
+                    p.name AS product_name,
+                    p.image AS product_image,
+                    oi.product_id,
+                    oi.variations,
+                    oi.request,
+                    oi.quantity,
+                    oi.price,
+                    oi.subtotal AS item_subtotal
+                FROM orders o
+                JOIN order_stalls os ON o.id = os.order_id
+                JOIN stalls s ON os.stall_id = s.id
+                JOIN order_items oi ON os.id = oi.order_stall_id
+                JOIN products p ON oi.product_id = p.id
+                WHERE o.user_id = ? 
+                  AND s.park_id = ?
+                ORDER BY o.created_at DESC, os.status";
+        $stmt = $this->db->connect()->prepare($sql);
+        $stmt->execute([$user_id, $park_id]);
+        return $stmt->fetchAll();
+    }
+    
+    public function getStallOrders($stall_id) {
+        $sql = "SELECT 
+                    o.id AS order_id,
+                    o.created_at AS order_date,
+                    os.id AS order_stall_id,
+                    os.status AS order_status,
+                    os.subtotal AS stall_subtotal,
+                    os.queue_number,
+                    p.name AS product_name,
+                    p.image AS product_image,
+                    oi.product_id,
+                    oi.variations,
+                    oi.request,
+                    oi.quantity,
+                    oi.price,
+                    oi.subtotal AS item_subtotal
+                FROM orders o
+                JOIN order_stalls os ON o.id = os.order_id
+                JOIN order_items oi ON os.id = oi.order_stall_id
+                JOIN products p ON oi.product_id = p.id
+                WHERE os.stall_id = ?
+                ORDER BY o.created_at DESC, os.status";
+        $stmt = $this->db->connect()->prepare($sql);
+        $stmt->execute([$stall_id]);
+        return $stmt->fetchAll();
+    }
+    
 }

@@ -182,89 +182,89 @@
 
 <!-- Order Received -->
 <div class="modal fade" id="orderreceived" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="d-flex justify-content-end">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check"></i> Received Order</h4>
+                    <span>Mark this order as received?</span>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" data-order-id="">Yes</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="text-center">
-          <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check"></i> Received Order</h4>
-          <span>Mark this order as received?</span>
-          <div class="mt-5 mb-3">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-            <button type="button" class="btn btn-primary" data-order-id="">Yes</button>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <!-- Prepare Order -->
 <div class="modal fade" id="prepareorder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="text-center">
-            <h4 class="fw-bold mb-4"><i class="fa-solid fa-utensils me-2"></i> Prepare Order</h4>
-            <p class="mb-2">Start preparing this order?</p>
-            <span class="text-muted small">Preparing this order means that their payment is confirmed.</span>
-            <div class="mt-5 mb-3">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-utensils me-2"></i> Prepare Order</h4>
+                    <p class="mb-2">Start preparing this order?</p>
+                    <span class="text-muted small">Preparing this order means that their payment is confirmed.</span>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary">Yes</button>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <!-- Order Ready -->
 <div class="modal fade" id="orderready" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="text-center">
-            <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check me-2"></i> Order Ready</h4>
-            <p class="mb-2">Mark this order as ready for pickup?</p>
-            <span class="text-muted small">Marking this order will notify the customer about their order.</span>
-            <div class="mt-5 mb-3">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check me-2"></i> Order Ready</h4>
+                    <p class="mb-2">Mark this order as ready for pickup?</p>
+                    <span class="text-muted small">Marking this order will notify the customer about their order.</span>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary">Yes</button>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <!-- Order Complete -->
 <div class="modal fade" id="ordercomplete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="text-center">
-            <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check me-2"></i> Order Complete</h4>
-            <p class="mb-2">Mark this order as completed?</p>
-            <span class="text-muted small">Marking this order means that the order is done.</span>
-            <div class="mt-5 mb-3">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary">Yes</button>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check me-2"></i> Order Complete</h4>
+                    <p class="mb-2">Mark this order as completed?</p>
+                    <span class="text-muted small">Marking this order means that the order is done.</span>
+                    <div class="mt-5 mb-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary">Yes</button>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <!-- Add Rent Payment -->

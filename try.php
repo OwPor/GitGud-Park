@@ -1,239 +1,182 @@
-<?php
-    include_once 'links.php'; 
-    include_once 'header.php'; 
-    require_once __DIR__ . '/classes/product.class.php';
-    require_once __DIR__ . '/classes/stall.class.php';
+<?php  
+include_once 'header.php'; 
+include_once 'links.php'; 
+include_once 'modals.php'; 
+include_once 'nav.php';
+require_once __DIR__ . '/classes/stall.class.php';
 
-    $stallObj   = new Stall();
-    $productObj = new Product();
+$stallObj = new Stall();
+$ordersData = $stallObj->getUserOrders($user_id, $park_id);
 
-    if (isset($_GET['id'])) {
-        $stall_id = intval($_GET['id']);
-        $stall = $stallObj->getStall($stall_id); 
-        $products = $stallObj->getProducts($stall_id);
-        $categories = $productObj->getCategories($stall_id);
-        $totalProducts = $stallObj->getTotalProducts($stall_id);
+$groupedOrders = [];
+foreach ($ordersData as $order) {
+    $status = $order['order_status']; 
+    if (!isset($groupedOrders[$status])) {
+        $groupedOrders[$status] = [];
     }
+    $osid = $order['order_stall_id'];
+    if (!isset($groupedOrders[$status][$osid])) {
+        $groupedOrders[$status][$osid] = [
+            'order_id'       => $order['order_id'],
+            'order_date'     => $order['order_date'],
+            'stall_id'       => $order['stall_id'],
+            'stall_name'     => $order['stall_name'],
+            'stall_subtotal'=> $order['stall_subtotal'],
+            'items'          => []
+        ];
+    }
+    $groupedOrders[$status][$osid]['items'][] = $order;
+}
+
+$statusMapping = [
+    'Pending'   => 'topay',      
+    'Preparing' => 'preparing',
+    'Ready'     => 'toreceive',
+    'Completed' => 'completed'
+];
 ?>
-
+<style>
+    main { padding: 20px 120px; }
+</style>
+<script> const userId = <?php echo $user['user_session']; ?>; </script>
 <main>
-    <div class="d-flex pagefilter align-items-center gap-3">
-        <div class="d-flex align-items-center gap-3 leftfilter">
-            <form action="#" method="get" class="searchmenu">
-                <button type="submit"><i class="fas fa-search fa-lg"></i></button>
-                <input type="text" name="search" placeholder="Search in menu">
-            </form>
-            <a href="#popular" class="nav-link"><i class="fa-solid fa-fire-flame-curved"></i> Popular</a>
-            <a href="#new" class="nav-link"><i class="fa-solid fa-ribbon"></i> New</a>
-            <a href="#promo" class="nav-link"><i class="fa-solid fa-percent"></i> Promo</a>
-        </div>
-
-        <i class="fa-solid fa-arrow-left scroll-arrow left-arrow" style="display: none;"></i>
-
-        <div class="d-flex rightfilter gap-3">
-            <?php foreach ($categories as $cat): ?>
-                <a href="#category<?= $cat['id']; ?>" class="nav-link"><?= htmlspecialchars($cat['name']); ?></a>
-            <?php endforeach; ?>
-        </div>
-
-        <i class="fa-solid fa-arrow-right scroll-arrow right-arrow"></i>
+    <div class="nav-container d-flex gap-3 my-2">
+        <a href="#topay" class="nav-link" data-target="topay">To Pay</a>
+        <a href="#preparing" class="nav-link" data-target="preparing">Preparing</a>
+        <a href="#toreceive" class="nav-link" data-target="toreceive">To Receive</a>
+        <a href="#completed" class="nav-link" data-target="completed">Completed</a>
     </div>
-
-    <?php foreach ($categories as $cat): ?>
-        <section id="category<?= $cat['id']; ?>" class="pt-3 mt-3">
-            <h5><?= htmlspecialchars($cat['name']); ?></h5>
-            <div class="row row-cols-1 row-cols-md-4 g-3">
-                <?php 
-                    $hasProducts = false;
-                    foreach ($products as $product):
-                        if ($product['category_id'] == $cat['id']):
-                            $hasProducts = true;
+    
+    <?php 
+    foreach ($statusMapping as $status => $sectionId) {
+        echo '<div id="'.$sectionId.'" class="section-content '. (empty($groupedOrders[$status]) ? 'd-none' : '') .'">';
+        if (!empty($groupedOrders[$status])) {
+            foreach ($groupedOrders[$status] as $osid => $orderGroup) { 
+                $formattedOrderId = str_pad($orderGroup['order_id'], 4, '0', STR_PAD_LEFT);
+                $formattedDate = date("m/d/Y H:i", strtotime($orderGroup['order_date']));
+                $displayStatus = ($status == 'Pending') ? "TO PAY" :
+                                 (($status == 'Preparing') ? "PREPARING" :
+                                 (($status == 'Ready') ? "TO RECEIVE" : "COMPLETED"));
                 ?>
-                            <div class="col">
-                                <a href="#" class="card-link text-decoration-none" data-bs-toggle="modal" data-bs-target="#menumodal<?= $product['id']; ?>">
-                                    <div class="card position-relative">
-                                        <img src="<?= htmlspecialchars($product['image']); ?>" class="card-img-top" alt="<?= htmlspecialchars($product['name']); ?>">
-                                        <button class="addtocart position-absolute fw-bold d-flex justify-content-center align-items-center">+</button>
-                                        <div class="card-body">
-                                            <p class="card-text text-muted m-0"><?= htmlspecialchars($cat['name']); ?></p>
-                                            <h5 class="card-title my-2"><?= htmlspecialchars($product['name']); ?></h5>
-                                            <p class="card-text text-muted m-0"><?= htmlspecialchars($product['description']); ?></p>
-                                            <div class="d-flex align-items-center justify-content-between my-3">
-                                                <div>
-                                                    <span class="proprice">₱<?= number_format($product['base_price'], 2); ?></span>
-                                                    <span class="pricebefore small">₱<?= number_format($product['base_price'], 2); ?></span>
-                                                </div>
-                                                <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
-                                            </div>                          
-                                            <div class="m-0">
-                                                <span class="opennow">Popular</span>
-                                                <span class="discount">10% off</span>
-                                                <span class="newopen">New</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                <div class="border py-3 px-4 rounded-2 bg-white mb-3">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+                        <div class="d-flex gap-3 align-items-center">
+                            <span class="fw-bold">ORDER ID: <?php echo $formattedOrderId; ?></span>
+                            <span class="dot text-muted"></span>
+                            <div class="d-flex gap-2 align-items-center">
+                                <span class="fw-bold"><?php echo htmlspecialchars($orderGroup['stall_name']); ?></span>
+                                <button class="viewstall border bg-white small px-2" onclick="window.location.href='stall.php?stall_id=<?php echo $orderGroup['stall_id']; ?>';">View Stall</button>
                             </div>
-
-                            <!-- Modal for the product -->
-                            <div class="modal fade menumodal" id="menumodal<?= $product['id']; ?>" tabindex="-1" aria-labelledby="modalLabel<?= $product['id']; ?>" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <form class="modal-content">
-                                        <div class="modal-body p-0">
-                                            <div class="card border-0 position-relative rounded-0">
-                                                <img src="<?= htmlspecialchars($product['image']); ?>" class="card-img-top custom-img rounded-0" alt="<?= htmlspecialchars($product['name']); ?>">
-                                                <button type="button" class="btn-close position-absolute top-0 end-0 mt-3 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                <div class="card-body">
-                                                    <p class="card-text text-muted m-0"><?= htmlspecialchars($cat['name']); ?></p>
-                                                    <h5 class="card-title my-2"><?= htmlspecialchars($product['name']); ?></h5>
-                                                    <p class="card-text text-muted m-0"><?= htmlspecialchars($product['description']); ?></p>
-                                                    <div class="d-flex align-items-center justify-content-between my-3">
-                                                        <div>
-                                                            <span class="proprice">₱<?= number_format($product['base_price'], 2); ?></span>
-                                                            <span class="pricebefore small">₱<?= number_format($product['base_price'], 2); ?></span>
-                                                        </div>
-                                                        <span class="prolikes small"><i class="fa-solid fa-heart"></i> 189</span>
-                                                    </div>                          
-                                                    <div class="m-0">
-                                                        <span class="opennow">Popular</span>
-                                                        <span class="discount">10% off</span>
-                                                        <span class="newopen">New</span>
-                                                    </div>
-                                                    <hr>
-                                                    <?php 
-                                                        $variations = $stallObj->getProductVariations($product['id']);
-                                                        if (!empty($variations)):
-                                                    ?>
-                                                        <?php foreach ($variations as $variation): ?>
-                                                            <div class="vrtn mt-3">
-                                                                <div class="variation-group mb-3" data-variation-id="<?= $variation['id']; ?>">
-                                                                    <div class="d-flex justify-content-between variation mb-2">
-                                                                        <div>
-                                                                            <h5 class="mb-0"><?= htmlspecialchars($variation['name']); ?></h5>
-                                                                            <span class="mt-2 tangina">Select 1</span>
-                                                                        </div>
-                                                                        <span class="mx-2 variationspan rounded-4 px-2 py-1 m-0">Required</span>
-                                                                    </div>
-                                                                    <?php 
-                                                                        $options = $stallObj->getVariationOptions($variation['id']);
-                                                                        foreach ($options as $option):
-                                                                    ?>
-                                                                        <div class="d-flex align-items-center justify-content-between variationitem mb-2" onclick="document.getElementById('variation<?= $option['id']; ?>').click()">
-                                                                            <div class="form-check d-flex gap-2 align-items-center">
-                                                                                <input 
-                                                                                    class="form-check-input" 
-                                                                                    type="radio" 
-                                                                                    name="variation_<?= $variation['id']; ?>"  
-                                                                                    id="variation<?= $option['id']; ?>"
-                                                                                    data-addprice="<?= $option['add_price']; ?>"
-                                                                                    data-subtractprice="<?= $option['subtract_price']; ?>"
-                                                                                >
-                                                                                <img src="<?= htmlspecialchars($option['image']); ?>" alt="<?= htmlspecialchars($option['name']); ?>" width="45px" height="45px" class="rounded-2">
-                                                                                <label class="form-check-label" for="variation<?= $option['id']; ?>"><?= htmlspecialchars($option['name']); ?></label>
-                                                                            </div>
-                                                                            <span class="px-2">
-                                                                                <?= ($option['add_price'] > 0) ? '+ ₱' . number_format($option['add_price'], 2) : (($option['subtract_price'] > 0) ? '- ₱' . number_format($option['subtract_price'], 2) : 'Free'); ?>
-                                                                            </span>
-                                                                        </div>
-                                                                    <?php endforeach; ?>
-                                                                </div>
-                                                            </div>
-                                                        <?php endforeach; ?>
-                                                    <?php endif; ?>
-                                                    <div class="speins mt-4 mb-5">
-                                                        <div class="mb-3">
-                                                            <h5 class="mb-0">Special Instructions</h5>
-                                                            <span class="mt-2">Special requests are subject to the restaurant's approval. Tell us here!</span>
-                                                        </div>
-                                                        <div class="input-group m-0">
-                                                            <textarea 
-                                                                name="specialinstructions<?= $product['id'] ?>" 
-                                                                id="specialinstructions<?= $product['id'] ?>" 
-                                                                placeholder="e.g. No mayo (Optional)" 
-                                                                class="rounded-2" 
-                                                                rows="3"
-                                                            ></textarea>
-                                                        </div>                
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-3 ordquantity">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fa-solid fa-minus" onclick="updateQuantity(<?= $product['id']; ?>, -1)"></i>
-                                                <span id="quantity<?= $product['id']; ?>" class="ordquanum">1</span>
-                                                <i class="fa-solid fa-plus" onclick="updateQuantity(<?= $product['id']; ?>, 1)"></i>
-                                            </div>
-                                            <button type="button" class="btn btn-primary w-100" onclick="addToCart(<?= $product['id']; ?>)">Add to cart</button>
-                                        </div>
-                                        <script>
-                                            function addToCart(productId) {
-                                                let quantity = parseInt(document.getElementById("quantity" + productId).innerText);
-                                                let specialInstructions = document.getElementById("specialinstructions" + productId)?.value || '';
-                                                let modal = document.getElementById("menumodal" + productId);
-                                                let variationGroups = modal.querySelectorAll(".variation-group");
-                                                let variationOptionIds = [];
-                                                let totalAdditional = 0;
-                                                let totalSubtraction = 0;
-                                                
-                                                variationGroups.forEach(group => {
-                                                    let checked = group.querySelector("input[type='radio']:checked");
-                                                    if (checked) {
-                                                        variationOptionIds.push(checked.id.replace("variation", ""));
-                                                        totalAdditional += parseFloat(checked.dataset.addprice) || 0;
-                                                        totalSubtraction += parseFloat(checked.dataset.subtractprice) || 0;
-                                                    }
-                                                });
-                                                
-                                                let basePriceText = modal.querySelector(".proprice").innerText;
-                                                let basePrice = parseFloat(basePriceText.replace("₱", "").trim());
-                                                let finalPrice = basePrice + totalAdditional - totalSubtraction;
-                                                let params = `product_id=${productId}&quantity=${quantity}&price=${finalPrice}&request=${encodeURIComponent(specialInstructions)}`;
-                                                variationOptionIds.forEach(id => {
-                                                    params += `&variation_options[]=${id}`;
-                                                });
-                                                
-                                                let xhr = new XMLHttpRequest();
-                                                xhr.open("POST", "add_to_cart.php", true);
-                                                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                                xhr.onreadystatechange = function () {
-                                                    if (xhr.readyState === 4 && xhr.status === 200) {
-                                                        alert(xhr.responseText);
-                                                    }
-                                                };
-                                                
-                                                xhr.send(params);
-                                            }
-                                        </script>
-                                    </form>
+                        </div>
+                        <div class="d-flex gap-3 align-items-center">
+                            <span style="color: #6A9C89" class="small"><?php echo $formattedDate; ?></span>
+                            <span class="dot text-muted"></span>
+                            <span class="fw-bold" style="color: #CD5C08"><?php echo $displayStatus; ?></span>
+                        </div>
+                    </div>
+                    <?php 
+                    foreach ($orderGroup['items'] as $item) { ?>
+                        <div class="d-flex justify-content-between border-bottom py-2">
+                            <div class="d-flex gap-3 align-items-center">
+                                <img src="<?php echo htmlspecialchars($item['product_image']); ?>" width="85px" height="85px" class="border rounded-2">
+                                <div>
+                                    <span class="fs-5"><?php echo htmlspecialchars($item['product_name']); ?></span><br>
+                                    <?php if (!empty($item['variations'])): ?>
+                                        <span class="small text-muted">Variation: <?php echo htmlspecialchars($item['variations']); ?></span><br>
+                                    <?php endif; ?>
+                                    <?php if (!empty($item['request'])): ?>
+                                        <span class="small text-muted">"<?php echo htmlspecialchars($item['request']); ?>"</span><br>
+                                    <?php endif; ?>
+                                    <span>x<?php echo $item['quantity']; ?></span>
                                 </div>
                             </div>
-                <?php 
-                        endif;
-                    endforeach;
-                ?>
-                <?php if (!$hasProducts): ?>
-                    <div class="col">
-                        <p>No products found for this category.</p>
+                            <div class="d-flex flex-column justify-content-end">
+                                <span class="fw-bold">₱<?php echo number_format($item['item_subtotal'], 2); ?></span>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <div class="d-flex justify-content-between pt-2">
+                        <div class="d-flex gap-3 align-items-center text-muted small">
+                            <span>Payment Method: Cash</span>
+                            <span class="dot text-muted"></span>
+                            <span>Your order is awaiting payment</span>
+                        </div>
+                        <div class="d-flex gap-4 align-items-center">
+                            <?php if($status == 'Ready'): ?>
+                                <button class="cancelorder rounded-2 order-received-btn" data-order-stall-id="<?php echo $osid; ?>" data-new-status="Completed" data-bs-toggle="modal" data-bs-target="#orderreceived">Order Received</button>
+                            <?php endif; ?>
+                            <span class="dot text-muted"></span>
+                            <div class="d-flex gap-3 align-items-center">
+                                <span class="text-muted">Sub Total:</span>
+                                <span class="fw-bold fs-4">₱<?php echo number_format($orderGroup['stall_subtotal'], 2); ?></span>
+                            </div>
+                        </div>
                     </div>
-                <?php endif; ?>
-            </div>
-        </section>
-    <?php endforeach; ?>
-
-    <br><br><br><br><br><br>
-    
-    <script>
-        function updateQuantity(productId, change) {
-            const quantitySpan = document.getElementById("quantity" + productId);
-            let quantity = parseInt(quantitySpan.innerText);
-            quantity = Math.max(1, quantity + change);
-            quantitySpan.innerText = quantity;
+                </div>
+                <?php 
+            }
+        } else {
+            echo "<p>No orders in this section.</p>";
         }
-    </script>
+        echo '</div>';
+    }
+    ?>
+    
+    <div class="modal fade" id="orderreceived" tabindex="-1" aria-labelledby="orderreceivedLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="fw-bold mb-4"><i class="fa-solid fa-circle-check"></i> Received Order</h4>
+                        <span>Mark this order as received?</span>
+                        <div class="mt-5 mb-3">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-primary" id="orderReceivedYesBtn" data-order-id="" data-new-status="">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
-<?php
-    include_once 'modals.php'; 
-    include_once './footer.php'; 
-?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.order-received-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var orderStallId = this.getAttribute('data-order-stall-id');
+            var modalYesBtn = document.getElementById('orderReceivedYesBtn');
+            modalYesBtn.setAttribute('data-order-id', orderStallId);
+            modalYesBtn.setAttribute('data-new-status', 'Completed');
+        });
+    });
+
+    document.getElementById('orderReceivedYesBtn').addEventListener('click', function() {
+        var orderStallId = this.getAttribute('data-order-id');
+        var newStatus = this.getAttribute('data-new-status');
+        if (!orderStallId || !newStatus) {
+            alert("Missing order information.");
+            return;
+        }
+        fetch('update_order_status.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'order_stall_id=' + encodeURIComponent(orderStallId) + '&new_status=' + encodeURIComponent(newStatus)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                location.reload();
+            } else {
+                alert("Error: " + data.message);
+            }
+        })
+        .catch(error => alert("Request failed: " + error));
+    });
+});
+</script>
+<script src="./assets/js/navigation.js?v=<?php echo time(); ?>"></script>
+<?php include_once './footer.php'; ?>
