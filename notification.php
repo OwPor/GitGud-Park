@@ -1,7 +1,14 @@
 <?php 
     include_once 'links.php'; 
-    include_once 'header.php';
+    require_once 'header.php';
     include_once 'modals.php';
+    require_once __DIR__ . '/classes/user.class.php';
+
+    $userClassObj = new UserClass();
+
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        $notifications = $userClassObj->getNotifications($user_id);
+    }
 ?>
 <style>
     main{
@@ -11,9 +18,30 @@
 <main>
     <div class="d-flex justify-content-between align-items-center border py-3 px-4 rounded-2 bg-white mb-3 carttop">
         <h4 class="fw-bold mb-0">Notifications</h4>
-        <button>Mark all as read</button>
+        <!-- <button>Mark all as read</button> -->
     </div>
-    <div class="d-flex justify-content-between align-items-center border py-3 px-4 rounded-2 bg-white border-bottom">
+
+    <?php
+        if ($notifications) {
+            foreach ($notifications as $notification) {
+                ?>
+                <div class="d-flex justify-content-between align-items-center border py-3 px-4 rounded-2 bg-white border-bottom">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img src="assets/images/stall1.jpg" weight="85" height="85">
+                        <div>
+                            <h5 class="fw-bold m-0"><?= $notification['title'] ?></h5>
+                            <p class="my-1"><?= $notification['message'] ?></p>
+                            <span class="text-muted"><?= $notification['created_at'] ?></span>
+                        </div>
+                    </div>
+                    <!-- <button class="p-1 border bg-white small" onclick="window.location.href='purchase.php#preparing';">View Details</button> -->
+                </div>
+                <?php
+            }
+        }
+    ?>
+
+    <!-- <div class="d-flex justify-content-between align-items-center border py-3 px-4 rounded-2 bg-white border-bottom">
         <div class="d-flex gap-3 align-items-center">
             <img src="assets/images/stall1.jpg" weight="85" height="85">
             <div>
@@ -23,8 +51,8 @@
             </div>
         </div>
         <button class="p-1 border bg-white small" onclick="window.location.href='purchase.php#toreceive';">View Details</button>
-    </div>
-    <div class="d-flex justify-content-between align-items-center border py-3 px-4 rounded-2 bg-white border-bottom">
+    </div> -->
+    <!-- <div class="d-flex justify-content-between align-items-center border py-3 px-4 rounded-2 bg-white border-bottom">
         <div class="d-flex gap-3 align-items-center">
             <img src="assets/images/stall1.jpg" weight="85" height="85">
             <div>
@@ -34,8 +62,8 @@
             </div>
         </div>
         <button class="p-1 border bg-white small" onclick="window.location.href='purchase.php#preparing';">View Details</button>
-    </div>
-    <div class="d-flex justify-content-between align-items-center border py-3 px-4 rounded-2 bg-white border-bottom">
+    </div> -->
+    <!-- <div class="d-flex justify-content-between align-items-center border py-3 px-4 rounded-2 bg-white border-bottom">
         <div class="d-flex gap-3 align-items-center">
             <img src="assets/images/gitgud.png" weight="85" height="85">
             <div>
@@ -45,7 +73,7 @@
             </div>
         </div>
         <button class="p-1 border bg-white small" onclick="window.location.href='#';">View Receipt</button>
-    </div>
+    </div> -->
     <br><br><br><br><br>
 </main>
 <?php 

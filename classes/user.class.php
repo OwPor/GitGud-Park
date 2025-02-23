@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/db.php';
 
-class User {
+class UserClass {
 
     protected $db;
 

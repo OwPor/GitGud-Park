@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $user = new User();
+    $user = new UserClass();
     $user->id = $_SESSION['user']['id'];
 
     $result = $user->changePassword($user->id, $currentPassword, $newPassword, $logoutOtherDevices);
