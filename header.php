@@ -14,13 +14,14 @@ $parkObj = new Park();
 
 // Check if user is logged in
 if (isset($_SESSION['user'])) {
-    $park_id = $_SESSION['current_park_id'];
     $user_id = $_SESSION['user']['id'];
-
     $user = $userObj->getUser($user_id);
 
-    $is_food_park_owner = $parkObj->isOwner($user_id, $park_id);
-    $is_stall_owner = $parkObj->isStallOwner($user_id, $park_id);
+    if (isset($_SESSION['current_park_id'])) {
+        $park_id = $_SESSION['current_park_id'];
+        $is_food_park_owner = $parkObj->isOwner($user_id, $park_id);
+        $is_stall_owner = $parkObj->isStallOwner($user_id, $park_id);
+    }
 
     // Default accessible links
     $nav_links = [
@@ -48,7 +49,9 @@ if (isset($_SESSION['user'])) {
         ];
     }
 } else {
-    $park_id = $_SESSION['current_park_id'];
+    if (isset($_SESSION['current_park_id'])) {
+        $park_id = $_SESSION['current_park_id'];
+    }
 }
 ?>
 
