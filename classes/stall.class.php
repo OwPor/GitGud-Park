@@ -300,19 +300,12 @@ class Stall {
 
 
 
-
-
-
-
-
-
-
-
-
     public function getUserOrders($user_id, $park_id) {
         $sql = "SELECT 
                     o.id AS order_id,
                     o.created_at AS order_date,
+                    o.payment_method,
+                    o.order_type,
                     os.id AS order_stall_id,
                     os.stall_id,
                     os.status AS order_status,
@@ -325,7 +318,7 @@ class Stall {
                     oi.product_id,
                     oi.variations,
                     oi.request,
-                    oi.quantity,
+                    oi.quantity, 
                     oi.price,
                     oi.subtotal AS item_subtotal
                 FROM orders o
@@ -344,6 +337,9 @@ class Stall {
     public function getStallOrders($stall_id) {
         $sql = "SELECT 
                     o.id AS order_id,
+                    o.payment_method,
+                    o.order_type,
+                    o.user_id,
                     o.created_at AS order_date,
                     os.id AS order_stall_id,
                     os.status AS order_status,
@@ -365,6 +361,25 @@ class Stall {
                 ORDER BY o.created_at DESC, os.status";
         $stmt = $this->db->connect()->prepare($sql);
         $stmt->execute([$stall_id]);
+        return $stmt->fetchAll();
+    }
+
+    public function createNotification($user_id, $order_id, $stall_id, $message) {
+        $sql = "INSERT INTO notifications (user_id, order_id, stall_id, message) VALUES (?, ?, ?, ?)";
+        $stmt = $this->db->connect()->prepare($sql);
+        return $stmt->execute([$user_id, $order_id, $stall_id, $message]);
+    }
+
+    public function getNotifications($user_id, $park_id){
+        $stmt = $this->db->connect()->prepare("
+            SELECT n.*, s.logo, s.name 
+            FROM notifications n
+            JOIN stalls s ON n.stall_id = s.id
+            WHERE n.user_id = ? 
+              AND s.park_id = ?
+            ORDER BY n.created_at DESC
+        ");
+        $stmt->execute([$user_id, $park_id]);
         return $stmt->fetchAll();
     }
     
