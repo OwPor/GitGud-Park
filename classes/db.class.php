@@ -275,38 +275,6 @@ class User {
         return $query->fetch();
     }
 
-    public function changePassword($id, $currentPassword, $newPassword, $logoutOtherDevices) {
-        $user = $this->getUserById($id);
-        
-        if (!$user) {
-            return ['success' => false, 'message' => 'User not found.'];
-        }
-    
-        if (!password_verify($currentPassword, $user['password'])) {
-            return ['success' => false, 'message' => $user['password']];
-        } else if ($currentPassword == $newPassword) {
-            return ['success' => false, 'message' => 'New password must be different from the current password.'];
-        }
-    
-        $hashedNewPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-        $sql = "UPDATE users SET password = ? WHERE id = ?";
-        $query = $this->db->connect()->prepare($sql);
-        $query->execute([$hashedNewPassword, $id]);
-    
-        if ($query->rowCount() > 0) {
-            // Only generate a new user session if the logoutOtherDevices option is ticked
-            if ($logoutOtherDevices) {
-                $new_session = $this->generateUniqueUserSession($user->email);
-                return ['success' => true, 'user_session' => $new_session]; // Return the new session
-            }
-            
-            // If not logging out other devices, return the current session
-            return ['success' => true, 'user_session' => $user['user_session']];
-        }
-    
-        return ['success' => false, 'message' => 'Failed to update password.'];
-    }
-
     function isVerified($user_id) {
         $sql = "SELECT is_verified FROM verification WHERE user_id = :user_id;";
         $query = $this->db->connect()->prepare($sql);
