@@ -1,9 +1,13 @@
 <?php
-    include_once 'landingheader.php'; 
+    include_once 'header.php'; 
     include_once 'links.php'; 
     include_once 'modals.php'; 
     require_once __DIR__ . '/classes/admin.class.php';
     $adminObj = new Admin();
+    date_default_timezone_set('Asia/Manila');
+    
+    $currentDateTime = date("l, F j, Y h:i A");
+
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
@@ -45,7 +49,7 @@
         <div class="d-flex justify-content-between">
             <div>
                 <h5 class="fw-bold mb-2">Manage Accounts</h5>
-                <span class="small">November 03, 2024 8:40 AM</span>
+                <span class="small"><?= $currentDateTime ?></span>
             </div>
             <button class="disatc m-0 small" data-bs-toggle="modal" data-bs-target="#adduser">+ Add User</button>
         </div>
@@ -84,11 +88,11 @@
                     echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['first_name']) . '</td>';
                     echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['last_name']) . '</td>';
                     echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['email']) . '</td>';
-                    echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['phone']) . '</td>';
+                    echo '<td class="fw-normal small py-3 px-4">' . "+63" . htmlspecialchars($user['phone']) . '</td>';
                     echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['birth_date']) . '</td>';
                     echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['sex']) . '</td>';
                     echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['status']) . '</td>';
-                    echo '<td class="fw-normal small py-3 px-4"><span class="small rounded-5 text-success border border-success p-1 border-2 fw-bold">' . htmlspecialchars($user['role']) . '</span></td>';
+                    echo '<td class="fw-normal small py-3 px-1"><span class="small rounded-5 text-success border border-success p-1 border-2 fw-bold">' . htmlspecialchars($user['role']) . '</span></td>';
                     echo '<td class="fw-normal small py-3 px-4">' . htmlspecialchars($user['created_at']) . '</td>';
                     echo '<td class="fw-normal small py-3 px-4">';
                     echo '<div class="dropdown position-relative">';
