@@ -17,6 +17,8 @@ MUST MERGE DATABASE
 
 generate payment link
 
+polling notifications
+
 
 buhay ay di karera
 
