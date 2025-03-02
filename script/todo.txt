@@ -19,6 +19,7 @@ generate payment link
 
 polling notifications
 
+password validation
 
 buhay ay di karera
 
