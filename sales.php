@@ -104,19 +104,15 @@ if($yearAvailable) {
     <div id="<?php echo $key; ?>" class="section-content <?php echo $key === 'today' ? 'active' : ''; ?>">
         <div class="d-flex gap-3 mb-3">
             <div class="bg-white border rounded-2 p-4 w-75">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex gap-2 align-items-center">
-                        <h5 class="m-0 fw-bold">Sales <?php echo $period['label']; ?></h5>
-                        <span class="small text-muted">(<?php echo $period['display']; ?>)</span>
-                    </div>
-                    <span class="small py-1 px-2 rounded-5 salesdr" style="color: #CD5C08;">
-                        Download Report <i class="fa-regular fa-circle-down ms-2"></i>
-                    </span>
-                </div>
-                <div class="w-100 d-flex my-4">
-                    <div class="cartot btn-group w-50" role="group">
-                        <button type="button" class="btn-toggle active rounded" id="outletView">Outlet View</button>
-                        <button type="button" class="btn-toggle rounded" id="chartView">Chart View</button>
+                <div class="w-100 d-flex mb-4">
+                    <div class="w-50">
+                        <div class="d-flex gap-2 align-items-center mb-2">
+                            <h5 class="m-0 fw-bold">Sales <?php echo $period['label']; ?></h5>
+                            <span class="small text-muted">(<?php echo $period['display']; ?>)</span>
+                        </div>
+                        <span class="small" style="color: #CD5C08; cursor: pointer;">
+                            Download Report <i class="fa-regular fa-circle-down ms-2"></i>
+                        </span>
                     </div>
                     <div class="w-25 text-end">
                         <h4 class="m-0 fw-bold"><?php echo $period['sales']['totalOrders']; ?></h4>
@@ -141,6 +137,9 @@ if($yearAvailable) {
                     </tr>
                     <?php endforeach; endif; ?>
                 </table>
+                <div class="d-flex gap-3 saletabpag align-items-center justify-content-center mt-3">
+                    <!-- Pagination will be dynamically generated -->
+                </div>
             </div>
             <div class="bg-white border p-4 w-25 rounded-2">
                 <h5 class="m-0 fw-bold mb-1">Live Ops Monitor</h5>
@@ -169,6 +168,14 @@ if($yearAvailable) {
                     </div>
                     <i class="fa-solid fa-angle-right ms-auto me-3"></i> 
                 </div>
+                <div class="d-flex align-items-center border rounded-2 py-2">
+                    <h4 class="text-danger px-3 m-0 fw-bold"><?php echo $liveOps['no_sales']; ?></h4>
+                    <div>
+                        <p class="m-0 fw-bold">No Product Sales</p>
+                        <span class="text-muted small"><?php echo $period['label']; ?></span>
+                    </div>
+                    <i class="fa-solid fa-angle-right ms-auto me-3"></i> 
+                </div>
             </div>
         </div>
         <div class="d-flex gap-3">
@@ -178,8 +185,8 @@ if($yearAvailable) {
                 <div class="d-flex gap-3 my-3">
                     <div class="p-3 d-flex align-items-end border w-50 rounded-2" style="background-color: #f4f4f4;">
                         <div class="w-50">
-                            <h5 class="m-0 fw-bold">₱<?php echo $opsHealth['Online']; ?></h5>
-                            <span>Online</span>
+                            <h5 class="m-0 fw-bold">₱<?php echo $opsHealth['GCash']; ?></h5>
+                            <span>GCash</span>
                         </div>
                         <span>vs.</span>
                         <div class="w-50 text-end">
@@ -201,18 +208,12 @@ if($yearAvailable) {
                 </div>
                 <div class="d-flex gap-3">
                     <div class="p-3 rounded-2 w-50 border" style="background-color: #f4f4f4;">
-                        <div class="d-flex align-items-center gap-2">
-                            <h5 class="m-0 fw-bold mb-1"><?php echo $opsHealth['avg_prep_time']; ?> min</h5>
-                            <i class="fa-solid fa-arrow-up text-danger small fw-bold"></i>
-                        </div>
+                        <h5 class="m-0 fw-bold mb-1"><?php echo $opsHealth['avg_prep_time']; ?> min</h5>
                         <p class="mb-4">Avg. Preparation Time</p>
                         <span class="text-muted small"><?php echo $period['label']; ?></span>
                     </div>
                     <div class="p-3 rounded-2 w-50 border" style="background-color: #f4f4f4;">
-                        <div class="d-flex align-items-center gap-2">
-                            <h5 class="m-0 fw-bold mb-1">₱<?php echo $opsHealth['lost_sales']; ?></h5>
-                            <i class="fa-solid fa-arrow-down text-success small fw-bold"></i>
-                        </div>
+                        <h5 class="m-0 fw-bold mb-1">₱<?php echo $opsHealth['lost_sales']; ?></h5>
                         <p class="mb-4">Lost Sales Due to Cancel</p>
                         <span class="text-muted small"><?php echo $period['label']; ?></span>
                     </div>
@@ -245,6 +246,7 @@ if($yearAvailable) {
         </div>
     </div>
     <?php endforeach; ?>
+    <br><br><br><br><br><br>
 </main>
 <script src="./assets/js/navigation.js?v=<?php echo time(); ?>"></script>
 <script src="./assets/js/sales.js?v=<?php echo time(); ?>"></script>

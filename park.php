@@ -5,38 +5,6 @@
 
     $stalls = $parkObj->getStalls($park_id); 
     
-    /*$userObj = new User();
-    $parkObj = new Park();
-    
-    $isLoggedIn = false;
-
-    if (isset($_SESSION['user']['id'])) {
-        if ($userObj->isVerified($_SESSION['user']['id']) == 1) {
-            $isLoggedIn = true;
-        } else {
-            header('Location: email/verify_email.php');
-            exit();
-        }
-    }
-    
-    if (isset($_GET['id'])) {
-        $park_link = htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8');
-        $park = $parkObj->getPark($park_link);
-
-        if (!$park) {
-            header('Location: index.php');
-            exit();
-        }
-
-        $stalls = $parkObj->getStalls($park);
-
-        if (!$stalls) {
-            echo 'No stalls found.';
-        }
-    } else {
-        header('Location: index.php');
-        exit();
-    }*/
 ?>
 
 <style>
@@ -77,52 +45,52 @@
         <i class="fa-solid fa-arrow-left scroll-arrow left-arrow" style="display: none;"></i>
         <div class="d-flex rightfilter gap-3">
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category1.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/BBQ.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">BBQ</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category2.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Seafood.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Seafood</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category3.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Desserts.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Desserts</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category4.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Snacks.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Snacks</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category5.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Beverages.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Beverages</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category1.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Vegan.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Vegan</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category2.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Asian.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Asian</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category3.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Burgers.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Burgers</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category4.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Tacos.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Tacos</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category5.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Fusion.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Fusion</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category1.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Pasta.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Pasta</span>
             </a>
             <a href="#" class="text-decoration-none text-center">
-                <img src="assets/images/category2.jpg" width="110px" height="110px" class="rounded-2">
-                <span class="text-dark d-block mt-1">Category</span>
+                <img src="assets/images/Salads.jpg" width="110px" height="110px" class="rounded-2">
+                <span class="text-dark d-block mt-1">Salads</span>
             </a>
         </div>
         <a href="stall.php" class="card-link text-decoration-none">
@@ -300,31 +268,6 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-4 g-3">
-        <!--<div class="col">
-            <a href="stall.php" class="card-link text-decoration-none bg-white">
-                <div class="card" style="position: relative;">
-                    <img src="assets/images/stall1.jpg" class="card-img-top" alt="...">
-                    <div class="closed">Closed until Wed 10:00 AM</div>
-                    <button class="add"><i class="fa-regular fa-heart"></i></button>
-                    <div class="card-body">
-                         <div class="d-flex gap-2 align-items-center">
-                        <p class="card-text text-muted m-0">Category</p>
-                        <span class="dot text-muted"></span>
-                        <p class="card-text text-muted m-0">Category</p>
-                    </div>
-                        <h5 class="card-title my-2">Food Stall Name</h5>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text text-muted m-0">Description</p>
-                            <span style="color:#6A9C89;"><i class="fa-solid fa-heart"></i> 200</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="discount">With Promo</span>
-                            <span class="newopen">New Open</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>-->
         <?php
             foreach ($stalls as $stall) {
                 ?>
@@ -363,51 +306,6 @@
             }
         ?>
 
-        <!--<?php
-            foreach ($stalls as $stall) {
-                if ($stall['status'] == 'Open') {
-                    $uniqueLink = "./stall.php?pid=" . $_GET['id'] . '&' . 'sid=' . $stall['id'];
-                    ?>
-                    <div class="col open-stall">
-                        <a href="<?= $uniqueLink ?>" class="card-link text-decoration-none bg-white">
-                            <div class="card" style="position: relative;">
-                                <img src="<?= $stall['img'] ?>" class="card-img-top" alt="...">
-                                <button class="add"><i class="fa-regular fa-heart"></i></button>
-                                <div class="card-body">
-                                    <h5 class="card-title my-2"><?= $stall['name'] ?></h5>
-                                    <div class="d-flex justify-content-between">
-                                        <p class="card-text text-muted m-0"><?= $stall['description'] ?></p>
-                                    </div>
-                                    <div class="mt-2">
-                                        <span class="opennow">Top Rated</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-            <?php
-                } else if ($stall['status'] == 'Closed') {
-                    ?>
-                    <div class="col closed-stall" hidden>
-                        <div class="card card-link text-decoration-none bg-white" style="position: relative;">
-                            <img src="<?= $stall['img'] ?>" class="card-img-top" alt="...">
-                            <button class="add"><i class="fa-regular fa-heart"></i></button>
-                            <div class="card-body">
-                                <h5 class="card-title my-2"><?= $stall['name'] ?></h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="card-text text-muted m-0"><?= $stall['description'] ?></p>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="opennow">Closed</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php
-                }
-            } 
-        ?>-->
-
     </div>
 
     <br><br>
@@ -415,12 +313,10 @@
 </section>
 
 <SCript>
-    // Select all anchor tags with the class 'add'
     document.querySelectorAll('.add').forEach(anchor => {
         anchor.addEventListener('click', function (event) {
             const icon = this.querySelector('i');
 
-            // Toggle the icon's class
             if (icon.classList.contains('fa-regular')) {
                 icon.classList.remove('fa-regular', 'fa-heart');
                 icon.classList.add('fa-solid', 'fa-heart');
@@ -429,7 +325,6 @@
                 icon.classList.add('fa-regular', 'fa-heart');
             }
 
-            // Prevent navigation if the user clicked on the <i> element
             if (event.target.tagName === 'I') {
                 event.preventDefault();
             }

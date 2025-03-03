@@ -1,17 +1,18 @@
 <?php
 require_once __DIR__ . '/classes/db.class.php';
 require_once __DIR__ . '/classes/park.class.php';
+require_once __DIR__ . '/classes/encdec.class.php';
 
 $parkObj = new Park();
 
 if (isset($_POST['search'])) {
     $query = $_POST['search'];
-    $parks = $parkObj->searchParks($query); // Implement this function in Park class
+    $parks = $parkObj->searchParks($query); 
 
     if (!empty($parks)) {
         foreach ($parks as $park) {
             ?>
-            <div class="search-item" data-url="enter_park.php?id=<?= $park['id'] ?>">
+            <div class="search-item" data-url="enter_park.php?id=<?= encrypt($park['id']) ?>">
                 <img src="<?= $park['business_logo'] ?>" class="search-logo">
                 <div class="search-info">
                     <p class="search-name"><?= htmlspecialchars($park['business_name']) ?></p>

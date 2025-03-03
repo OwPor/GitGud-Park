@@ -12,40 +12,37 @@ $nav_links = [];
 $userObj = new User();
 $parkObj = new Park();
 
-// Check if user is logged in
 if (isset($_SESSION['user'])) {
     $user_id = $_SESSION['user']['id'];
     $user = $userObj->getUser($user_id);
 
     if (isset($_SESSION['current_park_id'])) {
         $park_id = $_SESSION['current_park_id'];
+        $park_name = $_SESSION['current_park_name'];
         $is_food_park_owner = $parkObj->isOwner($user_id, $park_id);
         $is_stall_owner = $parkObj->isStallOwner($user_id, $park_id);
     }
 
-    // Default accessible links
     $nav_links = [
         'account.php' => ['label' => 'Account', 'icon' => 'fa-solid fa-user'],
         'favorites.php' => ['label' => 'Favorites', 'icon' => 'fa-solid fa-heart'],
         'purchase.php' => ['label' => 'Purchase', 'icon' => 'fa-solid fa-shopping-bag'],
     ];
 
-    // If the user is a stall owner inside the food park
     if ($is_stall_owner) {
         $nav_links += [
             'orders.php' => ['label' => 'Orders', 'icon' => 'fa-solid fa-receipt'],
             'managemenu.php' => ['label' => 'Manage Menu', 'icon' => 'fa-solid fa-utensils'],
             'sales.php' => ['label' => 'Sales', 'icon' => 'fa-solid fa-chart-line'],
-            'stallpage.php' => ['label' => 'Stall Page', 'icon' => 'fa-solid fa-store'],
+            //'stallpage.php' => ['label' => 'Stall Page', 'icon' => 'fa-solid fa-store'],
         ];
     }
 
-    // If the user is the food park owner
     if ($is_food_park_owner) {
         $nav_links += [
             'managestall.php' => ['label' => 'Manage Stall', 'icon' => 'fa-solid fa-cogs'],
             'dashboard.php' => ['label' => 'Dashboard', 'icon' => 'fa-solid fa-chart-bar'],
-            'centralized.php' => ['label' => 'Centralized', 'icon' => 'fa-solid fa-layer-group'],
+            //'centralized.php' => ['label' => 'Centralized', 'icon' => 'fa-solid fa-layer-group'],
         ];
     }
 } else {
@@ -63,7 +60,8 @@ if (isset($_SESSION['user'])) {
 </style>
 
 <nav>
-    <div class="top position-relative">
+    <div class="top d-flex justify-content-between">
+        <span class="text-white"><i class="fa-solid fa-location-crosshairs me-3"></i><?= htmlspecialchars($park_name) ?></span>
         <ul>
             <?php if ($user): ?>
                 <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>

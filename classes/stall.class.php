@@ -470,6 +470,7 @@ class Stall {
     
     public function getLiveOpsMonitor($stall_id, $start, $end){
         $data = [];
+        
         $stmt = $this->db->connect()->prepare("
             SELECT COUNT(*) as canceled_orders 
             FROM order_stalls 
@@ -497,8 +498,26 @@ class Stall {
         }
         $data['new_customers'] = $new;
         $data['repeated_customers'] = $repeated;
+        
+        $stmt = $this->db->connect()->prepare("
+            SELECT COUNT(*) 
+            FROM products p 
+            WHERE p.stall_id = ? 
+              AND p.id NOT IN (
+                  SELECT DISTINCT product_id 
+                  FROM order_items oi 
+                  JOIN order_stalls os ON oi.order_stall_id = os.id 
+                  WHERE os.stall_id = ? 
+                    AND oi.created_at BETWEEN ? AND ? 
+                    AND os.status = 'Preparing'
+              )
+        ");
+        $stmt->execute([$stall_id, $stall_id, $start, $end]);
+        $data['no_sales'] = $stmt->fetchColumn();
+        
         return $data;
     }
+    
     
     public function getOperationsHealth($stall_id, $start, $end){
         $data = [];
@@ -519,7 +538,7 @@ class Stall {
                 $online += $row['sales'];
             }
         }
-        $data['Online'] = $online;
+        $data['GCash'] = $online;
         $data['Cash'] = $cash;
         
         $stmt = $this->db->connect()->prepare("
@@ -551,14 +570,17 @@ class Stall {
         $data['lost_sales'] = $stmt->fetchColumn();
         
         $stmt = $this->db->connect()->prepare("
-            SELECT AVG(TIMESTAMPDIFF(MINUTE, o.created_at, os.created_at)) as avg_prep_time 
-            FROM orders o 
-            JOIN order_stalls os ON o.id = os.order_id 
-            WHERE os.stall_id = ? AND o.created_at BETWEEN ? AND ? AND os.status = 'Preparing'
+            SELECT AVG(TIMESTAMPDIFF(MINUTE, os.created_at, os.updated_at)) as avg_prep_time 
+            FROM order_stalls os 
+            WHERE os.stall_id = ? 
+            AND os.status = 'Ready'
+            AND os.created_at BETWEEN ? AND ?
         ");
         $stmt->execute([$stall_id, $start, $end]);
         $avg = $stmt->fetchColumn();
         $data['avg_prep_time'] = $avg ? round($avg) : 0;
+
+
         return $data;
     }
     

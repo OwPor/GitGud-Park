@@ -149,9 +149,18 @@
                 <div class="form-group m-0 select2Part select2multiple w-100 floating-group">
                     <label class="floating-label">Categories <span style="color: #CD5C08;">*</span></label>
                     <select name="categories[]" id="categories" class="form-control customSelectMultiple floating-control" multiple>
-                        <option value="Drinks">Drinks</option>
-                        <option value="Vegetables">Vegetables</option>
+                        <option value="BBQ">BBQ</option>
+                        <option value="Seafood">Seafood</option>
                         <option value="Desserts">Desserts</option>
+                        <option value="Snacks">Snacks</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Asian">Asian</option>
+                        <option value="Burgers">Burgers</option>
+                        <option value="Tacos">Tacos</option>
+                        <option value="Fusion">Fusion</option>
+                        <option value="Pasta">Pasta</option>
+                        <option value="Salads">Salads</option>
                     </select>
                 </div>
                 <script src="assets/js/selectcategory.js"></script>

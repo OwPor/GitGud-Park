@@ -59,11 +59,16 @@
                         <div class="d-flex gap-2">
                             <span>Products</span>
                             <span class="likpro"><?= $totalProducts; ?></span>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
-            <button class="pagelike">Like</button>
+            <?php if ($user_id == $stall['user_id']): ?>
+                <button class="pagelike" onclick="window.location.href='editpage.php?id=<?= $stall['id'] ?>';">Edit Page</button>
+            <?php else: ?>
+                <button class="pagelike">Like</button>
+            <?php endif; ?>
+
         </div>
     </div>
 

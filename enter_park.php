@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
 
     if ($park) {
         $_SESSION['current_park_id'] = $park_id;
-        $_SESSION['current_park_name'] = $park['businessname'];
+        $_SESSION['current_park_name'] = $park['business_name'];
         header("Location: park.php");
         exit();
     } else {
