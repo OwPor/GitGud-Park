@@ -384,5 +384,197 @@ class Stall {
         $stmt->execute([$user_id, $park_id]);
         return $stmt->fetchAll();
     }
+
+
+
+    public function getStallCreationDate($stall_id){ 
+        $stmt = $this->db->connect()->prepare("SELECT created_at FROM stalls WHERE id = ?");
+        $stmt->execute([$stall_id]);
+        return $stmt->fetchColumn();
+    }
+    
+    // General report method that accepts fixed date ranges.
+    private function getSalesReport($stall_id, $start, $end){
+        $stmt = $this->db->connect()->prepare("
+            SELECT COUNT(*) as totalOrders, COALESCE(SUM(subtotal),0) as totalSales 
+            FROM order_items 
+            WHERE order_stall_id IN (
+                SELECT id FROM order_stalls WHERE stall_id = ? AND status = 'Preparing'
+            ) 
+            AND created_at BETWEEN ? AND ?
+        ");
+        $stmt->execute([$stall_id, $start, $end]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    public function getSalesToday($stall_id, $start = null, $end = null){
+        if(!$start || !$end) {
+            $today = date("Y-m-d");
+            $start = $today." 00:00:00";
+            $end   = $today." 23:59:59";
+        }
+        return $this->getSalesReport($stall_id, $start, $end);
+    }
+    
+    public function getSalesYesterday($stall_id, $start = null, $end = null){
+        if(!$start || !$end) {
+            $yesterday = date("Y-m-d", strtotime("-1 day"));
+            $start = $yesterday." 00:00:00";
+            $end   = $yesterday." 23:59:59";
+        }
+        return $this->getSalesReport($stall_id, $start, $end);
+    }
+    
+    public function getSales7Days($stall_id, $start = null, $end = null){
+        if(!$start || !$end) {
+            $created = $this->getStallCreationDate($stall_id);
+            $start = date("Y-m-d 00:00:00", strtotime($created));
+            $end   = date("Y-m-d 23:59:59", strtotime($created." +6 days"));
+        }
+        return $this->getSalesReport($stall_id, $start, $end);
+    }
+    
+    public function getSales30Days($stall_id, $start = null, $end = null){
+        if(!$start || !$end) {
+            $created = $this->getStallCreationDate($stall_id);
+            $start = date("Y-m-d 00:00:00", strtotime($created));
+            $end   = date("Y-m-d 23:59:59", strtotime($created." +29 days"));
+        }
+        return $this->getSalesReport($stall_id, $start, $end);
+    }
+    
+    public function getSales1Year($stall_id, $start = null, $end = null){
+        if(!$start || !$end) {
+            $created = $this->getStallCreationDate($stall_id);
+            $start = date("Y-m-d 00:00:00", strtotime($created));
+            $end   = date("Y-m-d 23:59:59", strtotime($created." +364 days"));
+        }
+        return $this->getSalesReport($stall_id, $start, $end);
+    }
+    
+    public function getProductsReport($stall_id, $start, $end){
+        $stmt = $this->db->connect()->prepare("
+            SELECT p.name, COALESCE(SUM(oi.quantity),0) as order_count, COALESCE(SUM(oi.subtotal),0) as sales 
+            FROM products p 
+            LEFT JOIN order_items oi ON p.id = oi.product_id 
+                AND oi.created_at BETWEEN ? AND ?
+                AND oi.order_stall_id IN (
+                    SELECT id FROM order_stalls WHERE status = 'Preparing'
+                )
+            WHERE p.stall_id = ?
+            GROUP BY p.id
+        ");
+        $stmt->execute([$start, $end, $stall_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function getLiveOpsMonitor($stall_id, $start, $end){
+        $data = [];
+        $stmt = $this->db->connect()->prepare("
+            SELECT COUNT(*) as canceled_orders 
+            FROM order_stalls 
+            WHERE stall_id = ? AND status = 'Canceled' AND created_at BETWEEN ? AND ?
+        ");
+        $stmt->execute([$stall_id, $start, $end]);
+        $data['canceled_orders'] = $stmt->fetchColumn();
+        
+        $stmt = $this->db->connect()->prepare("
+            SELECT o.user_id, COUNT(*) as orders 
+            FROM orders o 
+            JOIN order_stalls os ON o.id = os.order_id 
+            WHERE os.stall_id = ? AND o.created_at BETWEEN ? AND ? AND os.status = 'Preparing'
+            GROUP BY o.user_id
+        ");
+        $stmt->execute([$stall_id, $start, $end]);
+        $new = 0;
+        $repeated = 0;
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            if($row['orders'] == 1){
+                $new++;
+            } else {
+                $repeated++;
+            }
+        }
+        $data['new_customers'] = $new;
+        $data['repeated_customers'] = $repeated;
+        return $data;
+    }
+    
+    public function getOperationsHealth($stall_id, $start, $end){
+        $data = [];
+        $stmt = $this->db->connect()->prepare("
+            SELECT o.payment_method, SUM(o.total_price) as sales 
+            FROM orders o 
+            JOIN order_stalls os ON o.id = os.order_id 
+            WHERE os.stall_id = ? AND o.created_at BETWEEN ? AND ? AND os.status = 'Preparing'
+            GROUP BY o.payment_method
+        ");
+        $stmt->execute([$stall_id, $start, $end]);
+        $online = 0;
+        $cash = 0;
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            if(strtolower($row['payment_method']) == 'cash'){
+                $cash += $row['sales'];
+            } else {
+                $online += $row['sales'];
+            }
+        }
+        $data['Online'] = $online;
+        $data['Cash'] = $cash;
+        
+        $stmt = $this->db->connect()->prepare("
+            SELECT o.order_type, SUM(o.total_price) as sales 
+            FROM orders o 
+            JOIN order_stalls os ON o.id = os.order_id 
+            WHERE os.stall_id = ? AND o.created_at BETWEEN ? AND ? AND os.status = 'Preparing'
+            GROUP BY o.order_type
+        ");
+        $stmt->execute([$stall_id, $start, $end]);
+        $dineIn = 0;
+        $takeOut = 0;
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            if(strtolower($row['order_type']) == 'dine in'){
+                $dineIn += $row['sales'];
+            } else if(strtolower($row['order_type']) == 'take out'){
+                $takeOut += $row['sales'];
+            }
+        }
+        $data['Dine In'] = $dineIn;
+        $data['Take Out'] = $takeOut;
+        
+        $stmt = $this->db->connect()->prepare("
+            SELECT COALESCE(SUM(subtotal),0) as lost_sales 
+            FROM order_stalls 
+            WHERE stall_id = ? AND status = 'Canceled' AND created_at BETWEEN ? AND ?
+        ");
+        $stmt->execute([$stall_id, $start, $end]);
+        $data['lost_sales'] = $stmt->fetchColumn();
+        
+        $stmt = $this->db->connect()->prepare("
+            SELECT AVG(TIMESTAMPDIFF(MINUTE, o.created_at, os.created_at)) as avg_prep_time 
+            FROM orders o 
+            JOIN order_stalls os ON o.id = os.order_id 
+            WHERE os.stall_id = ? AND o.created_at BETWEEN ? AND ? AND os.status = 'Preparing'
+        ");
+        $stmt->execute([$stall_id, $start, $end]);
+        $avg = $stmt->fetchColumn();
+        $data['avg_prep_time'] = $avg ? round($avg) : 0;
+        return $data;
+    }
+    
+    public function getHighestSellingProducts($stall_id, $start, $end){
+        $stmt = $this->db->connect()->prepare("
+            SELECT p.name, SUM(oi.quantity) as order_count, SUM(oi.subtotal) as sales 
+            FROM order_items oi 
+            JOIN order_stalls os ON oi.order_stall_id = os.id 
+            JOIN products p ON oi.product_id = p.id 
+            WHERE os.stall_id = ? AND oi.created_at BETWEEN ? AND ? AND os.status = 'Preparing'
+            GROUP BY p.id 
+            ORDER BY sales DESC 
+            LIMIT 5
+        ");
+        $stmt->execute([$stall_id, $start, $end]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
 }
