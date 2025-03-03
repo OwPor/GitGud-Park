@@ -336,29 +336,31 @@ class Stall {
     
     public function getStallOrders($stall_id) {
         $sql = "SELECT 
-                    o.id AS order_id,
-                    o.payment_method,
-                    o.order_type,
-                    o.user_id,
-                    o.created_at AS order_date,
-                    os.id AS order_stall_id,
-                    os.status AS order_status,
-                    os.subtotal AS stall_subtotal,
-                    os.queue_number,
-                    p.name AS product_name,
-                    p.image AS product_image,
-                    oi.product_id,
-                    oi.variations,
-                    oi.request,
-                    oi.quantity,
-                    oi.price,
-                    oi.subtotal AS item_subtotal
-                FROM orders o
-                JOIN order_stalls os ON o.id = os.order_id
-                JOIN order_items oi ON os.id = oi.order_stall_id
-                JOIN products p ON oi.product_id = p.id
-                WHERE os.stall_id = ?
-                ORDER BY o.created_at DESC, os.status";
+            o.id AS order_id,
+            o.payment_method,
+            o.order_type,
+            o.user_id,
+            o.created_at AS order_date,
+            os.id AS order_stall_id,
+            os.status AS order_status,
+            os.subtotal AS stall_subtotal,
+            os.queue_number,
+            os.cancellation_reason,  -- Added field here
+            p.name AS product_name,
+            p.image AS product_image,
+            oi.product_id,
+            oi.variations,
+            oi.request,
+            oi.quantity,
+            oi.price,
+            oi.subtotal AS item_subtotal
+        FROM orders o
+        JOIN order_stalls os ON o.id = os.order_id
+        JOIN order_items oi ON os.id = oi.order_stall_id
+        JOIN products p ON oi.product_id = p.id
+        WHERE os.stall_id = ?
+        ORDER BY o.created_at DESC, os.status";
+
         $stmt = $this->db->connect()->prepare($sql);
         $stmt->execute([$stall_id]);
         return $stmt->fetchAll();

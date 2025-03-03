@@ -85,8 +85,19 @@ try {
         }
     }
     
-    $stmt = $pdo->prepare("UPDATE order_stalls SET status = :new_status WHERE id = :order_stall_id");
-    $stmt->execute(['new_status' => $new_status, 'order_stall_id' => $order_stall_id]);
+    if ($new_status === 'Canceled') {
+        $cancel_reason = isset($_POST['cancel_reason']) ? $_POST['cancel_reason'] : 'Canceled';
+        $stmt = $pdo->prepare("UPDATE order_stalls SET status = :new_status, cancellation_reason = :cancel_reason WHERE id = :order_stall_id");
+        $stmt->execute([
+            'new_status'      => $new_status,
+            'cancel_reason'   => $cancel_reason,
+            'order_stall_id'  => $order_stall_id
+        ]);
+    } else {
+        $stmt = $pdo->prepare("UPDATE order_stalls SET status = :new_status WHERE id = :order_stall_id");
+        $stmt->execute(['new_status' => $new_status, 'order_stall_id' => $order_stall_id]);
+    }
+    
     
     if ($new_status === 'Preparing' || $new_status === 'Ready') {
         if ($new_status === 'Preparing') {

@@ -17,12 +17,14 @@ foreach ($ordersData as $order) {
     $osid = $order['order_stall_id'];
     if (!isset($groupedOrders[$status][$osid])) {
         $groupedOrders[$status][$osid] = [
-            'order_id'       => $order['order_id'],
-            'order_date'     => $order['order_date'],
-            'stall_subtotal' => $order['stall_subtotal'],
-            'queue_number'   => $order['queue_number'],  
-            'items'          => []
+            'order_id'             => $order['order_id'],
+            'order_date'           => $order['order_date'],
+            'stall_subtotal'       => $order['stall_subtotal'],
+            'queue_number'         => $order['queue_number'],
+            'cancellation_reason'  => $order['cancellation_reason'] ?? '',
+            'items'                => []
         ];
+        
     }
     $groupedOrders[$status][$osid]['items'][] = $order;
 }
@@ -143,8 +145,9 @@ $statusMapping = [
                         <?php elseif($status == 'Completed'): ?>
                             <span class="text-muted">Completed</span>
                         <?php elseif($status == 'Canceled'): ?>
-                            <span class="text-muted text-center">Canceled by the customer<br>(Need to modify order)</span>
+                            <span class="text-muted text-center">Reason<br>(<?php echo htmlspecialchars($orderGroup['cancellation_reason']); ?>)</span>
                         <?php endif; ?>
+
                     </div>
                 </div>
                 <?php 
@@ -230,8 +233,8 @@ $statusMapping = [
                             <button class="rounded-2 notify-customer-btn" data-order-stall-id="<?php echo $osid; ?>" data-action="notify_customer" style="background-color: #6A9C89;">Notify Customer</button>
                         <?php elseif($status == 'Completed'): ?>
                             <span class="text-muted">Completed</span>
-                        <?php elseif($status == 'Canceled'): ?>
-                            <span class="text-muted text-center">Canceled by the customer<br>(Need to modify order)</span>
+                            <?php elseif($status == 'Canceled'): ?>
+                            <span class="text-muted text-center">Reason<br>(<?php echo htmlspecialchars($orderGroup['cancellation_reason']); ?>)</span>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -323,25 +326,26 @@ $statusMapping = [
                         <i class="fa-solid fa-circle-exclamation me-1"></i> Please take note that this will cancel all items in the order and the action cannot be undone.
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelReason" id="reason1">
+                        <input class="form-check-input" type="radio" name="cancelReason" id="reason1" value="Need to modify order">
                         <label class="form-check-label" for="reason1">Need to modify order</label>
                     </div><br>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelReason" id="reason2">
+                        <input class="form-check-input" type="radio" name="cancelReason" id="reason2" value="Payment procedure too troublesome">
                         <label class="form-check-label" for="reason2">Payment procedure too troublesome</label>
                     </div><br>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelReason" id="reason3">
+                        <input class="form-check-input" type="radio" name="cancelReason" id="reason3" value="Found cheaper elsewhere">
                         <label class="form-check-label" for="reason3">Found cheaper elsewhere</label>
                     </div><br>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelReason" id="reason4">
+                        <input class="form-check-input" type="radio" name="cancelReason" id="reason4" value="Don't want to buy anymore">
                         <label class="form-check-label" for="reason4">Don't want to buy anymore</label>
                     </div><br>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="cancelReason" id="reason5">
+                        <input class="form-check-input" type="radio" name="cancelReason" id="reason5" value="Others">
                         <label class="form-check-label" for="reason5">Others</label>
                     </div>
+
                     <div class="text-center mt-4">
                         <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
                         <button type="button" class="btn btn-primary" id="cancelOrderYesBtn">Cancel Order</button>
@@ -418,14 +422,28 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cancelOrderYesBtn').addEventListener('click', function() {
         var orderStallId = this.getAttribute('data-order-id');
         var newStatus = this.getAttribute('data-new-status');
+        
+        var selectedRadio = document.querySelector('input[name="cancelReason"]:checked');
+        var cancelReason = selectedRadio ? selectedRadio.value : '';
+        
         if (!orderStallId || !newStatus) {
             alert("Missing order information.");
             return;
         }
+        
+        if (newStatus === 'Canceled' && cancelReason === '') {
+            alert("Please select a cancellation reason.");
+            return;
+        }
+        
+        var postBody = 'order_stall_id=' + encodeURIComponent(orderStallId) +
+                    '&new_status=' + encodeURIComponent(newStatus) +
+                    (cancelReason ? '&cancel_reason=' + encodeURIComponent(cancelReason) : '');
+        
         fetch('update_order_status.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'order_stall_id=' + encodeURIComponent(orderStallId) + '&new_status=' + encodeURIComponent(newStatus)
+            body: postBody
         })
         .then(response => response.json())
         .then(data => {
