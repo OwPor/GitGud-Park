@@ -28,6 +28,74 @@ class Park {
         return $stmt->fetch(PDO::FETCH_ASSOC); 
     }
 
+    public function getPopularStalls($parkId) {
+        $db = $this->db->connect();
+        
+        $avgSql = "
+            SELECT AVG(order_count) AS avg_orders FROM (
+                SELECT COUNT(*) AS order_count
+                FROM order_stalls 
+                WHERE stall_id IN (SELECT id FROM stalls WHERE park_id = :park_id)
+                GROUP BY stall_id
+            ) AS counts
+        ";
+        $avgQuery = $db->prepare($avgSql);
+        $avgQuery->execute([':park_id' => $parkId]);
+        $avgResult = $avgQuery->fetch(PDO::FETCH_ASSOC);
+        $avgOrders = $avgResult ? $avgResult['avg_orders'] : 0;
+        
+        $sql = "
+            SELECT s.*, 
+                   GROUP_CONCAT(DISTINCT sc.name SEPARATOR ', ') AS stall_categories,
+                   os.order_count
+            FROM stalls s
+            LEFT JOIN stall_categories sc ON s.id = sc.stall_id
+            JOIN (
+                SELECT stall_id, COUNT(*) AS order_count
+                FROM order_stalls
+                GROUP BY stall_id
+            ) os ON s.id = os.stall_id
+            WHERE s.park_id = :park_id AND os.order_count > :avg_orders
+            GROUP BY s.id
+        ";
+        $query = $db->prepare($sql);
+        $query->execute([
+            ':park_id' => $parkId,
+            ':avg_orders' => $avgOrders
+        ]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPromoStalls($parkId) {
+        $sql = "
+            SELECT DISTINCT s.*, 
+                   GROUP_CONCAT(DISTINCT sc.name SEPARATOR ', ') AS stall_categories
+            FROM stalls s
+            LEFT JOIN stall_categories sc ON s.id = sc.stall_id
+            JOIN products p ON s.id = p.stall_id
+            WHERE s.park_id = :park_id AND p.discount > 0
+            GROUP BY s.id
+        ";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute([':park_id' => $parkId]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getNewProductStalls($parkId) {
+        $sql = "
+            SELECT DISTINCT s.*, 
+                   GROUP_CONCAT(DISTINCT sc.name SEPARATOR ', ') AS stall_categories
+            FROM stalls s
+            LEFT JOIN stall_categories sc ON s.id = sc.stall_id
+            JOIN products p ON s.id = p.stall_id
+            WHERE s.park_id = :park_id AND p.created_at >= (NOW() - INTERVAL 30 DAY)
+            GROUP BY s.id
+        ";
+        $query = $this->db->connect()->prepare($sql);
+        $query->execute([':park_id' => $parkId]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function getStalls($parkId) {
         $sql = "
             SELECT 
