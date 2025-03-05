@@ -21,6 +21,8 @@ polling notifications
 
 password validation
 
+authorization
+
 buhay ay di karera
 
 
