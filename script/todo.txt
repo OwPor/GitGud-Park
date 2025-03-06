@@ -23,6 +23,8 @@ password validation
 
 authorization
 
+encryption
+
 buhay ay di karera
 
 
