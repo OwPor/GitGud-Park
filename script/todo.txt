@@ -17,7 +17,7 @@ MUST MERGE DATABASE
 
 generate payment link
 
-polling notifications
+polling notifications/ajax
 
 password validation
 
