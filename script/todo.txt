@@ -20,6 +20,8 @@ generate payment link
 polling notifications/ajax
 polling done
 
+attempt ajax ordering
+
 password validation
 
 authorization
