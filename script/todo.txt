@@ -22,6 +22,8 @@ polling done
 
 attempt ajax ordering
 
+both sides
+
 password validation
 
 authorization
