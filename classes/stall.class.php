@@ -311,6 +311,7 @@ class Stall {
                     os.status AS order_status,
                     os.subtotal AS stall_subtotal,
                     os.queue_number,
+                    os.cancellation_reason,
                     s.name AS stall_name,
                     s.park_id,
                     p.name AS product_name,
